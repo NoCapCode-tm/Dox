@@ -22,10 +22,9 @@ const SignIn = () => {
   };
 
   return (
-    <div className="relative w-[1440px] h-[1024px] bg-[#0A0E14] mx-auto overflow-hidden">
-
+<div className="relative min-h-screen w-full bg-[#0A0E14] flex flex-col items-center justify-center">
       {/* ── Card — 456×456, top:232, left:492, radius:10px ── */}
-      <div className="absolute top-[232px] left-[492px] w-[456px] h-[456px] rounded-[10px] bg-[rgba(255,255,255,0.05)]">
+      <div className="relative w-[456px] h-[456px] rounded-[10px] bg-[rgba(255,255,255,0.05)]">
 
         {/* Title — top:22, left:193, width:71, height:33 */}
         <div className="absolute top-[22px] left-[193px] w-[71px] h-[33px] flex items-center gap-[6px]">
@@ -97,15 +96,15 @@ const SignIn = () => {
         </button>
       </div>
 
-      {/* ── DOX logo — top:930, left:673, width:94.875, height:22 ── */}
-      <div className="absolute top-[930px] left-[673px] w-[94px] h-[22px]">
-        <DoxLogo />
-      </div>
-
-      {/* ── Footer text — top:967, left:485, width:471, height:27 ── */}
-      <p className="absolute top-[967px] left-[485px] w-[471px] h-[27px] font-[Jost] text-[24px] font-normal text-[rgba(255,255,255,0.65)] leading-[27px] text-center m-0">
-        Powered by Atlas × NoCapCode Infrastructure
-      </p>
+      {/* Footer — below card, centered */}
+<div className="flex flex-col items-center gap-[8px] mt-[40px]">
+  <div className="w-[94px] h-[22px]">
+    <DoxLogo />
+  </div>
+  <p className="font-[Jost] text-[14px] font-normal text-[rgba(255,255,255,0.65)] text-center m-0">
+    Powered by Atlas × NoCapCode Infrastructure
+  </p>
+</div>
     </div>
   );
 };
