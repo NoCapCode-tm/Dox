@@ -99,7 +99,7 @@ const SignIn = () => {
             filter: "blur(13.65px)",
             bottom: 0,
             left: "50%",
-            transform: "translate(-50%, 45%)",
+            transform: "translate(-50%, 60%)",
             whiteSpace: "nowrap",
           }}
         >
@@ -120,7 +120,7 @@ const SignIn = () => {
             backgroundClip: "text",
             bottom: 0,
             left: "50%",
-            transform: "translate(-50%, 45%)",
+            transform: "translate(-50%, 60%)",
             whiteSpace: "nowrap",
           }}
         >
@@ -130,25 +130,23 @@ const SignIn = () => {
 
       {/* ── Main Content Wrapper ── */}
       <div
-        className="relative flex flex-col items-center w-full px-4"
-        style={{ maxWidth: "471px", zIndex: 20 }}
+        className="relative flex flex-col items-center w-full px-4 "
+style={{ maxWidth: "471px", zIndex: 20 }}
       >
         {/* Union — background pill behind DOX logo, sits above card  */}
         <div
-          className="flex items-center justify-center mb-[18px]"
-          style={{
-            width: "332.06px",
-            height: "89px",
-          }}
+          className="flex items-center justify-center mb-[18px] mt-[25px]"
+style={{
+  width: "332.06px",
+  height: "89px",
+  flexShrink: 0,
+}}
         >
-          <DoxLogo />
+          <DoxLogo stroke="rgba(20,35,65,0.95)" width="70%" />
         </div>
 
         {/* Card */}
-        <div
-          className="w-full max-w-[456px] rounded-[10px] px-[26px] pt-[18px] pb-[26px] flex flex-col items-center"
-          style={{ backgroundColor: "rgba(255,255,255,0.05)" }}
-        >
+
           {/* Title */}
           <div className="flex items-center gap-[6px] h-[33px]">
             <span
@@ -228,7 +226,7 @@ const SignIn = () => {
             </div>
           </div>
 
-        </div>
+  
 
         {/* Sign In button */}
           <button
@@ -250,7 +248,7 @@ const SignIn = () => {
 
         {/* Footer — DOX logo + gradient text */}
         <div className="flex flex-col items-center gap-[8px] mt-[20px]">
-          <DoxLogo />
+          <DoxLogo stroke="#FFFFFF" width="95" />
           <p
             className="font-[Jost] text-[14px] font-normal text-center m-0"
             style={{
@@ -325,52 +323,49 @@ const LockIcon = () => (
 );
 
 /**
- * DoxLogo
+ * DoxLogo — DOX SVG.
+ * @param {string} stroke - stroke color for the vectors
+ * @param {string} width - svg width, defaults to "95"
  */
-const DoxLogo = () => (
+const DoxLogo = ({ stroke = "#FFFFFF", width = "95" }) => (
   <svg
-    width="100%"
+    width={width}
     height="22"
     viewBox="0 0 95 22"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     aria-label="DOX logo"
   >
-    {/* Vector 4: D (left stroke) */}
     <path
       d="M 1.25 1.25 C 9.88 1.25, 16.63 6, 16.63 11 C 16.63 16, 9.88 20.75, 1.25 20.75"
-      stroke="#FFFFFF"
+      stroke={stroke}
       strokeWidth="2.5"
       strokeLinecap="round"
     />
-    {/* Vector 5: O left */}
     <path
       d="M 16.63 1.25 C 8 1.25, 1.25 6, 1.25 11 C 1.25 16, 8 20.75, 16.63 20.75"
-      stroke="#FFFFFF"
+      stroke={stroke}
       strokeWidth="2.5"
       strokeLinecap="round"
       transform="translate(23.18, 0)"
     />
-    {/* Vector 6: O right, mirrored */}
     <path
       d="M 16.63 1.25 C 8 1.25, 1.25 6, 1.25 11 C 1.25 16, 8 20.75, 16.63 20.75"
-      stroke="#FFFFFF"
+      stroke={stroke}
       strokeWidth="2.5"
       strokeLinecap="round"
       transform="translate(55.19, 0) matrix(-1, 0, 0, 1, 0, 0)"
     />
-    {/* Vector 7: X left (stroke) */}
     <path
       d="M 1.25 1.25 C 9.88 1.25, 16.63 6, 16.63 11 C 16.63 16, 9.88 20.75, 1.25 20.75"
-      stroke="#FFFFFF"
+      stroke={stroke}
       strokeWidth="2.5"
       strokeLinecap="round"
       transform="translate(61.74, 0)"
     />
-    {/* Vector 8: X right, mirrored */}
     <path
       d="M 1.25 1.25 C 9.88 1.25, 16.63 6, 16.63 11 C 16.63 16, 9.88 20.75, 1.25 20.75"
-      stroke="#FFFFFF"
+      stroke={stroke}
       strokeWidth="2.5"
       strokeLinecap="round"
       transform="translate(93.75, 0) matrix(-1, 0, 0, 1, 0, 0)"
