@@ -131,120 +131,116 @@ const SignIn = () => {
       {/* ── Main Content Wrapper ── */}
       <div
         className="relative flex flex-col items-center w-full px-4 "
-style={{ maxWidth: "471px", zIndex: 20 }}
+        style={{ maxWidth: "471px", zIndex: 20 }}
       >
-        {/* Union — background pill behind DOX logo, sits above card  */}
+        {/* Union — background pill behind DOX logo, sits above card */}
         <div
-          className="flex items-center justify-center mb-[18px] mt-[25px]"
-style={{
-  width: "332.06px",
-  height: "89px",
-  flexShrink: 0,
-}}
+          className="flex items-center justify-center mb-[10px]"
+          style={{
+            width: "min(332px, 70vw)",
+            height: "clamp(50px, 8vh, 89px)",
+            flexShrink: 0,
+          }}
         >
           <DoxLogo stroke="rgba(20,35,65,0.95)" width="70%" />
         </div>
 
-        {/* Card */}
+        {/* Title */}
+        <div className="flex items-center gap-[6px] h-[33px]">
+          <span
+            className="font-[Jost] text-[24px] text-[#FFFFFF]"
+            style={{ fontWeight: 200 }}
+          >
+            Sign
+          </span>
+          <span
+            className="font-[Jost] text-[24px] text-[#86B2F4]"
+            style={{ fontWeight: 200 }}
+          >
+            In
+          </span>
+        </div>
 
-          {/* Title */}
-          <div className="flex items-center gap-[6px] h-[33px]">
-            <span
-              className="font-[Jost] text-[24px] text-[#FFFFFF]"
-              style={{ fontWeight: 200 }}
-            >
-              Sign
-            </span>
-            <span
-              className="font-[Jost] text-[24px] text-[#86B2F4]"
-              style={{ fontWeight: 200 }}
-            >
-              In
-            </span>
+        {/* Subtitle */}
+        <p
+          className="mt-[1px] font-[Jost] text-[15px] font-normal text-center leading-[28px]"
+          style={{ color: "rgba(255,255,255,0.65)" }}
+        >
+          Access your onboarding portal
+        </p>
+
+        {/* Inner fields box */}
+        <div
+          className="mt-[24px] w-full max-w-[392px] rounded-[16px] px-[26px] py-[19px] flex flex-col"
+          style={{
+            backgroundColor: "rgba(255,255,255,0.05)",
+            border: "0.8px solid rgba(255,255,255,0.1)",
+          }}
+        >
+          {/* Email label */}
+          <div className="h-[20px] flex items-center font-[Jost] text-[14px] font-medium text-[#FFFFFF]">
+            Email Address
           </div>
 
-          {/* Subtitle */}
-          <p
-            className="mt-[10px] font-[Jost] text-[15px] font-normal text-center leading-[28px]"
-            style={{ color: "rgba(255,255,255,0.65)" }}
-          >
-            Access your onboarding portal
-          </p>
-
-          {/* Inner fields box — radius:16px */}
+          {/* Email input */}
           <div
-            className="mt-[24px] w-full max-w-[392px] rounded-[16px] px-[26px] py-[19px] flex flex-col"
-            style={{
-              backgroundColor: "rgba(255,255,255,0.05)",
-              border: "0.8px solid rgba(255,255,255,0.1)",
-            }}
+            className="mt-[6px] w-full h-[45px] rounded-[10px] flex items-center gap-[10px] px-[16px]"
+            style={{ backgroundColor: "rgba(201,201,201,0.1)" }}
           >
-            {/* Email label */}
-            <div className="h-[20px] flex items-center font-[Jost] text-[14px] font-medium text-[#FFFFFF]">
-              Email Address
-            </div>
-
-            {/* Email input */}
-            <div
-              className="mt-[6px] w-full h-[45px] rounded-[10px] flex items-center gap-[10px] px-[16px]"
-              style={{ backgroundColor: "rgba(201,201,201,0.1)" }}
-            >
-              <MailIcon />
-              <input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="your.email@example.com"
-                inputMode="email"
-                autoComplete="email"
-                className="flex-1 bg-transparent border-none outline-none font-[Jost] text-[14px] caret-white"
-                style={{ color: "rgba(255,255,255,0.65)" }}
-                aria-label="Email address"
-              />
-            </div>
-
-            {/* Password label */}
-            <div className="mt-[16px] h-[20px] flex items-center font-[Jost] text-[14px] font-medium text-[#FFFFFF]">
-              Password
-            </div>
-
-            {/* Password input */}
-            <div
-              className="mt-[6px] w-full h-[45px] rounded-[10px] flex items-center gap-[10px] px-[16px]"
-              style={{ backgroundColor: "rgba(201,201,201,0.1)" }}
-            >
-              <LockIcon />
-              <input
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-                type="password"
-                autoComplete="current-password"
-                className="flex-1 bg-transparent border-none outline-none font-[Jost] text-[14px] caret-white"
-                style={{ color: "rgba(255,255,255,0.65)" }}
-                aria-label="Password"
-              />
-            </div>
+            <MailIcon />
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="your.email@example.com"
+              inputMode="email"
+              autoComplete="email"
+              className="flex-1 bg-transparent border-none outline-none font-[Jost] text-[14px] caret-white"
+              style={{ color: "rgba(255,255,255,0.65)" }}
+              aria-label="Email address"
+            />
           </div>
 
-  
+          {/* Password label */}
+          <div className="mt-[16px] h-[20px] flex items-center font-[Jost] text-[14px] font-medium text-[#FFFFFF]">
+            Password
+          </div>
+
+          {/* Password input */}
+          <div
+            className="mt-[6px] w-full h-[45px] rounded-[10px] flex items-center gap-[10px] px-[16px]"
+            style={{ backgroundColor: "rgba(201,201,201,0.1)" }}
+          >
+            <LockIcon />
+            <input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
+              type="password"
+              autoComplete="current-password"
+              className="flex-1 bg-transparent border-none outline-none font-[Jost] text-[14px] caret-white"
+              style={{ color: "rgba(255,255,255,0.65)" }}
+              aria-label="Password"
+            />
+          </div>
+        </div>
 
         {/* Sign In button */}
-          <button
-            type="button"
-            onClick={handleSignIn}
-            disabled={!canSubmit}
-            className="mt-[25px] w-full max-w-[392px] h-[56px] rounded-[14px] flex items-center justify-center gap-[4px] transition-opacity disabled:opacity-50 disabled:cursor-not-allowed hover:enabled:opacity-90"
-            style={{
-              backgroundColor: "#314460",
-              border: "1px solid #FFFFFF",
-              boxShadow:
-                "1px 1px 2px rgba(64,88,125,0.3), -1px -1px 2px rgba(34,48,67,0.5), inset -5px 5px 10px rgba(34,48,67,0.2), inset 5px -5px 10px rgba(34,48,67,0.2), inset -5px -5px 10px rgba(64,88,125,0.9), inset 5px 5px 13px rgba(34,48,67,0.9)",
-            }}
-          >
-            <span className="font-[Jost] text-[15px] font-medium text-[#FFFFFF]">
-              Sign In →
-            </span>
-          </button>
+        <button
+          type="button"
+          onClick={handleSignIn}
+          disabled={!canSubmit}
+          className="mt-[25px] w-full max-w-[392px] h-[56px] rounded-[14px] flex items-center justify-center gap-[4px] transition-opacity disabled:opacity-50 disabled:cursor-not-allowed hover:enabled:opacity-90"
+          style={{
+            backgroundColor: "#314460",
+            border: "1px solid #FFFFFF",
+            boxShadow:
+              "1px 1px 2px rgba(64,88,125,0.3), -1px -1px 2px rgba(34,48,67,0.5), inset -5px 5px 10px rgba(34,48,67,0.2), inset 5px -5px 10px rgba(34,48,67,0.2), inset -5px -5px 10px rgba(64,88,125,0.9), inset 5px 5px 13px rgba(34,48,67,0.9)",
+          }}
+        >
+          <span className="font-[Jost] text-[15px] font-medium text-[#FFFFFF]">
+            Sign In →
+          </span>
+        </button>
 
         {/* Footer — DOX logo + gradient text */}
         <div className="flex flex-col items-center gap-[8px] mt-[20px]">
@@ -261,7 +257,9 @@ style={{
             Powered by Atlas × NoCapCode Infrastructure
           </p>
         </div>
+        
       </div>
+
     </div>
   );
 };
