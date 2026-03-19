@@ -1,9 +1,7 @@
 import { useMemo, useState } from "react";
 
 /**
- * SignIn page — matches updated Figma "Desktop - 9" design.
- * Responsive layout using flexbox. Background is a diagonal blue gradient.
- * Decorative large text sits behind the form as visual layer.
+ * SignIn page
  */
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -23,47 +21,56 @@ const SignIn = () => {
 
   return (
     <div
-      className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden"
+      className="relative h-screen w-full overflow-hidden flex items-center justify-center"
       style={{
-        background: "linear-gradient(116.04deg, #0A0E14 18.26%, #112B53 51.38%, #0A0E14 78.49%)",
+        background:
+          "linear-gradient(116.04deg, #0A0E14 18.26%, #112B53 51.38%, #0A0E14 78.49%)",
       }}
     >
-      {/* ── Decorative "Atla" text — top, behind form ── */}
+      {/* Group 260 — "Atla" decorative text*/}
       <div
-        className="absolute top-0 left-0 w-full pointer-events-none select-none overflow-hidden"
-        style={{ height: "180px" }}
+        className="absolute pointer-events-none select-none w-full"
+        style={{
+          top: 0,
+          left: 0,
+          zIndex: 0,
+        }}
       >
-        {/* Shadow layer */}
+        {/* Atla shadow layer */}
         <div
           className="absolute"
           style={{
             fontFamily: "Jomolhari, serif",
-            fontSize: "clamp(200px, 40vw, 800px)",
+            fontSize: "55vw",
             fontWeight: 400,
-            lineHeight: "27px",
+            lineHeight: "1",
             color: "rgba(0,0,0,0.46)",
             filter: "blur(11.1px)",
-            top: "-200px",
-            left: "-46px",
+            top: 0,
+            left: "-3vw",
+            transform: "translate(0, -68%)",
             whiteSpace: "nowrap",
           }}
         >
           Atla
         </div>
-        {/* Gradient layer */}
+
+        {/* Atla gradient layer */}
         <div
           className="absolute"
           style={{
             fontFamily: "Jomolhari, serif",
-            fontSize: "clamp(200px, 40vw, 800px)",
+            fontSize: "55vw",
             fontWeight: 400,
-            lineHeight: "27px",
-            background: "linear-gradient(95.73deg, #000000 8.34%, #FFFFFF 63.47%, #0A0E14 94.62%)",
+            lineHeight: "1",
+            background:
+              "linear-gradient(95.73deg, #000000 8.34%, #FFFFFF 63.47%, #0A0E14 94.62%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
-            top: "-220px",
-            left: "-46px",
+            top: 0,
+            left: "-3vw",
+            transform: "translate(0, -68%)",
             whiteSpace: "nowrap",
           }}
         >
@@ -71,42 +78,49 @@ const SignIn = () => {
         </div>
       </div>
 
-      {/* ── Decorative "NCC" text — bottom, behind form ── */}
+      {/*Group 261 — "NCC" decorative text*/}
       <div
-        className="absolute bottom-0 left-0 w-full pointer-events-none select-none overflow-hidden"
-        style={{ height: "180px" }}
+        className="absolute pointer-events-none select-none w-full"
+        style={{
+          bottom: 0,
+          left: 0,
+          zIndex: 0,
+        }}
       >
-        {/* Shadow layer */}
+        {/* NCC shadow layer */}
         <div
           className="absolute"
           style={{
             fontFamily: "Jomolhari, serif",
-            fontSize: "clamp(200px, 40vw, 800px)",
+            fontSize: "40vw",
             fontWeight: 400,
-            lineHeight: "27px",
+            lineHeight: "1",
             color: "rgba(0,0,0,0.49)",
             filter: "blur(13.65px)",
-            bottom: "-600px",
-            left: "-192px",
+            bottom: 0,
+            left: "50%",
+            transform: "translate(-50%, 45%)",
             whiteSpace: "nowrap",
           }}
         >
           NCC
         </div>
-        {/* Gradient layer */}
+        {/* NCC gradient layer */}
         <div
           className="absolute"
           style={{
             fontFamily: "Jomolhari, serif",
-            fontSize: "clamp(200px, 40vw, 800px)",
+            fontSize: "40vw",
             fontWeight: 400,
-            lineHeight: "27px",
-            background: "linear-gradient(93.02deg, #6C6C6C 24.98%, #FFFFFF 45.65%, #050505 75.35%)",
+            lineHeight: "1",
+            background:
+              "linear-gradient(93.02deg, #6C6C6C 24.98%, #FFFFFF 45.65%, #050505 75.35%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
-            bottom: "-600px",
-            left: "-136px",
+            bottom: 0,
+            left: "50%",
+            transform: "translate(-50%, 45%)",
             whiteSpace: "nowrap",
           }}
         >
@@ -114,17 +128,25 @@ const SignIn = () => {
         </div>
       </div>
 
-      {/* ── Main content — DOX logo + card + footer ── */}
-      <div className="relative z-10 flex flex-col items-center w-full px-4">
-
-        {/* DOX logo — above card */}
-        <div className="mb-[16px]">
+      {/* ── Main Content Wrapper ── */}
+      <div
+        className="relative flex flex-col items-center w-full px-4"
+        style={{ maxWidth: "471px", zIndex: 20 }}
+      >
+        {/* Union — background pill behind DOX logo, sits above card  */}
+        <div
+          className="flex items-center justify-center mb-[18px]"
+          style={{
+            width: "332.06px",
+            height: "89px",
+          }}
+        >
           <DoxLogo />
         </div>
 
-        {/* ── Card — max-w:456px, radius:10px ── */}
+        {/* Card */}
         <div
-          className="w-full max-w-[456px] rounded-[10px] px-[32px] pt-[22px] pb-[32px] flex flex-col items-center"
+          className="w-full max-w-[456px] rounded-[10px] px-[26px] pt-[18px] pb-[26px] flex flex-col items-center"
           style={{ backgroundColor: "rgba(255,255,255,0.05)" }}
         >
           {/* Title */}
@@ -145,7 +167,7 @@ const SignIn = () => {
 
           {/* Subtitle */}
           <p
-            className="mt-[12px] font-[Jost] text-[15px] font-normal text-center leading-[28px] m-0"
+            className="mt-[10px] font-[Jost] text-[15px] font-normal text-center leading-[28px]"
             style={{ color: "rgba(255,255,255,0.65)" }}
           >
             Access your onboarding portal
@@ -153,7 +175,7 @@ const SignIn = () => {
 
           {/* Inner fields box — radius:16px */}
           <div
-            className="mt-[30px] w-full max-w-[392px] rounded-[16px] px-[33px] py-[24px] flex flex-col"
+            className="mt-[24px] w-full max-w-[392px] rounded-[16px] px-[26px] py-[19px] flex flex-col"
             style={{
               backgroundColor: "rgba(255,255,255,0.05)",
               border: "0.8px solid rgba(255,255,255,0.1)",
@@ -164,9 +186,9 @@ const SignIn = () => {
               Email Address
             </div>
 
-            {/* Email input — height:45, radius:10px */}
+            {/* Email input */}
             <div
-              className="mt-[8px] w-full h-[45px] rounded-[10px] flex items-center gap-[10px] px-[16px]"
+              className="mt-[6px] w-full h-[45px] rounded-[10px] flex items-center gap-[10px] px-[16px]"
               style={{ backgroundColor: "rgba(201,201,201,0.1)" }}
             >
               <MailIcon />
@@ -183,13 +205,13 @@ const SignIn = () => {
             </div>
 
             {/* Password label */}
-            <div className="mt-[20px] h-[20px] flex items-center font-[Jost] text-[14px] font-medium text-[#FFFFFF]">
+            <div className="mt-[16px] h-[20px] flex items-center font-[Jost] text-[14px] font-medium text-[#FFFFFF]">
               Password
             </div>
 
-            {/* Password input — height:45, radius:10px */}
+            {/* Password input */}
             <div
-              className="mt-[8px] w-full h-[45px] rounded-[10px] flex items-center gap-[10px] px-[16px]"
+              className="mt-[6px] w-full h-[45px] rounded-[10px] flex items-center gap-[10px] px-[16px]"
               style={{ backgroundColor: "rgba(201,201,201,0.1)" }}
             >
               <LockIcon />
@@ -206,26 +228,28 @@ const SignIn = () => {
             </div>
           </div>
 
-          {/* Sign In button — height:56, radius:14px, with exact Figma box shadow */}
+        </div>
+
+        {/* Sign In button */}
           <button
             type="button"
             onClick={handleSignIn}
             disabled={!canSubmit}
-            className="mt-[31px] w-full max-w-[392px] h-[56px] rounded-[14px] flex items-center justify-center gap-[4px] transition-opacity disabled:opacity-50 disabled:cursor-not-allowed hover:enabled:opacity-90"
+            className="mt-[25px] w-full max-w-[392px] h-[56px] rounded-[14px] flex items-center justify-center gap-[4px] transition-opacity disabled:opacity-50 disabled:cursor-not-allowed hover:enabled:opacity-90"
             style={{
               backgroundColor: "#314460",
               border: "1px solid #FFFFFF",
-              boxShadow: "1px 1px 2px rgba(64,88,125,0.3), -1px -1px 2px rgba(34,48,67,0.5), inset -5px 5px 10px rgba(34,48,67,0.2), inset 5px -5px 10px rgba(34,48,67,0.2), inset -5px -5px 10px rgba(64,88,125,0.9), inset 5px 5px 13px rgba(34,48,67,0.9)",
+              boxShadow:
+                "1px 1px 2px rgba(64,88,125,0.3), -1px -1px 2px rgba(34,48,67,0.5), inset -5px 5px 10px rgba(34,48,67,0.2), inset 5px -5px 10px rgba(34,48,67,0.2), inset -5px -5px 10px rgba(64,88,125,0.9), inset 5px 5px 13px rgba(34,48,67,0.9)",
             }}
           >
             <span className="font-[Jost] text-[15px] font-medium text-[#FFFFFF]">
               Sign In →
             </span>
           </button>
-        </div>
 
-        {/* ── Footer — DOX logo + gradient text ── */}
-        <div className="flex flex-col items-center gap-[8px] mt-[32px]">
+        {/* Footer — DOX logo + gradient text */}
+        <div className="flex flex-col items-center gap-[8px] mt-[20px]">
           <DoxLogo />
           <p
             className="font-[Jost] text-[14px] font-normal text-center m-0"
@@ -244,7 +268,9 @@ const SignIn = () => {
   );
 };
 
-/** Mail icon — 15×15, stroke rgba(255,255,255,0.65) */
+/**
+ * MailIcon
+ */
 const MailIcon = () => (
   <svg
     width="15"
@@ -270,7 +296,9 @@ const MailIcon = () => (
   </svg>
 );
 
-/** Lock icon — 15×15, stroke rgba(255,255,255,0.65) */
+/**
+ * LockIcon
+ */
 const LockIcon = () => (
   <svg
     width="15"
@@ -297,40 +325,55 @@ const LockIcon = () => (
 );
 
 /**
- * DoxLogo — width:94.88, height:22, stroke #FFFFFF at 2.5px.
- * Matches Figma Group 173 — 5 vector paths forming DOX wordmark.
+ * DoxLogo
  */
 const DoxLogo = () => (
   <svg
-    width="95"
+    width="100%"
     height="22"
     viewBox="0 0 95 22"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     aria-label="DOX logo"
   >
+    {/* Vector 4: D (left stroke) */}
     <path
-      d="M2 2h5.5C12.5 2 16 5.5 16 11s-3.5 9-8.5 9H2V2Z"
-      stroke="#FFFFFF"
-      strokeWidth="2.5"
-      strokeLinejoin="round"
-      fill="none"
-    />
-    <ellipse
-      cx="33"
-      cy="11"
-      rx="8"
-      ry="9"
-      stroke="#FFFFFF"
-      strokeWidth="2.5"
-      fill="none"
-    />
-    <path
-      d="M54 2l14 18M68 2L54 20"
+      d="M 1.25 1.25 C 9.88 1.25, 16.63 6, 16.63 11 C 16.63 16, 9.88 20.75, 1.25 20.75"
       stroke="#FFFFFF"
       strokeWidth="2.5"
       strokeLinecap="round"
-      fill="none"
+    />
+    {/* Vector 5: O left */}
+    <path
+      d="M 16.63 1.25 C 8 1.25, 1.25 6, 1.25 11 C 1.25 16, 8 20.75, 16.63 20.75"
+      stroke="#FFFFFF"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      transform="translate(23.18, 0)"
+    />
+    {/* Vector 6: O right, mirrored */}
+    <path
+      d="M 16.63 1.25 C 8 1.25, 1.25 6, 1.25 11 C 1.25 16, 8 20.75, 16.63 20.75"
+      stroke="#FFFFFF"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      transform="translate(55.19, 0) matrix(-1, 0, 0, 1, 0, 0)"
+    />
+    {/* Vector 7: X left (stroke) */}
+    <path
+      d="M 1.25 1.25 C 9.88 1.25, 16.63 6, 16.63 11 C 16.63 16, 9.88 20.75, 1.25 20.75"
+      stroke="#FFFFFF"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      transform="translate(61.74, 0)"
+    />
+    {/* Vector 8: X right, mirrored */}
+    <path
+      d="M 1.25 1.25 C 9.88 1.25, 16.63 6, 16.63 11 C 16.63 16, 9.88 20.75, 1.25 20.75"
+      stroke="#FFFFFF"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      transform="translate(93.75, 0) matrix(-1, 0, 0, 1, 0, 0)"
     />
   </svg>
 );
