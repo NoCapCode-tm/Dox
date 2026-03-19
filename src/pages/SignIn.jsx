@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 
 /**
- * SignIn page — pixel-perfect match to Figma "Desktop - 6".
- * Layout uses Tailwind arbitrary values from exact Figma inspect values.
- * Page canvas: 1440×1024. Card: 456×456 at top:232 left:492.
+ * SignIn page — matches updated Figma "Desktop - 9" design.
+ * Responsive layout using flexbox. Background is a diagonal blue gradient.
+ * Decorative large text sits behind the form as visual layer.
  */
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -22,89 +22,224 @@ const SignIn = () => {
   };
 
   return (
-<div className="relative min-h-screen w-full bg-[#0A0E14] flex flex-col items-center justify-center">
-      {/* ── Card — 456×456, top:232, left:492, radius:10px ── */}
-      <div className="relative w-[456px] h-[456px] rounded-[10px] bg-[rgba(255,255,255,0.05)]">
-
-        {/* Title — top:22, left:193, width:71, height:33 */}
-        <div className="absolute top-[22px] left-[193px] w-[71px] h-[33px] flex items-center gap-[6px]">
-          <span className="font-[Jost] text-[24px] font-light text-[#FFFFFF] whitespace-nowrap">
-            Sign
-          </span>
-          <span className="font-[Jost] text-[24px] font-light text-[#86B2F4]">
-            In
-          </span>
-        </div>
-
-        {/* Subtitle — top:67, left:130, width:196, height:28 */}
-        <p className="absolute top-[67px] left-[130px] w-[196px] h-[28px] font-[Jost] text-[15px] font-normal text-[rgba(255,255,255,0.65)] text-center leading-[28px] m-0">
-          Access your onboarding portal
-        </p>
-
-        {/* Inner fields box — top:125, left:32, width:392, height:222, radius:16px */}
-        <div className="absolute top-[125px] left-[32px] w-[392px] h-[222px] rounded-[16px] border-[0.8px] border-[rgba(255,255,255,0.1)] bg-[rgba(255,255,255,0.03)] px-[33px] py-[24px] box-border">
-
-          {/* Email label — height:20 */}
-          <div className="h-[20px] flex items-center font-[Jost] text-[14px] font-medium text-[#FFFFFF] mb-[8px]">
-            Email Address
-          </div>
-
-          {/* Email input — width:326, height:45, radius:10px */}
-          <div className="w-[326px] h-[45px] rounded-[10px] bg-[#C9C9C91A] flex items-center gap-[10px] px-[16px] box-border">
-            <MailIcon />
-            <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="your.email@example.com"
-              inputMode="email"
-              autoComplete="email"
-              className="flex-1 bg-transparent border-none outline-none font-[Jost] text-[14px] text-[rgba(255,255,255,0.65)] placeholder:text-[rgba(255,255,255,0.65)] caret-white"
-              aria-label="Email address"
-            />
-          </div>
-
-          {/* Password label — margin-top:20px */}
-          <div className="h-[20px] flex items-center font-[Jost] text-[14px] font-medium text-[#FFFFFF] mt-[20px] mb-[8px]">
-            Password
-          </div>
-
-          {/* Password input — width:326, height:45, radius:10px */}
-          <div className="w-[326px] h-[45px] rounded-[10px] bg-[#C9C9C91A] flex items-center gap-[10px] px-[16px] box-border">
-            <LockIcon />
-            <input
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              type="password"
-              autoComplete="current-password"
-              className="flex-1 bg-transparent border-none outline-none font-[Jost] text-[14px] text-[rgba(255,255,255,0.65)] placeholder:text-[rgba(255,255,255,0.65)] caret-white"
-              aria-label="Password"
-            />
-          </div>
-        </div>
-
-        {/* Sign In button — top:378, left:32, width:392, height:56, radius:14px */}
-        <button
-          type="button"
-          onClick={handleSignIn}
-          disabled={!canSubmit}
-          className="absolute top-[378px] left-[32px] w-[392px] h-[56px] rounded-[14px] bg-[#314460] border border-[#FFFFFF] flex items-center justify-center gap-[4px] transition-opacity disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90"
+    <div
+      className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden"
+      style={{
+        background: "linear-gradient(116.04deg, #0A0E14 18.26%, #112B53 51.38%, #0A0E14 78.49%)",
+      }}
+    >
+      {/* ── Decorative "Atla" text — top, behind form ── */}
+      <div
+        className="absolute top-0 left-0 w-full pointer-events-none select-none overflow-hidden"
+        style={{ height: "180px" }}
+      >
+        {/* Shadow layer */}
+        <div
+          className="absolute"
+          style={{
+            fontFamily: "Jomolhari, serif",
+            fontSize: "clamp(200px, 40vw, 800px)",
+            fontWeight: 400,
+            lineHeight: "27px",
+            color: "rgba(0,0,0,0.46)",
+            filter: "blur(11.1px)",
+            top: "-200px",
+            left: "-46px",
+            whiteSpace: "nowrap",
+          }}
         >
-          <span className="font-[Jost] text-[15px] font-medium text-[#FFFFFF]">
-            Sign In →
-          </span>
-        </button>
+          Atla
+        </div>
+        {/* Gradient layer */}
+        <div
+          className="absolute"
+          style={{
+            fontFamily: "Jomolhari, serif",
+            fontSize: "clamp(200px, 40vw, 800px)",
+            fontWeight: 400,
+            lineHeight: "27px",
+            background: "linear-gradient(95.73deg, #000000 8.34%, #FFFFFF 63.47%, #0A0E14 94.62%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+            top: "-220px",
+            left: "-46px",
+            whiteSpace: "nowrap",
+          }}
+        >
+          Atla
+        </div>
       </div>
 
-      {/* Footer — below card, centered */}
-<div className="flex flex-col items-center gap-[8px] mt-[40px]">
-  <div className="w-[94px] h-[22px]">
-    <DoxLogo />
-  </div>
-  <p className="font-[Jost] text-[14px] font-normal text-[rgba(255,255,255,0.65)] text-center m-0">
-    Powered by Atlas × NoCapCode Infrastructure
-  </p>
-</div>
+      {/* ── Decorative "NCC" text — bottom, behind form ── */}
+      <div
+        className="absolute bottom-0 left-0 w-full pointer-events-none select-none overflow-hidden"
+        style={{ height: "180px" }}
+      >
+        {/* Shadow layer */}
+        <div
+          className="absolute"
+          style={{
+            fontFamily: "Jomolhari, serif",
+            fontSize: "clamp(200px, 40vw, 800px)",
+            fontWeight: 400,
+            lineHeight: "27px",
+            color: "rgba(0,0,0,0.49)",
+            filter: "blur(13.65px)",
+            bottom: "-600px",
+            left: "-192px",
+            whiteSpace: "nowrap",
+          }}
+        >
+          NCC
+        </div>
+        {/* Gradient layer */}
+        <div
+          className="absolute"
+          style={{
+            fontFamily: "Jomolhari, serif",
+            fontSize: "clamp(200px, 40vw, 800px)",
+            fontWeight: 400,
+            lineHeight: "27px",
+            background: "linear-gradient(93.02deg, #6C6C6C 24.98%, #FFFFFF 45.65%, #050505 75.35%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+            bottom: "-600px",
+            left: "-136px",
+            whiteSpace: "nowrap",
+          }}
+        >
+          NCC
+        </div>
+      </div>
+
+      {/* ── Main content — DOX logo + card + footer ── */}
+      <div className="relative z-10 flex flex-col items-center w-full px-4">
+
+        {/* DOX logo — above card */}
+        <div className="mb-[16px]">
+          <DoxLogo />
+        </div>
+
+        {/* ── Card — max-w:456px, radius:10px ── */}
+        <div
+          className="w-full max-w-[456px] rounded-[10px] px-[32px] pt-[22px] pb-[32px] flex flex-col items-center"
+          style={{ backgroundColor: "rgba(255,255,255,0.05)" }}
+        >
+          {/* Title */}
+          <div className="flex items-center gap-[6px] h-[33px]">
+            <span
+              className="font-[Jost] text-[24px] text-[#FFFFFF]"
+              style={{ fontWeight: 200 }}
+            >
+              Sign
+            </span>
+            <span
+              className="font-[Jost] text-[24px] text-[#86B2F4]"
+              style={{ fontWeight: 200 }}
+            >
+              In
+            </span>
+          </div>
+
+          {/* Subtitle */}
+          <p
+            className="mt-[12px] font-[Jost] text-[15px] font-normal text-center leading-[28px] m-0"
+            style={{ color: "rgba(255,255,255,0.65)" }}
+          >
+            Access your onboarding portal
+          </p>
+
+          {/* Inner fields box — radius:16px */}
+          <div
+            className="mt-[30px] w-full max-w-[392px] rounded-[16px] px-[33px] py-[24px] flex flex-col"
+            style={{
+              backgroundColor: "rgba(255,255,255,0.05)",
+              border: "0.8px solid rgba(255,255,255,0.1)",
+            }}
+          >
+            {/* Email label */}
+            <div className="h-[20px] flex items-center font-[Jost] text-[14px] font-medium text-[#FFFFFF]">
+              Email Address
+            </div>
+
+            {/* Email input — height:45, radius:10px */}
+            <div
+              className="mt-[8px] w-full h-[45px] rounded-[10px] flex items-center gap-[10px] px-[16px]"
+              style={{ backgroundColor: "rgba(201,201,201,0.1)" }}
+            >
+              <MailIcon />
+              <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="your.email@example.com"
+                inputMode="email"
+                autoComplete="email"
+                className="flex-1 bg-transparent border-none outline-none font-[Jost] text-[14px] caret-white"
+                style={{ color: "rgba(255,255,255,0.65)" }}
+                aria-label="Email address"
+              />
+            </div>
+
+            {/* Password label */}
+            <div className="mt-[20px] h-[20px] flex items-center font-[Jost] text-[14px] font-medium text-[#FFFFFF]">
+              Password
+            </div>
+
+            {/* Password input — height:45, radius:10px */}
+            <div
+              className="mt-[8px] w-full h-[45px] rounded-[10px] flex items-center gap-[10px] px-[16px]"
+              style={{ backgroundColor: "rgba(201,201,201,0.1)" }}
+            >
+              <LockIcon />
+              <input
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                type="password"
+                autoComplete="current-password"
+                className="flex-1 bg-transparent border-none outline-none font-[Jost] text-[14px] caret-white"
+                style={{ color: "rgba(255,255,255,0.65)" }}
+                aria-label="Password"
+              />
+            </div>
+          </div>
+
+          {/* Sign In button — height:56, radius:14px, with exact Figma box shadow */}
+          <button
+            type="button"
+            onClick={handleSignIn}
+            disabled={!canSubmit}
+            className="mt-[31px] w-full max-w-[392px] h-[56px] rounded-[14px] flex items-center justify-center gap-[4px] transition-opacity disabled:opacity-50 disabled:cursor-not-allowed hover:enabled:opacity-90"
+            style={{
+              backgroundColor: "#314460",
+              border: "1px solid #FFFFFF",
+              boxShadow: "1px 1px 2px rgba(64,88,125,0.3), -1px -1px 2px rgba(34,48,67,0.5), inset -5px 5px 10px rgba(34,48,67,0.2), inset 5px -5px 10px rgba(34,48,67,0.2), inset -5px -5px 10px rgba(64,88,125,0.9), inset 5px 5px 13px rgba(34,48,67,0.9)",
+            }}
+          >
+            <span className="font-[Jost] text-[15px] font-medium text-[#FFFFFF]">
+              Sign In →
+            </span>
+          </button>
+        </div>
+
+        {/* ── Footer — DOX logo + gradient text ── */}
+        <div className="flex flex-col items-center gap-[8px] mt-[32px]">
+          <DoxLogo />
+          <p
+            className="font-[Jost] text-[14px] font-normal text-center m-0"
+            style={{
+              background: "linear-gradient(90deg, #195AC0 0%, #FFFFFF 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
+          >
+            Powered by Atlas × NoCapCode Infrastructure
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
@@ -162,19 +297,18 @@ const LockIcon = () => (
 );
 
 /**
- * DoxLogo — width:94.875, height:22, stroke #FFFFFF at 2.5px.
- * Matches Figma Group 173 DOX wordmark exactly.
+ * DoxLogo — width:94.88, height:22, stroke #FFFFFF at 2.5px.
+ * Matches Figma Group 173 — 5 vector paths forming DOX wordmark.
  */
 const DoxLogo = () => (
   <svg
-    width="94.875"
+    width="95"
     height="22"
     viewBox="0 0 95 22"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     aria-label="DOX logo"
   >
-    {/* D */}
     <path
       d="M2 2h5.5C12.5 2 16 5.5 16 11s-3.5 9-8.5 9H2V2Z"
       stroke="#FFFFFF"
@@ -182,7 +316,6 @@ const DoxLogo = () => (
       strokeLinejoin="round"
       fill="none"
     />
-    {/* O */}
     <ellipse
       cx="33"
       cy="11"
@@ -192,7 +325,6 @@ const DoxLogo = () => (
       strokeWidth="2.5"
       fill="none"
     />
-    {/* X */}
     <path
       d="M54 2l14 18M68 2L54 20"
       stroke="#FFFFFF"
