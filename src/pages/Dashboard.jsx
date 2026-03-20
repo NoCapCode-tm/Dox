@@ -84,7 +84,7 @@ const Dashboard = () => {
       className="relative min-h-screen w-full overflow-x-hidden flex flex-col font-[Jost] text-white"
       style={{
         background:
-          'radial-gradient(98.47% 90.12% at 1.53% 1.5%, #6F8BC3 0.71%, #1D2A43 57.77%, #0B1019 81.6%, #070A10 93.9%)',
+          'radial-gradient(1417px 1021px at 0% 0%, #6F8BC3 0.71%, #1D2A43 45%, #0B1019 70%, #070A10 100%)',
       }}
     >
       {/* Decorative Background grid/wires*/}
