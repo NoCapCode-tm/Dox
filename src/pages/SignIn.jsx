@@ -21,7 +21,7 @@ const SignIn = () => {
 
   return (
     <div
-      className="relative h-screen w-full overflow-hidden flex items-center justify-center"
+className="relative h-screen w-full overflow-hidden flex flex-col items-center justify-center"
       style={{
         background:
           "linear-gradient(116.04deg, #0A0E14 18.26%, #112B53 51.38%, #0A0E14 78.49%)",
@@ -243,7 +243,7 @@ const SignIn = () => {
 
       {/* Footer — DOX logo + gradient text */}
       <div
-        className="absolute bottom-[24px] left-1/2 -translate-x-1/2 flex flex-col items-center gap-[6px]"
+        className="absolute bottom-[3vh] left-1/2 -translate-x-1/2 flex flex-col items-center gap-[6px]"
         style={{ zIndex: 20 }}
       >
         <DoxLogo fill="#FFFFFF" width="95" />
