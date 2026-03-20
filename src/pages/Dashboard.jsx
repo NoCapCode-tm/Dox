@@ -87,17 +87,17 @@ const Dashboard = () => {
           'radial-gradient(98.47% 90.12% at 1.53% 1.5%, #6F8BC3 0.71%, #1D2A43 57.77%, #0B1019 81.6%, #070A10 93.9%)',
       }}
     >
-      {/* Decorative Background grid/wires (Subtle representation) */}
+      {/* Decorative Background grid/wires*/}
       <div 
-        className="absolute inset-0 pointer-events-none z-0 opacity-20"
+        className="absolute inset-0 pointer-events-none z-0 opacity-40"
         style={{
-          backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)',
+          backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
           backgroundSize: '100px 100px'
         }}
       />
 
       {/* Header/Logo area */}
-      <div className="w-full px-8 py-8 flex flex-col relative z-10">
+      <div className="w-full px-8 pt-8 pb-2 flex flex-col relative z-10">
         <DoxLogo width="69" />
         <span className="text-[12px] text-white/65 leading-[20px] mt-2 tracking-wide font-normal">
           Employee Onboarding
@@ -107,7 +107,7 @@ const Dashboard = () => {
       <main className="flex-1 w-full max-w-[1349px] mx-auto px-4 md:px-8 pb-16 flex flex-col items-center relative z-10">
         
         {/* Main Title Section */}
-        <div className="flex flex-col items-center text-center mt-[36px] mb-[66px]">
+        <div className="flex flex-col items-center text-center mt-[12px] mb-[66px]">
           <h1 className="text-[clamp(32px,4vw,48px)] leading-[60px] font-normal tracking-wide">
             Onboarding Information
           </h1>
