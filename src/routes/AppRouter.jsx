@@ -1,9 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import SignIn from '../pages/SignIn.jsx'
 import Dashboard from '../pages/Dashboard.jsx'
-import LegalAgreements from '../pages/LegalAgreements.jsx'
-import CompanyDocs from '../pages/CompanyDocs.jsx'
-import HRReview from '../pages/HRReview.jsx'
+import Completion from '../pages/Completion.jsx'
 import OnboardingLayout from '../pages/onboarding/OnboardingLayout.jsx'
 
 /**
@@ -15,9 +13,7 @@ const AppRouter = () => {
       <Routes>
         <Route path="/" element={<SignIn />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/legal" element={<LegalAgreements />} />
-        <Route path="/company-docs" element={<CompanyDocs />} />
-        <Route path="/hr-review" element={<HRReview />} />
+        <Route path="/completion" element={<Completion />} />
         <Route path="/onboarding/*" element={<OnboardingLayout />} />
         
         <Route path="*" element={<Navigate to="/" replace />} />
