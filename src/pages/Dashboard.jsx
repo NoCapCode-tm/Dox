@@ -124,11 +124,11 @@ const Dashboard = () => {
               key={step.num}
               className="flex flex-col justify-between p-6 rounded-[10px] h-full min-h-[234px]"
               style={{
-  backgroundColor: 'rgba(21, 27, 35, 0.2)',
-  border: '1px solid rgba(255, 255, 255, 0.08)',
-  backdropFilter: 'blur(10px)',
-  boxShadow: 'inset 1px 1px 0px rgba(255, 255, 255, 0.15), inset -1px -1px 0px rgba(255, 255, 255, 0.03)',
-}}
+                backgroundColor: 'rgba(21, 27, 35, 0.2)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                backdropFilter: 'blur(10px)',
+                boxShadow: 'inset 1px 1px 0px rgba(255, 255, 255, 0.15), inset -1px -1px 0px rgba(255, 255, 255, 0.03)',
+              }}
             >
               <div>
                 <div className="text-[16px] text-white font-normal leading-[20px] mb-[30px]">
