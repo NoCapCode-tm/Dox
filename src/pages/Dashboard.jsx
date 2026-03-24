@@ -112,7 +112,7 @@ const Dashboard = () => {
             Onboarding Information
           </h1>
           <p className="mt-[20px] text-[24px] text-[#FFFFFF] max-w-[739px] font-normal leading-[32px]">
-            Complete your onboarding process in 8 simple steps. All information
+            Complete your onboarding process in 7 simple steps. All information
             will be used for preparing your offer letter and agreements.
           </p>
         </div>
