@@ -54,10 +54,10 @@ const Step2EmergencyInfo = () => {
             border: '0.8px solid rgba(255,255,255,0.1)',
           }}
         >
-          <div className="flex items-center gap-0 min-w-max">
-            <NavItem label="Home" icon={<HomeIcon />} active />
+          <div className="flex items-center justify-between w-full">
+            <NavItem label="Home" icon={<HomeIcon />}  />
             <NavItem label="Personal Info" icon={<PersonIcon />} />
-            <NavItem label="Emergency Info" icon={<SirenIcon />} />
+            <NavItem label="Emergency Info" icon={<SirenIcon />}active />
             <NavItem label="Identity" icon={<IdIcon />} />
             <NavItem label="Education" icon={<EducationIcon />} />
             <NavItem label="Profile" icon={<ProfileIcon />} />
@@ -73,7 +73,7 @@ const Step2EmergencyInfo = () => {
 
         {/* Step label */}
         <p
-          className="font-[Jost] font-medium leading-[20px] mb-[10px]"
+          className="font-[Jost] font-medium leading-[20px] mb-[30px]"
           style={{ fontSize: '48px', color: '#314460' }}
         >
           Step 2 of 8
