@@ -74,10 +74,10 @@ background: 'linear-gradient(121.47deg, #0A0E14 49.53%, #161F2C 104.45%)',}}
             border: '0.8px solid rgba(255,255,255,0.1)',
           }}
         >
-          <div className="flex items-center gap-0 min-w-max">
+          <div className="flex items-center justify-between w-full">
             {/* Home — active */}
-            <NavItem label="Home" icon={<HomeIcon />} active href="/" />
-            <NavItem label="Personal Info" icon={<PersonIcon />} />
+            <NavItem label="Home" icon={<HomeIcon />}  />
+            <NavItem label="Personal Info" icon={<PersonIcon />}active />
             <NavItem label="Emergency Info" icon={<SirenIcon />} />
             <NavItem label="Identity" icon={<IdIcon />} />
             <NavItem label="Education" icon={<EducationIcon />} />
@@ -94,7 +94,7 @@ background: 'linear-gradient(121.47deg, #0A0E14 49.53%, #161F2C 104.45%)',}}
 
         {/* Step label */}
         <p
-          className="font-[Jost] font-medium leading-[20px] mb-[10px]"
+          className="font-[Jost] font-medium leading-[20px] mb-[30px]"
           style={{ fontSize: '48px', color: '#314460' }}
         >
           Step 1 of 8
