@@ -41,9 +41,6 @@ const Completion = () => {
 					'conic-gradient(from 118.41deg at 50% 55.97%, #000000 0deg, #254386 0.51deg, #000000 360deg), conic-gradient(from 90deg at 92.22% 50%, #000000 0deg, #2D5EC9 360deg), conic-gradient(from 0deg at 50% 11.18%, #000000 0deg, #1C4BB2 360deg), conic-gradient(from -90deg at 10.69% 50%, #123D7C -0.03deg, #000102 0.04deg, #123D7C 359.97deg, #000102 360.04deg), conic-gradient(from 180deg at 50% 87.88%, #394860 0deg, #101620 360deg)',
 			}}
 		>
-			<div className="absolute inset-0" style={{ backgroundColor: 'rgba(10,20,50,0.45)' }} />
-			<div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(135deg, rgba(49,68,96,0.2), transparent 35%, rgba(12,18,30,0.5) 100%)' }} />
-
 			<div className="relative z-10 w-full px-[35px] pt-[35px]">
 				<DoxLogo width="69" />
 				<span className="block text-[12px] text-white/65 leading-[20px] mt-[6px] font-normal tracking-wide">
@@ -110,7 +107,7 @@ const Completion = () => {
 					<span className="font-[Jost] font-normal text-[16px] leading-[24px] text-white">Go to Dashboard</span>
 				</button>
 
-				<div className="mt-[22px] text-[14px] leading-[20px] font-normal text-white/65">
+				<div className="mt-[22px] text-[16px] leading-[24px] font-normal text-white/65">
 					Questions or need help?{' '}
 					<a href="#" className="text-[#1B6CE5] hover:underline">
 						Contact HR Support
