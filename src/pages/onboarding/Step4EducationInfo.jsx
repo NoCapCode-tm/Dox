@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useOnboardingContext } from '../../context/OnboardingContext';
 
 /**
  * Step4EducationInfo
@@ -10,17 +10,11 @@ import { useNavigate } from 'react-router-dom';
  */
 const Step4EducationInfo = () => {
   const navigate = useNavigate();
-
-  const [form, setForm] = useState({
-    highestQualification: '',
-    courseName: '',
-    universityName: '',
-    graduationYear: '',
-    currentYearSemester: '',
-  });
+  const { formData, updateFormData } = useOnboardingContext();
+  const form = formData.step4;
 
   const handleChange = (field, value) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
+    updateFormData('step4', field, value);
   };
 
   return (
@@ -58,11 +52,11 @@ const Step4EducationInfo = () => {
           }}
         >
           <div className="flex items-center justify-between w-full">
-            <NavItem label="Home" icon={<HomeIcon />}  />
+            <NavItem label="Home" icon={<HomeIcon />} />
             <NavItem label="Personal Info" icon={<PersonIcon />} />
             <NavItem label="Emergency Info" icon={<SirenIcon />} />
             <NavItem label="Identity" icon={<IdIcon />} />
-            <NavItem label="Education" icon={<EducationIcon />} active/>
+            <NavItem label="Education" icon={<EducationIcon />} active />
             <NavItem label="Profile" icon={<ProfileIcon />} />
             <NavItem label="Bank Details" icon={<BankIcon />} />
             <NavItem label="System Info" icon={<SystemIcon />} />

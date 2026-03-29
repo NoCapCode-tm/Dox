@@ -1,29 +1,23 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useOnboardingContext } from '../../context/OnboardingContext';
 
 /**
  * Step3IdentityInfo
  */
 const Step3IdentityInfo = () => {
   const navigate = useNavigate();
-
-  const [form, setForm] = useState({
-    govIdNumber: '',
-    govIdFile: null,
-    secondaryIdNumber: '',
-    secondaryIdFile: null,
-    passportPhoto: null,
-    studentIdFile: null,
-  });
+  const { formData, updateFormData } = useOnboardingContext();
+  const form = formData.step3;
 
   /** Update a text field */
   const handleChange = (field, value) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
+    updateFormData('step3', field, value);
   };
 
   /** Update a file field */
   const handleFile = (field, file) => {
-    setForm((prev) => ({ ...prev, [field]: file }));
+    updateFormData('step3', field, file);
   };
 
   return (
@@ -61,10 +55,10 @@ const Step3IdentityInfo = () => {
           }}
         >
           <div className="flex items-center justify-between w-full">
-            <NavItem label="Home" icon={<HomeIcon />}  />
+            <NavItem label="Home" icon={<HomeIcon />} />
             <NavItem label="Personal Info" icon={<PersonIcon />} />
             <NavItem label="Emergency Info" icon={<SirenIcon />} />
-            <NavItem label="Identity" icon={<IdIcon />} active/>
+            <NavItem label="Identity" icon={<IdIcon />} active />
             <NavItem label="Education" icon={<EducationIcon />} />
             <NavItem label="Profile" icon={<ProfileIcon />} />
             <NavItem label="Bank Details" icon={<BankIcon />} />
