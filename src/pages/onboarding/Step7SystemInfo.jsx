@@ -1,23 +1,16 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useOnboardingContext } from '../../context/OnboardingContext';
 
 /**
  * Step7SystemInfo
  */
 const Step7SystemInfo = () => {
   const navigate = useNavigate();
-
-  const [form, setForm] = useState({
-    laptopAvailability: '',
-    primaryDeviceType: '',
-    operatingSystem: '',
-    internetReliability: '',
-    timeZone: '',
-    weeklyAvailability: '',
-  });
+  const { formData, updateFormData } = useOnboardingContext();
+  const form = formData.step7;
 
   const handleChange = (field, value) =>
-    setForm((prev) => ({ ...prev, [field]: value }));
+    updateFormData('step7', field, value);
 
   return (
     <div

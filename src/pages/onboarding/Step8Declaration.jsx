@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useOnboardingContext } from '../../context/OnboardingContext';
 
 /**
  * Step8Declaration
@@ -12,14 +12,21 @@ import { useNavigate } from 'react-router-dom';
  */
 const Step8Declaration = () => {
     const navigate = useNavigate();
-
-    const [signature, setSignature] = useState('');
-    const [fullName, setFullName] = useState('');
-    const [dateOfSubmission, setDateOfSubmission] = useState('');
-    const [agreed, setAgreed] = useState(false);
+    const { formData, updateFormData } = useOnboardingContext();
+    const step8 = formData.step8;
+    const step1 = formData.step1;
+    const step2 = formData.step2;
+    const step3 = formData.step3;
+    const step4 = formData.step4;
+    const step5 = formData.step5;
+    const step6 = formData.step6;
+    const step7 = formData.step7;
 
     const handleSubmit = () => {
-        if (!agreed) return;
+        if (!step8.agreed) return;
+        if (!step8.completionStartedAt) {
+            updateFormData('step8', 'completionStartedAt', Date.now());
+        }
         navigate('/completion');
     };
 
@@ -103,14 +110,14 @@ const Step8Declaration = () => {
                         icon={<PersonIcon size={20} />}
                         onEdit={() => navigate('/onboarding/step1')}
                         items={[
-                            { label: 'Full Name', value: 'Rahul Kumar Sharma' },
-                            { label: 'Email', value: 'rahul.sharma@example.com' },
-                            { label: 'Phone Number', value: '+91 9876543210' },
-                            { label: 'Date of Birth', value: '1998-05-15' },
-                            { label: 'Gender', value: 'Male' },
-                            { label: 'Permanent Address', value: '123, MG Road, Sector 18, Bangalore, Karnataka - 560001' },
-                            { label: 'Communication Address', value: '123, MG Road, Sector 18, Bangalore, Karnataka - 560001' },
-                            { label: 'Country of citizenship', value: 'India' },
+                            { label: 'Full Name', value: step1.fullName || '—' },
+                            { label: 'Email', value: step1.personalEmail || '—' },
+                            { label: 'Phone Number', value: step1.phoneWithCode || '—' },
+                            { label: 'Date of Birth', value: step1.dateOfBirth || '—' },
+                            { label: 'Gender', value: step1.gender || '—' },
+                            { label: 'Permanent Address', value: step1.permanentAddress || '—' },
+                            { label: 'Communication Address', value: step1.communicationAddress || '—' },
+                            { label: 'Country of citizenship', value: step1.countryOfCitizenship || '—' },
                         ]}
                     />
 
@@ -119,11 +126,11 @@ const Step8Declaration = () => {
                         icon={<SirenIcon size={20} />}
                         onEdit={() => navigate('/onboarding/step2')}
                         items={[
-                            { label: 'Emergency Contact Name', value: 'Priya Sharma' },
-                            { label: 'Emergency Contact Number', value: '+91 9876543211' },
-                            { label: 'Relationship to Employee', value: '—' },
-                            { label: 'Emergency Contact Email', value: 'rahulsharma.dev' },
-                            { label: 'Country of Residence', value: 'US' },
+                            { label: 'Emergency Contact Name', value: step2.contactName || '—' },
+                            { label: 'Emergency Contact Number', value: step2.contactPhone || '—' },
+                            { label: 'Relationship to Employee', value: step2.relationship || '—' },
+                            { label: 'Emergency Contact Email', value: step2.contactEmail || '—' },
+                            { label: 'Country of Residence', value: step2.countryOfResidence || '—' },
                         ]}
                     />
 
@@ -132,12 +139,12 @@ const Step8Declaration = () => {
                         icon={<IdIcon size={20} />}
                         onEdit={() => navigate('/onboarding/step3')}
                         items={[
-                            { label: 'Government-issued ID Number', value: '545463456' },
-                            { label: 'Uploaded Government-issued ID', value: 'Uploaded' },
-                            { label: 'Secondary Government-issued ID', value: '—' },
-                            { label: 'Uploaded Secondar-ID', value: '—' },
-                            { label: 'Passport-size Photograph', value: '—' },
-                            { label: 'Student/University ID', value: '—' },
+                            { label: 'Government-issued ID Number', value: step3.govIdNumber || '—' },
+                            { label: 'Uploaded Government-issued ID', value: step3.govIdFile ? 'Uploaded' : '—' },
+                            { label: 'Secondary Government-issued ID', value: step3.secondaryIdNumber || '—' },
+                            { label: 'Uploaded Secondar-ID', value: step3.secondaryIdFile ? 'Uploaded' : '—' },
+                            { label: 'Passport-size Photograph', value: step3.passportPhoto ? 'Uploaded' : '—' },
+                            { label: 'Student/University ID', value: step3.studentIdFile ? 'Uploaded' : '—' },
                         ]}
                     />
 
@@ -146,11 +153,11 @@ const Step8Declaration = () => {
                         icon={<EducationIcon size={20} />}
                         onEdit={() => navigate('/onboarding/step4')}
                         items={[
-                            { label: 'Highest Qualification', value: 'Graduation' },
-                            { label: 'College / University Name', value: 'College' },
-                            { label: 'Current Year / Semester', value: '—' },
-                            { label: 'Course / Program Name', value: '—' },
-                            { label: 'Expected Graduation Year', value: '2006' },
+                            { label: 'Highest Qualification', value: step4.highestQualification || '—' },
+                            { label: 'College / University Name', value: step4.universityName || '—' },
+                            { label: 'Current Year / Semester', value: step4.currentYearSemester || '—' },
+                            { label: 'Course / Program Name', value: step4.courseName || '—' },
+                            { label: 'Expected Graduation Year', value: step4.graduationYear || '—' },
                         ]}
                     />
 
@@ -159,15 +166,15 @@ const Step8Declaration = () => {
                         icon={<ProfileIcon size={20} />}
                         onEdit={() => navigate('/onboarding/step5')}
                         items={[
-                            { label: 'Areas of Expertise', value: 'Software Development Intern' },
-                            { label: 'Organization / Company Name', value: 'Engineering' },
-                            { label: 'Duration', value: 'Paid' },
-                            { label: 'Portfolio Link', value: 'Hybrid' },
-                            { label: 'LinkedIn Profile URL', value: '2026-02-01' },
-                            { label: 'Technical Skills', value: '2026-07-31' },
-                            { label: 'Role Title', value: '9:00 AM - 6:00 PM' },
-                            { label: 'Key Responsibilities', value: 'Amit Verma' },
-                            { label: 'GitHub Profile', value: 'Amit Verma' },
+                            { label: 'Areas of Expertise', value: step5.areasOfExpertise || '—' },
+                            { label: 'Organization / Company Name', value: step5.orgName || '—' },
+                            { label: 'Duration', value: step5.duration || '—' },
+                            { label: 'Portfolio Link', value: step5.portfolioLink || '—' },
+                            { label: 'LinkedIn Profile URL', value: step5.linkedinUrl || '—' },
+                            { label: 'Technical Skills', value: step5.technicalSkills || '—' },
+                            { label: 'Role Title', value: step5.roleTitle || '—' },
+                            { label: 'Key Responsibilities', value: step5.keyResponsibilities || '—' },
+                            { label: 'GitHub Profile', value: step5.githubProfile || '—' },
                         ]}
                     />
 
@@ -176,15 +183,15 @@ const Step8Declaration = () => {
                         icon={<BankIcon size={20} />}
                         onEdit={() => navigate('/onboarding/step6')}
                         items={[
-                            { label: 'Account Holder Name', value: 'Rahul Kumar Sharma' },
-                            { label: 'Account Number', value: '1234567890123456' },
-                            { label: 'Bank Name', value: 'HDFC Bank' },
-                            { label: 'IFSC Code', value: 'HDFC0001234' },
-                            { label: 'Branch Name', value: 'MG Road, Bangalore' },
-                            { label: 'UPI ID', value: 'rahul@paytm' },
-                            { label: 'IBAN / Account Number', value: '—' },
-                            { label: 'SWIFT Code', value: 'MG Road, Bangalore' },
-                            { label: 'Payment Platform', value: 'rahul@paytm' },
+                            { label: 'Account Holder Name', value: step6.india?.accountHolderName || step6.intl?.accountHolderName || '—' },
+                            { label: 'Account Number', value: step6.india?.accountNumber || step6.intl?.ibanAccountNumber || '—' },
+                            { label: 'Bank Name', value: step6.india?.bankName || step6.intl?.bankName || '—' },
+                            { label: 'IFSC Code', value: step6.india?.ifscCode || '—' },
+                            { label: 'Branch Name', value: step6.india?.branchName || '—' },
+                            { label: 'UPI ID', value: step6.india?.upiId || '—' },
+                            { label: 'IBAN / Account Number', value: step6.intl?.ibanAccountNumber || '—' },
+                            { label: 'SWIFT Code', value: step6.intl?.swiftCode || '—' },
+                            { label: 'Payment Platform', value: step6.intl?.paymentPlatform || '—' },
                         ]}
                     />
 
@@ -193,12 +200,12 @@ const Step8Declaration = () => {
                         icon={<SystemIcon size={20} />}
                         onEdit={() => navigate('/onboarding/step7')}
                         items={[
-                            { label: 'Laptop Availability', value: 'Personal' },
-                            { label: 'Operating System', value: 'macOS Sonoma' },
-                            { label: 'Time Zone', value: '@rahulsharma' },
-                            { label: 'Primary Device Type', value: 'https://rahulsharma.dev' },
-                            { label: 'Internet Reliability', value: 'https://linkedin.com/in/rahulsharma' },
-                            { label: 'Weekly Availability', value: 'https://linkedin.com/in/rahulsharma' },
+                            { label: 'Laptop Availability', value: step7.laptopAvailability || '—' },
+                            { label: 'Operating System', value: step7.operatingSystem || '—' },
+                            { label: 'Time Zone', value: step7.timeZone || '—' },
+                            { label: 'Primary Device Type', value: step7.primaryDeviceType || '—' },
+                            { label: 'Internet Reliability', value: step7.internetReliability || '—' },
+                            { label: 'Weekly Availability', value: step7.weeklyAvailability || '—' },
                         ]}
                     />
                 </div>
@@ -266,7 +273,7 @@ const Step8Declaration = () => {
                                 >
                                     <button
                                         type="button"
-                                        onClick={() => setSignature('signed')}
+                                        onClick={() => updateFormData('step8', 'signature', 'signed')}
                                         className="h-[40px] px-[20px] rounded-[10px] shrink-0 font-[Jost] font-medium text-[16px] text-white"
                                         style={{
                                             backgroundColor: '#314460',
@@ -274,9 +281,9 @@ const Step8Declaration = () => {
                                                 '1px 1px 2px rgba(64,88,125,0.3), -1px -1px 2px rgba(34,48,67,0.5), inset -5px 5px 10px rgba(34,48,67,0.2), inset 5px -5px 10px rgba(34,48,67,0.2), inset -5px -5px 10px rgba(64,88,125,0.9), inset 5px 5px 13px rgba(34,48,67,0.9)',
                                         }}
                                     >
-                                        {signature ? '✓ Signed' : 'Click'}
+                                        {step8.signature ? '✓ Signed' : 'Click'}
                                     </button>
-                                    {signature && (
+                                    {step8.signature && (
                                         <span className="text-[14px] font-[Jost]" style={{ color: '#99A1AF' }}>Signature captured</span>
                                     )}
                                 </div>
@@ -291,14 +298,14 @@ const Step8Declaration = () => {
                                     <span style={{ color: '#FF6467' }} className="text-[14px]">*</span>
                                 </label>
                                 <input
-                                    value={fullName}
-                                    onChange={(e) => setFullName(e.target.value)}
+                                    value={step8.fullName}
+                                    onChange={(e) => updateFormData('step8', 'fullName', e.target.value)}
                                     placeholder="Enter full name as per ID"
                                     className="w-full h-[53px] rounded-[10px] px-[20px] outline-none font-[Jost] text-[16px] caret-white"
                                     style={{
                                         backgroundColor: 'rgba(255,255,255,0.05)',
                                         border: '0.8px solid rgba(255,255,255,0.1)',
-                                        color: fullName ? '#FFFFFF' : '#6A7282',
+                                        color: step8.fullName ? '#FFFFFF' : '#6A7282',
                                     }}
                                 />
                             </div>
@@ -313,13 +320,13 @@ const Step8Declaration = () => {
                                 </label>
                                 <input
                                     type="date"
-                                    value={dateOfSubmission}
-                                    onChange={(e) => setDateOfSubmission(e.target.value)}
+                                    value={step8.dateOfSubmission}
+                                    onChange={(e) => updateFormData('step8', 'dateOfSubmission', e.target.value)}
                                     className="w-full h-[53px] rounded-[10px] px-[20px] outline-none font-[Jost] text-[16px] caret-white"
                                     style={{
                                         backgroundColor: 'rgba(255,255,255,0.05)',
                                         border: '0.8px solid rgba(255,255,255,0.1)',
-                                        color: dateOfSubmission ? '#FFFFFF' : '#6A7282',
+                                        color: step8.dateOfSubmission ? '#FFFFFF' : '#6A7282',
                                         colorScheme: 'dark',
                                     }}
                                 />
@@ -346,12 +353,12 @@ const Step8Declaration = () => {
                         <div
                             className="w-[24px] h-[24px] rounded-[8px] flex items-center justify-center shrink-0"
                             style={{
-                                backgroundColor: agreed ? '#314460' : 'rgba(255,255,255,0.05)',
+                                backgroundColor: step8.agreed ? '#314460' : 'rgba(255,255,255,0.05)',
                                 border: '1px solid rgba(255,255,255,0.1)',
                             }}
-                            onClick={() => setAgreed(!agreed)}
+                            onClick={() => updateFormData('step8', 'agreed', !step8.agreed)}
                         >
-                            {agreed && (
+                            {step8.agreed && (
                                 <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
                                     <path d="M1 5.5L5 9.5L13 1.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
@@ -380,7 +387,7 @@ const Step8Declaration = () => {
                     <button
                         type="button"
                         onClick={handleSubmit}
-                        disabled={!agreed}
+                        disabled={!step8.agreed}
                         className="h-[40px] px-[24px] rounded-[10px] flex items-center gap-[8px] transition-opacity hover:opacity-90 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
                         style={{
                             backgroundColor: '#314460',

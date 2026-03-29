@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useOnboardingContext } from '../../context/OnboardingContext';
 
 /**
  * Step6BankDetails
@@ -8,26 +8,12 @@ import { useNavigate } from 'react-router-dom';
  */
 const Step6BankDetails = () => {
   const navigate = useNavigate();
+  const { formData, updateNestedFormData } = useOnboardingContext();
+  const india = formData.step6.india;
+  const intl = formData.step6.intl;
 
-  const [india, setIndia] = useState({
-    accountHolderName: '',
-    ifscCode: '',
-    accountNumber: '',
-    branchName: '',
-    bankName: '',
-    upiId: '',
-  });
-
-  const [intl, setIntl] = useState({
-    accountHolderName: '',
-    swiftCode: '',
-    ibanAccountNumber: '',
-    paymentPlatform: '',
-    bankName: '',
-  });
-
-  const handleIndia = (field, value) => setIndia((prev) => ({ ...prev, [field]: value }));
-  const handleIntl = (field, value) => setIntl((prev) => ({ ...prev, [field]: value }));
+  const handleIndia = (field, value) => updateNestedFormData('step6', 'india', field, value);
+  const handleIntl = (field, value) => updateNestedFormData('step6', 'intl', field, value);
 
   return (
     <div

@@ -1,23 +1,17 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useOnboardingContext } from '../../context/OnboardingContext';
 
 /**
  * Step2EmergencyInfo
  */
 const Step2EmergencyInfo = () => {
   const navigate = useNavigate();
-
-  const [form, setForm] = useState({
-    contactName: '',
-    contactPhone: '',
-    relationship: '',
-    contactEmail: '',
-    countryOfResidence: '',
-  });
+  const { formData, updateFormData } = useOnboardingContext();
+  const form = formData.step2;
 
   /** Update a single field */
   const handleChange = (field, value) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
+    updateFormData('step2', field, value);
   };
 
   return (
@@ -55,9 +49,9 @@ const Step2EmergencyInfo = () => {
           }}
         >
           <div className="flex items-center justify-between w-full">
-            <NavItem label="Home" icon={<HomeIcon />}  />
+            <NavItem label="Home" icon={<HomeIcon />} />
             <NavItem label="Personal Info" icon={<PersonIcon />} />
-            <NavItem label="Emergency Info" icon={<SirenIcon />}active />
+            <NavItem label="Emergency Info" icon={<SirenIcon />} active />
             <NavItem label="Identity" icon={<IdIcon />} />
             <NavItem label="Education" icon={<EducationIcon />} />
             <NavItem label="Profile" icon={<ProfileIcon />} />
@@ -95,7 +89,7 @@ const Step2EmergencyInfo = () => {
           style={{
             backgroundColor: 'rgba(10,14,20,0.6)',
             border: '0.8px solid rgba(255,255,255,0.1)',
-        }}
+          }}
         >
           {/* 2-column grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[230px] gap-y-[24px]">

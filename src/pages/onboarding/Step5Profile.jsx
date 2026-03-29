@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useOnboardingContext } from '../../context/OnboardingContext';
 
 /**
  * Step5Profile
@@ -10,21 +10,11 @@ import { useNavigate } from 'react-router-dom';
  */
 const Step5Profile = () => {
   const navigate = useNavigate();
-
-  const [form, setForm] = useState({
-    areasOfExpertise: '',
-    technicalSkills: '',
-    orgName: '',
-    roleTitle: '',
-    duration: '',
-    keyResponsibilities: '',
-    portfolioLink: '',
-    githubProfile: '',
-    linkedinUrl: '',
-  });
+  const { formData, updateFormData } = useOnboardingContext();
+  const form = formData.step5;
 
   const handleChange = (field, value) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
+    updateFormData('step5', field, value);
   };
 
   return (
@@ -62,12 +52,12 @@ const Step5Profile = () => {
           }}
         >
           <div className="flex items-center justify-between w-full">
-            <NavItem label="Home" icon={<HomeIcon />}  />
+            <NavItem label="Home" icon={<HomeIcon />} />
             <NavItem label="Personal Info" icon={<PersonIcon />} />
             <NavItem label="Emergency Info" icon={<SirenIcon />} />
             <NavItem label="Identity" icon={<IdIcon />} />
             <NavItem label="Education" icon={<EducationIcon />} />
-            <NavItem label="Profile" icon={<ProfileIcon />} active/>
+            <NavItem label="Profile" icon={<ProfileIcon />} active />
             <NavItem label="Bank Details" icon={<BankIcon />} />
             <NavItem label="System Info" icon={<SystemIcon />} />
             <NavItem label="Declaration" icon={<DeclarationIcon />} />
