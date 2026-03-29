@@ -51,7 +51,7 @@ const Completion = () => {
 				</span>
 			</div>
 
-			<main className="relative z-10 max-w-[1200px] mx-auto px-4 pt-[90px] pb-[80px] flex flex-col items-center text-center">
+			<main className="relative z-10 max-w-[1200px] mx-auto px-4 pt-[70px] pb-[80px] flex flex-col items-center text-center">
 				<div className="mb-[28px] flex justify-center" style={{ position: 'relative' }}>
 					<CheckCircleIcon />
 				</div>
@@ -75,23 +75,31 @@ const Completion = () => {
 				</p>
 
 				<div
-					className="mt-[56px] flex items-end justify-center gap-[2px]"
-					style={{ fontFamily: 'Roboto Flex, Jost, sans-serif', fontWeight: 200, lineHeight: '28px', color: '#FFFFFF' }}
+					className="mt-[56px] mx-auto w-[394px] max-w-full flex items-baseline justify-center gap-[6px] whitespace-nowrap"
+					style={{
+						fontFamily: 'Roboto Flex, Jost, sans-serif',
+						fontWeight: 200,
+						fontStyle: 'normal',
+						lineHeight: '1',
+						textAlign: 'center',
+						color: '#FFFFFF',
+						fontVariationSettings: '"opsz" 48, "wght" 200',
+					}}
 				>
-					<span style={{ fontSize: '64px', lineHeight: '1' }}>{hours}</span>
-					<span style={{ fontSize: '14px', lineHeight: '1', marginBottom: '12px', opacity: 0.8 }}>Hr</span>
-					<span style={{ fontSize: '48px', lineHeight: '1', margin: '0 4px 2px' }}>:</span>
-					<span style={{ fontSize: '64px', lineHeight: '1' }}>{minutes}</span>
-					<span style={{ fontSize: '14px', lineHeight: '1', marginBottom: '12px', opacity: 0.8 }}>Min</span>
-					<span style={{ fontSize: '48px', lineHeight: '1', margin: '0 4px 2px' }}>:</span>
-					<span style={{ fontSize: '64px', lineHeight: '1' }}>{seconds}</span>
-					<span style={{ fontSize: '14px', lineHeight: '1', marginBottom: '12px', opacity: 0.8 }}>Sec</span>
+					<span style={{ fontSize: 'clamp(44px, 4.6vw, 64px)', lineHeight: '1' }}>{hours}</span>
+					<span style={{ fontSize: 'clamp(16px, 1.35vw, 24px)', lineHeight: '1', transform: 'translateY(0px)' }}>Hr</span>
+					<span style={{ fontSize: 'clamp(30px, 2.6vw, 48px)', lineHeight: '1' }}>:</span>
+					<span style={{ fontSize: 'clamp(44px, 4.6vw, 64px)', lineHeight: '1' }}>{minutes}</span>
+					<span style={{ fontSize: 'clamp(16px, 1.35vw, 24px)', lineHeight: '1', transform: 'translateY(0px)' }}>Min</span>
+					<span style={{ fontSize: 'clamp(30px, 2.6vw, 48px)', lineHeight: '1' }}>:</span>
+					<span style={{ fontSize: 'clamp(44px, 4.6vw, 64px)', lineHeight: '1' }}>{seconds}</span>
+					<span style={{ fontSize: 'clamp(16px, 1.35vw, 24px)', lineHeight: '1', transform: 'translateY(0px)' }}>Sec</span>
 				</div>
 
 				<button
 					type="button"
 					onClick={() => navigate('/dashboard')}
-					className="mt-[123px] h-[40px] w-[187px] rounded-[10px] flex items-center justify-center gap-[7px] transition-opacity hover:opacity-90 active:scale-95"
+					className="mt-[90px] h-[40px] w-[187px] rounded-[10px] flex items-center justify-center gap-[7px] transition-opacity hover:opacity-90 active:scale-95"
 					style={{
 						background: '#314460',
 						boxShadow:
