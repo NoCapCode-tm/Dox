@@ -301,20 +301,38 @@ const SelectInput = ({ value, onChange, options, placeholder }) => (
 /**
  * NavItem — single navbar link
  */
-const NavItem = ({ label, icon, active }) => (
-  <div
-    className="flex items-center gap-[8px] px-[16px] py-[10px] rounded-[10px] cursor-pointer whitespace-nowrap"
-    style={{ backgroundColor: active ? '#314460' : 'transparent' }}
-  >
-    <span style={{ color: active ? '#51A2FF' : 'rgba(255,255,255,0.65)' }}>{icon}</span>
-    <span
-      className="font-[Jost] font-normal text-[15px] leading-[20px]"
-      style={{ color: active ? '#51A2FF' : 'rgba(255,255,255,0.65)' }}
+const NavItem = ({ label, icon, active }) => {
+  const navigate = useNavigate();
+  const routeByLabel = {
+    Home: '/dashboard',
+    'Personal Info': '/onboarding/step1',
+    'Emergency Info': '/onboarding/step2',
+    Identity: '/onboarding/step3',
+    Education: '/onboarding/step4',
+    Profile: '/onboarding/step5',
+    'Bank Details': '/onboarding/step6',
+    'System Info': '/onboarding/step7',
+    Declaration: '/onboarding/step8',
+  };
+  const targetPath = routeByLabel[label];
+
+  return (
+    <button
+      type="button"
+      onClick={() => targetPath && !active && navigate(targetPath)}
+      className="flex items-center gap-[8px] px-[16px] py-[10px] rounded-[10px] cursor-pointer whitespace-nowrap"
+      style={{ backgroundColor: active ? '#314460' : 'transparent' }}
     >
-      {label}
-    </span>
-  </div>
-);
+      <span style={{ color: active ? '#51A2FF' : 'rgba(255,255,255,0.65)' }}>{icon}</span>
+      <span
+        className="font-[Jost] font-normal text-[15px] leading-[20px]"
+        style={{ color: active ? '#51A2FF' : 'rgba(255,255,255,0.65)' }}
+      >
+        {label}
+      </span>
+    </button>
+  );
+};
 
 /* Icon Components */
 
