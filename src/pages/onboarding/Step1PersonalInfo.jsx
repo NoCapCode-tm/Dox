@@ -1,40 +1,25 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useOnboardingContext } from '../../context/OnboardingContext';
 
 /**
  * Step1PersonalInfo
  */
 const Step1PersonalInfo = () => {
   const navigate = useNavigate();
-
-  const [form, setForm] = useState({
-    fullName: '',
-    personalEmail: '',
-    phoneWhatsapp: '',
-    dateOfBirth: '',
-    countryOfCitizenship: '',
-    stateProvince: '',
-    city: '',
-    gender: '',
-    permanentAddress: '',
-    communicationAddress: '',
-    sameAsPermanent: false,
-    phoneWithCode: '',
-  });
+  const { formData, updateFormData } = useOnboardingContext();
+  const form = formData.step1;
 
   /** Update a single field */
   const handleChange = (field, value) => {
-    setForm((prev) => {
-      const next = { ...prev, [field]: value };
-      // Auto-fill communication address when checkbox is toggled on
-      if (field === 'sameAsPermanent' && value) {
-        next.communicationAddress = prev.permanentAddress;
-      }
-      if (field === 'permanentAddress' && prev.sameAsPermanent) {
-        next.communicationAddress = value;
-      }
-      return next;
-    });
+    updateFormData('step1', field, value);
+
+    // Auto-fill communication address when checkbox is toggled on
+    if (field === 'sameAsPermanent' && value) {
+      updateFormData('step1', 'communicationAddress', form.permanentAddress);
+    }
+    if (field === 'permanentAddress' && form.sameAsPermanent) {
+      updateFormData('step1', 'communicationAddress', value);
+    }
   };
 
   const handleNext = () => {
@@ -45,17 +30,18 @@ const Step1PersonalInfo = () => {
     <div
       className="relative min-h-screen w-full overflow-x-hidden flex flex-col font-[Jost] text-white"
       style={{
-background: 'linear-gradient(121.47deg, #0A0E14 49.53%, #161F2C 104.45%)',}}
+        background: 'linear-gradient(121.47deg, #0A0E14 49.53%, #161F2C 104.45%)',
+      }}
     >
-    {/* Grid lines */}
-<div
-  className="absolute inset-0 pointer-events-none select-none z-0"
-  style={{
-    backgroundImage:
-      'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)',
-    backgroundSize: '115px 115px',
-  }}
-/>
+      {/* Grid lines */}
+      <div
+        className="absolute inset-0 pointer-events-none select-none z-0"
+        style={{
+          backgroundImage:
+            'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)',
+          backgroundSize: '115px 115px',
+        }}
+      />
 
       {/* ── Header ── */}
       <div className="w-full px-[35px] pt-[35px] pb-0 flex flex-col relative z-10">
@@ -76,8 +62,8 @@ background: 'linear-gradient(121.47deg, #0A0E14 49.53%, #161F2C 104.45%)',}}
         >
           <div className="flex items-center justify-between w-full">
             {/* Home — active */}
-            <NavItem label="Home" icon={<HomeIcon />}  />
-            <NavItem label="Personal Info" icon={<PersonIcon />}active />
+            <NavItem label="Home" icon={<HomeIcon />} />
+            <NavItem label="Personal Info" icon={<PersonIcon />} active />
             <NavItem label="Emergency Info" icon={<SirenIcon />} />
             <NavItem label="Identity" icon={<IdIcon />} />
             <NavItem label="Education" icon={<EducationIcon />} />
@@ -383,24 +369,40 @@ const TextareaInput = ({ value, onChange, placeholder, disabled }) => (
  * @param {React.ReactNode} icon
  * @param {boolean} active
  */
-const NavItem = ({ label, icon, active }) => (
-  <div
-    className="flex items-center gap-[8px] px-[16px] py-[10px] rounded-[10px] cursor-pointer whitespace-nowrap"
-    style={{
-      backgroundColor: active ? '#314460' : 'transparent',
-    }}
-  >
-    <span style={{ color: active ? '#51A2FF' : 'rgba(255,255,255,0.65)' }}>
-      {icon}
-    </span>
-    <span
-      className="font-[Jost] font-normal text-[15px] leading-[20px]"
-      style={{ color: active ? '#51A2FF' : 'rgba(255,255,255,0.65)' }}
+const NavItem = ({ label, icon, active }) => {
+  const navigate = useNavigate();
+  const routeByLabel = {
+    Home: '/dashboard',
+    'Personal Info': '/onboarding/step1',
+    'Emergency Info': '/onboarding/step2',
+    Identity: '/onboarding/step3',
+    Education: '/onboarding/step4',
+    Profile: '/onboarding/step5',
+    'Bank Details': '/onboarding/step6',
+    'System Info': '/onboarding/step7',
+    Declaration: '/onboarding/step8',
+  };
+  const targetPath = routeByLabel[label];
+
+  return (
+    <button
+      type="button"
+      onClick={() => targetPath && !active && navigate(targetPath)}
+      className="flex items-center gap-[8px] px-[16px] py-[10px] rounded-[10px] cursor-pointer whitespace-nowrap"
+      style={{ backgroundColor: active ? '#314460' : 'transparent' }}
     >
-      {label}
-    </span>
-  </div>
-);
+      <span style={{ color: active ? '#51A2FF' : 'rgba(255,255,255,0.65)' }}>
+        {icon}
+      </span>
+      <span
+        className="font-[Jost] font-normal text-[15px] leading-[20px]"
+        style={{ color: active ? '#51A2FF' : 'rgba(255,255,255,0.65)' }}
+      >
+        {label}
+      </span>
+    </button>
+  );
+};
 
 /* ── Icon Components ── */
 

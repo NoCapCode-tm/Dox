@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useOnboardingContext } from '../../context/OnboardingContext';
 
 /**
  * Step4EducationInfo
@@ -10,17 +10,11 @@ import { useNavigate } from 'react-router-dom';
  */
 const Step4EducationInfo = () => {
   const navigate = useNavigate();
-
-  const [form, setForm] = useState({
-    highestQualification: '',
-    courseName: '',
-    universityName: '',
-    graduationYear: '',
-    currentYearSemester: '',
-  });
+  const { formData, updateFormData } = useOnboardingContext();
+  const form = formData.step4;
 
   const handleChange = (field, value) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
+    updateFormData('step4', field, value);
   };
 
   return (
@@ -58,11 +52,11 @@ const Step4EducationInfo = () => {
           }}
         >
           <div className="flex items-center justify-between w-full">
-            <NavItem label="Home" icon={<HomeIcon />}  />
+            <NavItem label="Home" icon={<HomeIcon />} />
             <NavItem label="Personal Info" icon={<PersonIcon />} />
             <NavItem label="Emergency Info" icon={<SirenIcon />} />
             <NavItem label="Identity" icon={<IdIcon />} />
-            <NavItem label="Education" icon={<EducationIcon />} active/>
+            <NavItem label="Education" icon={<EducationIcon />} active />
             <NavItem label="Profile" icon={<ProfileIcon />} />
             <NavItem label="Bank Details" icon={<BankIcon />} />
             <NavItem label="System Info" icon={<SystemIcon />} />
@@ -255,20 +249,38 @@ const SelectInput = ({ value, onChange, options, placeholder }) => (
 /**
  * NavItem — single navbar link
  */
-const NavItem = ({ label, icon, active }) => (
-  <div
-    className="flex items-center gap-[8px] px-[16px] py-[10px] rounded-[10px] cursor-pointer whitespace-nowrap"
-    style={{ backgroundColor: active ? '#314460' : 'transparent' }}
-  >
-    <span style={{ color: active ? '#51A2FF' : 'rgba(255,255,255,0.65)' }}>{icon}</span>
-    <span
-      className="font-[Jost] font-normal text-[15px] leading-[20px]"
-      style={{ color: active ? '#51A2FF' : 'rgba(255,255,255,0.65)' }}
+const NavItem = ({ label, icon, active }) => {
+  const navigate = useNavigate();
+  const routeByLabel = {
+    Home: '/dashboard',
+    'Personal Info': '/onboarding/step1',
+    'Emergency Info': '/onboarding/step2',
+    Identity: '/onboarding/step3',
+    Education: '/onboarding/step4',
+    Profile: '/onboarding/step5',
+    'Bank Details': '/onboarding/step6',
+    'System Info': '/onboarding/step7',
+    Declaration: '/onboarding/step8',
+  };
+  const targetPath = routeByLabel[label];
+
+  return (
+    <button
+      type="button"
+      onClick={() => targetPath && !active && navigate(targetPath)}
+      className="flex items-center gap-[8px] px-[16px] py-[10px] rounded-[10px] cursor-pointer whitespace-nowrap"
+      style={{ backgroundColor: active ? '#314460' : 'transparent' }}
     >
-      {label}
-    </span>
-  </div>
-);
+      <span style={{ color: active ? '#51A2FF' : 'rgba(255,255,255,0.65)' }}>{icon}</span>
+      <span
+        className="font-[Jost] font-normal text-[15px] leading-[20px]"
+        style={{ color: active ? '#51A2FF' : 'rgba(255,255,255,0.65)' }}
+      >
+        {label}
+      </span>
+    </button>
+  );
+};
 
 /* Icon Components */
 
