@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getCurrentUser } from '../api/employeeApi';
 
 /**
  * Dashboard
@@ -7,6 +8,24 @@ import { useNavigate } from 'react-router-dom';
  */
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [userName, setUserName] = useState('');
+  const [authError, setAuthError] = useState('');
+
+  useEffect(() => {
+    const loadCurrentUser = async () => {
+      try {
+        setAuthError('');
+        const response = await getCurrentUser();
+        const name = response?.data?.name || response?.message?.name || '';
+        setUserName(name);
+      } catch (error) {
+        setAuthError(error?.message || 'Session expired. Please sign in again.');
+        navigate('/', { replace: true });
+      }
+    };
+
+    loadCurrentUser();
+  }, [navigate]);
 
   const handleStartStep = (stepNumber) => {
     // Navigates to the respective step in the onboarding flow
@@ -111,10 +130,20 @@ const Dashboard = () => {
           <h1 className="text-[clamp(32px,4vw,48px)] leading-[60px] font-normal tracking-wide">
             Onboarding Information
           </h1>
+          {userName ? (
+            <p className="mt-[6px] text-[18px] text-white/80 font-normal leading-[26px]">
+              Welcome, {userName}
+            </p>
+          ) : null}
           <p className="mt-[20px] text-[24px] text-[#FFFFFF] max-w-[739px] font-normal leading-[32px]">
             Complete your onboarding process in 7 simple steps. All information
             will be used for preparing your offer letter and agreements.
           </p>
+          {authError ? (
+            <p className="mt-[10px] text-[14px] text-[#FF9EA0] font-normal leading-[22px]">
+              {authError}
+            </p>
+          ) : null}
         </div>
 
         {/* 8 Step Cards Grid */}
