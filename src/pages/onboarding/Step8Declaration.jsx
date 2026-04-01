@@ -1,5 +1,8 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOnboardingContext } from '../../context/OnboardingContext';
+import { saveStep8Declaration } from '../../api/employeeApi';
+import Loader from '../../components/ui/Loader';
 
 /**
  * Step8Declaration
@@ -13,6 +16,8 @@ import { useOnboardingContext } from '../../context/OnboardingContext';
 const Step8Declaration = () => {
     const navigate = useNavigate();
     const { formData, updateFormData } = useOnboardingContext();
+    const [isSavingStep, setIsSavingStep] = useState(false);
+    const [stepError, setStepError] = useState('');
     const step8 = formData.step8;
     const step1 = formData.step1;
     const step2 = formData.step2;
@@ -22,12 +27,21 @@ const Step8Declaration = () => {
     const step6 = formData.step6;
     const step7 = formData.step7;
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!step8.agreed) return;
-        if (!step8.completionStartedAt) {
-            updateFormData('step8', 'completionStartedAt', Date.now());
+        try {
+            setIsSavingStep(true);
+            setStepError('');
+            await saveStep8Declaration(step8);
+            if (!step8.completionStartedAt) {
+                updateFormData('step8', 'completionStartedAt', Date.now());
+            }
+            navigate('/completion');
+        } catch (error) {
+            setStepError(error?.message || 'Unable to save Step 8. Please try again.');
+        } finally {
+            setIsSavingStep(false);
         }
-        navigate('/completion');
     };
 
     return (
@@ -37,6 +51,7 @@ const Step8Declaration = () => {
                 background: 'linear-gradient(121.47deg, #0A0E14 49.53%, #161F2C 104.45%)',
             }}
         >
+            {isSavingStep && <Loader fullScreen={true} message="Saving and completing onboarding..." />}
             {/* Grid lines */}
             <div
                 className="absolute inset-0 pointer-events-none select-none z-0"
@@ -387,7 +402,7 @@ const Step8Declaration = () => {
                     <button
                         type="button"
                         onClick={handleSubmit}
-                        disabled={!step8.agreed}
+                        disabled={!step8.agreed || isSavingStep}
                         className="h-[36px] sm:h-[40px] flex-1 sm:flex-none min-w-0 px-[12px] sm:px-[24px] rounded-[10px] flex items-center justify-center gap-[8px] transition-opacity hover:opacity-90 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
                         style={{
                             backgroundColor: '#314460',
@@ -395,10 +410,14 @@ const Step8Declaration = () => {
                                 '1px 1px 2px rgba(64,88,125,0.3), -1px -1px 2px rgba(34,48,67,0.5), inset -5px 5px 10px rgba(34,48,67,0.2), inset 5px -5px 10px rgba(34,48,67,0.2), inset -5px -5px 10px rgba(64,88,125,0.9), inset 5px 5px 13px rgba(34,48,67,0.9)',
                         }}
                     >
-                        <span className="text-[13px] sm:text-[16px] font-medium text-white leading-[18px] sm:leading-[24px] text-center">Next</span>
+                        <span className="text-[13px] sm:text-[16px] font-medium text-white leading-[18px] sm:leading-[24px] text-center">{isSavingStep ? 'Saving...' : 'Next'}</span>
                         <ArrowRightIcon />
                     </button>
                 </div>
+
+                {stepError ? (
+                    <p className="mt-[12px] text-[14px] text-[#FF9EA0]">{stepError}</p>
+                ) : null}
 
             </main>
         </div>
