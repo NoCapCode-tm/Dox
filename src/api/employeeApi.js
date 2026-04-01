@@ -102,3 +102,20 @@ export const saveStep3IdentityInfo = async (step3Data) => {
 
     return parseResponse(response);
 };
+
+export const saveStep4EducationInfo = async (step4Data) => {
+    const body = new FormData();
+    body.append("highestqualification", step4Data.highestQualification || "");
+    body.append("collegename", step4Data.universityName || "");
+    body.append("coursename", step4Data.courseName || "");
+    body.append("year", step4Data.currentYearSemester || "");
+    body.append("expectedgraduation", step4Data.graduationYear || "");
+
+    const response = await fetch(`${API_BASE_URL}/employee/onboarding/4`, {
+        method: "PATCH",
+        credentials: "include",
+        body,
+    });
+
+    return parseResponse(response);
+};
