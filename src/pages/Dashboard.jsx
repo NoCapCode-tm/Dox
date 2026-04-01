@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getCurrentUser } from '../api/employeeApi';
+import Loader from '../components/ui/Loader';
 
 /**
  * Dashboard
@@ -7,6 +9,34 @@ import { useNavigate } from 'react-router-dom';
  */
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [userName, setUserName] = useState('');
+  const [authError, setAuthError] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const loadCurrentUser = async () => {
+      try {
+        setIsLoading(true);
+        setAuthError('');
+
+        const response = await getCurrentUser();
+        const name = response?.data?.name || response?.message?.name || '';
+        setUserName(name);
+      } catch (error) {
+        setAuthError(error?.message || 'Session expired. Please sign in again.');
+        navigate('/', { replace: true });
+      } finally {
+        setIsLoading(false);
+
+        // test loader
+        // setTimeout(() => {
+        //   setIsLoading(false);
+        // }, 3000);
+      }
+    };
+
+    loadCurrentUser();
+  }, [navigate]);
 
   const handleStartStep = (stepNumber) => {
     // Navigates to the respective step in the onboarding flow
@@ -87,6 +117,7 @@ const Dashboard = () => {
           'radial-gradient(1400px 1000px at 0% 0%, #5B7AB5 0%, #1D2A43 45%, #0B1019 75%, #040608 100%)',
       }}
     >
+      {isLoading && <Loader fullScreen={true} message="Loading dashboard..." />}
       {/* Decorative Background grid/wires*/}
       <div
         className="absolute inset-0 pointer-events-none z-0 opacity-80"
@@ -111,10 +142,20 @@ const Dashboard = () => {
           <h1 className="text-[clamp(32px,4vw,48px)] leading-[60px] font-normal tracking-wide">
             Onboarding Information
           </h1>
+          {userName ? (
+            <p className="mt-[6px] text-[18px] text-white/80 font-normal leading-[26px]">
+              Welcome, {userName}
+            </p>
+          ) : null}
           <p className="mt-[20px] text-[24px] text-[#FFFFFF] max-w-[739px] font-normal leading-[32px]">
             Complete your onboarding process in 7 simple steps. All information
             will be used for preparing your offer letter and agreements.
           </p>
+          {authError ? (
+            <p className="mt-[10px] text-[14px] text-[#FF9EA0] font-normal leading-[22px]">
+              {authError}
+            </p>
+          ) : null}
         </div>
 
         {/* 8 Step Cards Grid */}

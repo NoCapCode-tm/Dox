@@ -233,19 +233,20 @@ const Step1PersonalInfo = () => {
         </div>
 
         {/* ── Next Button ── */}
-        <div className="flex justify-end mt-[32px]">
+        <div className="flex mt-[32px]">
           <button
             type="button"
             onClick={handleNext}
-            className="h-[40px] px-[24px] rounded-[10px] flex items-center gap-[8px] transition-opacity hover:opacity-90 active:scale-95"
+            className="h-[36px] sm:h-[40px] w-full sm:w-auto px-[12px] sm:px-[24px] rounded-[10px] flex items-center justify-center gap-[8px] transition-opacity hover:opacity-90 active:scale-95"
             style={{
               backgroundColor: '#314460',
               boxShadow:
                 '1px 1px 2px rgba(64,88,125,0.3), -1px -1px 2px rgba(34,48,67,0.5), inset -5px 5px 10px rgba(34,48,67,0.2), inset 5px -5px 10px rgba(34,48,67,0.2), inset -5px -5px 10px rgba(64,88,125,0.9), inset 5px 5px 13px rgba(34,48,67,0.9)',
             }}
           >
-            <span className="text-[16px] font-medium text-white leading-[24px]">
-              Next: Emergency Contact Information
+            <span className="text-[13px] sm:text-[16px] font-medium text-white leading-[18px] sm:leading-[24px] text-center">
+              <span className="sm:hidden">Next</span>
+              <span className="hidden sm:inline">Next: Emergency Contact Information</span>
             </span>
             <ArrowRightIcon />
           </button>

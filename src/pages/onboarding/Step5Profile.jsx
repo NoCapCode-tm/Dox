@@ -198,28 +198,31 @@ const Step5Profile = () => {
         </div>
 
         {/* Navigation Buttons */}
-        <div className="flex justify-between items-center mt-[32px]">
+        <div className="flex items-center sm:justify-between gap-[8px] sm:gap-[12px] mt-[32px]">
           <button
             type="button"
             onClick={() => navigate('/onboarding/step4')}
-            className="h-[40px] px-[20px] rounded-[10px] flex items-center gap-[8px] transition-opacity hover:opacity-90 active:scale-95"
+            className="h-[36px] sm:h-[40px] flex-1 sm:flex-none min-w-0 px-[12px] sm:px-[20px] rounded-[10px] flex items-center justify-center gap-[8px] transition-opacity hover:opacity-90 active:scale-95"
             style={{ backgroundColor: 'rgba(255,255,255,0.3)' }}
           >
             <ArrowLeftIcon />
-            <span className="text-[16px] font-normal text-white leading-[24px]">Previous</span>
+            <span className="text-[13px] sm:text-[16px] font-normal text-white leading-[18px] sm:leading-[24px] text-center">Previous</span>
           </button>
 
           <button
             type="button"
             onClick={() => navigate('/onboarding/step6')}
-            className="h-[40px] px-[24px] rounded-[10px] flex items-center gap-[8px] transition-opacity hover:opacity-90 active:scale-95"
+            className="h-[36px] sm:h-[40px] flex-1 sm:flex-none min-w-0 px-[12px] sm:px-[24px] rounded-[10px] flex items-center justify-center gap-[8px] transition-opacity hover:opacity-90 active:scale-95"
             style={{
               backgroundColor: '#314460',
               boxShadow:
                 '1px 1px 2px rgba(64,88,125,0.3), -1px -1px 2px rgba(34,48,67,0.5), inset -5px 5px 10px rgba(34,48,67,0.2), inset 5px -5px 10px rgba(34,48,67,0.2), inset -5px -5px 10px rgba(64,88,125,0.9), inset 5px 5px 13px rgba(34,48,67,0.9)',
             }}
           >
-            <span className="text-[16px] font-medium text-white leading-[24px]">Next: Financial Details</span>
+            <span className="text-[13px] sm:text-[16px] font-medium text-white leading-[18px] sm:leading-[24px] text-center">
+              <span className="sm:hidden">Next</span>
+              <span className="hidden sm:inline">Next: Financial Details</span>
+            </span>
             <ArrowRightIcon />
           </button>
         </div>

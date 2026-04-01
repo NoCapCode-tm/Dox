@@ -1,11 +1,17 @@
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { loginEmployee } from "../api/employeeApi";
+import Loader from "../components/ui/Loader";
 
 /**
  * SignIn page
  */
 const SignIn = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   /** Only enable button when both fields have content */
   const canSubmit = useMemo(
@@ -13,20 +19,33 @@ const SignIn = () => {
     [email, password]
   );
 
-  const handleSignIn = () => {
-    if (!canSubmit) return;
-    // Replace with real auth call when backend is wired up
-    console.log("Sign in with", email.trim());
+  const handleSignIn = async () => {
+    if (!canSubmit || isLoading) return;
+
+    try {
+      setIsLoading(true);
+      
+      setErrorMessage("");
+      
+      // Backend expects "userid", map the current email field value.
+      await loginEmployee({ userid: email.trim(), password });
+      navigate("/dashboard");
+    } catch (error) {
+      setErrorMessage(error?.message || "Sign in failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div
-className="relative h-screen w-full overflow-hidden flex flex-col items-center justify-center"
+      className="relative h-screen w-full overflow-hidden flex flex-col items-center justify-center"
       style={{
         background:
           "linear-gradient(116.04deg, #0A0E14 18.26%, #112B53 51.38%, #0A0E14 78.49%)",
       }}
     >
+      {isLoading && <Loader fullScreen={true} message="Signing in..." />}
       {/* Group 260 — "Atla" decorative text*/}
       <div
         className="absolute pointer-events-none select-none w-full"
@@ -130,7 +149,7 @@ className="relative h-screen w-full overflow-hidden flex flex-col items-center j
 
       {/* ── Main Content Wrapper ── */}
       <div
-       className="relative flex flex-col items-center w-full px-4 mt-[1vh]"
+        className="relative flex flex-col items-center w-full px-4 mt-[1vh]"
         style={{ maxWidth: "471px", zIndex: 20 }}
       >
         {/* Union — DOX logo pill above card */}
@@ -210,6 +229,11 @@ className="relative h-screen w-full overflow-hidden flex flex-col items-center j
             <input
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && canSubmit && !isLoading) {
+                  handleSignIn();
+                }
+              }}
               placeholder="Enter your password"
               type="password"
               autoComplete="current-password"
@@ -224,7 +248,7 @@ className="relative h-screen w-full overflow-hidden flex flex-col items-center j
         <button
           type="button"
           onClick={handleSignIn}
-          disabled={!canSubmit}
+          disabled={!canSubmit || isLoading}
           className="mt-[16px] w-full max-w-[392px] h-[56px] rounded-[14px] flex items-center justify-center gap-[4px] transition-opacity disabled:opacity-50 disabled:cursor-not-allowed hover:enabled:opacity-90"
           style={{
             position: "relative",
@@ -235,9 +259,15 @@ className="relative h-screen w-full overflow-hidden flex flex-col items-center j
           }}
         >
           <span className="font-[Jost] text-[15px] font-medium text-[#FFFFFF]">
-            Sign In →
+            {isLoading ? "Signing In..." : "Sign In →"}
           </span>
         </button>
+
+        {errorMessage ? (
+          <p className="mt-[10px] text-[13px] text-[#FF9EA0] text-center max-w-[392px]">
+            {errorMessage}
+          </p>
+        ) : null}
 
       </div>
 
@@ -335,42 +365,42 @@ const DoxLogo = ({ width = "95", useFilter = false, fill = "#FFFFFF" }) => (
     {useFilter && (
       <defs>
         <filter id="dox_filter" x="0" y="0" width="338.062" height="95" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-          <feFlood floodOpacity="0" result="BackgroundImageFix"/>
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-          <feOffset dx="-1" dy="-1"/>
-          <feGaussianBlur stdDeviation="1"/>
-          <feColorMatrix type="matrix" values="0 0 0 0 0.0313726 0 0 0 0 0.0705882 0 0 0 0 0.12549 0 0 0 0.5 0"/>
-          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-          <feOffset dx="1" dy="1"/>
-          <feGaussianBlur stdDeviation="1"/>
-          <feColorMatrix type="matrix" values="0 0 0 0 0.133333 0 0 0 0 0.27451 0 0 0 0 0.494118 0 0 0 0.3 0"/>
-          <feBlend mode="normal" in2="effect1_dropShadow" result="effect2_dropShadow"/>
-          <feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow" result="shape"/>
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-          <feOffset dx="3" dy="3"/>
-          <feGaussianBlur stdDeviation="4"/>
-          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-          <feColorMatrix type="matrix" values="0 0 0 0 0.0313726 0 0 0 0 0.0705882 0 0 0 0 0.12549 0 0 0 0.9 0"/>
-          <feBlend mode="normal" in2="shape" result="effect3_innerShadow"/>
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-          <feOffset dx="-3" dy="-3"/>
-          <feGaussianBlur stdDeviation="3"/>
-          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-          <feColorMatrix type="matrix" values="0 0 0 0 0.133333 0 0 0 0 0.27451 0 0 0 0 0.494118 0 0 0 0.9 0"/>
-          <feBlend mode="normal" in2="effect3_innerShadow" result="effect4_innerShadow"/>
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-          <feOffset dx="3" dy="-3"/>
-          <feGaussianBlur stdDeviation="3"/>
-          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-          <feColorMatrix type="matrix" values="0 0 0 0 0.0313726 0 0 0 0 0.0705882 0 0 0 0 0.12549 0 0 0 0.2 0"/>
-          <feBlend mode="normal" in2="effect4_innerShadow" result="effect5_innerShadow"/>
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-          <feOffset dx="-3" dy="3"/>
-          <feGaussianBlur stdDeviation="3"/>
-          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-          <feColorMatrix type="matrix" values="0 0 0 0 0.0313726 0 0 0 0 0.0705882 0 0 0 0 0.12549 0 0 0 0.2 0"/>
-          <feBlend mode="normal" in2="effect5_innerShadow" result="effect6_innerShadow"/>
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feOffset dx="-1" dy="-1" />
+          <feGaussianBlur stdDeviation="1" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.0313726 0 0 0 0 0.0705882 0 0 0 0 0.12549 0 0 0 0.5 0" />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feOffset dx="1" dy="1" />
+          <feGaussianBlur stdDeviation="1" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.133333 0 0 0 0 0.27451 0 0 0 0 0.494118 0 0 0 0.3 0" />
+          <feBlend mode="normal" in2="effect1_dropShadow" result="effect2_dropShadow" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow" result="shape" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feOffset dx="3" dy="3" />
+          <feGaussianBlur stdDeviation="4" />
+          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.0313726 0 0 0 0 0.0705882 0 0 0 0 0.12549 0 0 0 0.9 0" />
+          <feBlend mode="normal" in2="shape" result="effect3_innerShadow" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feOffset dx="-3" dy="-3" />
+          <feGaussianBlur stdDeviation="3" />
+          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.133333 0 0 0 0 0.27451 0 0 0 0 0.494118 0 0 0 0.9 0" />
+          <feBlend mode="normal" in2="effect3_innerShadow" result="effect4_innerShadow" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feOffset dx="3" dy="-3" />
+          <feGaussianBlur stdDeviation="3" />
+          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.0313726 0 0 0 0 0.0705882 0 0 0 0 0.12549 0 0 0 0.2 0" />
+          <feBlend mode="normal" in2="effect4_innerShadow" result="effect5_innerShadow" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feOffset dx="-3" dy="3" />
+          <feGaussianBlur stdDeviation="3" />
+          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.0313726 0 0 0 0 0.0705882 0 0 0 0 0.12549 0 0 0 0.2 0" />
+          <feBlend mode="normal" in2="effect5_innerShadow" result="effect6_innerShadow" />
         </filter>
       </defs>
     )}
