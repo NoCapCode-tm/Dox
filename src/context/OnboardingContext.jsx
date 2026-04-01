@@ -147,12 +147,23 @@ export const OnboardingProvider = ({ children }) => {
         }));
     };
 
+    const updateStepData = (step, values) => {
+        setFormData((prev) => ({
+            ...prev,
+            [step]: {
+                ...prev[step],
+                ...values,
+            },
+        }));
+    };
+
     return (
         <OnboardingContext.Provider
             value={{
                 formData,
                 updateFormData,
                 updateNestedFormData,
+                updateStepData,
             }}
         >
             {children}
