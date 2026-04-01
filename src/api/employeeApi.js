@@ -70,3 +70,35 @@ export const saveStep2EmergencyInfo = async (step2Data) => {
 
     return parseResponse(response);
 };
+
+export const saveStep3IdentityInfo = async (step3Data) => {
+    const body = new FormData();
+    body.append("govid1", step3Data.govIdNumber || "");
+    body.append("govid2", step3Data.secondaryIdNumber || "");
+
+    if (step3Data.govIdFile) {
+        body.append("govid1image", step3Data.govIdFile);
+        body.append("aadharimage", step3Data.govIdFile);
+    }
+
+    if (step3Data.secondaryIdFile) {
+        body.append("govid2image", step3Data.secondaryIdFile);
+        body.append("panimage", step3Data.secondaryIdFile);
+    }
+
+    if (step3Data.passportPhoto) {
+        body.append("passportimage", step3Data.passportPhoto);
+    }
+
+    if (step3Data.studentIdFile) {
+        body.append("collegeid", step3Data.studentIdFile);
+    }
+
+    const response = await fetch(`${API_BASE_URL}/employee/onboarding/3`, {
+        method: "PATCH",
+        credentials: "include",
+        body,
+    });
+
+    return parseResponse(response);
+};
