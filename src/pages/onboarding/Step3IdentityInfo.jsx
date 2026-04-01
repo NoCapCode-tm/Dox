@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOnboardingContext } from '../../context/OnboardingContext';
-import { saveStep3IdentityInfo } from '../../api/employeeApi';
+import { saveStep3IdentityInfo, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
 
 /**
@@ -13,6 +13,23 @@ const Step3IdentityInfo = () => {
   const form = formData.step3;
   const [isSavingStep, setIsSavingStep] = useState(false);
   const [stepError, setStepError] = useState('');
+
+  /** Prefill form data from database on component mount */
+  useEffect(() => {
+    const prefillFormData = async () => {
+      try {
+        const userData = await getCurrentUser();
+        if (userData?.message) {
+          const data = userData.message;
+          updateFormData('step3', 'govIdNumber', data.documents?.govid1?.number || '');
+          updateFormData('step3', 'secondaryIdNumber', data.documents?.govid2?.number || '');
+        }
+      } catch (error) {
+        console.warn('Could not prefill Step 3 data:', error?.message);
+      }
+    };
+    prefillFormData();
+  }, []);
 
   /** Update a text field */
   const handleChange = (field, value) => {

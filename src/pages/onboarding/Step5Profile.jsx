@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOnboardingContext } from '../../context/OnboardingContext';
-import { saveStep5ProfileInfo } from '../../api/employeeApi';
+import { saveStep5ProfileInfo, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
 
 /**
@@ -17,6 +17,26 @@ const Step5Profile = () => {
   const form = formData.step5;
   const [isSavingStep, setIsSavingStep] = useState(false);
   const [stepError, setStepError] = useState('');
+
+  /** Prefill form data from database on component mount */
+  useEffect(() => {
+    const prefillFormData = async () => {
+      try {
+        const userData = await getCurrentUser();
+        if (userData?.message) {
+          const data = userData.message;
+          updateFormData('step5', 'githubProfile', data.professionaldetails?.github || '');
+          updateFormData('step5', 'portfolioLink', data.professionaldetails?.portfolio || '');
+          updateFormData('step5', 'linkedinUrl', data.professionaldetails?.Linkedin || '');
+          updateFormData('step5', 'areasOfExpertise', Array.isArray(data.professionaldetails?.expertise) ? data.professionaldetails.expertise.join(', ') : '');
+          updateFormData('step5', 'technicalSkills', Array.isArray(data.professionaldetails?.technical) ? data.professionaldetails.technical.join(', ') : '');
+        }
+      } catch (error) {
+        console.warn('Could not prefill Step 5 data:', error?.message);
+      }
+    };
+    prefillFormData();
+  }, []);
 
   const handleChange = (field, value) => {
     updateFormData('step5', field, value);

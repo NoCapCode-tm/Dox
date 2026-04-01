@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOnboardingContext } from '../../context/OnboardingContext';
-import { saveStep6BankDetails } from '../../api/employeeApi';
+import { saveStep6BankDetails, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
 
 /**
@@ -16,6 +16,38 @@ const Step6BankDetails = () => {
   const intl = formData.step6.intl;
   const [isSavingStep, setIsSavingStep] = useState(false);
   const [stepError, setStepError] = useState('');
+
+  /** Prefill form data from database on component mount */
+  useEffect(() => {
+    const prefillFormData = async () => {
+      try {
+        const userData = await getCurrentUser();
+        if (userData?.message) {
+          const data = userData.message;
+          // Prefill Indian bank details
+          if (data.bankdetails?.Indian) {
+            updateNestedFormData('step6', 'india', 'accountHolderName', data.bankdetails.Indian.acholdername || '');
+            updateNestedFormData('step6', 'india', 'accountNumber', data.bankdetails.Indian.accountno || '');
+            updateNestedFormData('step6', 'india', 'ifscCode', data.bankdetails.Indian.ifsc || '');
+            updateNestedFormData('step6', 'india', 'bankName', data.bankdetails.Indian.bankname || '');
+            updateNestedFormData('step6', 'india', 'branchName', data.bankdetails.Indian.branchname || '');
+            updateNestedFormData('step6', 'india', 'upiId', data.bankdetails.Indian.upi || '');
+          }
+          // Prefill International bank details
+          if (data.bankdetails?.International) {
+            updateNestedFormData('step6', 'intl', 'accountHolderName', data.bankdetails.International.acholdername || '');
+            updateNestedFormData('step6', 'intl', 'ibanAccountNumber', data.bankdetails.International.accountno || '');
+            updateNestedFormData('step6', 'intl', 'swiftCode', data.bankdetails.International.swift || '');
+            updateNestedFormData('step6', 'intl', 'bankName', data.bankdetails.International.bankname || '');
+            updateNestedFormData('step6', 'intl', 'paymentPlatform', data.bankdetails.International.platform || '');
+          }
+        }
+      } catch (error) {
+        console.warn('Could not prefill Step 6 data:', error?.message);
+      }
+    };
+    prefillFormData();
+  }, []);
 
   const handleIndia = (field, value) => updateNestedFormData('step6', 'india', field, value);
   const handleIntl = (field, value) => updateNestedFormData('step6', 'intl', field, value);

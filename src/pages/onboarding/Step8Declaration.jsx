@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOnboardingContext } from '../../context/OnboardingContext';
-import { saveStep8Declaration } from '../../api/employeeApi';
+import { saveStep8Declaration, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
 
 /**
@@ -26,6 +26,22 @@ const Step8Declaration = () => {
     const step5 = formData.step5;
     const step6 = formData.step6;
     const step7 = formData.step7;
+
+    /** Prefill form data from database on component mount */
+    useEffect(() => {
+        const prefillFormData = async () => {
+            try {
+                const userData = await getCurrentUser();
+                if (userData?.message) {
+                    const data = userData.message;
+                    updateFormData('step8', 'signature', data.signature || '');
+                }
+            } catch (error) {
+                console.warn('Could not prefill Step 8 data:', error?.message);
+            }
+        };
+        prefillFormData();
+    }, []);
 
     const handleSubmit = async () => {
         if (!step8.agreed) return;

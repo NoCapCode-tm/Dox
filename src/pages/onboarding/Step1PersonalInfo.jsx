@@ -1,8 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOnboardingContext } from '../../context/OnboardingContext';
-import { saveStep1PersonalInfo } from '../../api/employeeApi';
+import { saveStep1PersonalInfo, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
+
+const toDateInputValue = (value) => {
+  if (!value) return '';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return '';
+  return date.toISOString().slice(0, 10);
+};
 
 /**
  * Step1PersonalInfo
@@ -13,6 +20,34 @@ const Step1PersonalInfo = () => {
   const form = formData.step1;
   const [isSavingStep, setIsSavingStep] = useState(false);
   const [stepError, setStepError] = useState('');
+
+  /** Prefill form data from database on component mount */
+  useEffect(() => {
+    const prefillFormData = async () => {
+      try {
+        const userData = await getCurrentUser();
+        if (userData?.message) {
+          const data = userData.message;
+          updateFormData('step1', 'fullName', data.name || '');
+          updateFormData('step1', 'personalEmail', data.Emails?.email || '');
+          updateFormData('step1', 'phoneWhatsapp', data.phone?.permanent || '');
+          updateFormData('step1', 'phoneWithCode', data.phone?.alternate || '');
+          updateFormData('step1', 'dateOfBirth', toDateInputValue(data.dob));
+          updateFormData('step1', 'gender', data.gender || '');
+          updateFormData('step1', 'permanentAddress', data.address?.permanent || '');
+          updateFormData('step1', 'communicationAddress', data.address?.communication || '');
+          updateFormData('step1', 'countryOfCitizenship', data.address?.country || '');
+          updateFormData('step1', 'stateProvince', data.address?.state || '');
+          updateFormData('step1', 'city', data.address?.city || '');
+        } else {
+          console.warn(' Step 1: No message field in userData');
+        }
+      } catch (error) {
+        console.error(' Step 1: Prefill error:', error?.message, error);
+      }
+    };
+    prefillFormData();
+  }, []); // Empty dependency array - runs only once on mount
 
   /** Update a single field */
   const handleChange = (field, value) => {
@@ -32,11 +67,11 @@ const Step1PersonalInfo = () => {
       setIsSavingStep(true);
       setStepError('');
       await saveStep1PersonalInfo(form);
-      navigate('/onboarding/step2'); 
+      navigate('/onboarding/step2');
     } catch (error) {
       setStepError(error?.message || 'Unable to save Step 1. Please try again.');
     } finally {
-      setIsSavingStep(false); 
+      setIsSavingStep(false);
     }
   };
 

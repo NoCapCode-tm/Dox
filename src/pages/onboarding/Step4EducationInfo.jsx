@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOnboardingContext } from '../../context/OnboardingContext';
-import { saveStep4EducationInfo } from '../../api/employeeApi';
+import { saveStep4EducationInfo, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
 
 /**
@@ -17,6 +17,26 @@ const Step4EducationInfo = () => {
   const form = formData.step4;
   const [isSavingStep, setIsSavingStep] = useState(false);
   const [stepError, setStepError] = useState('');
+
+  /** Prefill form data from database on component mount */
+  useEffect(() => {
+    const prefillFormData = async () => {
+      try {
+        const userData = await getCurrentUser();
+        if (userData?.message) {
+          const data = userData.message;
+          updateFormData('step4', 'highestQualification', data.Qualificationdetails?.highestqualification || '');
+          updateFormData('step4', 'universityName', data.Qualificationdetails?.collegename || '');
+          updateFormData('step4', 'courseName', data.Qualificationdetails?.coursename || '');
+          updateFormData('step4', 'currentYearSemester', data.Qualificationdetails?.year || '');
+          updateFormData('step4', 'graduationYear', data.Qualificationdetails?.expectedgraduation || '');
+        }
+      } catch (error) {
+        console.warn('Could not prefill Step 4 data:', error?.message);
+      }
+    };
+    prefillFormData();
+  }, []);
 
   const handleChange = (field, value) => {
     updateFormData('step4', field, value);
