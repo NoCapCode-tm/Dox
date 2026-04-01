@@ -119,3 +119,29 @@ export const saveStep4EducationInfo = async (step4Data) => {
 
     return parseResponse(response);
 };
+
+export const saveStep5ProfileInfo = async (step5Data) => {
+    const body = new FormData();
+    body.append("github", step5Data.githubProfile || "");
+    body.append("portfolio", step5Data.portfolioLink || "");
+    body.append("linkedin", step5Data.linkedinUrl || "");
+    body.append("expertise", step5Data.areasOfExpertise || "");
+    body.append("technical", step5Data.technicalSkills || "");
+
+    const previousExperienceParts = [
+        step5Data.orgName ? `Organization: ${step5Data.orgName}` : "",
+        step5Data.roleTitle ? `Role: ${step5Data.roleTitle}` : "",
+        step5Data.duration ? `Duration: ${step5Data.duration}` : "",
+        step5Data.keyResponsibilities ? `Responsibilities: ${step5Data.keyResponsibilities}` : "",
+    ].filter(Boolean);
+
+    body.append("previousexperience", previousExperienceParts.join(" | "));
+
+    const response = await fetch(`${API_BASE_URL}/employee/onboarding/5`, {
+        method: "PATCH",
+        credentials: "include",
+        body,
+    });
+
+    return parseResponse(response);
+};
