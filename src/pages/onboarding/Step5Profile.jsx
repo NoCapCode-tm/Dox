@@ -25,11 +25,32 @@ const Step5Profile = () => {
         const userData = await getCurrentUser();
         if (userData?.message) {
           const data = userData.message;
-          updateFormData('step5', 'githubProfile', data.professionaldetails?.github || '');
-          updateFormData('step5', 'portfolioLink', data.professionaldetails?.portfolio || '');
-          updateFormData('step5', 'linkedinUrl', data.professionaldetails?.Linkedin || '');
-          updateFormData('step5', 'areasOfExpertise', Array.isArray(data.professionaldetails?.expertise) ? data.professionaldetails.expertise.join(', ') : '');
-          updateFormData('step5', 'technicalSkills', Array.isArray(data.professionaldetails?.technical) ? data.professionaldetails.technical.join(', ') : '');
+          updateFormData('step5', 'githubProfile', form.githubProfile || data.professionaldetails?.github || '');
+          updateFormData('step5', 'portfolioLink', form.portfolioLink || data.professionaldetails?.portfolio || '');
+          updateFormData('step5', 'linkedinUrl', form.linkedinUrl || data.professionaldetails?.Linkedin || '');
+          updateFormData('step5', 'areasOfExpertise', form.areasOfExpertise || (Array.isArray(data.professionaldetails?.expertise) ? data.professionaldetails.expertise.join(', ') : ''));
+          updateFormData('step5', 'technicalSkills', form.technicalSkills || (Array.isArray(data.professionaldetails?.technical) ? data.professionaldetails.technical.join(', ') : ''));
+
+          const previousExperience = data.professionaldetails?.Previousexperience;
+          const expItem = Array.isArray(previousExperience) ? previousExperience[0] : previousExperience;
+
+          if (expItem && typeof expItem === 'object') {
+            updateFormData('step5', 'orgName', form.orgName || expItem.companyname || '');
+            updateFormData('step5', 'roleTitle', form.roleTitle || expItem.role || '');
+            updateFormData('step5', 'duration', form.duration || expItem.duration || '');
+            updateFormData('step5', 'keyResponsibilities', form.keyResponsibilities || expItem.responsibilities || '');
+          } else if (typeof expItem === 'string') {
+            const parts = expItem.split('|').map((part) => part.trim());
+            const org = parts.find((part) => part.toLowerCase().startsWith('organization:'));
+            const role = parts.find((part) => part.toLowerCase().startsWith('role:'));
+            const duration = parts.find((part) => part.toLowerCase().startsWith('duration:'));
+            const responsibilities = parts.find((part) => part.toLowerCase().startsWith('responsibilities:'));
+
+            updateFormData('step5', 'orgName', form.orgName || (org ? org.replace(/organization:/i, '').trim() : ''));
+            updateFormData('step5', 'roleTitle', form.roleTitle || (role ? role.replace(/role:/i, '').trim() : ''));
+            updateFormData('step5', 'duration', form.duration || (duration ? duration.replace(/duration:/i, '').trim() : ''));
+            updateFormData('step5', 'keyResponsibilities', form.keyResponsibilities || (responsibilities ? responsibilities.replace(/responsibilities:/i, '').trim() : ''));
+          }
         }
       } catch (error) {
         console.warn('Could not prefill Step 5 data:', error?.message);

@@ -21,8 +21,12 @@ const Step3IdentityInfo = () => {
         const userData = await getCurrentUser();
         if (userData?.message) {
           const data = userData.message;
-          updateFormData('step3', 'govIdNumber', data.documents?.govid1?.number || '');
-          updateFormData('step3', 'secondaryIdNumber', data.documents?.govid2?.number || '');
+          const serverGovId = data.documents?.govid1?.number != null ? String(data.documents.govid1.number) : '';
+          const serverSecondaryId = data.documents?.govid2?.number != null ? String(data.documents.govid2.number) : '';
+
+          // Preserve values already present in context when navigating back.
+          updateFormData('step3', 'govIdNumber', form.govIdNumber || serverGovId);
+          updateFormData('step3', 'secondaryIdNumber', form.secondaryIdNumber || serverSecondaryId);
         }
       } catch (error) {
         console.warn('Could not prefill Step 3 data:', error?.message);

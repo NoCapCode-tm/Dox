@@ -26,20 +26,20 @@ const Step6BankDetails = () => {
           const data = userData.message;
           // Prefill Indian bank details
           if (data.bankdetails?.Indian) {
-            updateNestedFormData('step6', 'india', 'accountHolderName', data.bankdetails.Indian.acholdername || '');
-            updateNestedFormData('step6', 'india', 'accountNumber', data.bankdetails.Indian.accountno || '');
-            updateNestedFormData('step6', 'india', 'ifscCode', data.bankdetails.Indian.ifsc || '');
-            updateNestedFormData('step6', 'india', 'bankName', data.bankdetails.Indian.bankname || '');
-            updateNestedFormData('step6', 'india', 'branchName', data.bankdetails.Indian.branchname || '');
-            updateNestedFormData('step6', 'india', 'upiId', data.bankdetails.Indian.upi || '');
+            updateNestedFormData('step6', 'india', 'accountHolderName', india.accountHolderName || data.bankdetails.Indian.acholdername || '');
+            updateNestedFormData('step6', 'india', 'accountNumber', india.accountNumber || data.bankdetails.Indian.accountno || '');
+            updateNestedFormData('step6', 'india', 'ifscCode', india.ifscCode || data.bankdetails.Indian.ifsc || '');
+            updateNestedFormData('step6', 'india', 'bankName', india.bankName || data.bankdetails.Indian.bankname || '');
+            updateNestedFormData('step6', 'india', 'branchName', india.branchName || data.bankdetails.Indian.branchname || '');
+            updateNestedFormData('step6', 'india', 'upiId', india.upiId || data.bankdetails.Indian.upi || '');
           }
           // Prefill International bank details
           if (data.bankdetails?.International) {
-            updateNestedFormData('step6', 'intl', 'accountHolderName', data.bankdetails.International.acholdername || '');
-            updateNestedFormData('step6', 'intl', 'ibanAccountNumber', data.bankdetails.International.accountno || '');
-            updateNestedFormData('step6', 'intl', 'swiftCode', data.bankdetails.International.swift || '');
-            updateNestedFormData('step6', 'intl', 'bankName', data.bankdetails.International.bankname || '');
-            updateNestedFormData('step6', 'intl', 'paymentPlatform', data.bankdetails.International.platform || '');
+            updateNestedFormData('step6', 'intl', 'accountHolderName', intl.accountHolderName || data.bankdetails.International.acholdername || '');
+            updateNestedFormData('step6', 'intl', 'ibanAccountNumber', intl.ibanAccountNumber || data.bankdetails.International.accountno || '');
+            updateNestedFormData('step6', 'intl', 'swiftCode', intl.swiftCode || data.bankdetails.International.swift || '');
+            updateNestedFormData('step6', 'intl', 'bankName', intl.bankName || data.bankdetails.International.bankname || '');
+            updateNestedFormData('step6', 'intl', 'paymentPlatform', intl.paymentPlatform || data.bankdetails.International.platform || '');
           }
         }
       } catch (error) {

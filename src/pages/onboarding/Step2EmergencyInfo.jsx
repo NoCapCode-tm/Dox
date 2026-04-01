@@ -21,11 +21,11 @@ const Step2EmergencyInfo = () => {
         const userData = await getCurrentUser();
         if (userData?.message) {
           const data = userData.message;
-          updateFormData('step2', 'contactName', data.emergency?.contactname || '');
-          updateFormData('step2', 'contactPhone', data.emergency?.contactnumber || '');
-          updateFormData('step2', 'contactEmail', data.emergency?.contactemail || '');
-          updateFormData('step2', 'relationship', data.emergency?.contactrelation || '');
-          updateFormData('step2', 'countryOfResidence', data.emergency?.contactcountry || '');
+          updateFormData('step2', 'contactName', form.contactName || data.emergency?.contactname || '');
+          updateFormData('step2', 'contactPhone', form.contactPhone || (data.emergency?.contactnumber != null ? String(data.emergency.contactnumber) : ''));
+          updateFormData('step2', 'contactEmail', form.contactEmail || data.emergency?.contactemail || '');
+          updateFormData('step2', 'relationship', form.relationship || data.emergency?.contactrelation || '');
+          updateFormData('step2', 'countryOfResidence', form.countryOfResidence || data.emergency?.contactcountry || '');
         }
       } catch (error) {
         console.warn('Could not prefill Step 2 data:', error?.message);

@@ -25,11 +25,11 @@ const Step4EducationInfo = () => {
         const userData = await getCurrentUser();
         if (userData?.message) {
           const data = userData.message;
-          updateFormData('step4', 'highestQualification', data.Qualificationdetails?.highestqualification || '');
-          updateFormData('step4', 'universityName', data.Qualificationdetails?.collegename || '');
-          updateFormData('step4', 'courseName', data.Qualificationdetails?.coursename || '');
-          updateFormData('step4', 'currentYearSemester', data.Qualificationdetails?.year || '');
-          updateFormData('step4', 'graduationYear', data.Qualificationdetails?.expectedgraduation || '');
+          updateFormData('step4', 'highestQualification', form.highestQualification || data.Qualificationdetails?.highestqualification || '');
+          updateFormData('step4', 'universityName', form.universityName || data.Qualificationdetails?.collegename || '');
+          updateFormData('step4', 'courseName', form.courseName || data.Qualificationdetails?.coursename || '');
+          updateFormData('step4', 'currentYearSemester', form.currentYearSemester || data.Qualificationdetails?.year || '');
+          updateFormData('step4', 'graduationYear', form.graduationYear || data.Qualificationdetails?.expectedgraduation || '');
         }
       } catch (error) {
         console.warn('Could not prefill Step 4 data:', error?.message);

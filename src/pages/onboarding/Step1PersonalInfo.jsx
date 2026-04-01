@@ -28,17 +28,17 @@ const Step1PersonalInfo = () => {
         const userData = await getCurrentUser();
         if (userData?.message) {
           const data = userData.message;
-          updateFormData('step1', 'fullName', data.name || '');
-          updateFormData('step1', 'personalEmail', data.Emails?.email || '');
-          updateFormData('step1', 'phoneWhatsapp', data.phone?.permanent || '');
-          updateFormData('step1', 'phoneWithCode', data.phone?.alternate || '');
-          updateFormData('step1', 'dateOfBirth', toDateInputValue(data.dob));
-          updateFormData('step1', 'gender', data.gender || '');
-          updateFormData('step1', 'permanentAddress', data.address?.permanent || '');
-          updateFormData('step1', 'communicationAddress', data.address?.communication || '');
-          updateFormData('step1', 'countryOfCitizenship', data.address?.country || '');
-          updateFormData('step1', 'stateProvince', data.address?.state || '');
-          updateFormData('step1', 'city', data.address?.city || '');
+          updateFormData('step1', 'fullName', form.fullName || data.name || '');
+          updateFormData('step1', 'personalEmail', form.personalEmail || data.Emails?.email || '');
+          updateFormData('step1', 'phoneWhatsapp', form.phoneWhatsapp || data.phone?.permanent || '');
+          updateFormData('step1', 'phoneWithCode', form.phoneWithCode || data.phone?.alternate || '');
+          updateFormData('step1', 'dateOfBirth', form.dateOfBirth || toDateInputValue(data.dob));
+          updateFormData('step1', 'gender', form.gender || data.gender || '');
+          updateFormData('step1', 'permanentAddress', form.permanentAddress || data.address?.permanent || '');
+          updateFormData('step1', 'communicationAddress', form.communicationAddress || data.address?.communication || '');
+          updateFormData('step1', 'countryOfCitizenship', form.countryOfCitizenship || data.address?.country || '');
+          updateFormData('step1', 'stateProvince', form.stateProvince || data.address?.state || '');
+          updateFormData('step1', 'city', form.city || data.address?.city || '');
         } else {
           console.warn(' Step 1: No message field in userData');
         }
