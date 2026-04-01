@@ -145,3 +145,38 @@ export const saveStep5ProfileInfo = async (step5Data) => {
 
     return parseResponse(response);
 };
+
+export const saveStep6BankDetails = async (step6Data) => {
+    const body = new FormData();
+
+    const hasIndiaData = Object.values(step6Data.india || {}).some((value) => String(value || "").trim().length > 0);
+    const hasIntlData = Object.values(step6Data.intl || {}).some((value) => String(value || "").trim().length > 0);
+
+    if (hasIndiaData || !hasIntlData) {
+        body.append("personnel", "Indian");
+        body.append("acholdername", step6Data.india?.accountHolderName || "");
+        body.append("accountno", step6Data.india?.accountNumber || "");
+        body.append("ifsc", step6Data.india?.ifscCode || "");
+        body.append("bankname", step6Data.india?.bankName || "");
+        body.append("branchname", step6Data.india?.branchName || "");
+        body.append("upi", step6Data.india?.upiId || "");
+        body.append("paymentplatform", "");
+    } else {
+        body.append("personnel", "International");
+        body.append("acholdername", step6Data.intl?.accountHolderName || "");
+        body.append("accountno", step6Data.intl?.ibanAccountNumber || "");
+        body.append("ifsc", step6Data.intl?.swiftCode || "");
+        body.append("bankname", step6Data.intl?.bankName || "");
+        body.append("branchname", "");
+        body.append("upi", "");
+        body.append("paymentplatform", step6Data.intl?.paymentPlatform || "");
+    }
+
+    const response = await fetch(`${API_BASE_URL}/employee/onboarding/6`, {
+        method: "PATCH",
+        credentials: "include",
+        body,
+    });
+
+    return parseResponse(response);
+};
