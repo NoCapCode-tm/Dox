@@ -32,11 +32,11 @@ const Step1PersonalInfo = () => {
       setIsSavingStep(true);
       setStepError('');
       await saveStep1PersonalInfo(form);
-      navigate('/onboarding/step2');  // 
+      navigate('/onboarding/step2'); 
     } catch (error) {
       setStepError(error?.message || 'Unable to save Step 1. Please try again.');
     } finally {
-      setIsSavingStep(false);  // 
+      setIsSavingStep(false); 
     }
   };
 
