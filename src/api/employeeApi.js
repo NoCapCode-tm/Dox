@@ -53,3 +53,20 @@ export const saveStep1PersonalInfo = async (step1Data) => {
 
     return parseResponse(response);
 };
+
+export const saveStep2EmergencyInfo = async (step2Data) => {
+    const body = new FormData();
+    body.append("emergencyname", step2Data.contactName || "");
+    body.append("emergencycontact", step2Data.contactPhone || "");
+    body.append("emergencyemail", step2Data.contactEmail || "");
+    body.append("relation", step2Data.relationship || "");
+    body.append("emergencycountry", step2Data.countryOfResidence || "");
+
+    const response = await fetch(`${API_BASE_URL}/employee/onboarding/2`, {
+        method: "PATCH",
+        credentials: "include",
+        body,
+    });
+
+    return parseResponse(response);
+};
