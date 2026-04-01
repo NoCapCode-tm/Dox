@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginEmployee } from "../api/employeeApi";
+import Loader from "../components/ui/Loader";
 
 /**
  * SignIn page
@@ -23,6 +24,7 @@ const SignIn = () => {
 
     try {
       setIsLoading(true);
+      
       setErrorMessage("");
       
       // Backend expects "userid", map the current email field value.
@@ -43,6 +45,7 @@ const SignIn = () => {
           "linear-gradient(116.04deg, #0A0E14 18.26%, #112B53 51.38%, #0A0E14 78.49%)",
       }}
     >
+      {isLoading && <Loader fullScreen={true} message="Signing in..." />}
       {/* Group 260 — "Atla" decorative text*/}
       <div
         className="absolute pointer-events-none select-none w-full"
@@ -226,6 +229,11 @@ const SignIn = () => {
             <input
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && canSubmit && !isLoading) {
+                  handleSignIn();
+                }
+              }}
               placeholder="Enter your password"
               type="password"
               autoComplete="current-password"
