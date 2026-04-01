@@ -21,12 +21,12 @@ const Step7SystemInfo = () => {
         const userData = await getCurrentUser();
         if (userData?.message) {
           const data = userData.message;
-          updateFormData('step7', 'primaryDeviceType', data.systemdetails?.devicetype || '');
-          updateFormData('step7', 'operatingSystem', data.systemdetails?.os || '');
-          updateFormData('step7', 'laptopAvailability', data.systemdetails?.laptopavailaibility || '');
-          updateFormData('step7', 'internetReliability', data.systemdetails?.internet || '');
-          updateFormData('step7', 'timeZone', data.systemdetails?.timezone || '');
-          updateFormData('step7', 'weeklyAvailability', data.systemdetails?.weeklyavailaibility || '');
+          updateFormData('step7', 'primaryDeviceType', form.primaryDeviceType || data.systemdetails?.devicetype || '');
+          updateFormData('step7', 'operatingSystem', form.operatingSystem || data.systemdetails?.os || '');
+          updateFormData('step7', 'laptopAvailability', form.laptopAvailability || data.systemdetails?.laptopavailaibility || '');
+          updateFormData('step7', 'internetReliability', form.internetReliability || data.systemdetails?.internet || '');
+          updateFormData('step7', 'timeZone', form.timeZone || data.systemdetails?.timezone || '');
+          updateFormData('step7', 'weeklyAvailability', form.weeklyAvailability || data.systemdetails?.weeklyavailaibility || '');
         }
       } catch (error) {
         console.warn('Could not prefill Step 7 data:', error?.message);

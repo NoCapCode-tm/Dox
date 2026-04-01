@@ -34,7 +34,8 @@ const Step8Declaration = () => {
                 const userData = await getCurrentUser();
                 if (userData?.message) {
                     const data = userData.message;
-                    updateFormData('step8', 'signature', data.signature || '');
+                    updateFormData('step8', 'signature', step8.signature || data.signature || '');
+                    updateFormData('step8', 'fullName', step8.fullName || data.name || '');
                 }
             } catch (error) {
                 console.warn('Could not prefill Step 8 data:', error?.message);
