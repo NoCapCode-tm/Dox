@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCurrentUser } from '../api/employeeApi';
+import Loader from '../components/ui/Loader';
 
 /**
  * Dashboard
@@ -10,17 +11,27 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
   const [authError, setAuthError] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const loadCurrentUser = async () => {
       try {
+        setIsLoading(true);
         setAuthError('');
+
         const response = await getCurrentUser();
         const name = response?.data?.name || response?.message?.name || '';
         setUserName(name);
       } catch (error) {
         setAuthError(error?.message || 'Session expired. Please sign in again.');
         navigate('/', { replace: true });
+      } finally {
+        setIsLoading(false);
+
+        // test loader
+        // setTimeout(() => {
+        //   setIsLoading(false);
+        // }, 3000);
       }
     };
 
@@ -106,6 +117,7 @@ const Dashboard = () => {
           'radial-gradient(1400px 1000px at 0% 0%, #5B7AB5 0%, #1D2A43 45%, #0B1019 75%, #040608 100%)',
       }}
     >
+      {isLoading && <Loader fullScreen={true} message="Loading dashboard..." />}
       {/* Decorative Background grid/wires*/}
       <div
         className="absolute inset-0 pointer-events-none z-0 opacity-80"

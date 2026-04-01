@@ -57,11 +57,11 @@ const Completion = () => {
 					className="text-[40px] md:text-[64px] font-normal text-[#DBDBDB]"
 					style={{
 						maxWidth: '792px',
-						lineHeight: '28px',
+						lineHeight: '1.1',
 						transform: 'rotate(0.11deg)',
 					}}
 				>
-					Your onboarding is <span className="text-[#1B6CE5]">complete</span>
+					Your onboarding is <span className="block md:inline text-[#1B6CE5]">complete</span>
 				</h1>
 
 				<p
