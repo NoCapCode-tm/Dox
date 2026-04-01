@@ -180,3 +180,35 @@ export const saveStep6BankDetails = async (step6Data) => {
 
     return parseResponse(response);
 };
+
+export const saveStep7SystemInfo = async (step7Data) => {
+    const body = new FormData();
+    body.append("devicetype", step7Data.primaryDeviceType || "");
+    body.append("operatingsystem", step7Data.operatingSystem || "");
+    body.append("laptopavailaibility", step7Data.laptopAvailability || "");
+    body.append("internet", step7Data.internetReliability || "");
+    body.append("timezone", step7Data.timeZone || "");
+    body.append("weeklyavailaibility", step7Data.weeklyAvailability || "");
+
+    const response = await fetch(`${API_BASE_URL}/employee/onboarding/7`, {
+        method: "PATCH",
+        credentials: "include",
+        body,
+    });
+
+    return parseResponse(response);
+};
+
+export const saveStep8Declaration = async (step8Data) => {
+    const body = new FormData();
+    body.append("signature", step8Data.signature || "");
+    body.append("date", step8Data.dateOfSubmission || "");
+
+    const response = await fetch(`${API_BASE_URL}/employee/onboarding/8`, {
+        method: "PATCH",
+        credentials: "include",
+        body,
+    });
+
+    return parseResponse(response);
+};
