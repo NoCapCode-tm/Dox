@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOnboardingContext } from '../../context/OnboardingContext';
-import { saveStep7SystemInfo } from '../../api/employeeApi';
+import { saveStep7SystemInfo, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
 
 /**
@@ -13,6 +13,27 @@ const Step7SystemInfo = () => {
   const form = formData.step7;
   const [isSavingStep, setIsSavingStep] = useState(false);
   const [stepError, setStepError] = useState('');
+
+  /** Prefill form data from database on component mount */
+  useEffect(() => {
+    const prefillFormData = async () => {
+      try {
+        const userData = await getCurrentUser();
+        if (userData?.message) {
+          const data = userData.message;
+          updateFormData('step7', 'primaryDeviceType', data.systemdetails?.devicetype || '');
+          updateFormData('step7', 'operatingSystem', data.systemdetails?.os || '');
+          updateFormData('step7', 'laptopAvailability', data.systemdetails?.laptopavailaibility || '');
+          updateFormData('step7', 'internetReliability', data.systemdetails?.internet || '');
+          updateFormData('step7', 'timeZone', data.systemdetails?.timezone || '');
+          updateFormData('step7', 'weeklyAvailability', data.systemdetails?.weeklyavailaibility || '');
+        }
+      } catch (error) {
+        console.warn('Could not prefill Step 7 data:', error?.message);
+      }
+    };
+    prefillFormData();
+  }, []);
 
   const handleChange = (field, value) =>
     updateFormData('step7', field, value);

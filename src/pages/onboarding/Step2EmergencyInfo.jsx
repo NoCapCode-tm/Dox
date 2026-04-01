@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOnboardingContext } from '../../context/OnboardingContext';
-import { saveStep2EmergencyInfo } from '../../api/employeeApi';
+import { saveStep2EmergencyInfo, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
 
 /**
@@ -13,6 +13,26 @@ const Step2EmergencyInfo = () => {
   const form = formData.step2;
   const [isSavingStep, setIsSavingStep] = useState(false);
   const [stepError, setStepError] = useState('');
+
+  /** Prefill form data from database on component mount */
+  useEffect(() => {
+    const prefillFormData = async () => {
+      try {
+        const userData = await getCurrentUser();
+        if (userData?.message) {
+          const data = userData.message;
+          updateFormData('step2', 'contactName', data.emergency?.contactname || '');
+          updateFormData('step2', 'contactPhone', data.emergency?.contactnumber || '');
+          updateFormData('step2', 'contactEmail', data.emergency?.contactemail || '');
+          updateFormData('step2', 'relationship', data.emergency?.contactrelation || '');
+          updateFormData('step2', 'countryOfResidence', data.emergency?.contactcountry || '');
+        }
+      } catch (error) {
+        console.warn('Could not prefill Step 2 data:', error?.message);
+      }
+    };
+    prefillFormData();
+  }, []);
 
   /** Update a single field */
   const handleChange = (field, value) => {
