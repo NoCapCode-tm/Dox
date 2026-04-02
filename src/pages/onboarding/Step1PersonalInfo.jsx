@@ -47,13 +47,12 @@ const Step1PersonalInfo = () => {
       }
     };
     prefillFormData();
-  }, []); // Empty dependency array - runs only once on mount
+  }, []);
 
   /** Update a single field */
   const handleChange = (field, value) => {
     updateFormData('step1', field, value);
 
-    // Auto-fill communication address when checkbox is toggled on
     if (field === 'sameAsPermanent' && value) {
       updateFormData('step1', 'communicationAddress', form.permanentAddress);
     }
