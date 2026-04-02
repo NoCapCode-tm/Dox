@@ -38,14 +38,14 @@ const Welcome = () => {
                     className="absolute top-0 left-0 w-1/2 h-full"
                     style={{
                         background:
-                            'conic-gradient(from 89.78deg at 50% 39.45%, #FFFFFF 0deg, #00184D 219.41deg, #101828 309.85deg, #111111 360deg)',
+                            'conic-gradient(from 89.78deg at 50% 41%, #FFFFFF 0deg, #00184D 219.41deg, #101828 309.85deg, #111111 360deg)',
                     }}
                 />
                 <div
                     className="absolute top-0 right-0 w-1/2 h-full"
                     style={{
                         background:
-                            'conic-gradient(from 89.78deg at 50% 39.45%, #FFFFFF 0deg, #00184D 219.41deg, #101828 309.85deg, #111111 360deg)',
+                            'conic-gradient(from 89.78deg at 50% 41%, #FFFFFF 0deg, #00184D 219.41deg, #101828 309.85deg, #111111 360deg)',
                         transform: 'matrix(-1, 0, 0, 1, 0, 0)',
                     }}
                 />
@@ -69,7 +69,7 @@ const Welcome = () => {
                 className="absolute inset-0 z-0"
                 style={{
                     background:
-                        'linear-gradient(180deg, #000000 14.42%, #5492EC 43.27%, #000000 100%)',
+                        'linear-gradient(180deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.28) 42%, rgba(0,0,0,0.72) 100%)',
                     mixBlendMode: 'multiply',
                 }}
             />
@@ -100,7 +100,7 @@ const Welcome = () => {
                 </div>
 
                 {/* Main content */}
-                <div className="flex-1 flex flex-col items-center justify-center px-4 py-8">
+                <div className="flex-1 flex flex-col items-center px-4 pt-8 md:pt-10 pb-6">
 
                     {/* Welcome to */}
                     <p
@@ -116,12 +116,15 @@ const Welcome = () => {
                     </p>
 
                     {/* Large DOX logo */}
-                    <div className="mb-[48px] md:mb-[60px]">
+                    <div className="relative z-10 mb-[24px] md:mb-[32px] flex justify-center">
                         <LargeDoxLogo />
                     </div>
 
+                    {/* Tubelight effect */}
+                    <Tubelight />
+
                     {/* 3 Task Cards */}
-                    <div className="w-full max-w-[1170px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-[24px] md:gap-[60px] px-4">
+                    <div className="w-full max-w-[1170px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-[24px] md:gap-[60px] px-4 mt-[8px] md:mt-[12px]">
                         {cards.map((card, i) => (
                             <TaskCard key={i} {...card} />
                         ))}
@@ -218,50 +221,53 @@ const SignIcon = () => (
     </svg>
 );
 
+const Tubelight = () => (
+    <div
+        className="relative w-full max-w-[760px] h-[14px] md:h-[18px] rounded-full mb-[18px] md:mb-[24px]"
+        style={{
+            background: 'linear-gradient(180deg, rgba(146,193,255,0.95) 0%, rgba(120,173,245,0.82) 52%, rgba(120,173,245,0.25) 100%)',
+            boxShadow: '0 0 36px rgba(84,146,236,0.72), 0 18px 52px rgba(84,146,236,0.35)',
+        }}
+    />
+);
+
 /** Small header DOX logo */
 const DoxLogo = () => (
     <svg width="69" height="19" viewBox="0 0 75 19" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="DOX logo">
         {/* D */}
         <g transform="translate(0 0)">
-            <path d="M0.400771 17.25C0.400771 17.25 -2.35803 17.25 6.60085 17.25C15.5597 17.25 14.6954 1.25 6.60085 1.25C-1.49371 1.25 0.400771 1.25 0.400771 1.25" stroke="white" strokeWidth="2.5" />
+            <path d="M0.400771 17.25C0.400771 17.25 -2.35803 17.25 6.60085 17.25C15.5597 17.25 14.6954 1.25 6.60085 1.25C-1.49371 1.25 0.400771 1.25 0.400771 1.25" stroke="white" strokeWidth="2.5" strokeLinecap="butt" />
         </g>
         {/* O */}
         <g transform="translate(17 0)">
-            <path d="M13.8492 17.25C13.8492 17.25 16.608 17.25 7.64915 17.25C-1.30974 17.25 -0.445418 1.25 7.64915 1.25C15.7437 1.25 13.8492 1.25 13.8492 1.25" stroke="white" strokeWidth="2.5" />
+            <path d="M13.8492 17.25C13.8492 17.25 16.608 17.25 7.64915 17.25C-1.30974 17.25 -0.445418 1.25 7.64915 1.25C15.7437 1.25 13.8492 1.25 13.8492 1.25" stroke="white" strokeWidth="2.5" strokeLinecap="butt" />
         </g>
         <g transform="translate(27 0)">
-            <path d="M0.400771 17.25C0.400771 17.25 -2.35803 17.25 6.60085 17.25C15.5597 17.25 14.6954 1.25 6.60085 1.25C-1.49371 1.25 0.400771 1.25 0.400771 1.25" stroke="white" strokeWidth="2.5" />
+            <path d="M0.400771 17.25C0.400771 17.25 -2.35803 17.25 6.60085 17.25C15.5597 17.25 14.6954 1.25 6.60085 1.25C-1.49371 1.25 0.400771 1.25 0.400771 1.25" stroke="white" strokeWidth="2.5" strokeLinecap="butt" />
         </g>
         {/* X */}
         <g transform="translate(45 0)">
-            <path d="M0.400771 17.25C0.400771 17.25 -2.35803 17.25 6.60085 17.25C15.5597 17.25 14.6954 1.25 6.60085 1.25C-1.49371 1.25 0.400771 1.25 0.400771 1.25" stroke="white" strokeWidth="2.5" />
+            <path d="M0.400771 17.25C0.400771 17.25 -2.35803 17.25 6.60085 17.25C15.5597 17.25 14.6954 1.25 6.60085 1.25C-1.49371 1.25 0.400771 1.25 0.400771 1.25" stroke="white" strokeWidth="2.5" strokeLinecap="butt" />
         </g>
         <g transform="translate(56 0)">
-            <path d="M13.8492 17.25C13.8492 17.25 16.608 17.25 7.64915 17.25C-1.30974 17.25 -0.445418 1.25 7.64915 1.25C15.7437 1.25 13.8492 1.25 13.8492 1.25" stroke="white" strokeWidth="2.5" />
+            <path d="M13.8492 17.25C13.8492 17.25 16.608 17.25 7.64915 17.25C-1.30974 17.25 -0.445418 1.25 7.64915 1.25C15.7437 1.25 13.8492 1.25 13.8492 1.25" stroke="white" strokeWidth="2.5" strokeLinecap="butt" />
         </g>
     </svg>
 );
 
-/** Large centered DOX logo with gradient */
+/** Large centered DOX logo  */
 const LargeDoxLogo = () => {
-    const scale = 'clamp(260px, 32vw, 462px)';
+    const scale = 'clamp(200px, 24vw, 340px)';
     return (
-        <div style={{ width: scale }}>
-            <svg viewBox="0 0 463 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="DOX large logo" style={{ width: '100%', height: 'auto' }}>
+        <div style={{ width: 'min(100%, ' + scale + ')' }}>
+            <svg width="463" height="119" viewBox="0 0 463 119" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="DOX large logo" style={{ width: '100%', height: 'auto', display: 'block' }}>
                 <defs>
-                    <linearGradient id="dox_grad" x1="231.5" y1="0" x2="231.5" y2="120" gradientUnits="userSpaceOnUse">
+                    <linearGradient id="paint0_linear_1326_384" x1="231.241" y1="0" x2="231.241" y2="119" gradientUnits="userSpaceOnUse">
                         <stop offset="0%" stopColor="#F0F0F0" />
                         <stop offset="98.56%" stopColor="#04070D" />
                     </linearGradient>
                 </defs>
-                {/* D */}
-                <path d="M4 110C4 110 -18 110 52 110C122 110 116 10 52 10C-12 10 4 10 4 10" stroke="url(#dox_grad)" strokeWidth="10" strokeLinecap="round" />
-                {/* O */}
-                <path d="M175 110C175 110 153 110 223 110C293 110 287 10 223 10C159 10 175 10 175 10" stroke="url(#dox_grad)" strokeWidth="10" strokeLinecap="round" />
-                <path d="M290 110C290 110 312 110 242 110C172 110 178 10 242 10C306 10 290 10 290 10" stroke="url(#dox_grad)" strokeWidth="10" strokeLinecap="round" />
-                {/* X */}
-                <path d="M350 110C350 110 328 110 398 110C468 110 462 10 398 10C334 10 350 10 350 10" stroke="url(#dox_grad)" strokeWidth="10" strokeLinecap="round" />
-                <path d="M459 110C459 110 481 110 411 110C341 110 347 10 411 10C475 10 459 10 459 10" stroke="url(#dox_grad)" strokeWidth="10" strokeLinecap="round" />
+                <path fillRule="evenodd" clipRule="evenodd" d="M41.1602 0C56.5284 0 68.3762 7.87699 76.2881 19.1602C84.1229 30.3336 88.2341 44.9626 88.6133 59.3682C88.9922 73.7646 85.656 88.4981 77.9355 99.791C70.0885 111.269 57.8016 119 41.1602 119H0V109H41.1602C54.2559 109 63.5555 103.106 69.6807 94.1465C75.9322 85.002 78.9554 72.4851 78.6172 59.6318C78.2791 46.7876 74.5964 34.1663 68.1006 24.9023C61.6817 15.7483 52.6601 10 41.1602 10H0V0H41.1602ZM218.285 0C233.653 0 245.501 7.87699 253.413 19.1602C261.248 30.3336 265.359 44.9626 265.738 59.3682C266.117 73.7646 262.781 88.4981 255.061 99.791C247.214 111.269 234.927 119 218.285 119H162.447C145.806 119 133.519 111.269 125.672 99.791C117.951 88.4981 114.615 73.7646 114.994 59.3682C115.373 44.9626 119.484 30.3336 127.319 19.1602C135.231 7.87707 147.079 0 162.447 0H218.285ZM334.098 0C349.466 0 361.314 7.87699 369.226 19.1602C372.852 24.3325 375.68 30.2458 377.71 36.5342C379.74 30.2459 382.568 24.3325 386.194 19.1602C394.106 7.87706 405.954 0 421.322 0H462.482V10H421.322C409.822 10 400.801 15.7483 394.382 24.9023C387.886 34.1663 384.203 46.7876 383.865 59.6318C383.527 72.4851 386.55 85.002 392.802 94.1465C398.927 103.106 408.227 109 421.322 109H462.482V119H421.322C404.681 119 392.394 111.269 384.547 99.791C381.67 95.5835 379.404 90.8979 377.71 85.9307C376.016 90.898 373.75 95.5835 370.873 99.791C363.026 111.269 350.739 119 334.098 119H292.938V109H334.098C347.193 109 356.493 103.106 362.618 94.1465C368.87 85.002 371.893 72.4851 371.555 59.6318C371.217 46.7876 367.534 34.1663 361.038 24.9023C354.619 15.7483 345.598 10 334.098 10H292.938V0H334.098ZM162.447 10C150.947 10 141.926 15.7483 135.507 24.9023C129.011 34.1663 125.328 46.7876 124.99 59.6318C124.652 72.4851 127.675 85.002 133.927 94.1465C140.052 103.106 149.352 109 162.447 109H218.285C231.381 109 240.68 103.106 246.806 94.1465C253.057 85.002 256.08 72.4851 255.742 59.6318C255.404 46.7876 251.721 34.1663 245.226 24.9023C238.807 15.7483 229.785 10 218.285 10H162.447Z" fill="url(#paint0_linear_1326_384)" />
             </svg>
         </div>
     );
