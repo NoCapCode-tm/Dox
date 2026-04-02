@@ -3,6 +3,7 @@ import SignIn from '../pages/SignIn.jsx'
 import Dashboard from '../pages/Dashboard.jsx'
 import Completion from '../pages/Completion.jsx'
 import OnboardingLayout from '../pages/onboarding/OnboardingLayout.jsx'
+import Welcome from '../pages/Welcome.jsx'
 
 /**
  * AppRouter — defines all client-side routes for the application.
@@ -14,6 +15,8 @@ const AppRouter = () => {
         <Route path="/" element={<SignIn />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/completion" element={<Completion />} />
+        <Route path="/welcome" element={<Welcome />} />
+
         <Route path="/onboarding/*" element={<OnboardingLayout />} />
         
         <Route path="*" element={<Navigate to="/" replace />} />

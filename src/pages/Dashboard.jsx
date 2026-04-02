@@ -28,10 +28,6 @@ const Dashboard = () => {
       } finally {
         setIsLoading(false);
 
-        // test loader
-        // setTimeout(() => {
-        //   setIsLoading(false);
-        // }, 3000);
       }
     };
 
