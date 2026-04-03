@@ -38,14 +38,14 @@ const Welcome = () => {
                     className="absolute top-0 left-0 w-1/2 h-full"
                     style={{
                         background:
-                            'conic-gradient(from 89.78deg at 50% 41%, #FFFFFF 0deg, #00184D 219.41deg, #101828 309.85deg, #111111 360deg)',
+                            'conic-gradient(from 89.78deg at 50% 41%, #0A1F56 0deg, #00184D 219.41deg, #101828 309.85deg, #111111 360deg)',
                     }}
                 />
                 <div
                     className="absolute top-0 right-0 w-1/2 h-full"
                     style={{
                         background:
-                            'conic-gradient(from 89.78deg at 50% 41%, #FFFFFF 0deg, #00184D 219.41deg, #101828 309.85deg, #111111 360deg)',
+                            'conic-gradient(from 89.78deg at 50% 41%, #0A1F56 0deg, #00184D 219.41deg, #101828 309.85deg, #111111 360deg)',
                         transform: 'matrix(-1, 0, 0, 1, 0, 0)',
                     }}
                 />
@@ -69,7 +69,7 @@ const Welcome = () => {
                 className="absolute inset-0 z-0"
                 style={{
                     background:
-                        'linear-gradient(180deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.28) 42%, rgba(0,0,0,0.72) 100%)',
+                        'linear-gradient(180deg, #000000 30%, #5492EC 60%, #000000 100%)',
                     mixBlendMode: 'multiply',
                 }}
             />
@@ -222,13 +222,15 @@ const SignIcon = () => (
 );
 
 const Tubelight = () => (
-    <div
-        className="relative w-full max-w-[760px] h-[14px] md:h-[18px] rounded-full mb-[18px] md:mb-[24px]"
-        style={{
-            background: 'linear-gradient(180deg, rgba(146,193,255,0.95) 0%, rgba(120,173,245,0.82) 52%, rgba(120,173,245,0.25) 100%)',
-            boxShadow: '0 0 36px rgba(84,146,236,0.72), 0 18px 52px rgba(84,146,236,0.35)',
-        }}
-    />
+    <div className="relative w-full max-w-[760px] h-[34px] md:h-[40px] mb-[12px] md:mb-[16px] pointer-events-none overflow-hidden">
+        <div
+            className="absolute inset-x-0 top-0 h-full"
+            style={{
+                background: 'radial-gradient(110% 90% at 50% 10%, rgba(126,181,255,0.28) 0%, rgba(126,181,255,0.15) 45%, rgba(126,181,255,0.04) 75%, rgba(126,181,255,0) 100%)',
+                filter: 'blur(6px)',
+            }}
+        />
+    </div>
 );
 
 /** Small header DOX logo */
