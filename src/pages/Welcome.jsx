@@ -124,10 +124,12 @@ const Welcome = () => {
                     <Tubelight />
 
                     {/* 3 Task Cards */}
-                    <div className="w-full max-w-[1170px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-[24px] md:gap-[60px] px-4 mt-[8px] md:mt-[12px]">
-                        {cards.map((card, i) => (
-                            <TaskCard key={i} {...card} />
-                        ))}
+                    <div className="relative w-full max-w-[1170px] mx-auto px-4 mt-[8px] md:mt-[12px]">
+                        <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-[24px] md:gap-[60px]">
+                            {cards.map((card, i) => (
+                                <TaskCard key={i} {...card} />
+                            ))}
+                        </div>
                     </div>
 
                 </div>
@@ -147,51 +149,65 @@ const Welcome = () => {
  */
 const TaskCard = ({ title, desc, icon, onClick }) => (
     <div
-        className="relative flex flex-col p-[20px] rounded-[10px]"
-        style={{ background: 'rgba(11,15,21,0.17)' }}
+        className="relative flex flex-col overflow-hidden p-[20px]"
+        style={{
+            backgroundColor: '#0B0F152B',
+            backgroundImage: 'linear-gradient(180deg, rgba(18, 24, 34, 0.62) 0%, rgba(10, 14, 20, 0.88) 100%)',
+            borderRadius: '10px',
+            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08)',
+        }}
     >
-        {/* Pending badge */}
         <div
-            className="absolute top-[20px] right-[20px] flex items-center gap-[6px] px-[8px] py-[2px] rounded-[5px]"
-            style={{ background: 'rgba(255,255,255,0.15)' }}
-        >
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                <rect x="1" y="1" width="10" height="10" rx="5" stroke="white" strokeWidth="1" />
-            </svg>
-            <span className="font-[Jost] font-normal text-[12px] leading-[16px] text-white">Pending</span>
-        </div>
+            className="absolute inset-0 pointer-events-none"
+            style={{
+                background: 'linear-gradient(180deg, rgba(11, 15, 21, 0.88) 0%, rgba(11, 15, 21, 0.82) 100%)',
+            }}
+        />
 
-        {/* Icon pill */}
-        <div
-            className="w-[48px] h-[48px] rounded-[8px] flex items-center justify-center mb-[auto] mt-0"
-            style={{ background: 'rgba(255,255,255,0.15)', padding: '12px 12px 0px' }}
-        >
-            {icon}
-        </div>
+        <div className="relative z-10 flex flex-col h-full">
+            {/* Pending badge */}
+            <div
+                className="absolute top-[20px] right-[20px] flex items-center gap-[6px] px-[8px] py-[2px] rounded-[5px]"
+                style={{ background: 'rgba(255,255,255,0.15)' }}
+            >
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                    <rect x="1" y="1" width="10" height="10" rx="5" stroke="white" strokeWidth="1" />
+                </svg>
+                <span className="font-[Jost] font-normal text-[12px] leading-[16px] text-white">Pending</span>
+            </div>
 
-        {/* Title + desc */}
-        <div className="mt-[24px] mb-[16px]">
-            <h3 className="font-[Jost] font-normal text-[16px] leading-[24px] text-white mb-[4px]">
-                {title}
-            </h3>
-            <p className="font-[Jost] font-normal text-[14px] leading-[20px]" style={{ color: 'rgba(255,255,255,0.65)' }}>
-                {desc}
-            </p>
-        </div>
+            {/* Icon pill */}
+            <div
+                className="w-[48px] h-[48px] rounded-[8px] flex items-center justify-center mb-[auto] mt-0"
+                style={{ background: 'rgba(255,255,255,0.15)', padding: '12px 12px 0px' }}
+            >
+                {icon}
+            </div>
 
-        {/* Start button */}
-        <button
-            type="button"
-            onClick={onClick}
-            className="flex items-center gap-[8px] w-fit px-[17px] py-[10px] rounded-[10px] font-[Jost] font-normal text-[16px] leading-[24px] text-white transition-opacity hover:opacity-80 active:scale-95"
-            style={{ border: '1px solid rgba(255,255,255,0.5)' }}
-        >
-            Start
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M3.33334 8H12.6667" stroke="white" strokeWidth="1.333" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M8 3.33334L12.6667 8.00001L8 12.6667" stroke="white" strokeWidth="1.333" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-        </button>
+            {/* Title + desc */}
+            <div className="mt-[24px] mb-[16px]">
+                <h3 className="font-[Jost] font-normal text-[16px] leading-[24px] text-white mb-[4px]">
+                    {title}
+                </h3>
+                <p className="font-[Jost] font-normal text-[14px] leading-[20px]" style={{ color: 'rgba(255,255,255,0.65)' }}>
+                    {desc}
+                </p>
+            </div>
+
+            {/* Start button */}
+            <button
+                type="button"
+                onClick={onClick}
+                className="flex items-center gap-[8px] w-fit px-[17px] py-[10px] rounded-[10px] font-[Jost] font-normal text-[16px] leading-[24px] text-white transition-opacity hover:opacity-80 active:scale-95"
+                style={{ border: '1px solid rgba(255,255,255,0.5)' }}
+            >
+                Start
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M3.33334 8H12.6667" stroke="white" strokeWidth="1.333" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M8 3.33334L12.6667 8.00001L8 12.6667" stroke="white" strokeWidth="1.333" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+            </button>
+        </div>
     </div>
 );
 
