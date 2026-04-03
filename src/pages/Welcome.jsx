@@ -51,7 +51,7 @@ const Welcome = () => {
                 />
             </div>
 
-            {/* Topographic pattern overlay with multiply blend */}
+            {/* Topographic pattern overlay (dark lines, Figma-like) */}
             <div
                 className="absolute inset-0 z-0"
                 style={{
@@ -59,8 +59,9 @@ const Welcome = () => {
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
-                    mixBlendMode: 'screen',
-                    opacity: 0.38,
+                    mixBlendMode: 'multiply',
+                    filter: 'brightness(0) contrast(1.08)',
+                    opacity: 0.62,
                 }}
             />
 
