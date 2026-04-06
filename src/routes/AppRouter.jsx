@@ -5,7 +5,7 @@ import Completion from '../pages/Completion.jsx'
 import OnboardingLayout from '../pages/onboarding/OnboardingLayout.jsx'
 import Welcome from '../pages/Welcome.jsx'
 import LegalAgreements from '../pages/LegalAgreements.jsx'
-
+import ReviewApproval from '../pages/ReviewApproval.jsx'
 /**
  * AppRouter — defines all client-side routes for the application.
  */
@@ -18,6 +18,7 @@ const AppRouter = () => {
         <Route path="/completion" element={<Completion />} />
         <Route path="/welcome" element={<Welcome />} />
         <Route path="/legal-agreements" element={<LegalAgreements />} />
+        <Route path="/review-approval" element={<ReviewApproval/>} />
 
         <Route path="/onboarding/*" element={<OnboardingLayout />} />
         

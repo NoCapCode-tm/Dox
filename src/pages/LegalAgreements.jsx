@@ -48,12 +48,12 @@ const LegalAgreements = () => {
                 >
                     <div className="grid grid-cols-1 md:grid-cols-[140px_1fr] min-h-[760px]">
                         <aside className="relative p-4 md:p-3">
-                            <div className="hidden md:block absolute right-0 top-0 pointer-events-none">
+                            <div className="hidden md:flex absolute right-0 top-[18px] bottom-[18px] pointer-events-none items-stretch">
                                 <VerticalDivider />
                             </div>
                             <DoxLogo />
                             <p className="text-[11px] leading-[16px] text-white/65 mt-1">Employee Onboarding</p>
-                            <div className="my-5">
+                            <div className="my-5 pr-6">
                                 <HorizontalDivider />
                             </div>
 
@@ -169,13 +169,13 @@ const AgreementCard = ({ title, description, status, actionLabel, onAction, icon
 )
 
 const VerticalDivider = () => (
-    <svg width="2" height="797" viewBox="0 0 2 797" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <svg className="h-full w-auto" width="2" height="797" viewBox="0 0 2 797" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="none">
         <path d="M1 1L1 795.024" stroke="white" strokeOpacity="0.05" strokeWidth="2" strokeLinecap="round" />
     </svg>
 )
 
 const HorizontalDivider = () => (
-    <svg width="150" height="2" viewBox="0 0 150 2" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <svg width="118" height="2" viewBox="0 0 150 2" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M1 1H148.5" stroke="white" strokeOpacity="0.05" strokeWidth="2" strokeLinecap="round" />
     </svg>
 )
