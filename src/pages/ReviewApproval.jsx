@@ -53,82 +53,145 @@ const ReviewApproval = () => {
                 }}
             />
 
-            <div className="relative z-10 mx-auto w-full max-w-[1300px] px-4 py-[54px]">
+            <div className="relative z-10 mx-auto w-full max-w-[1300px] px-3 sm:px-4 lg:px-4 py-4 sm:py-6 lg:py-[54px]">
                 <div
-                    className="relative min-h-[880px] rounded-[10px]"
+                    className="relative rounded-[10px] p-4 sm:p-6 lg:p-0"
                     style={{
                         background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(153, 153, 153, 0) 100%)',
                     }}
                 >
-                    <div className="absolute inset-y-0 left-[188px] pointer-events-none">
-                        <VerticalDivider />
-                    </div>
-
-                    <div className="absolute left-[40px] top-[40px]">
-                        <DoxLogo />
-                        <p className="mt-[6px] text-[12px] leading-[20px] text-white/65">Employee Onboarding</p>
-                        <div className="mt-[12px]">
-                            <HorizontalDivider />
+                    <div className="lg:hidden">
+                        <div>
+                            <DoxLogo />
+                            <p className="mt-1 text-[12px] leading-[18px] text-white/65">Employee Onboarding</p>
+                            <div className="mt-3 mb-4">
+                                <HorizontalDivider />
+                            </div>
                         </div>
-                    </div>
 
-                    <div className="absolute left-[56px] top-[170px] flex flex-col gap-[42px]">
-                        <StepBox number="1" active />
-                        <StepBox number="2" />
-                        <StepBox number="3" completed />
-                    </div>
+                        <div className="flex items-center gap-3 mb-5">
+                            <StepBox number="1" active />
+                            <StepBox number="2" />
+                            <StepBox number="3" completed />
+                        </div>
 
-                    <div className="absolute left-[229px] top-[64px] right-[40px]">
-                        <h1 className="text-[36px] leading-[36px] font-normal text-white">Review &amp; Approval</h1>
-                        <p className="mt-[8px] text-[24px] leading-[24px] font-normal text-white">
+                        <h1 className="text-[28px] sm:text-[32px] leading-[32px] sm:leading-[36px] font-normal text-white">Review &amp; Approval</h1>
+                        <p className="mt-2 text-[16px] sm:text-[18px] leading-[22px] sm:leading-[24px] font-normal text-white">
                             Your onboarding submission is being reviewed by the HR team.
                         </p>
-                    </div>
 
-                    <div className="absolute left-[229px] top-[173px] w-[1027px] h-[145px] rounded-[10px] bg-[rgba(46,109,194,0.2)]">
-                        <div className="absolute left-[20px] top-[20px] h-[48px] w-[48px] rounded-[10px] bg-white/15 flex items-center justify-center">
-                            <ReviewIcon />
-                        </div>
-                        <div className="absolute left-[83px] top-[32px]">
-                            <h2 className="text-[24px] leading-[24px] font-normal text-white">Under HR Review</h2>
-                            <p className="mt-[25px] text-[18px] leading-[24px] font-normal text-white/65 max-w-[710px]">
+                        <div className="mt-5 rounded-[10px] bg-[rgba(46,109,194,0.2)] p-4 sm:p-5">
+                            <div className="h-[44px] w-[44px] rounded-[10px] bg-white/15 flex items-center justify-center">
+                                <ReviewIcon />
+                            </div>
+                            <h2 className="mt-3 text-[22px] sm:text-[24px] leading-[24px] font-normal text-white">Under HR Review</h2>
+                            <p className="mt-3 text-[15px] sm:text-[17px] leading-[22px] font-normal text-white/65">
                                 Your onboarding details are currently being verified by our HR team.
                             </p>
-                            <p className="mt-[4px] text-[18px] leading-[20px] font-normal text-white/65">
+                            <p className="mt-2 text-[15px] sm:text-[17px] leading-[20px] font-normal text-white/65">
                                 Expected completion: Within 48 hours
                             </p>
                         </div>
-                    </div>
 
-                    <div className="absolute left-[229px] top-[347px] w-[1027px] h-[311px] rounded-[10px] bg-[rgba(46,109,194,0.1)]">
-                        <div className="absolute left-[224px] top-[24px]">
-                            <h2 className="text-[24px] leading-[24px] font-normal text-white">Completed Steps</h2>
+                        <div className="mt-5 rounded-[10px] bg-[rgba(46,109,194,0.1)] p-4 sm:p-5">
+                            <h2 className="text-[22px] sm:text-[24px] leading-[24px] font-normal text-white">Completed Steps</h2>
+                            <div className="mt-5 flex flex-col gap-4">
+                                {steps.map((step, index) => (
+                                    <CompletedStep key={index} title={step.title} desc={step.desc} />
+                                ))}
+                            </div>
                         </div>
 
-                        <div className="absolute left-[40px] top-[67px] flex flex-col gap-[16px]">
-                            {steps.map((step, index) => (
-                                <CompletedStep key={index} title={step.title} desc={step.desc} />
-                            ))}
+                        <div className="mt-5 rounded-[10px] bg-[rgba(46,109,194,0.1)] p-4">
+                            <p className="text-[16px] leading-[24px] font-normal text-white">HR Comments</p>
+                            <div className="mt-3 h-[40px] rounded-[10px] bg-white/10 flex items-center justify-center px-4 text-center">
+                                <p className="text-[13px] sm:text-[15px] leading-[18px] sm:leading-[22px] italic text-white">
+                                    No comments yet. HR will add notes here if any clarifications are needed.
+                                </p>
+                            </div>
                         </div>
+
+                        <button
+                            type="button"
+                            onClick={() => navigate('/welcome')}
+                            className="mt-5 flex items-center gap-[8px] h-[40px] rounded-[10px] border border-white/70 px-[18px] text-[16px] leading-[24px] text-white/70 hover:bg-white/5 transition-colors"
+                        >
+                            <BackArrowIcon />
+                            Back
+                        </button>
                     </div>
 
-                    <div className="absolute left-[229px] top-[678px] w-[1027px] h-[105px] rounded-[10px] bg-[rgba(46,109,194,0.1)]">
-                        <p className="absolute left-[15px] top-[15px] text-[16px] leading-[24px] font-normal text-white">HR Comments</p>
-                        <div className="absolute left-[15px] right-[15px] top-[50px] h-[40px] rounded-[10px] bg-white/10 flex items-center justify-center px-4 text-center">
-                            <p className="text-[16px] leading-[24px] italic text-white">
-                                No comments yet. HR will add notes here if any clarifications are needed.
+                    <div className="hidden lg:block min-h-[880px]">
+                        <div className="absolute inset-y-0 left-[188px] pointer-events-none">
+                            <VerticalDivider />
+                        </div>
+
+                        <div className="absolute left-[40px] top-[40px]">
+                            <DoxLogo />
+                            <p className="mt-[6px] text-[12px] leading-[20px] text-white/65">Employee Onboarding</p>
+                            <div className="mt-[12px]">
+                                <HorizontalDivider />
+                            </div>
+                        </div>
+
+                        <div className="absolute left-[56px] top-[170px] flex flex-col gap-[42px]">
+                            <StepBox number="1" active />
+                            <StepBox number="2" />
+                            <StepBox number="3" completed />
+                        </div>
+
+                        <div className="absolute left-[229px] top-[64px] right-[40px]">
+                            <h1 className="text-[36px] leading-[36px] font-normal text-white">Review &amp; Approval</h1>
+                            <p className="mt-[8px] text-[24px] leading-[24px] font-normal text-white">
+                                Your onboarding submission is being reviewed by the HR team.
                             </p>
                         </div>
-                    </div>
 
-                    <button
-                        type="button"
-                        onClick={() => navigate('/welcome')}
-                        className="absolute left-[229px] top-[800px] flex items-center gap-[8px] h-[40px] rounded-[10px] border border-white/70 px-[18px] text-[16px] leading-[24px] text-white/70 hover:bg-white/5 transition-colors"
-                    >
-                        <BackArrowIcon />
-                        Back
-                    </button>
+                        <div className="absolute left-[229px] top-[173px] w-[1027px] h-[145px] rounded-[10px] bg-[rgba(46,109,194,0.2)]">
+                            <div className="absolute left-[20px] top-[20px] h-[48px] w-[48px] rounded-[10px] bg-white/15 flex items-center justify-center">
+                                <ReviewIcon />
+                            </div>
+                            <div className="absolute left-[83px] top-[32px]">
+                                <h2 className="text-[24px] leading-[24px] font-normal text-white">Under HR Review</h2>
+                                <p className="mt-[25px] text-[18px] leading-[24px] font-normal text-white/65 max-w-[710px]">
+                                    Your onboarding details are currently being verified by our HR team.
+                                </p>
+                                <p className="mt-[4px] text-[18px] leading-[20px] font-normal text-white/65">
+                                    Expected completion: Within 48 hours
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="absolute left-[229px] top-[347px] w-[1027px] h-[311px] rounded-[10px] bg-[rgba(46,109,194,0.1)]">
+                            <div className="absolute left-[224px] top-[24px]">
+                                <h2 className="text-[24px] leading-[24px] font-normal text-white">Completed Steps</h2>
+                            </div>
+
+                            <div className="absolute left-[40px] top-[67px] flex flex-col gap-[16px]">
+                                {steps.map((step, index) => (
+                                    <CompletedStep key={index} title={step.title} desc={step.desc} />
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="absolute left-[229px] top-[678px] w-[1027px] h-[105px] rounded-[10px] bg-[rgba(46,109,194,0.1)]">
+                            <p className="absolute left-[15px] top-[15px] text-[16px] leading-[24px] font-normal text-white">HR Comments</p>
+                            <div className="absolute left-[15px] right-[15px] top-[50px] h-[40px] rounded-[10px] bg-white/10 flex items-center justify-center px-4 text-center">
+                                <p className="text-[16px] leading-[24px] italic text-white">
+                                    No comments yet. HR will add notes here if any clarifications are needed.
+                                </p>
+                            </div>
+                        </div>
+
+                        <button
+                            type="button"
+                            onClick={() => navigate('/welcome')}
+                            className="absolute left-[229px] top-[800px] flex items-center gap-[8px] h-[40px] rounded-[10px] border border-white/70 px-[18px] text-[16px] leading-[24px] text-white/70 hover:bg-white/5 transition-colors"
+                        >
+                            <BackArrowIcon />
+                            Back
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
