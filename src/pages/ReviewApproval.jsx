@@ -60,7 +60,15 @@ const ReviewApproval = () => {
                         background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(153, 153, 153, 0) 100%)',
                     }}
                 >
-                    <div className="lg:hidden">
+                    <div
+                        className="pointer-events-none absolute inset-0 rounded-[10px]"
+                        style={{
+                            background:
+                                'radial-gradient(66% 44% at 56% 40%, rgba(88, 142, 230, 0.30) 0%, rgba(88, 142, 230, 0.14) 46%, rgba(88, 142, 230, 0) 100%), linear-gradient(180deg, rgba(8, 20, 44, 0.26) 0%, rgba(26, 58, 110, 0.14) 52%, rgba(8, 20, 44, 0.26) 100%)',
+                        }}
+                    />
+
+                    <div className="relative z-10 lg:hidden">
                         <div>
                             <DoxLogo />
                             <p className="mt-1 text-[12px] leading-[18px] text-white/65">Employee Onboarding</p>
@@ -121,7 +129,7 @@ const ReviewApproval = () => {
                         </button>
                     </div>
 
-                    <div className="hidden lg:block min-h-[880px]">
+                    <div className="relative z-10 hidden lg:block min-h-[880px]">
                         <div className="absolute inset-y-0 left-[188px] pointer-events-none">
                             <VerticalDivider />
                         </div>
