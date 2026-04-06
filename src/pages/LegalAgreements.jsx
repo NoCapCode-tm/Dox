@@ -57,7 +57,7 @@ const LegalAgreements = () => {
                                 <HorizontalDivider />
                             </div>
 
-                            <div className="flex md:flex-col gap-3">
+                            <div className="flex md:flex-col gap-3 md:gap-8">
                                 <StepBadge number="1" active />
                                 <StepBadge number="2" />
                                 <StepBadge number="3" />
