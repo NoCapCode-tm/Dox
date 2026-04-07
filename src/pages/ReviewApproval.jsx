@@ -90,7 +90,7 @@ const ReviewApproval = () => {
                                         description="Your onboarding details are currently being verified by our HR team."
                                         secondary="Expected completion: Within 48 hours"
                                         icon={<ClockIcon />}
-                                        iconClassName="h-[104px] w-[104px] rounded-[20px]"
+                                        iconClassName="h-10 w-10 rounded-[10px]"
                                         tone="primary"
                                     />
 
@@ -210,7 +210,7 @@ const DoxLogo = () => (
 )
 
 const ClockIcon = () => (
-    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+    <svg width="20" height="20" viewBox="0 0 48 48" fill="none" aria-hidden="true">
         <circle cx="24" cy="24" r="13.5" stroke="#00A63E" strokeWidth="3" />
         <path d="M24 16.5V24.5L29.5 28" stroke="#00A63E" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
