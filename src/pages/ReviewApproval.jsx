@@ -96,6 +96,7 @@ const ReviewApproval = () => {
 
                                     <InfoCard
                                         title="Completed Steps"
+                                        contentClassName="pl-4 md:pl-10"
                                         description={
                                             <div className="mt-5 flex flex-col gap-4">
                                                 {steps.map((step, index) => (
@@ -159,7 +160,7 @@ const CompletedStep = ({ title, desc }) => (
     </div>
 )
 
-const InfoCard = ({ title, description, secondary, icon, iconClassName = 'h-10 w-10 rounded-[10px]', tone = 'secondary' }) => (
+const InfoCard = ({ title, description, secondary, icon, iconClassName = 'h-10 w-10 rounded-[10px]', contentClassName = '', tone = 'secondary' }) => (
     <div
         className="relative rounded-[10px] border border-white/8 p-4 md:p-6"
         style={{
@@ -174,7 +175,7 @@ const InfoCard = ({ title, description, secondary, icon, iconClassName = 'h-10 w
                     {icon}
                 </div>
             ) : null}
-            <div className="min-w-0 flex-1">
+            <div className={`min-w-0 flex-1 ${contentClassName}`}>
                 <h2 className="text-[22px] leading-[28px] font-normal text-white md:text-[24px] md:leading-[32px]">{title}</h2>
                 {typeof description === 'string' ? (
                     <p className="mt-2 max-w-[760px] text-[16px] leading-[24px] text-white/70">{description}</p>
