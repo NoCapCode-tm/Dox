@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOnboardingContext } from '../../context/OnboardingContext';
+import { saveStep3IdentityInfo, getCurrentUser } from '../../api/employeeApi';
+import Loader from '../../components/ui/Loader';
 
 /**
  * Step3IdentityInfo
@@ -9,6 +11,29 @@ const Step3IdentityInfo = () => {
   const navigate = useNavigate();
   const { formData, updateFormData } = useOnboardingContext();
   const form = formData.step3;
+  const [isSavingStep, setIsSavingStep] = useState(false);
+  const [stepError, setStepError] = useState('');
+
+  /** Prefill form data from database on component mount */
+  useEffect(() => {
+    const prefillFormData = async () => {
+      try {
+        const userData = await getCurrentUser();
+        if (userData?.message) {
+          const data = userData.message;
+          const serverGovId = data.documents?.govid1?.number != null ? String(data.documents.govid1.number) : '';
+          const serverSecondaryId = data.documents?.govid2?.number != null ? String(data.documents.govid2.number) : '';
+
+          // Preserve values already present in context when navigating back.
+          updateFormData('step3', 'govIdNumber', form.govIdNumber || serverGovId);
+          updateFormData('step3', 'secondaryIdNumber', form.secondaryIdNumber || serverSecondaryId);
+        }
+      } catch (error) {
+        console.warn('Could not prefill Step 3 data:', error?.message);
+      }
+    };
+    prefillFormData();
+  }, []);
 
   /** Update a text field */
   const handleChange = (field, value) => {
@@ -20,6 +45,19 @@ const Step3IdentityInfo = () => {
     updateFormData('step3', field, file);
   };
 
+  const handleNext = async () => {
+    try {
+      setIsSavingStep(true);
+      setStepError('');
+      await saveStep3IdentityInfo(form);
+      navigate('/onboarding/step4');
+    } catch (error) {
+      setStepError(error?.message || 'Unable to save Step 3. Please try again.');
+    } finally {
+      setIsSavingStep(false);
+    }
+  };
+
   return (
     <div
       className="relative min-h-screen w-full overflow-x-hidden flex flex-col font-[Jost] text-white"
@@ -27,6 +65,7 @@ const Step3IdentityInfo = () => {
         background: 'linear-gradient(121.47deg, #0A0E14 49.53%, #161F2C 104.45%)',
       }}
     >
+      {isSavingStep && <Loader fullScreen={true} message="Saving and loading next step..." />}
       {/* Grid lines */}
       <div
         className="absolute inset-0 pointer-events-none select-none z-0"
@@ -163,21 +202,27 @@ const Step3IdentityInfo = () => {
 
           <button
             type="button"
-            onClick={() => navigate('/onboarding/step4')}
+            onClick={handleNext}
+            disabled={isSavingStep}
             className="h-[36px] sm:h-[40px] flex-1 sm:flex-none min-w-0 px-[12px] sm:px-[24px] rounded-[10px] flex items-center justify-center gap-[8px] transition-opacity hover:opacity-90 active:scale-95"
             style={{
               backgroundColor: '#314460',
               boxShadow:
                 '1px 1px 2px rgba(64,88,125,0.3), -1px -1px 2px rgba(34,48,67,0.5), inset -5px 5px 10px rgba(34,48,67,0.2), inset 5px -5px 10px rgba(34,48,67,0.2), inset -5px -5px 10px rgba(64,88,125,0.9), inset 5px 5px 13px rgba(34,48,67,0.9)',
+              opacity: isSavingStep ? 0.7 : 1,
             }}
           >
             <span className="text-[13px] sm:text-[16px] font-medium text-white leading-[18px] sm:leading-[24px] text-center">
-              <span className="sm:hidden">Next</span>
-              <span className="hidden sm:inline">Next: Education Details</span>
+              <span className="sm:hidden">{isSavingStep ? 'Saving...' : 'Next'}</span>
+              <span className="hidden sm:inline">{isSavingStep ? 'Saving Step 3...' : 'Next: Education Details'}</span>
             </span>
             <ArrowRightIcon />
           </button>
         </div>
+
+        {stepError ? (
+          <p className="mt-[12px] text-[14px] text-[#FF9EA0]">{stepError}</p>
+        ) : null}
 
       </main>
     </div>
