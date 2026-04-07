@@ -1,5 +1,8 @@
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOnboardingContext } from '../../context/OnboardingContext';
+import { saveStep6BankDetails, getCurrentUser } from '../../api/employeeApi';
+import Loader from '../../components/ui/Loader';
 
 /**
  * Step6BankDetails
@@ -11,9 +14,56 @@ const Step6BankDetails = () => {
   const { formData, updateNestedFormData } = useOnboardingContext();
   const india = formData.step6.india;
   const intl = formData.step6.intl;
+  const [isSavingStep, setIsSavingStep] = useState(false);
+  const [stepError, setStepError] = useState('');
+
+  /** Prefill form data from database on component mount */
+  useEffect(() => {
+    const prefillFormData = async () => {
+      try {
+        const userData = await getCurrentUser();
+        if (userData?.message) {
+          const data = userData.message;
+          // Prefill Indian bank details
+          if (data.bankdetails?.Indian) {
+            updateNestedFormData('step6', 'india', 'accountHolderName', india.accountHolderName || data.bankdetails.Indian.acholdername || '');
+            updateNestedFormData('step6', 'india', 'accountNumber', india.accountNumber || data.bankdetails.Indian.accountno || '');
+            updateNestedFormData('step6', 'india', 'ifscCode', india.ifscCode || data.bankdetails.Indian.ifsc || '');
+            updateNestedFormData('step6', 'india', 'bankName', india.bankName || data.bankdetails.Indian.bankname || '');
+            updateNestedFormData('step6', 'india', 'branchName', india.branchName || data.bankdetails.Indian.branchname || '');
+            updateNestedFormData('step6', 'india', 'upiId', india.upiId || data.bankdetails.Indian.upi || '');
+          }
+          // Prefill International bank details
+          if (data.bankdetails?.International) {
+            updateNestedFormData('step6', 'intl', 'accountHolderName', intl.accountHolderName || data.bankdetails.International.acholdername || '');
+            updateNestedFormData('step6', 'intl', 'ibanAccountNumber', intl.ibanAccountNumber || data.bankdetails.International.accountno || '');
+            updateNestedFormData('step6', 'intl', 'swiftCode', intl.swiftCode || data.bankdetails.International.swift || '');
+            updateNestedFormData('step6', 'intl', 'bankName', intl.bankName || data.bankdetails.International.bankname || '');
+            updateNestedFormData('step6', 'intl', 'paymentPlatform', intl.paymentPlatform || data.bankdetails.International.platform || '');
+          }
+        }
+      } catch (error) {
+        console.warn('Could not prefill Step 6 data:', error?.message);
+      }
+    };
+    prefillFormData();
+  }, []);
 
   const handleIndia = (field, value) => updateNestedFormData('step6', 'india', field, value);
   const handleIntl = (field, value) => updateNestedFormData('step6', 'intl', field, value);
+
+  const handleNext = async () => {
+    try {
+      setIsSavingStep(true);
+      setStepError('');
+      await saveStep6BankDetails(formData.step6);
+      navigate('/onboarding/step7');
+    } catch (error) {
+      setStepError(error?.message || 'Unable to save Step 6. Please try again.');
+    } finally {
+      setIsSavingStep(false);
+    }
+  };
 
   return (
     <div
@@ -22,6 +72,7 @@ const Step6BankDetails = () => {
         background: 'linear-gradient(121.47deg, #0A0E14 49.53%, #161F2C 104.45%)',
       }}
     >
+      {isSavingStep && <Loader fullScreen={true} message="Saving and loading next step..." />}
       {/* Grid lines */}
       <div
         className="absolute inset-0 pointer-events-none select-none z-0"
@@ -218,21 +269,27 @@ const Step6BankDetails = () => {
 
           <button
             type="button"
-            onClick={() => navigate('/onboarding/step7')}
+            onClick={handleNext}
+            disabled={isSavingStep}
             className="h-[36px] sm:h-[40px] flex-1 sm:flex-none min-w-0 px-[12px] sm:px-[24px] rounded-[10px] flex items-center justify-center gap-[8px] transition-opacity hover:opacity-90 active:scale-95"
             style={{
               backgroundColor: '#314460',
               boxShadow:
                 '1px 1px 2px rgba(64,88,125,0.3), -1px -1px 2px rgba(34,48,67,0.5), inset -5px 5px 10px rgba(34,48,67,0.2), inset 5px -5px 10px rgba(34,48,67,0.2), inset -5px -5px 10px rgba(64,88,125,0.9), inset 5px 5px 13px rgba(34,48,67,0.9)',
+              opacity: isSavingStep ? 0.7 : 1,
             }}
           >
             <span className="text-[13px] sm:text-[16px] font-medium text-white leading-[18px] sm:leading-[24px] text-center">
-              <span className="sm:hidden">Next</span>
-              <span className="hidden sm:inline">Next: Technical Details</span>
+              <span className="sm:hidden">{isSavingStep ? 'Saving...' : 'Next'}</span>
+              <span className="hidden sm:inline">{isSavingStep ? 'Saving Step 6...' : 'Next: Technical Details'}</span>
             </span>
             <ArrowRightIcon />
           </button>
         </div>
+
+        {stepError ? (
+          <p className="mt-[12px] text-[14px] text-[#FF9EA0]">{stepError}</p>
+        ) : null}
 
       </main>
     </div>
