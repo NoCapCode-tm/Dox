@@ -4,33 +4,36 @@ const LegalAgreements = () => {
     const navigate = useNavigate()
 
     return (
+        /* Page Shell */
         <div
             className="relative min-h-screen w-full overflow-hidden font-[Jost] text-white"
             style={{ background: '#000' }}
         >
+            {/* Base Background Gradients */}
             <div className="absolute inset-0 z-0">
                 <div
                     className="absolute top-0 left-0 w-1/2 h-full"
                     style={{
                         background:
-                            'conic-gradient(from 89.78deg at 50% 41%, #0A1F56 0deg, #00184D 219.41deg, #101828 309.85deg, #111111 360deg)',
+                            'conic-gradient(from 89.78deg at 50% 41%, #0A1F56 0deg, #00184D 219.41deg, #0A1F56 309.85deg, #0D2460 360deg)',
                     }}
                 />
                 <div
                     className="absolute top-0 right-0 w-1/2 h-full"
                     style={{
                         background:
-                            'conic-gradient(from 89.78deg at 50% 41%, #0A1F56 0deg, #00184D 219.41deg, #101828 309.85deg, #111111 360deg)',
+                            'conic-gradient(from 89.78deg at 50% 41%, #0A1F56 0deg, #00184D 219.41deg, #0A1F56 309.85deg, #0D2460 360deg)',
                         transform: 'matrix(-1, 0, 0, 1, 0, 0)',
                     }}
                 />
             </div>
 
+            {/* Pattern Overlay */}
             <div
                 className="absolute inset-0 z-0"
                 style={{
                     backgroundImage:
-                        'url(/dox-bg.png), linear-gradient(180deg, #000000 14.42%, rgba(74, 131, 214, 0.6) 43.27%, #000000 100%)',
+                        'url(/dox-bg.png), linear-gradient(180deg, rgba(0, 0, 0, 0.72) 14.42%, rgba(74, 131, 214, 0.14) 43.27%, rgba(0, 0, 0, 0.78) 100%)',
                     backgroundSize: 'cover, cover',
                     backgroundPosition: 'center, center',
                     backgroundRepeat: 'no-repeat, no-repeat',
@@ -38,15 +41,19 @@ const LegalAgreements = () => {
                 }}
             />
 
+            {/* Main Frame */}
             <div className="relative z-10 max-w-[1240px] mx-auto px-4 md:px-8 py-8 md:py-10">
                 <div
-                    className="rounded-[12px] border border-white/8 overflow-hidden"
+                    className="relative rounded-[12px] border border-white/8 overflow-hidden"
                     style={{
                         background:
-                            'linear-gradient(180deg, rgba(10, 15, 26, 0.84) 0%, rgba(8, 12, 20, 0.8) 100%)',
+                            'linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(153, 153, 153, 0.02) 100%)',
+                        backdropFilter: 'blur(8px)',
+                        WebkitBackdropFilter: 'blur(8px)',
                     }}
                 >
                     <div className="grid grid-cols-1 md:grid-cols-[140px_1fr] min-h-[760px]">
+                        {/* Sidebar */}
                         <aside className="relative p-4 md:p-3">
                             <div className="hidden md:flex absolute right-0 top-[18px] bottom-[18px] pointer-events-none items-stretch">
                                 <VerticalDivider />
@@ -64,18 +71,15 @@ const LegalAgreements = () => {
                             </div>
                         </aside>
 
+                        {/* Main Content */}
                         <section className="relative p-5 md:p-8 lg:p-10">
-                            <div className="pointer-events-none absolute inset-0" style={{
-                                background: 'radial-gradient(60% 36% at 50% 40%, rgba(78, 138, 235, 0.45) 0%, rgba(78, 138, 235, 0.2) 45%, rgba(78, 138, 235, 0) 100%)',
-                                mixBlendMode: 'screen',
-                            }} />
-
                             <div className="relative z-10">
                                 <h1 className="text-[28px] leading-[34px] font-normal">Legal Agreements</h1>
                                 <p className="mt-1 text-white/70 text-[16px] leading-[24px] max-w-[820px]">
                                     Please review and sign the following documents to proceed with your onboarding.
                                 </p>
 
+                                {/* Agreement Cards */}
                                 <div className="mt-10 space-y-8">
                                     <AgreementCard
                                         title="Offer Letter"
@@ -97,6 +101,7 @@ const LegalAgreements = () => {
                                     />
                                 </div>
 
+                                {/* Footer Actions */}
                                 <div className="mt-8 flex items-center justify-between">
                                     <button
                                         type="button"
@@ -153,8 +158,12 @@ const ForwardArrowIcon = () => (
 
 const AgreementCard = ({ title, description, status, actionLabel, onAction, icon, signed = false }) => (
     <div
-        className="relative rounded-[12px] p-4 md:p-6 border border-white/8"
-        style={{ background: 'linear-gradient(180deg, rgba(45, 76, 137, 0.72) 0%, rgba(15, 37, 78, 0.72) 100%)' }}
+        className="relative rounded-[10px] p-4 md:p-6 border border-white/8"
+        style={{
+            background: 'rgba(46, 109, 194, 0.1)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)',
+        }}
     >
         <div className="absolute top-4 right-4 px-2 py-0.5 rounded-[6px] text-[12px] leading-[16px] inline-flex items-center gap-1" style={{
             background: signed ? 'rgba(6, 214, 160, 0.2)' : 'rgba(255,255,255,0.16)',
