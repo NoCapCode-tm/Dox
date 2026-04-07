@@ -19,23 +19,20 @@ const ReviewApproval = () => {
     ]
 
     return (
-        <div
-            className="relative min-h-screen w-full overflow-hidden font-[Jost] text-white"
-            style={{ background: 'linear-gradient(180deg, #050E1D 11.06%, #4A83D6 43%, #000000 100%)' }}
-        >
+        <div className="relative min-h-screen w-full overflow-hidden font-[Jost] text-white" style={{ background: '#000' }}>
             <div className="absolute inset-0 z-0">
                 <div
                     className="absolute top-0 left-0 w-1/2 h-full"
                     style={{
                         background:
-                            'conic-gradient(from 89.78deg at 50% 41%, #0A1F56 0deg, #00184D 219.41deg, #101828 309.85deg, #111111 360deg)',
+                            'conic-gradient(from 89.78deg at 50% 41%, #0A1F56 0deg, #00184D 219.41deg, #0A1F56 309.85deg, #0D2460 360deg)',
                     }}
                 />
                 <div
                     className="absolute top-0 right-0 w-1/2 h-full"
                     style={{
                         background:
-                            'conic-gradient(from 89.78deg at 50% 41%, #0A1F56 0deg, #00184D 219.41deg, #101828 309.85deg, #111111 360deg)',
+                            'conic-gradient(from 89.78deg at 50% 41%, #0A1F56 0deg, #00184D 219.41deg, #0A1F56 309.85deg, #0D2460 360deg)',
                         transform: 'matrix(-1, 0, 0, 1, 0, 0)',
                     }}
                 />
@@ -53,152 +50,88 @@ const ReviewApproval = () => {
                 }}
             />
 
-            <div className="relative z-10 mx-auto w-full max-w-[1300px] px-3 sm:px-4 lg:px-4 py-4 sm:py-6 lg:py-[54px]">
+            <div className="relative z-10 mx-auto w-full max-w-[1240px] px-4 md:px-8 py-8 md:py-10">
                 <div
-                    className="relative rounded-[10px] p-4 sm:p-6 lg:p-0"
+                    className="relative overflow-hidden rounded-[12px] border border-white/8"
                     style={{
-                        background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(153, 153, 153, 0) 100%)',
+                        background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(153, 153, 153, 0.02) 100%)',
+                        backdropFilter: 'blur(8px)',
+                        WebkitBackdropFilter: 'blur(8px)',
                     }}
                 >
-                    <div
-                        className="pointer-events-none absolute inset-0 rounded-[10px]"
-                        style={{
-                            background:
-                                'radial-gradient(66% 44% at 56% 40%, rgba(88, 142, 230, 0.30) 0%, rgba(88, 142, 230, 0.14) 46%, rgba(88, 142, 230, 0) 100%), linear-gradient(180deg, rgba(8, 20, 44, 0.26) 0%, rgba(26, 58, 110, 0.14) 52%, rgba(8, 20, 44, 0.26) 100%)',
-                        }}
-                    />
-
-                    <div className="relative z-10 lg:hidden">
-                        <div>
+                    <div className="grid grid-cols-1 md:grid-cols-[140px_1fr] min-h-[760px]">
+                        <aside className="relative p-4 md:p-3">
+                            <div className="hidden md:flex absolute right-0 top-[18px] bottom-[18px] pointer-events-none items-stretch">
+                                <VerticalDivider />
+                            </div>
                             <DoxLogo />
-                            <p className="mt-1 text-[12px] leading-[18px] text-white/65">Employee Onboarding</p>
-                            <div className="mt-3 mb-4">
+                            <p className="mt-1 text-[11px] leading-[16px] text-white/65">Employee Onboarding</p>
+                            <div className="my-5 pr-6">
                                 <HorizontalDivider />
                             </div>
-                        </div>
 
-                        <div className="flex items-center gap-3 mb-5">
-                            <StepBox number="1" active />
-                            <StepBox number="2" />
-                            <StepBox number="3" completed />
-                        </div>
-
-                        <h1 className="text-[28px] sm:text-[32px] leading-[32px] sm:leading-[36px] font-normal text-white">Review &amp; Approval</h1>
-                        <p className="mt-2 text-[16px] sm:text-[18px] leading-[22px] sm:leading-[24px] font-normal text-white">
-                            Your onboarding submission is being reviewed by the HR team.
-                        </p>
-
-                        <div className="mt-5 rounded-[10px] bg-[rgba(46,109,194,0.2)] p-4 sm:p-5">
-                            <div className="h-[44px] w-[44px] rounded-[10px] bg-white/15 flex items-center justify-center">
-                                <ReviewIcon />
+                            <div className="flex md:flex-col gap-3 md:gap-8">
+                                <StepBox number="1" active />
+                                <StepBox number="2" />
+                                <StepBox number="3" completed />
                             </div>
-                            <h2 className="mt-3 text-[22px] sm:text-[24px] leading-[24px] font-normal text-white">Under HR Review</h2>
-                            <p className="mt-3 text-[15px] sm:text-[17px] leading-[22px] font-normal text-white/65">
-                                Your onboarding details are currently being verified by our HR team.
-                            </p>
-                            <p className="mt-2 text-[15px] sm:text-[17px] leading-[20px] font-normal text-white/65">
-                                Expected completion: Within 48 hours
-                            </p>
-                        </div>
+                        </aside>
 
-                        <div className="mt-5 rounded-[10px] bg-[rgba(46,109,194,0.1)] p-4 sm:p-5">
-                            <h2 className="text-[22px] sm:text-[24px] leading-[24px] font-normal text-white">Completed Steps</h2>
-                            <div className="mt-5 flex flex-col gap-4">
-                                {steps.map((step, index) => (
-                                    <CompletedStep key={index} title={step.title} desc={step.desc} />
-                                ))}
-                            </div>
-                        </div>
-
-                        <div className="mt-5 rounded-[10px] bg-[rgba(46,109,194,0.1)] p-4">
-                            <p className="text-[16px] leading-[24px] font-normal text-white">HR Comments</p>
-                            <div className="mt-3 h-[40px] rounded-[10px] bg-white/10 flex items-center justify-center px-4 text-center">
-                                <p className="text-[13px] sm:text-[15px] leading-[18px] sm:leading-[22px] italic text-white">
-                                    No comments yet. HR will add notes here if any clarifications are needed.
+                        <section className="relative p-5 md:p-8 lg:p-10">
+                            <div className="relative z-10">
+                                <h1 className="text-[28px] leading-[34px] font-normal">Review &amp; Approval</h1>
+                                <p className="mt-1 max-w-[820px] text-[16px] leading-[24px] text-white/70">
+                                    Your onboarding submission is being reviewed by the HR team.
                                 </p>
+
+                                <div className="mt-10 space-y-8">
+                                    <InfoCard
+                                        title="Under HR Review"
+                                        description="Your onboarding details are currently being verified by our HR team."
+                                        secondary="Expected completion: Within 48 hours"
+                                        icon={<ReviewIcon />}
+                                        tone="primary"
+                                    />
+
+                                    <InfoCard
+                                        title="Completed Steps"
+                                        description={
+                                            <div className="mt-5 flex flex-col gap-4">
+                                                {steps.map((step, index) => (
+                                                    <CompletedStep key={index} title={step.title} desc={step.desc} />
+                                                ))}
+                                            </div>
+                                        }
+                                        icon={<ChecklistIcon />}
+                                        tone="secondary"
+                                    />
+
+                                    <InfoCard
+                                        title="HR Comments"
+                                        description={
+                                            <div className="mt-4 rounded-[10px] bg-white/10 px-4 py-3 text-center">
+                                                <p className="text-[15px] leading-[22px] italic text-white/85 md:text-[16px] md:leading-[24px]">
+                                                    No comments yet. HR will add notes here if any clarifications are needed.
+                                                </p>
+                                            </div>
+                                        }
+                                        icon={<CommentIcon />}
+                                        tone="secondary"
+                                    />
+                                </div>
+
+                                <div className="mt-8 flex items-center justify-between">
+                                    <button
+                                        type="button"
+                                        onClick={() => navigate('/welcome')}
+                                        className="inline-flex items-center gap-2 rounded-[10px] border border-white/50 px-7 py-2.5 text-[16px] leading-[22px] text-white/90 transition-colors hover:bg-white/5"
+                                    >
+                                        <BackArrowIcon />
+                                        Back
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-
-                        <button
-                            type="button"
-                            onClick={() => navigate('/welcome')}
-                            className="mt-5 flex items-center gap-[8px] h-[40px] rounded-[10px] border border-white/70 px-[18px] text-[16px] leading-[24px] text-white/70 hover:bg-white/5 transition-colors"
-                        >
-                            <BackArrowIcon />
-                            Back
-                        </button>
-                    </div>
-
-                    <div className="relative z-10 hidden lg:block min-h-[880px]">
-                        <div className="absolute inset-y-0 left-[188px] pointer-events-none">
-                            <VerticalDivider />
-                        </div>
-
-                        <div className="absolute left-[40px] top-[40px]">
-                            <DoxLogo />
-                            <p className="mt-[6px] text-[12px] leading-[20px] text-white/65">Employee Onboarding</p>
-                            <div className="mt-[12px]">
-                                <HorizontalDivider />
-                            </div>
-                        </div>
-
-                        <div className="absolute left-[56px] top-[170px] flex flex-col gap-[42px]">
-                            <StepBox number="1" active />
-                            <StepBox number="2" />
-                            <StepBox number="3" completed />
-                        </div>
-
-                        <div className="absolute left-[229px] top-[64px] right-[40px]">
-                            <h1 className="text-[36px] leading-[36px] font-normal text-white">Review &amp; Approval</h1>
-                            <p className="mt-[8px] text-[24px] leading-[24px] font-normal text-white">
-                                Your onboarding submission is being reviewed by the HR team.
-                            </p>
-                        </div>
-
-                        <div className="absolute left-[229px] top-[173px] w-[1027px] h-[145px] rounded-[10px] bg-[rgba(46,109,194,0.2)]">
-                            <div className="absolute left-[20px] top-[20px] h-[48px] w-[48px] rounded-[10px] bg-white/15 flex items-center justify-center">
-                                <ReviewIcon />
-                            </div>
-                            <div className="absolute left-[83px] top-[32px]">
-                                <h2 className="text-[24px] leading-[24px] font-normal text-white">Under HR Review</h2>
-                                <p className="mt-[25px] text-[18px] leading-[24px] font-normal text-white/65 max-w-[710px]">
-                                    Your onboarding details are currently being verified by our HR team.
-                                </p>
-                                <p className="mt-[4px] text-[18px] leading-[20px] font-normal text-white/65">
-                                    Expected completion: Within 48 hours
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className="absolute left-[229px] top-[347px] w-[1027px] h-[311px] rounded-[10px] bg-[rgba(46,109,194,0.1)]">
-                            <div className="absolute left-[224px] top-[24px]">
-                                <h2 className="text-[24px] leading-[24px] font-normal text-white">Completed Steps</h2>
-                            </div>
-
-                            <div className="absolute left-[40px] top-[67px] flex flex-col gap-[16px]">
-                                {steps.map((step, index) => (
-                                    <CompletedStep key={index} title={step.title} desc={step.desc} />
-                                ))}
-                            </div>
-                        </div>
-
-                        <div className="absolute left-[229px] top-[678px] w-[1027px] h-[105px] rounded-[10px] bg-[rgba(46,109,194,0.1)]">
-                            <p className="absolute left-[15px] top-[15px] text-[16px] leading-[24px] font-normal text-white">HR Comments</p>
-                            <div className="absolute left-[15px] right-[15px] top-[50px] h-[40px] rounded-[10px] bg-white/10 flex items-center justify-center px-4 text-center">
-                                <p className="text-[16px] leading-[24px] italic text-white">
-                                    No comments yet. HR will add notes here if any clarifications are needed.
-                                </p>
-                            </div>
-                        </div>
-
-                        <button
-                            type="button"
-                            onClick={() => navigate('/welcome')}
-                            className="absolute left-[229px] top-[800px] flex items-center gap-[8px] h-[40px] rounded-[10px] border border-white/70 px-[18px] text-[16px] leading-[24px] text-white/70 hover:bg-white/5 transition-colors"
-                        >
-                            <BackArrowIcon />
-                            Back
-                        </button>
+                        </section>
                     </div>
                 </div>
             </div>
@@ -208,21 +141,47 @@ const ReviewApproval = () => {
 
 const StepBox = ({ number, active = false, completed = false }) => (
     <div
-        className="relative h-[68px] w-[68px] rounded-[10px]"
-        style={{ background: completed ? 'rgba(255, 255, 255, 0.14)' : 'rgba(18, 42, 75, 0.2)' }}
+        className="flex h-[56px] w-[56px] items-center justify-center rounded-[10px] text-[34px] leading-none text-white"
+        style={{ background: completed ? 'rgba(255,255,255,0.18)' : active ? 'rgba(255,255,255,0.16)' : 'rgba(75, 96, 137, 0.35)' }}
     >
-        <span className="absolute left-[24px] top-[21px] text-[40px] leading-[24px] font-normal text-white">{number}</span>
+        {number}
     </div>
 )
 
 const CompletedStep = ({ title, desc }) => (
-    <div className="relative flex items-start gap-[16px]">
+    <div className="flex items-start gap-4">
         <div className="mt-[2px] h-[24px] w-[24px] shrink-0 text-[#00A63E]">
             <CheckIcon />
         </div>
         <div>
             <h3 className="text-[18px] leading-[24px] font-normal text-white">{title}</h3>
             <p className="text-[14px] leading-[20px] font-normal text-white/65">{desc}</p>
+        </div>
+    </div>
+)
+
+const InfoCard = ({ title, description, secondary, icon, tone = 'secondary' }) => (
+    <div
+        className="relative rounded-[10px] border border-white/8 p-4 md:p-6"
+        style={{
+            background: tone === 'primary' ? 'rgba(46, 109, 194, 0.2)' : 'rgba(46, 109, 194, 0.1)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)',
+        }}
+    >
+        <div className="flex items-start gap-3 md:gap-4">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-white/15 text-white">
+                {icon}
+            </div>
+            <div className="min-w-0 flex-1">
+                <h2 className="text-[22px] leading-[28px] font-normal text-white md:text-[24px] md:leading-[32px]">{title}</h2>
+                {typeof description === 'string' ? (
+                    <p className="mt-2 max-w-[760px] text-[16px] leading-[24px] text-white/70">{description}</p>
+                ) : (
+                    description
+                )}
+                {secondary ? <p className="mt-2 text-[15px] leading-[22px] text-white/70 md:text-[16px] md:leading-[24px]">{secondary}</p> : null}
+            </div>
         </div>
     </div>
 )
@@ -253,6 +212,25 @@ const ReviewIcon = () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <path d="M12 3a9 9 0 1 1-9 9" stroke="#00A63E" strokeWidth="2" strokeLinecap="round" />
         <path d="M3 3v6h6" stroke="#00A63E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+)
+
+const ChecklistIcon = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M9.5 7.5h8" stroke="#FFFFFF" strokeOpacity="0.9" strokeWidth="2" strokeLinecap="round" />
+        <path d="M9.5 12h8" stroke="#FFFFFF" strokeOpacity="0.9" strokeWidth="2" strokeLinecap="round" />
+        <path d="M9.5 16.5h8" stroke="#FFFFFF" strokeOpacity="0.9" strokeWidth="2" strokeLinecap="round" />
+        <path d="M5.5 7.5l1 1 1.7-1.8" stroke="#00A63E" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M5.5 12l1 1 1.7-1.8" stroke="#00A63E" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M5.5 16.5l1 1 1.7-1.8" stroke="#00A63E" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+)
+
+const CommentIcon = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M5 6.5h14v8.2c0 .8-.7 1.5-1.5 1.5H10l-4.6 3.1v-3.1H6.5C5.7 16.2 5 15.5 5 14.7V6.5Z" stroke="#FFFFFF" strokeOpacity="0.9" strokeWidth="1.8" strokeLinejoin="round" />
+        <path d="M8.5 10h7" stroke="#00A63E" strokeWidth="1.8" strokeLinecap="round" />
+        <path d="M8.5 13h4.5" stroke="#00A63E" strokeWidth="1.8" strokeLinecap="round" />
     </svg>
 )
 

@@ -27,19 +27,20 @@ const LegalAgreements = () => {
                     }}
                 />
             </div>
+            
 
             {/* Pattern Overlay */}
-            <div
-                className="absolute inset-0 z-0"
-                style={{
-                    backgroundImage:
-                        'url(/dox-bg.png), linear-gradient(180deg, rgba(0, 0, 0, 0.72) 14.42%, rgba(74, 131, 214, 0.14) 43.27%, rgba(0, 0, 0, 0.78) 100%)',
-                    backgroundSize: 'cover, cover',
-                    backgroundPosition: 'center, center',
-                    backgroundRepeat: 'no-repeat, no-repeat',
-                    mixBlendMode: 'multiply',
-                }}
-            />
+           <div
+    className="absolute inset-0 z-0"
+    style={{
+        backgroundImage:
+            'url(/dox-bg.png), linear-gradient(180deg, #000000 14.42%, rgba(74, 131, 214, 0.6) 43.27%, #000000 100%)',
+        backgroundSize: 'cover, cover',
+        backgroundPosition: 'center, center',
+        backgroundRepeat: 'no-repeat, no-repeat',
+        mixBlendMode: 'multiply',
+    }}
+/>
 
             {/* Main Frame */}
             <div className="relative z-10 max-w-[1240px] mx-auto px-4 md:px-8 py-8 md:py-10">
