@@ -103,7 +103,6 @@ const ReviewApproval = () => {
                                                 ))}
                                             </div>
                                         }
-                                        icon={<ChecklistIcon />}
                                         tone="secondary"
                                     />
 
@@ -116,7 +115,6 @@ const ReviewApproval = () => {
                                                 </p>
                                             </div>
                                         }
-                                        icon={<CommentIcon />}
                                         tone="secondary"
                                     />
                                 </div>
@@ -170,10 +168,12 @@ const InfoCard = ({ title, description, secondary, icon, iconClassName = 'h-10 w
             WebkitBackdropFilter: 'blur(10px)',
         }}
     >
-        <div className="flex items-start gap-3 md:gap-4">
-            <div className={`flex shrink-0 items-center justify-center bg-white/15 text-white ${iconClassName}`}>
-                {icon}
-            </div>
+        <div className={`flex items-start ${icon ? 'gap-3 md:gap-4' : 'gap-0'}`}>
+            {icon ? (
+                <div className={`flex shrink-0 items-center justify-center bg-white/15 text-white ${iconClassName}`}>
+                    {icon}
+                </div>
+            ) : null}
             <div className="min-w-0 flex-1">
                 <h2 className="text-[22px] leading-[28px] font-normal text-white md:text-[24px] md:leading-[32px]">{title}</h2>
                 {typeof description === 'string' ? (
