@@ -19,7 +19,9 @@ const ReviewApproval = () => {
     ]
 
     return (
+        /* Page Shell */
         <div className="relative min-h-screen w-full overflow-hidden font-[Jost] text-white" style={{ background: '#000' }}>
+            {/* Base Background Gradients */}
             <div className="absolute inset-0 z-0">
                 <div
                     className="absolute top-0 left-0 w-1/2 h-full"
@@ -38,6 +40,7 @@ const ReviewApproval = () => {
                 />
             </div>
 
+            {/* Pattern Overlay */}
             <div
                 className="absolute inset-0 z-0"
                 style={{
@@ -50,6 +53,7 @@ const ReviewApproval = () => {
                 }}
             />
 
+            {/* Main Frame */}
             <div className="relative z-10 mx-auto w-full max-w-[1240px] px-4 md:px-8 py-8 md:py-10">
                 <div
                     className="relative overflow-hidden rounded-[12px] border border-white/8"
@@ -60,6 +64,7 @@ const ReviewApproval = () => {
                     }}
                 >
                     <div className="grid grid-cols-1 md:grid-cols-[140px_1fr] min-h-[760px]">
+                        {/* Sidebar */}
                         <aside className="relative p-4 md:p-3">
                             <div className="hidden md:flex absolute right-0 top-[18px] bottom-[18px] pointer-events-none items-stretch">
                                 <VerticalDivider />
@@ -77,6 +82,7 @@ const ReviewApproval = () => {
                             </div>
                         </aside>
 
+                        {/* Main Content */}
                         <section className="relative p-5 md:p-8 lg:p-10">
                             <div className="relative z-10">
                                 <h1 className="text-[28px] leading-[34px] font-normal">Review &amp; Approval</h1>
@@ -84,6 +90,7 @@ const ReviewApproval = () => {
                                     Your onboarding submission is being reviewed by the HR team.
                                 </p>
 
+                                {/* Review Cards */}
                                 <div className="mt-10 space-y-8">
                                     <InfoCard
                                         title="Under HR Review"
@@ -120,6 +127,7 @@ const ReviewApproval = () => {
                                     />
                                 </div>
 
+                                {/* Footer Actions */}
                                 <div className="mt-8 flex items-center justify-between">
                                     <button
                                         type="button"

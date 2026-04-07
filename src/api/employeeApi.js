@@ -6,7 +6,10 @@ const parseResponse = async (response) => {
 
     if (!response.ok) {
         const message = data?.message || "Request failed";
-        throw new Error(message);
+        const error = new Error(message);
+        error.status = response.status;
+        error.data = data;
+        throw error;
     }
 
     return data;
