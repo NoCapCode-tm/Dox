@@ -140,10 +140,11 @@ const AgreementCard = ({ title, description, status, actionLabel, onAction, icon
         className="relative rounded-[12px] p-4 md:p-6 border border-white/8"
         style={{ background: 'linear-gradient(180deg, rgba(45, 76, 137, 0.72) 0%, rgba(15, 37, 78, 0.72) 100%)' }}
     >
-        <div className="absolute top-4 right-4 px-2 py-0.5 rounded-[6px] text-[12px] leading-[16px]" style={{
+        <div className="absolute top-4 right-4 px-2 py-0.5 rounded-[6px] text-[12px] leading-[16px] inline-flex items-center gap-1" style={{
             background: signed ? 'rgba(6, 214, 160, 0.2)' : 'rgba(255,255,255,0.16)',
             color: signed ? '#06D6A0' : 'rgba(255,255,255,0.85)',
         }}>
+            {signed ? <StatusSignedIcon /> : <StatusPendingIcon />}
             {status}
         </div>
 
@@ -160,12 +161,41 @@ const AgreementCard = ({ title, description, status, actionLabel, onAction, icon
         <button
             type="button"
             onClick={onAction}
-            className="mt-6 px-4 py-2.5 rounded-[10px] border border-white/50 text-[16px] leading-[22px] text-white/90 hover:bg-white/6 transition-colors"
+            className="mt-6 px-4 py-2.5 rounded-[10px] border border-white/50 text-[16px] leading-[22px] text-white/90 hover:bg-white/6 transition-colors inline-flex items-center gap-2"
             style={{ background: signed ? 'rgba(92, 141, 231, 0.4)' : 'transparent' }}
         >
+            {signed ? <ButtonCheckIcon /> : <ButtonSignwellIcon />}
             {actionLabel}
         </button>
     </div>
+)
+
+const StatusSignedIcon = () => (
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+        <circle cx="6" cy="6" r="4.5" stroke="currentColor" strokeWidth="1.2" />
+        <path d="M3.9 6.2L5.2 7.4L8.1 4.6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+)
+
+const StatusPendingIcon = () => (
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+        <circle cx="6" cy="6" r="4.5" stroke="currentColor" strokeWidth="1.2" />
+    </svg>
+)
+
+const ButtonCheckIcon = () => (
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+        <path d="M5.5 9L8 11.4L12.5 6.8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="9" cy="9" r="7.25" stroke="currentColor" strokeOpacity="0.35" strokeWidth="1.2" />
+    </svg>
+)
+
+const ButtonSignwellIcon = () => (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M13.2 3.0H17.2V7.0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M17.2 3.0L8.6 11.4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <rect x="4" y="6.1" width="9.9" height="9.9" rx="2.1" stroke="currentColor" strokeWidth="1.9" />
+    </svg>
 )
 
 const VerticalDivider = () => (
