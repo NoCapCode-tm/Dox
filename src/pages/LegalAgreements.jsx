@@ -101,17 +101,19 @@ const LegalAgreements = () => {
                                     <button
                                         type="button"
                                         onClick={() => navigate('/welcome')}
-                                        className="px-7 py-2.5 rounded-[10px] border border-white/50 text-[16px] leading-[22px] text-white/90 hover:bg-white/5 transition-colors"
+                                        className="px-7 py-2.5 rounded-[10px] border border-white/50 text-[16px] leading-[22px] text-white/90 hover:bg-white/5 transition-colors inline-flex items-center gap-2"
                                     >
+                                        <BackArrowIcon />
                                         Back
                                     </button>
 
                                     <button
                                         type="button"
                                         onClick={() => navigate('/dashboard')}
-                                        className="px-7 py-2.5 rounded-[10px] border border-white/40 text-[16px] leading-[22px] text-white/90 hover:bg-white/5 transition-colors"
+                                        className="px-7 py-2.5 rounded-[10px] border border-white/40 text-[16px] leading-[22px] text-white/90 hover:bg-white/5 transition-colors inline-flex items-center gap-2"
                                     >
                                         Continue
+                                        <ForwardArrowIcon />
                                     </button>
                                 </div>
                             </div>
@@ -133,6 +135,20 @@ const StepBadge = ({ number, active = false }) => (
     >
         {number}
     </div>
+)
+
+const BackArrowIcon = () => (
+    <svg width="16" height="14" viewBox="0 0 16 14" fill="none" aria-hidden="true">
+        <path d="M9.8 2.2L4.8 7L9.8 11.8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M5 7H14.2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+)
+
+const ForwardArrowIcon = () => (
+    <svg width="16" height="14" viewBox="0 0 16 14" fill="none" aria-hidden="true">
+        <path d="M6.2 2.2L11.2 7L6.2 11.8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M1.8 7H11" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
 )
 
 const AgreementCard = ({ title, description, status, actionLabel, onAction, icon, signed = false }) => (
