@@ -71,9 +71,9 @@ const ReviewApproval = () => {
                             </div>
 
                             <div className="flex md:flex-col gap-3 md:gap-8">
-                                <StepBox number="1" active />
+                                <StepBox number="1" />
                                 <StepBox number="2" />
-                                <StepBox number="3" completed />
+                                <StepBox number="3" active />
                             </div>
                         </aside>
 
@@ -139,10 +139,10 @@ const ReviewApproval = () => {
     )
 }
 
-const StepBox = ({ number, active = false, completed = false }) => (
+const StepBox = ({ number, active = false }) => (
     <div
         className="flex h-[56px] w-[56px] items-center justify-center rounded-[10px] text-[34px] leading-none text-white"
-        style={{ background: completed ? 'rgba(255,255,255,0.18)' : active ? 'rgba(255,255,255,0.16)' : 'rgba(75, 96, 137, 0.35)' }}
+        style={{ background: active ? 'rgba(255,255,255,0.18)' : 'rgba(75, 96, 137, 0.35)' }}
     >
         {number}
     </div>
