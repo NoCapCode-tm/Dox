@@ -89,7 +89,8 @@ const ReviewApproval = () => {
                                         title="Under HR Review"
                                         description="Your onboarding details are currently being verified by our HR team."
                                         secondary="Expected completion: Within 48 hours"
-                                        icon={<ReviewIcon />}
+                                        icon={<ClockIcon />}
+                                        iconClassName="h-[104px] w-[104px] rounded-[20px]"
                                         tone="primary"
                                     />
 
@@ -160,7 +161,7 @@ const CompletedStep = ({ title, desc }) => (
     </div>
 )
 
-const InfoCard = ({ title, description, secondary, icon, tone = 'secondary' }) => (
+const InfoCard = ({ title, description, secondary, icon, iconClassName = 'h-10 w-10 rounded-[10px]', tone = 'secondary' }) => (
     <div
         className="relative rounded-[10px] border border-white/8 p-4 md:p-6"
         style={{
@@ -170,7 +171,7 @@ const InfoCard = ({ title, description, secondary, icon, tone = 'secondary' }) =
         }}
     >
         <div className="flex items-start gap-3 md:gap-4">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-white/15 text-white">
+            <div className={`flex shrink-0 items-center justify-center bg-white/15 text-white ${iconClassName}`}>
                 {icon}
             </div>
             <div className="min-w-0 flex-1">
@@ -208,10 +209,10 @@ const DoxLogo = () => (
     </svg>
 )
 
-const ReviewIcon = () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M12 3a9 9 0 1 1-9 9" stroke="#00A63E" strokeWidth="2" strokeLinecap="round" />
-        <path d="M3 3v6h6" stroke="#00A63E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+const ClockIcon = () => (
+    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <circle cx="24" cy="24" r="13.5" stroke="#00A63E" strokeWidth="3" />
+        <path d="M24 16.5V24.5L29.5 28" stroke="#00A63E" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
 )
 
