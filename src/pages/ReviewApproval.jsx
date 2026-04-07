@@ -193,7 +193,7 @@ const VerticalDivider = () => (
 )
 
 const HorizontalDivider = () => (
-    <svg width="147.5" height="2" viewBox="0 0 150 2" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <svg width="118" height="2" viewBox="0 0 150 2" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M1 1H148.5" stroke="white" strokeOpacity="0.05" strokeWidth="2" strokeLinecap="round" />
     </svg>
 )
