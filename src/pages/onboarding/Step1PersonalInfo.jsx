@@ -1,8 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep1PersonalInfo, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
+
+const REQUIRED_STEP1_FIELDS = [
+  { key: 'fullName', label: 'Full Name' },
+  { key: 'personalEmail', label: 'Personal Email ID' },
+  { key: 'phoneWhatsapp', label: 'Phone Number (WhatsApp enabled)' },
+  { key: 'dateOfBirth', label: 'Date of Birth' },
+  { key: 'countryOfCitizenship', label: 'Country of Citizenship' },
+  { key: 'stateProvince', label: 'State/Province' },
+  { key: 'city', label: 'City' },
+  { key: 'gender', label: 'Gender' },
+  { key: 'permanentAddress', label: 'Permanent Address' },
+  { key: 'communicationAddress', label: 'Communication Address' },
+  { key: 'phoneWithCode', label: 'Phone Number (with country code)' },
+];
 
 const toDateInputValue = (value) => {
   if (!value) return '';
@@ -62,6 +77,17 @@ const Step1PersonalInfo = () => {
   };
 
   const handleNext = async () => {
+    const missingRequiredFields = REQUIRED_STEP1_FIELDS.filter(({ key }) => {
+      const value = form[key];
+      return typeof value === 'string' ? !value.trim() : !value;
+    });
+
+    if (missingRequiredFields.length > 0) {
+      const missingFieldNames = missingRequiredFields.map(({ label }) => label).join(', ');
+      toast.error(`Please fill the required fields: ${missingFieldNames}`);
+      return;
+    }
+
     try {
       setIsSavingStep(true);
       setStepError('');
