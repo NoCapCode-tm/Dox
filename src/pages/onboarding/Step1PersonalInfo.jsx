@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-hot-toast';
 import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep1PersonalInfo, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
+import { showMissingRequiredFieldsToast } from '../../utils/requiredFieldToast';
 
 const REQUIRED_STEP1_FIELDS = [
   { key: 'fullName', label: 'Full Name' },
@@ -77,14 +77,7 @@ const Step1PersonalInfo = () => {
   };
 
   const handleNext = async () => {
-    const missingRequiredFields = REQUIRED_STEP1_FIELDS.filter(({ key }) => {
-      const value = form[key];
-      return typeof value === 'string' ? !value.trim() : !value;
-    });
-
-    if (missingRequiredFields.length > 0) {
-      const missingFieldNames = missingRequiredFields.map(({ label }) => label).join(', ');
-      toast.error(`Please fill the required fields: ${missingFieldNames}`);
+    if (showMissingRequiredFieldsToast(form, REQUIRED_STEP1_FIELDS).length > 0) {
       return;
     }
 

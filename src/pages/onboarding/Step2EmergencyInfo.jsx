@@ -1,8 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { showMissingRequiredFieldsToast } from '../../utils/requiredFieldToast';
 import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep2EmergencyInfo, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
+
+const REQUIRED_STEP2_FIELDS = [
+  { key: 'contactName', label: 'Emergency Contact Name' },
+  { key: 'contactPhone', label: 'Emergency Contact Phone' },
+  { key: 'relationship', label: 'Relationship to Employee' },
+  { key: 'countryOfResidence', label: 'Country of Residence' },
+];
 
 /**
  * Step2EmergencyInfo
@@ -40,6 +48,10 @@ const Step2EmergencyInfo = () => {
   };
 
   const handleNext = async () => {
+    if (showMissingRequiredFieldsToast(form, REQUIRED_STEP2_FIELDS).length > 0) {
+      return;
+    }
+
     try {
       setIsSavingStep(true);
       setStepError('');
