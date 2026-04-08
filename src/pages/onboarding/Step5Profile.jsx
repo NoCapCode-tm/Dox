@@ -1,8 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { showMissingRequiredFieldsToast } from '../../utils/requiredFieldToast';
 import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep5ProfileInfo, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
+
+const REQUIRED_STEP5_FIELDS = [
+  { key: 'areasOfExpertise', label: 'Areas of Expertise' },
+  { key: 'technicalSkills', label: 'Technical Skills' },
+  { key: 'orgName', label: 'Organization / Company Name' },
+  { key: 'roleTitle', label: 'Role Title' },
+  { key: 'duration', label: 'Duration' },
+  { key: 'keyResponsibilities', label: 'Key Responsibilities' },
+];
 
 /**
  * Step5Profile
@@ -64,6 +74,10 @@ const Step5Profile = () => {
   };
 
   const handleNext = async () => {
+    if (showMissingRequiredFieldsToast(form, REQUIRED_STEP5_FIELDS).length > 0) {
+      return;
+    }
+
     try {
       setIsSavingStep(true);
       setStepError('');

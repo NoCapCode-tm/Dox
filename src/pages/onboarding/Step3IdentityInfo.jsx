@@ -1,8 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { showMissingRequiredFieldsToast } from '../../utils/requiredFieldToast';
 import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep3IdentityInfo, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
+
+const REQUIRED_STEP3_FIELDS = [
+  { key: 'govIdNumber', label: 'Government-issued ID Number' },
+  { key: 'govIdFile', label: 'Upload Government-issued ID' },
+  { key: 'passportPhoto', label: 'Passport-size Photograph' },
+];
 
 /**
  * Step3IdentityInfo
@@ -46,6 +53,10 @@ const Step3IdentityInfo = () => {
   };
 
   const handleNext = async () => {
+    if (showMissingRequiredFieldsToast(form, REQUIRED_STEP3_FIELDS).length > 0) {
+      return;
+    }
+
     try {
       setIsSavingStep(true);
       setStepError('');

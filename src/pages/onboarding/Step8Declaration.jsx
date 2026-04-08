@@ -1,8 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { showMissingRequiredFieldsToast } from '../../utils/requiredFieldToast';
 import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep8Declaration, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
+
+const REQUIRED_STEP8_FIELDS = [
+    { key: 'signature', label: 'Digital Signature' },
+    { key: 'fullName', label: 'Full Name' },
+    { key: 'dateOfSubmission', label: 'Date of Submission' },
+    { key: 'agreed', label: 'I agree' },
+];
 
 /**
  * Step8Declaration
@@ -45,7 +53,10 @@ const Step8Declaration = () => {
     }, []);
 
     const handleSubmit = async () => {
-        if (!step8.agreed) return;
+        if (showMissingRequiredFieldsToast(step8, REQUIRED_STEP8_FIELDS).length > 0) {
+            return;
+        }
+
         try {
             setIsSavingStep(true);
             setStepError('');
@@ -419,7 +430,7 @@ const Step8Declaration = () => {
                     <button
                         type="button"
                         onClick={handleSubmit}
-                        disabled={!step8.agreed || isSavingStep}
+                        disabled={isSavingStep}
                         className="h-[36px] sm:h-[40px] flex-1 sm:flex-none min-w-0 px-[12px] sm:px-[24px] rounded-[10px] flex items-center justify-center gap-[8px] transition-opacity hover:opacity-90 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
                         style={{
                             backgroundColor: '#314460',
