@@ -285,7 +285,7 @@ const DocumentTreeItem = ({ item, depth, activeId, onSelect }) => {
             </button>
 
             {item.children?.length ? (
-                <div className="mt-1 space-y-1 border-l border-white/8 pl-2">
+                <div className="mt-1 space-y-1 pl-2">
                     {item.children.map((child) => (
                         <DocumentTreeItem
                             key={child.id}
