@@ -24,14 +24,12 @@ const Dashboard = () => {
         setUserName(name);
       } catch (error) {
         setAuthError(error?.message || 'Session expired. Please sign in again.');
-        navigate('/', { replace: true });
+        if (error?.status === 401 || error?.status === 403) {
+          navigate('/', { replace: true });
+        }
       } finally {
         setIsLoading(false);
 
-        // test loader
-        // setTimeout(() => {
-        //   setIsLoading(false);
-        // }, 3000);
       }
     };
 
