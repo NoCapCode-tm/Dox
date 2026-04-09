@@ -15,6 +15,6 @@ export const showMissingRequiredFieldsToast = (form, requiredFields) => {
         return [];
     }
 
-    toast.error(`Please fill the required fields: ${missingFieldLabels.join(', ')}`);
+    toast.error('Please fill the required fields');
     return missingFieldLabels;
 };
