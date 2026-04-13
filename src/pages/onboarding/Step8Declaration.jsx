@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import { showMissingRequiredFieldsToast } from '../../utils/requiredFieldToast';
 import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep8Declaration, getCurrentUser } from '../../api/employeeApi';
@@ -61,6 +62,7 @@ const Step8Declaration = () => {
             setIsSavingStep(true);
             setStepError('');
             await saveStep8Declaration(step8);
+            toast.success('Step 8 filled');
             if (!step8.completionStartedAt) {
                 updateFormData('step8', 'completionStartedAt', Date.now());
             }

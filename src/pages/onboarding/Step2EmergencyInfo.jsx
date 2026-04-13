@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import { showMissingRequiredFieldsToast } from '../../utils/requiredFieldToast';
 import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep2EmergencyInfo, getCurrentUser } from '../../api/employeeApi';
@@ -56,6 +57,7 @@ const Step2EmergencyInfo = () => {
       setIsSavingStep(true);
       setStepError('');
       await saveStep2EmergencyInfo(form);
+      toast.success('Step 2 filled');
       navigate('/onboarding/step3');
     } catch (error) {
       setStepError(error?.message || 'Unable to save Step 2. Please try again.');
