@@ -149,11 +149,21 @@ const CompanyDocs = () => {
             <div
                 className="absolute inset-0 z-0"
                 style={{
-                    backgroundImage:
-                        'url(/dox-bg.png), linear-gradient(180deg, #000000 14.42%, rgba(74, 131, 214, 0.6) 43.27%, #000000 100%)',
-                    backgroundSize: 'cover, cover',
-                    backgroundPosition: 'center, center',
-                    backgroundRepeat: 'no-repeat, no-repeat',
+                    backgroundImage: 'url(/dox-bg.png)',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    mixBlendMode: 'multiply',
+                    filter: 'brightness(0) contrast(1.08)',
+                    opacity: 0.62,
+                }}
+            />
+
+            <div
+                className="absolute inset-0 z-0"
+                style={{
+                    background:
+                        'linear-gradient(180deg, #000000 20%, #5492EC 52%, #000000 100%)',
                     mixBlendMode: 'multiply',
                 }}
             />
