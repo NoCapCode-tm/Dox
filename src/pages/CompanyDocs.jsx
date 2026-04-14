@@ -1,11 +1,18 @@
 import { useMemo, useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-hot-toast'
 
 const documentTree = [
     {
         id: 'company-policies',
         title: 'Company Policies',
-        content: '## **Welcome to NoCapCode**\nWelcome to NoCapCode.\n\nThis document serves as the foundational reference for understanding how NoCapCode operates as a globally distributed organization. It has been designed to provide clarity, alignment, and transparency across all individuals engaging with the organization, irrespective of geography, role type, or engagement structure. The purpose of this handbook is to ensure that every contributor operates with a shared understanding of how work is executed, how decisions are made, and how collaboration is maintained across a distributed environment.\n\nNoCapCode operates as a global, remote-first organization with contributors working across multiple regions, including North America, Latin America, Europe, the Middle East, and Asia. Individuals may engage with NoCapCode under various structures, including full-time employment, independent contracting, consulting, part-time collaboration, or internship-based participation. While engagement structures may vary, the operational standards, expectations of professionalism, and accountability frameworks remain consistent across all participants.\n\nThe organization has been built on the principle that clarity in execution is more valuable than complexity in planning. As such, NoCapCode emphasizes structured communication, clearly defined ownership, and disciplined delivery. Contributors are expected to operate with a high degree of responsibility, ensuring that their work aligns with organizational objectives and maintains the quality standards expected in a global professional environment.\n\nThis handbook is intended to function as a living operational document. It evolves alongside the organization’s growth, expansion into new markets, and development of new capabilities. All individuals associated with NoCapCode are expected to review, understand, and adhere to the principles and standards outlined herein. Where regional or contractual variations apply, these will be communicated separately; however, the foundational philosophy and operational expectations remain universally applicable.\n\nNoCapCode welcomes individuals who value structured thinking, collaborative execution, and transparent working relationships. By engaging with NoCapCode, contributors become part of a globally coordinated system designed to build scalable digital solutions with clarity, discipline, and long-term impact',
+        content: `## **Welcome to NoCapCode**
+Welcome to NoCapCode.
+This document serves as the foundational reference for understanding how NoCapCode operates as a globally distributed organization. It has been designed to provide clarity, alignment, and transparency across all individuals engaging with the organization, irrespective of geography, role type, or engagement structure. The purpose of this handbook is to ensure that every contributor operates with a shared understanding of how work is executed, how decisions are made, and how collaboration is maintained across a distributed environment.
+NoCapCode operates as a global, remote-first organization with contributors working across multiple regions, including North America, Latin America, Europe, the Middle East, and Asia. Individuals may engage with NoCapCode under various structures, including full-time employment, independent contracting, consulting, part-time collaboration, or internship-based participation. While engagement structures may vary, the operational standards, expectations of professionalism, and accountability frameworks remain consistent across all participants.
+The organization has been built on the principle that clarity in execution is more valuable than complexity in planning. As such, NoCapCode emphasizes structured communication, clearly defined ownership, and disciplined delivery. Contributors are expected to operate with a high degree of responsibility, ensuring that their work aligns with organizational objectives and maintains the quality standards expected in a global professional environment.
+This handbook is intended to function as a living operational document. It evolves alongside the organization’s growth, expansion into new markets, and development of new capabilities. All individuals associated with NoCapCode are expected to review, understand, and adhere to the principles and standards outlined herein. Where regional or contractual variations apply, these will be communicated separately; however, the foundational philosophy and operational expectations remain universally applicable.
+NoCapCode welcomes individuals who value structured thinking, collaborative execution, and transparent working relationships. By engaging with NoCapCode, contributors become part of a globally coordinated system designed to build scalable digital solutions with clarity, discipline, and long-term impact`,
     },
     {
         id: 'code-of-conduct',
@@ -86,6 +93,8 @@ const CompanyDocs = () => {
     const navigate = useNavigate()
     const [selectedDocumentId, setSelectedDocumentId] = useState('company-policies')
     const [hasAcknowledged, setHasAcknowledged] = useState(false)
+    const [isContentOverflowing, setIsContentOverflowing] = useState(false)
+    const [hasOpenedLongContent, setHasOpenedLongContent] = useState(false)
 
     const selectedDocument = useMemo(
         () => findDocumentNode(documentTree, selectedDocumentId),
@@ -95,6 +104,26 @@ const CompanyDocs = () => {
     const handleSelect = (id) => {
         setSelectedDocumentId(id)
         setHasAcknowledged(false)
+        setIsContentOverflowing(false)
+        setHasOpenedLongContent(false)
+    }
+
+    const handleAcknowledgeChange = (event) => {
+        if (event.target.checked && isContentOverflowing && !hasOpenedLongContent) {
+            toast.error('Please click Read More to review the full document.')
+            return
+        }
+
+        setHasAcknowledged(event.target.checked)
+    }
+
+    const handleMarkAsRead = () => {
+        if (isContentOverflowing && !hasOpenedLongContent) {
+            toast.error('Please click Read More to review the full document.')
+            return
+        }
+
+        setHasAcknowledged(true)
     }
 
     return (
@@ -187,7 +216,11 @@ const CompanyDocs = () => {
                                     </nav>
 
                                     <div className="space-y-4">
-                                        <ExpandableContent content={selectedDocument.content} />
+                                        <ExpandableContent
+                                            content={selectedDocument.content}
+                                            onOverflowChange={setIsContentOverflowing}
+                                            onExpanded={() => setHasOpenedLongContent(true)}
+                                        />
 
                                         <section
                                             className="rounded-[10px] border border-white/8 p-4 md:p-6"
@@ -201,7 +234,7 @@ const CompanyDocs = () => {
                                                 <input
                                                     type="checkbox"
                                                     checked={hasAcknowledged}
-                                                    onChange={(event) => setHasAcknowledged(event.target.checked)}
+                                                    onChange={handleAcknowledgeChange}
                                                     className="mt-1 h-4 w-4 rounded border-white/35 bg-transparent text-[#6EA8FF] focus:ring-0 focus:ring-offset-0"
                                                 />
                                                 <span>I have read and understood this document.</span>
@@ -209,7 +242,7 @@ const CompanyDocs = () => {
 
                                             <button
                                                 type="button"
-                                                onClick={() => setHasAcknowledged(true)}
+                                                onClick={handleMarkAsRead}
                                                 disabled={hasAcknowledged}
                                                 className="mt-4 inline-flex items-center gap-2 rounded-[10px] border border-white/35 px-5 py-2.5 text-[15px] leading-[22px] text-white/90 transition-colors hover:bg-white/6 disabled:cursor-default disabled:bg-white/10 disabled:text-white/55"
                                             >
@@ -248,7 +281,7 @@ const CompanyDocs = () => {
     )
 }
 
-const ExpandableContent = ({ content }) => {
+const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
     const contentRef = useRef(null)
     const [isExpanded, setIsExpanded] = useState(false)
     const [isOverflowing, setIsOverflowing] = useState(false)
@@ -258,11 +291,23 @@ const ExpandableContent = ({ content }) => {
             // Check if content exceeds max-height (404px approximately)
             const scrollHeight = contentRef.current.scrollHeight
             const maxHeight = 404
-            setIsOverflowing(scrollHeight > maxHeight)
+            const nextIsOverflowing = scrollHeight > maxHeight
+            setIsOverflowing(nextIsOverflowing)
+            onOverflowChange?.(nextIsOverflowing)
             // Reset expanded state when content changes
             setIsExpanded(false)
         }
-    }, [content])
+    }, [content, onOverflowChange])
+
+    const handleToggleExpanded = () => {
+        setIsExpanded((previousValue) => {
+            const nextValue = !previousValue
+            if (nextValue) {
+                onExpanded?.()
+            }
+            return nextValue
+        })
+    }
 
     return (
         <div className="space-y-2">
@@ -313,7 +358,7 @@ const ExpandableContent = ({ content }) => {
                 <div className="flex items-center justify-center pt-2">
                     <button
                         type="button"
-                        onClick={() => setIsExpanded(!isExpanded)}
+                        onClick={handleToggleExpanded}
                         className="inline-flex items-center gap-2 rounded-full border border-white/35 px-4 py-2 text-[13px] leading-[18px] text-white/70 transition-all hover:bg-white/6 hover:text-white/90"
                     >
                         {isExpanded ? (
