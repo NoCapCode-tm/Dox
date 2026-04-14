@@ -1,11 +1,11 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const documentTree = [
     {
         id: 'company-policies',
         title: 'Company Policies',
-        content: 'TEXT....',
+        content: '## **Welcome to NoCapCode**\nWelcome to NoCapCode.\n\nThis document serves as the foundational reference for understanding how NoCapCode operates as a globally distributed organization. It has been designed to provide clarity, alignment, and transparency across all individuals engaging with the organization, irrespective of geography, role type, or engagement structure. The purpose of this handbook is to ensure that every contributor operates with a shared understanding of how work is executed, how decisions are made, and how collaboration is maintained across a distributed environment.\n\nNoCapCode operates as a global, remote-first organization with contributors working across multiple regions, including North America, Latin America, Europe, the Middle East, and Asia. Individuals may engage with NoCapCode under various structures, including full-time employment, independent contracting, consulting, part-time collaboration, or internship-based participation. While engagement structures may vary, the operational standards, expectations of professionalism, and accountability frameworks remain consistent across all participants.\n\nThe organization has been built on the principle that clarity in execution is more valuable than complexity in planning. As such, NoCapCode emphasizes structured communication, clearly defined ownership, and disciplined delivery. Contributors are expected to operate with a high degree of responsibility, ensuring that their work aligns with organizational objectives and maintains the quality standards expected in a global professional environment.\n\nThis handbook is intended to function as a living operational document. It evolves alongside the organization’s growth, expansion into new markets, and development of new capabilities. All individuals associated with NoCapCode are expected to review, understand, and adhere to the principles and standards outlined herein. Where regional or contractual variations apply, these will be communicated separately; however, the foundational philosophy and operational expectations remain universally applicable.\n\nNoCapCode welcomes individuals who value structured thinking, collaborative execution, and transparent working relationships. By engaging with NoCapCode, contributors become part of a globally coordinated system designed to build scalable digital solutions with clarity, discipline, and long-term impact',
     },
     {
         id: 'code-of-conduct',
@@ -187,18 +187,7 @@ const CompanyDocs = () => {
                                     </nav>
 
                                     <div className="space-y-4">
-                                        <article
-                                            className="rounded-[10px] border border-white/8 p-4 md:p-6"
-                                            style={{
-                                                background: 'rgba(46, 109, 194, 0.1)',
-                                                backdropFilter: 'blur(10px)',
-                                                WebkitBackdropFilter: 'blur(10px)',
-                                            }}
-                                        >
-                                            <p className="min-h-[404px] text-[15px] leading-[24px] tracking-[0.08em] text-white/80 md:text-[16px] md:leading-[26px]">
-                                                {selectedDocument.content}
-                                            </p>
-                                        </article>
+                                        <ExpandableContent content={selectedDocument.content} />
 
                                         <section
                                             className="rounded-[10px] border border-white/8 p-4 md:p-6"
@@ -255,6 +244,92 @@ const CompanyDocs = () => {
                     </div>
                 </div>
             </div>
+        </div>
+    )
+}
+
+const ExpandableContent = ({ content }) => {
+    const contentRef = useRef(null)
+    const [isExpanded, setIsExpanded] = useState(false)
+    const [isOverflowing, setIsOverflowing] = useState(false)
+
+    useEffect(() => {
+        if (contentRef.current) {
+            // Check if content exceeds max-height (404px approximately)
+            const scrollHeight = contentRef.current.scrollHeight
+            const maxHeight = 404
+            setIsOverflowing(scrollHeight > maxHeight)
+            // Reset expanded state when content changes
+            setIsExpanded(false)
+        }
+    }, [content])
+
+    return (
+        <div className="space-y-2">
+            <article
+                className="rounded-[10px] border border-white/8 transition-all duration-300 relative"
+                style={{
+                    background: 'rgba(46, 109, 194, 0.1)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)',
+                }}
+            >
+                <div
+                    style={{
+                        position: 'relative',
+                        overflow: isExpanded ? 'visible' : 'hidden',
+                        maxHeight: isExpanded ? 'none' : '404px',
+                    }}
+                >
+                    <p
+                        ref={contentRef}
+                        className="p-4 md:p-6 text-[15px] leading-[24px] tracking-[0.08em] text-white/80 md:text-[16px] md:leading-[26px] transition-all duration-300"
+                        style={{
+                            minHeight: isExpanded ? 'auto' : '404px',
+                            margin: 0,
+                        }}
+                    >
+                        {content}
+                    </p>
+                </div>
+
+                {isOverflowing && !isExpanded && (
+                    <div
+                        style={{
+                            position: 'absolute',
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            height: '120px',
+                            background: 'linear-gradient(to bottom, rgba(46, 109, 194, 0) 0%, rgba(15, 23, 42, 0.8) 100%)',
+                            pointerEvents: 'none',
+                            borderRadius: '0 0 10px 10px',
+                        }}
+                    />
+                )}
+            </article>
+
+            {isOverflowing && (
+                <div className="flex items-center justify-center pt-2">
+                    <button
+                        type="button"
+                        onClick={() => setIsExpanded(!isExpanded)}
+                        className="inline-flex items-center gap-2 rounded-full border border-white/35 px-4 py-2 text-[13px] leading-[18px] text-white/70 transition-all hover:bg-white/6 hover:text-white/90"
+                    >
+                        {isExpanded ? (
+                            <>
+                                <span>Read Less</span>
+                                <ChevronUpIcon />
+                            </>
+                        ) : (
+                            <>
+                                <span>Read More</span>
+                                <ChevronDownIcon />
+                            </>
+                        )}
+                    </button>
+                </div>
+            )}
         </div>
     )
 }
@@ -386,6 +461,18 @@ const DoxLogo = () => (
         <g transform="translate(56 0)">
             <path d="M13.8492 17.25C13.8492 17.25 16.608 17.25 7.64915 17.25C-1.30974 17.25 -0.445418 1.25 7.64915 1.25C15.7437 1.25 13.8492 1.25 13.8492 1.25" stroke="white" strokeWidth="2.5" strokeLinecap="butt" />
         </g>
+    </svg>
+)
+
+const ChevronDownIcon = () => (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M3.5 6L8 11L12.5 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+)
+
+const ChevronUpIcon = () => (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M12.5 10L8 5L3.5 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
 )
 
