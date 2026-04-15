@@ -325,22 +325,32 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
     )
 }
 
-const findDocumentNode = (items, targetId, trail = []) => {
-    for (const item of items) {
-        const nextTrail = [...trail, item.title]
-        if (item.id === targetId) {
-            return {
-                ...item,
-                pathLabel: nextTrail.join(' / '),
+const findDocumentNode = (items, targetId) => {
+    const findMatch = (nodes, trail = []) => {
+        for (const item of nodes) {
+            const nextTrail = [...trail, item.title]
+
+            if (item.id === targetId) {
+                return {
+                    ...item,
+                    pathLabel: nextTrail.join(' / '),
+                }
+            }
+
+            if (item.children?.length) {
+                const nestedMatch = findMatch(item.children, nextTrail)
+                if (nestedMatch) {
+                    return nestedMatch
+                }
             }
         }
 
-        if (item.children?.length) {
-            const match = findDocumentNode(item.children, targetId, nextTrail)
-            if (match) {
-                return match
-            }
-        }
+        return null
+    }
+
+    const match = findMatch(items)
+    if (match) {
+        return match
     }
 
     return {

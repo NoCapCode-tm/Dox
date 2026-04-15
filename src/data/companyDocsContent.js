@@ -2,7 +2,7 @@ const companyDocsContent = [
     {
         id: 'section-1-about-nocapcode',
         title: 'Section 1 — About NoCapCode',
-        content: 'An introduction to who we are, how we operate, and the principles that shape the company.',
+        content: `This section introduces the organization, its philosophy, and its global operating model. It provides clarity on how NoCapCode functions as a hybrid software and consulting company and establishes the foundational principles that guide all work and collaboration.`,
         children: [
             { id: 'welcome-to-nocapcode', title: 'Welcome to NoCapCode', content: 'Welcome to NoCapCode. This section introduces the onboarding journey and the context behind the handbook.' },
             { id: 'company-overview-operating-model', title: 'Company Overview & Operating Model (Software + Consulting Hybrid)', content: 'A summary of NoCapCode as a software and consulting hybrid, including how delivery and client work are structured.' },
@@ -15,7 +15,7 @@ const companyDocsContent = [
     {
         id: 'section-2-professional-standards-compliance',
         title: 'Section 2 — Professional Standards & Compliance',
-        content: 'Standards that define respectful conduct, compliance, confidentiality, and how we represent NoCapCode.',
+        content:`This section defines the ethical, behavioral, and professional standards expected across the organization. It reflects globally aligned compliance practices and ensures that all individuals operate with integrity, respect, and responsibility in every interaction.`,
         children: [
             { id: 'code-of-conduct', title: 'Code of Conduct', content: 'A baseline for professional behavior, integrity, and respectful collaboration.' },
             { id: 'anti-harassment-respectful-workplace-policy', title: 'Anti-Harassment & Respectful Workplace Policy', content: 'Zero tolerance expectations for harassment and requirements for a respectful workplace.' },
@@ -34,7 +34,7 @@ const companyDocsContent = [
     {
         id: 'section-3-work-framework-operating-model',
         title: 'Section 3 — Work Framework & Operating Model',
-        content: 'How work is structured, how availability is coordinated, and how delivery standards are maintained.',
+        content: `This section outlines how work is structured, managed, and delivered across NoCapCode's globally distributed teams. It defines expectations around ownership, accountability, flexibility, and cross-border collaboration.`,
         children: [
             { id: 'work-framework', title: 'Work Framework', content: 'An overview of how work is organized across teams, tasks, and deliverables.' },
             { id: 'remote-work-guidelines', title: 'Remote Work Guidelines', content: 'Standards for working effectively from remote locations.' },
@@ -51,7 +51,7 @@ const companyDocsContent = [
     {
         id: 'section-4-communication-collaboration',
         title: 'Section 4 — Communication & Collaboration',
-        content: 'Communication expectations, documentation habits, meeting etiquette, and escalation paths.',
+        content: `This section defines how communication is structured across teams, ensuring clarity, consistency, and alignment in a distributed environment. It establishes standards for collaboration, documentation, and decision-making.`,
         children: [
             { id: 'communication-protocol', title: 'Communication Protocol', content: 'How communication should be structured, shared, and followed through internally.' },
             { id: 'stack-best-practices', title: 'Stack Best Practices', content: 'Best practices for using the company stack consistently and effectively.' },
@@ -65,7 +65,7 @@ const companyDocsContent = [
     {
         id: 'section-5-people-talent-operations',
         title: 'Section 5 — People & Talent Operations',
-        content: 'People practices covering engagement types, leave, benefits, learning, and growth.',
+        content: `This section outlines the organization’s approach to team engagement, development, and support. It provides guidance on working relationships, time-off policies, growth opportunities, and overall team experience.`,
         children: [
             { id: 'people-operations-philosophy', title: 'People Operations Philosophy', content: 'The principles behind how people operations supports the team.' },
             { id: 'engagement-types-full-time-contract-intern-part-time', title: 'Engagement Types (Full-time / Contract / Intern / Part-time)', content: 'How different engagement types are defined and managed.' },
@@ -80,7 +80,7 @@ const companyDocsContent = [
     {
         id: 'section-6-legal-regulatory-global-compliance-framework',
         title: 'Section 6 — Legal, Regulatory & Global Compliance Framework',
-        content: 'Compliance expectations for contractors, IP, confidentiality, cross-border processing, and governance.',
+        content: `This section defines the legal and regulatory structures that support NoCapCode’s global operations. It ensures alignment with international standards and clarifies responsibilities related to intellectual property, data handling, and contractual engagement.`,
         children: [
             { id: 'global-compliance-framework', title: 'Global Compliance Framework', content: 'How the company approaches compliance across multiple jurisdictions.' },
             { id: 'contractor-independent-contributor-policy', title: 'Contractor & Independent Contributor Policy', content: 'Rules for working with contractors and independent contributors.' },
@@ -94,7 +94,7 @@ const companyDocsContent = [
     {
         id: 'section-7-closing-section',
         title: 'Section 7 — Closing Section',
-        content: 'The close of the handbook, including the transparency commitment and acknowledgment language.',
+        content: `This section reinforces NoCapCode’s commitment to transparency, clarity, and responsible execution. It serves as a final alignment point for all individuals engaging with the organization.`,
         children: [
             { id: 'transparency-commitment', title: 'Transparency Commitment', content: 'NoCapCode’s commitment to clarity, honesty, and transparent communication.' },
             { id: 'build-with-clarity-nocapcode-motto', title: 'Build With Clarity — NoCapCode Motto', content: 'The motto that captures the company’s approach to work and collaboration.' },
@@ -104,7 +104,7 @@ const companyDocsContent = [
     {
         id: 'section-8-risk-management-governance',
         title: 'Section 8 — Risk Management & Governance',
-        content: 'Frameworks for handling operational risk, security risk, escalation, and governance.',
+        content: `This section outlines how NoCapCode identifies, manages, and mitigates operational, data, and organizational risks. It supports long-term scalability and governance across global operations.`,
         children: [
             { id: 'risk-management-framework', title: 'Risk Management Framework', content: 'How risks are identified, assessed, and managed.' },
             { id: 'operational-risk-handling', title: 'Operational Risk Handling', content: 'How operational risks and disruptions should be handled.' },
