@@ -278,6 +278,7 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
                         style={{
                             minHeight: isExpanded ? 'auto' : '404px',
                             margin: 0,
+                            whiteSpace: 'pre-line',
                         }}
                     >
                         {content}
