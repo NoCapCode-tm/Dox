@@ -4,18 +4,50 @@ const companyDocsContent = [
         title: 'Section 1 — About NoCapCode',
         content: `This section introduces the organization, its philosophy, and its global operating model. It provides clarity on how NoCapCode functions as a hybrid software and consulting company and establishes the foundational principles that guide all work and collaboration.`,
         children: [
-            { id: 'welcome-to-nocapcode', title: 'Welcome to NoCapCode', content: 'Welcome to NoCapCode. This section introduces the onboarding journey and the context behind the handbook.' },
-            { id: 'company-overview-operating-model', title: 'Company Overview & Operating Model (Software + Consulting Hybrid)', content: 'A summary of NoCapCode as a software and consulting hybrid, including how delivery and client work are structured.' },
-            { id: 'mission-vision-long-term-direction', title: 'Mission, Vision & Long-Term Direction', content: 'This section explains the mission, vision, and the long-term direction that guides decisions and growth.' },
-            { id: 'company-ethos', title: 'Company Ethos', content: 'Our company ethos describes the mindset, tone, and standards we bring to our work and relationships.' },
-            { id: 'core-values', title: 'Core Values', content: 'Core values define the behaviors we expect, the way we collaborate, and how we evaluate success.' },
-            { id: 'core-principles', title: 'Core Principles', content: 'Core principles provide the practical rules that guide day-to-day judgment, ownership, and delivery.' },
+            {
+                id: 'welcome-to-nocapcode', title: 'Welcome to NoCapCode',
+                content: `Welcome to NoCapCode.
+
+This document serves as the foundational reference for understanding how NoCapCode operates as a globally distributed organization. It has been designed to provide clarity, alignment, and transparency across all individuals engaging with the organization, irrespective of geography, role type, or engagement structure. The purpose of this handbook is to ensure that every contributor operates with a shared understanding of how work is executed, how decisions are made, and how collaboration is maintained across a distributed environment.
+
+NoCapCode operates as a global, remote-first organization with contributors working across multiple regions, including North America, Latin America, Europe, the Middle East, and Asia. Individuals may engage with NoCapCode under various structures, including full-time employment, independent contracting, consulting, part-time collaboration, or internship-based participation. While engagement structures may vary, the operational standards, expectations of professionalism, and accountability frameworks remain consistent across all participants.
+
+The organization has been built on the principle that clarity in execution is more valuable than complexity in planning. As such, NoCapCode emphasizes structured communication, clearly defined ownership, and disciplined delivery. Contributors are expected to operate with a high degree of responsibility, ensuring that their work aligns with organizational objectives and maintains the quality standards expected in a global professional environment.
+
+This handbook is intended to function as a living operational document. It evolves alongside the organization’s growth, expansion into new markets, and development of new capabilities. All individuals associated with NoCapCode are expected to review, understand, and adhere to the principles and standards outlined herein. Where regional or contractual variations apply, these will be communicated separately; however, the foundational philosophy and operational expectations remain universally applicable.
+
+NoCapCode welcomes individuals who value structured thinking, collaborative execution, and transparent working relationships. By engaging with NoCapCode, contributors become part of a globally coordinated system designed to build scalable digital solutions with clarity, discipline, and long-term impact.` },
+
+            {
+                id: 'company-overview-operating-model', title: 'Company Overview & Operating Model (Software + Consulting Hybrid)',
+                content: 'A summary of NoCapCode as a software and consulting hybrid, including how delivery and client work are structured.'
+            },
+
+            {
+                id: 'mission-vision-long-term-direction', title: 'Mission, Vision & Long-Term Direction',
+                content: 'This section explains the mission, vision, and the long-term direction that guides decisions and growth.'
+            },
+
+            {
+                id: 'company-ethos', title: 'Company Ethos',
+                content: 'Our company ethos describes the mindset, tone, and standards we bring to our work and relationships.'
+            },
+
+            {
+                id: 'core-values', title: 'Core Values',
+                content: 'Core values define the behaviors we expect, the way we collaborate, and how we evaluate success.'
+            },
+
+            {
+                id: 'core-principles', title: 'Core Principles',
+                content: 'Core principles provide the practical rules that guide day-to-day judgment, ownership, and delivery.'
+            },
         ],
     },
     {
         id: 'section-2-professional-standards-compliance',
         title: 'Section 2 — Professional Standards & Compliance',
-        content:`This section defines the ethical, behavioral, and professional standards expected across the organization. It reflects globally aligned compliance practices and ensures that all individuals operate with integrity, respect, and responsibility in every interaction.`,
+        content: `This section defines the ethical, behavioral, and professional standards expected across the organization. It reflects globally aligned compliance practices and ensures that all individuals operate with integrity, respect, and responsibility in every interaction.`,
         children: [
             { id: 'code-of-conduct', title: 'Code of Conduct', content: 'A baseline for professional behavior, integrity, and respectful collaboration.' },
             { id: 'anti-harassment-respectful-workplace-policy', title: 'Anti-Harassment & Respectful Workplace Policy', content: 'Zero tolerance expectations for harassment and requirements for a respectful workplace.' },
