@@ -19,7 +19,7 @@ const Sidebar = ({
                             onClick={() => onSectionSelect(item.id, Boolean(item.children?.length))}
                             className="flex w-full items-start rounded-lg border border-transparent text-left transition-colors hover:bg-white/6"
                             style={{
-                                backgroundColor: isActive ? 'rgba(255,255,255,0.78)' : 'transparent',
+                                backgroundColor: isActive ? 'rgba(255,255,255,0.85)' : 'transparent',
                                 color: isActive ? '#15213A' : 'rgba(255,255,255,0.88)',
                                 paddingTop: '10px',
                                 paddingBottom: '10px',
@@ -27,7 +27,8 @@ const Sidebar = ({
                                 paddingRight: '12px',
                                 fontSize: '14px',
                                 lineHeight: '20px',
-                                fontWeight: 400,
+                                fontWeight: 600,
+
                             }}
                         >
                             <span className="flex min-w-0 flex-1 items-start gap-2">
@@ -50,7 +51,7 @@ const Sidebar = ({
                                             onClick={() => onDocumentSelect(child.id, item.id)}
                                             className="flex w-full items-start rounded-lg border border-transparent text-left transition-colors hover:bg-white/6"
                                             style={{
-                                                backgroundColor: isChildActive ? 'rgba(255,255,255,0.72)' : 'transparent',
+                                                backgroundColor: isChildActive ? 'rgba(255,255,255,0.85)' : 'transparent',
                                                 color: isChildActive ? '#15213A' : 'rgba(255,255,255,0.8)',
                                                 paddingTop: '8px',
                                                 paddingBottom: '8px',
@@ -59,6 +60,7 @@ const Sidebar = ({
                                                 fontSize: '13px',
                                                 lineHeight: '18px',
                                                 fontWeight: 400,
+
                                             }}
                                         >
                                             <span className="block min-w-0 flex-1 whitespace-normal wrap-break-word">

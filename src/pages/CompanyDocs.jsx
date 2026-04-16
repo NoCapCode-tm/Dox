@@ -67,7 +67,7 @@ const CompanyDocs = () => {
     }
 
     return (
-        <div className="relative min-h-screen w-full overflow-hidden font-[Jost] text-white" style={{ background: '#000' }}>
+        <div className="relative min-h-screen w-full overflow-hidden font-[jost] text-white" style={{ background: '#000' }}>
             <div className="absolute inset-0 z-0">
                 <div
                     className="absolute top-0 left-0 h-full w-1/2"
@@ -279,6 +279,7 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
                             minHeight: isExpanded ? 'auto' : '404px',
                             margin: 0,
                             whiteSpace: 'pre-line',
+                            fontFamily: 'Arial, sans-serif',
                         }}
                     >
                         {content}
