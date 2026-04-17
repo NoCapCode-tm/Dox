@@ -68,6 +68,7 @@ const CompanyDocs = () => {
 
     return (
         <div className="relative min-h-screen w-full overflow-hidden font-[jost] text-white" style={{ background: '#000' }}>
+            {/* Background */}
             <div className="absolute inset-0 z-0">
                 <div
                     className="absolute top-0 left-0 h-full w-1/2"
@@ -86,6 +87,7 @@ const CompanyDocs = () => {
                 />
             </div>
 
+            {/* Background Overlay */}
             <div
                 className="absolute inset-0 z-0"
                 style={{
@@ -99,6 +101,7 @@ const CompanyDocs = () => {
                 }}
             />
 
+            {/* Blue Gradient Overlay */}
             <div
                 className="absolute inset-0 z-0"
                 style={{
@@ -108,6 +111,7 @@ const CompanyDocs = () => {
                 }}
             />
 
+            {/* Main Content */}
             <div className="relative z-10 mx-auto w-full max-w-[1240px] px-4 py-8 md:px-8 md:py-10">
                 <div
                     className="relative overflow-hidden rounded-[12px] border border-white/8"
@@ -118,8 +122,10 @@ const CompanyDocs = () => {
                         WebkitBackdropFilter: 'blur(8px)',
                     }}
                 >
+                    {/* Sidebar and Content Layout */}
                     <div className="grid min-h-[760px] grid-cols-1 md:grid-cols-[140px_1fr]">
                         <aside className="relative p-4 md:p-3">
+                            {/* Sidebar */}
                             <div className="pointer-events-none absolute right-0 top-[18px] bottom-[18px] hidden items-stretch md:flex">
                                 <VerticalDivider />
                             </div>
@@ -143,6 +149,7 @@ const CompanyDocs = () => {
                                     Please review and understand our policies and culture.
                                 </p>
 
+                                {/* Document and Acknowledgement Area */}
                                 <div className="mt-10 grid grid-cols-1 gap-4 lg:grid-cols-[240px_1fr] lg:gap-5">
                                     <nav
                                         className="rounded-[10px] border border-white/8 p-3"
@@ -168,6 +175,7 @@ const CompanyDocs = () => {
                                             onExpanded={() => setHasOpenedLongContent(true)}
                                         />
 
+                                        {/* Acknowledgement Panel */}
                                         <section
                                             className="rounded-[10px] border border-white/8 p-4 md:p-6"
                                             style={{
@@ -199,6 +207,7 @@ const CompanyDocs = () => {
                                     </div>
                                 </div>
 
+                                {/* Footer Actions */}
                                 <div className="mt-8 flex items-center justify-between">
                                     <button
                                         type="button"
@@ -257,14 +266,17 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
 
     return (
         <div className="space-y-2">
+            {/* Document Card */}
             <article
                 className="rounded-[10px] border border-white/8 transition-all duration-300 relative"
                 style={{
-                    background: 'rgba(46, 109, 194, 0.1)',
+                    background: '#ffffff',
+                    borderColor: 'rgba(15, 23, 42, 0.08)',
                     backdropFilter: 'blur(10px)',
                     WebkitBackdropFilter: 'blur(10px)',
                 }}
             >
+                {/* Scrollable Content */}
                 <div
                     style={{
                         position: 'relative',
@@ -274,18 +286,20 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
                 >
                     <p
                         ref={contentRef}
-                        className="p-4 md:p-6 text-[15px] leading-[24px] tracking-[0.08em] text-white/80 md:text-[16px] md:leading-[26px] transition-all duration-300"
+                        className="p-4 md:p-6 text-[15px] leading-[24px] tracking-[0.08em] text-black/80 md:text-[16px] md:leading-[26px] transition-all duration-300"
                         style={{
                             minHeight: isExpanded ? 'auto' : '404px',
                             margin: 0,
                             whiteSpace: 'pre-line',
                             fontFamily: 'Arial, sans-serif',
+                            
                         }}
                     >
                         {content}
                     </p>
                 </div>
 
+                {/* Fade Overlay */}
                 {isOverflowing && !isExpanded && (
                     <div
                         style={{
@@ -294,7 +308,7 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
                             left: 0,
                             right: 0,
                             height: '120px',
-                            background: 'linear-gradient(to bottom, rgba(46, 109, 194, 0) 0%, rgba(15, 23, 42, 0.8) 100%)',
+                            background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%)',
                             pointerEvents: 'none',
                             borderRadius: '0 0 10px 10px',
                         }}
@@ -302,6 +316,7 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
                 )}
             </article>
 
+            {/* Expand Toggle */}
             {isOverflowing && (
                 <div className="flex items-center justify-center pt-2">
                     <button
