@@ -212,10 +212,11 @@ const Dashboard = () => {
                 <CheckCircleIcon />
               </div>
               <div className="flex flex-col mt-[-2px]">
+                
                 <h4 className="text-[16px] text-white font-normal leading-[28px]">
                   {info.title}
                 </h4>
-                
+
                 <p className="text-[14px] text-[#99A1AF] leading-[20px] mt-[4px]">
                   {info.desc}
                 </p>
