@@ -1,8 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+import { showMissingRequiredFieldsToast } from '../../utils/requiredFieldToast';
 import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep4EducationInfo, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
+
+const REQUIRED_STEP4_FIELDS = [
+  { key: 'highestQualification', label: 'Highest Qualification' },
+  { key: 'courseName', label: 'Course / Program Name' },
+  { key: 'universityName', label: 'College / University Name' },
+  { key: 'currentYearSemester', label: 'Current Year / Semester' },
+];
 
 /**
  * Step4EducationInfo
@@ -43,10 +52,15 @@ const Step4EducationInfo = () => {
   };
 
   const handleNext = async () => {
+    if (showMissingRequiredFieldsToast(form, REQUIRED_STEP4_FIELDS).length > 0) {
+      return;
+    }
+
     try {
       setIsSavingStep(true);
       setStepError('');
       await saveStep4EducationInfo(form);
+      toast.success('Step 4 filled');
       navigate('/onboarding/step5');
     } catch (error) {
       setStepError(error?.message || 'Unable to save Step 4. Please try again.');

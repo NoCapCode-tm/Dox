@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep6BankDetails, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
@@ -57,6 +58,7 @@ const Step6BankDetails = () => {
       setIsSavingStep(true);
       setStepError('');
       await saveStep6BankDetails(formData.step6);
+      toast.success('Step 6 filled');
       navigate('/onboarding/step7');
     } catch (error) {
       setStepError(error?.message || 'Unable to save Step 6. Please try again.');
