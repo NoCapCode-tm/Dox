@@ -1,18 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-hot-toast';
-import { showMissingRequiredFieldsToast } from '../../utils/requiredFieldToast';
 import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep7SystemInfo, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
-
-const REQUIRED_STEP7_FIELDS = [
-  { key: 'laptopAvailability', label: 'Laptop Availability' },
-  { key: 'primaryDeviceType', label: 'Primary Device Type' },
-  { key: 'operatingSystem', label: 'Operating System' },
-  { key: 'timeZone', label: 'Time Zone' },
-  { key: 'weeklyAvailability', label: 'Weekly Availability' },
-];
 
 /**
  * Step7SystemInfo
@@ -49,15 +39,10 @@ const Step7SystemInfo = () => {
     updateFormData('step7', field, value);
 
   const handleNext = async () => {
-    if (showMissingRequiredFieldsToast(form, REQUIRED_STEP7_FIELDS).length > 0) {
-      return;
-    }
-
     try {
       setIsSavingStep(true);
       setStepError('');
       await saveStep7SystemInfo(form);
-      toast.success('Step 7 filled');
       navigate('/onboarding/step8');
     } catch (error) {
       setStepError(error?.message || 'Unable to save Step 7. Please try again.');
