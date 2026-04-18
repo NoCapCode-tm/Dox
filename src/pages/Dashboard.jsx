@@ -258,6 +258,7 @@ const ArrowRightIcon = ({ className }) => (
   </svg>
 );
 
+
 const CheckCircleIcon = () => (
   <svg
     width="32"
