@@ -286,7 +286,7 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
                 >
                     <p
                         ref={contentRef}
-                        className="p-4 md:p-6 text-[15px] leading-[24px] tracking-[0.08em] text-black/80 md:text-[16px] md:leading-[26px] transition-all duration-300"
+                        className="p-4 md:p-6 text-[15px] leading-[24px] tracking-[0.08em] text-black/90 md:text-[16px] md:leading-[26px] transition-all duration-300"
                         style={{
                             minHeight: isExpanded ? 'auto' : '404px',
                             margin: 0,
