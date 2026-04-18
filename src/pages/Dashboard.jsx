@@ -11,7 +11,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
   const [authError, setAuthError] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] =useState(true);
 
   useEffect(() => {
     const loadCurrentUser = async () => {
@@ -36,7 +36,6 @@ const Dashboard = () => {
   }, [navigate]);
 
   const handleStartStep = (stepNumber) => {
-    // Navigates to the respective step in the onboarding flow
     navigate(`/onboarding/step${stepNumber}`);
   };
 
@@ -212,7 +211,7 @@ const Dashboard = () => {
                 <CheckCircleIcon />
               </div>
               <div className="flex flex-col mt-[-2px]">
-                
+
                 <h4 className="text-[16px] text-white font-normal leading-[28px]">
                   {info.title}
                 </h4>
@@ -285,7 +284,7 @@ const CheckCircleIcon = () => (
 );
 
 /**
- * DOX Logo minimal component
+ * DOX Logo 
  */
 const DoxLogo = ({ width = "69", fill = "#FFFFFF" }) => (
   <svg
