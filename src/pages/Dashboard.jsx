@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { clearAuthToken, getCurrentUser } from '../api/employeeApi';
 import Loader from '../components/ui/Loader';
 
+const AUTH_SESSION_KEY = 'emp-auth-session';
+
 /**
  * Dashboard
  * Grid layout with 8 steps and 3 info cards
@@ -21,6 +23,13 @@ const Dashboard = () => {
         setIsLoading(true);
         setAuthError('');
 
+        const session = localStorage.getItem(AUTH_SESSION_KEY);
+        if (!session) {
+          setUserName('');
+          navigate('/', { replace: true });
+          return;
+        }
+
         const response = await getCurrentUser();
         const name = response?.data?.name || response?.message?.name || '';
         setUserName(name);
@@ -35,6 +44,17 @@ const Dashboard = () => {
     };
 
     loadCurrentUser();
+  }, [navigate]);
+
+  useEffect(() => {
+    const handleStorageChange = (event) => {
+      if (event.key === AUTH_SESSION_KEY && !event.newValue) {
+        navigate('/', { replace: true });
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
   }, [navigate]);
 
   useEffect(() => {
@@ -58,6 +78,9 @@ const Dashboard = () => {
 
   const handleLogout = () => {
     clearAuthToken();
+    localStorage.removeItem(AUTH_SESSION_KEY);
+    setUserName('');
+    setAuthError('');
     setIsUserMenuOpen(false);
     navigate('/', { replace: true });
   };
