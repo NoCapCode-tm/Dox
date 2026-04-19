@@ -4,6 +4,8 @@ import { toast } from "react-hot-toast";
 import { loginEmployee } from "../api/employeeApi";
 import Loader from "../components/ui/Loader";
 
+const AUTH_SESSION_KEY = "emp-auth-session";
+
 /**
  * SignIn page
  */
@@ -45,9 +47,11 @@ const SignIn = () => {
 
       // Backend expects "userid", map the current email field value.
       await loginEmployee({ userid: email.trim(), password });
+      localStorage.setItem(AUTH_SESSION_KEY, "active");
       toast.success("Login successful");
       navigate("/dashboard");
     } catch (error) {
+      localStorage.removeItem(AUTH_SESSION_KEY);
       const message = isInvalidCredentialError(error)
         ? "Incorrect credentials"
         : "Sign in failed. Please try again.";
