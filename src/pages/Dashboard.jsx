@@ -149,7 +149,7 @@ const Dashboard = () => {
       />
 
       {/* Header/Logo area */}
-      <div className="w-full px-8 pt-8 pb-2 flex items-start justify-between relative z-10">
+      <div className="w-full px-8 pt-8 pb-2 flex items-start justify-between relative z-30">
         <div className="flex flex-col">
           <DoxLogo width="69" />
           <span className="text-[12px] text-white/65 leading-[20px] mt-2 tracking-wide font-normal">
@@ -157,7 +157,7 @@ const Dashboard = () => {
           </span>
         </div>
 
-        <div ref={userMenuRef} className="relative">
+        <div ref={userMenuRef} className="relative z-40">
           <button
             type="button"
             aria-label="Open user menu"
@@ -174,7 +174,7 @@ const Dashboard = () => {
 
           {isUserMenuOpen ? (
             <div
-              className="absolute right-0 top-[calc(100%+10px)] w-[220px] rounded-[12px] p-2 border border-white/15"
+              className="absolute right-0 top-[calc(100%+10px)] z-50 w-[220px] rounded-[12px] p-2 border border-white/15"
               style={{
                 background: 'rgba(8, 12, 18, 0.88)',
                 backdropFilter: 'blur(12px)',
