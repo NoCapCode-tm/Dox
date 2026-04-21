@@ -213,7 +213,7 @@ const SignIn = () => {
 
         {/* Inner fields box */}
         <div
-          className="mt-[16px] w-full max-w-[392px] rounded-[16px] px-[26px] py-[19px] flex flex-col"
+          className="mt-[16px] w-full max-w-[350px] rounded-[16px] px-[26px] py-[19px] flex flex-col"
           style={{
             backgroundColor: "rgba(255,255,255,0.05)",
             border: "0.8px solid rgba(255,255,255,0.1)",
@@ -285,7 +285,7 @@ const SignIn = () => {
           type="button"
           onClick={handleSignIn}
           disabled={!canSubmit || isLoading}
-          className="mt-[16px] w-full max-w-[392px] h-[56px] rounded-[14px] flex items-center justify-center gap-[4px] transition-opacity disabled:opacity-50 disabled:cursor-not-allowed hover:enabled:opacity-90"
+          className="mt-[16px] w-full max-w-[350px] h-[56px] rounded-[14px] flex items-center justify-center gap-[4px] transition-opacity disabled:opacity-50 disabled:cursor-not-allowed hover:enabled:opacity-90"
           style={{
             position: "relative",
             zIndex: 30,
