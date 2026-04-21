@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getCurrentUser } from '../api/employeeApi';
+import { clearAuthToken, getCurrentUser } from '../api/employeeApi';
 import Loader from '../components/ui/Loader';
+
+const AUTH_SESSION_KEY = 'emp-auth-session';
 
 /**
  * Dashboard
@@ -12,12 +14,21 @@ const Dashboard = () => {
   const [userName, setUserName] = useState('');
   const [authError, setAuthError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const userMenuRef = useRef(null);
 
   useEffect(() => {
     const loadCurrentUser = async () => {
       try {
         setIsLoading(true);
         setAuthError('');
+
+        const session = localStorage.getItem(AUTH_SESSION_KEY);
+        if (!session) {
+          setUserName('');
+          navigate('/', { replace: true });
+          return;
+        }
 
         const response = await getCurrentUser();
         const name = response?.data?.name || response?.message?.name || '';
@@ -29,17 +40,52 @@ const Dashboard = () => {
         }
       } finally {
         setIsLoading(false);
-
       }
     };
 
     loadCurrentUser();
   }, [navigate]);
 
+  useEffect(() => {
+    const handleStorageChange = (event) => {
+      if (event.key === AUTH_SESSION_KEY && !event.newValue) {
+        navigate('/', { replace: true });
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, [navigate]);
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleOutsideClick);
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, []);
+
   const handleStartStep = (stepNumber) => {
     // Navigates to the respective step in the onboarding flow
     navigate(`/onboarding/step${stepNumber}`);
   };
+
+  const handleLogout = () => {
+    clearAuthToken();
+    localStorage.removeItem(AUTH_SESSION_KEY);
+    setUserName('');
+    setAuthError('');
+    setIsUserMenuOpen(false);
+    navigate('/', { replace: true });
+  };
+
+  const avatarCharacter = (userName?.trim()?.charAt(0) || 'U').toUpperCase();
 
   const steps = [
     {
@@ -126,11 +172,53 @@ const Dashboard = () => {
       />
 
       {/* Header/Logo area */}
-      <div className="w-full px-8 pt-8 pb-2 flex flex-col relative z-10">
-        <DoxLogo width="69" />
-        <span className="text-[12px] text-white/65 leading-[20px] mt-2 tracking-wide font-normal">
-          Employee Onboarding
-        </span>
+      <div className="w-full px-8 pt-8 pb-2 flex items-start justify-between relative z-30">
+        <div className="flex flex-col">
+          <DoxLogo width="69" />
+          <span className="text-[12px] text-white/65 leading-[20px] mt-2 tracking-wide font-normal">
+            Employee Onboarding
+          </span>
+        </div>
+
+        <div ref={userMenuRef} className="relative z-40">
+          <button
+            type="button"
+            aria-label="Open user menu"
+            aria-expanded={isUserMenuOpen}
+            onClick={() => setIsUserMenuOpen((current) => !current)}
+            className="w-10 h-10 rounded-full flex items-center justify-center border border-white/20 text-[14px] font-semibold text-white transition-all hover:brightness-110"
+            style={{
+              background: 'linear-gradient(145deg, rgba(74, 102, 149, 0.9), rgba(38, 53, 76, 0.95))',
+              boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.18), 0 8px 20px rgba(0,0,0,0.35)',
+            }}
+          >
+            {avatarCharacter}
+          </button>
+
+          {isUserMenuOpen ? (
+            <div
+              className="absolute right-0 top-[calc(100%+10px)] z-50 w-[220px] rounded-[12px] p-2 border border-white/15"
+              style={{
+                background: 'rgba(8, 12, 18, 0.88)',
+                backdropFilter: 'blur(12px)',
+                boxShadow: '0 14px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.06)',
+              }}
+            >
+              <div className="px-3 py-2 rounded-[8px]" style={{ backgroundColor: 'rgba(255,255,255,0.03)' }}>
+                <p className="text-[11px] uppercase tracking-[0.15em] text-white/50">Username</p>
+                <p className="text-[14px] text-white mt-1 truncate">{userName || 'User'}</p>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="w-full mt-2 px-3 py-2 rounded-[8px] text-left text-[14px] text-[#FFB4B7] hover:bg-white/6 transition-colors"
+              >
+                Logout
+              </button>
+            </div>
+          ) : null}
+        </div>
       </div>
 
       <main className="flex-1 w-full max-w-[1349px] mx-auto px-4 md:px-8 pb-16 flex flex-col items-center relative z-10">

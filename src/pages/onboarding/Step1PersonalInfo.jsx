@@ -1,8 +1,24 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep1PersonalInfo, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
+import { showMissingRequiredFieldsToast } from '../../utils/requiredFieldToast';
+
+const REQUIRED_STEP1_FIELDS = [
+  { key: 'fullName', label: 'Full Name' },
+  { key: 'personalEmail', label: 'Personal Email ID' },
+  { key: 'phoneWhatsapp', label: 'Phone Number (WhatsApp enabled)' },
+  { key: 'dateOfBirth', label: 'Date of Birth' },
+  { key: 'countryOfCitizenship', label: 'Country of Citizenship' },
+  { key: 'stateProvince', label: 'State/Province' },
+  { key: 'city', label: 'City' },
+  { key: 'gender', label: 'Gender' },
+  { key: 'permanentAddress', label: 'Permanent Address' },
+  { key: 'communicationAddress', label: 'Communication Address' },
+  { key: 'phoneWithCode', label: 'Phone Number (with country code)' },
+];
 
 const toDateInputValue = (value) => {
   if (!value) return '';
@@ -62,10 +78,15 @@ const Step1PersonalInfo = () => {
   };
 
   const handleNext = async () => {
+    if (showMissingRequiredFieldsToast(form, REQUIRED_STEP1_FIELDS).length > 0) {
+      return;
+    }
+
     try {
       setIsSavingStep(true);
       setStepError('');
       await saveStep1PersonalInfo(form);
+      toast.success('Step 1 filled');
       navigate('/onboarding/step2');
     } catch (error) {
       setStepError(error?.message || 'Unable to save Step 1. Please try again.');
@@ -87,7 +108,7 @@ const Step1PersonalInfo = () => {
         className="absolute inset-0 pointer-events-none select-none z-0"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)',
+            'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)',
           backgroundSize: '115px 115px',
         }}
       />

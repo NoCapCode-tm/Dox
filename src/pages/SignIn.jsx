@@ -1,7 +1,10 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 import { loginEmployee } from "../api/employeeApi";
 import Loader from "../components/ui/Loader";
+
+const AUTH_SESSION_KEY = "emp-auth-session";
 
 /**
  * SignIn page
@@ -13,25 +16,48 @@ const SignIn = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  /** Only enable button when both fields have content */
   const canSubmit = useMemo(
     () => email.trim().length > 0 && password.length > 0,
     [email, password]
   );
+
+  const isInvalidCredentialError = (error) => {
+    const status = error?.status;
+    const message = String(error?.message || "").toLowerCase();
+
+    if (status === 400 || status === 401 || status === 403) {
+      return true;
+    }
+
+    return (
+      message.includes("invalid") ||
+      message.includes("incorrect") ||
+      message.includes("unauthorized") ||
+      message.includes("request failed")
+    );
+  };
 
   const handleSignIn = async () => {
     if (!canSubmit || isLoading) return;
 
     try {
       setIsLoading(true);
-      
+
       setErrorMessage("");
-      
+
       // Backend expects "userid", map the current email field value.
       await loginEmployee({ userid: email.trim(), password });
+      localStorage.setItem(AUTH_SESSION_KEY, "active");
+      toast.success("Login successful");
       navigate("/dashboard");
     } catch (error) {
-      setErrorMessage(error?.message || "Sign in failed. Please try again.");
+      localStorage.removeItem(AUTH_SESSION_KEY);
+      const message = isInvalidCredentialError(error)
+        ? "Incorrect credentials"
+        : "Sign in failed. Please try again.";
+
+      toast.error(message);
+      setErrorMessage(message);
     } finally {
       setIsLoading(false);
     }

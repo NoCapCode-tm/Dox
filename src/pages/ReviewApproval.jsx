@@ -44,11 +44,21 @@ const ReviewApproval = () => {
             <div
                 className="absolute inset-0 z-0"
                 style={{
+                    backgroundImage: 'url(/dox-bg.png)',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    mixBlendMode: 'multiply',
+                    filter: 'brightness(0) contrast(1.08)',
+                    opacity: 0.62,
+                }}
+            />
+
+            <div
+                className="absolute inset-0 z-0"
+                style={{
                     background:
-                        'url(/dox-bg.png), linear-gradient(180deg, #000000 14.42%, rgba(74, 131, 214, 0.6) 43.27%, #000000 100%)',
-                    backgroundSize: 'cover, cover',
-                    backgroundPosition: 'center, center',
-                    backgroundRepeat: 'no-repeat, no-repeat',
+                        'linear-gradient(180deg, #000000 20%, #5492EC 52%, #000000 100%)',
                     mixBlendMode: 'multiply',
                 }}
             />
@@ -78,7 +88,7 @@ const ReviewApproval = () => {
                             <div className="flex md:flex-col gap-3 md:gap-8">
                                 <StepBox number="1" />
                                 <StepBox number="2" />
-                                <StepBox number="3" active />
+                                <StepBox number="3" completed />
                             </div>
                         </aside>
 
@@ -147,10 +157,13 @@ const ReviewApproval = () => {
     )
 }
 
-const StepBox = ({ number, active = false }) => (
+const StepBox = ({ number, active = false, completed = false }) => (
     <div
         className="flex h-[56px] w-[56px] items-center justify-center rounded-[10px] text-[34px] leading-none text-white"
-        style={{ background: active ? 'rgba(255,255,255,0.18)' : 'rgba(75, 96, 137, 0.35)' }}
+        style={{
+            background: completed ? 'rgba(129, 155, 204, 0.46)' : active ? 'rgba(255,255,255,0.18)' : 'rgba(75, 96, 137, 0.35)',
+            boxShadow: completed ? 'inset 0 1px 0 rgba(255, 255, 255, 0.18)' : 'none',
+        }}
     >
         {number}
     </div>
