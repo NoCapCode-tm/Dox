@@ -13,6 +13,7 @@ const SignIn = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -261,12 +262,21 @@ const SignIn = () => {
                 }
               }}
               placeholder="Enter your password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               autoComplete="current-password"
               className="flex-1 bg-transparent border-none outline-none font-[Jost] text-[14px] caret-white"
               style={{ color: "rgba(255,255,255,0.65)" }}
               aria-label="Password"
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="shrink-0 bg-transparent border-none outline-none p-0 cursor-pointer"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              aria-pressed={showPassword}
+            >
+              {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+            </button>
           </div>
         </div>
 
@@ -371,6 +381,70 @@ const LockIcon = () => (
       stroke="rgba(255,255,255,0.65)"
       strokeWidth="1.5"
       strokeLinejoin="round"
+    />
+  </svg>
+);
+
+/**
+ * EyeIcon
+ */
+const EyeIcon = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    className="shrink-0"
+  >
+    <path
+      d="M1.5 8s2.2-3.5 6.5-3.5S14.5 8 14.5 8s-2.2 3.5-6.5 3.5S1.5 8 1.5 8Z"
+      stroke="rgba(255,255,255,0.65)"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+    <circle
+      cx="8"
+      cy="8"
+      r="2"
+      stroke="rgba(255,255,255,0.65)"
+      strokeWidth="1.5"
+    />
+  </svg>
+);
+
+/**
+ * EyeOffIcon
+ */
+const EyeOffIcon = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    className="shrink-0"
+  >
+    <path
+      d="M1.5 8s2.2-3.5 6.5-3.5S14.5 8 14.5 8s-2.2 3.5-6.5 3.5S1.5 8 1.5 8Z"
+      stroke="rgba(255,255,255,0.65)"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+    <circle
+      cx="8"
+      cy="8"
+      r="2"
+      stroke="rgba(255,255,255,0.65)"
+      strokeWidth="1.5"
+    />
+    <path
+      d="M2.5 13.5 13.5 2.5"
+      stroke="rgba(255,255,255,0.65)"
+      strokeWidth="1.5"
+      strokeLinecap="round"
     />
   </svg>
 );
