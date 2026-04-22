@@ -236,6 +236,35 @@ const CompanyDocs = () => {
     )
 }
 
+const renderContentWithBoldMarkers = (text) => {
+    const markerRegex = /§b§([\s\S]*?)§\/b§/g
+    const renderedParts = []
+    let lastIndex = 0
+    let match
+
+    while ((match = markerRegex.exec(text)) !== null) {
+        if (match.index > lastIndex) {
+            renderedParts.push(text.slice(lastIndex, match.index))
+        }
+
+        renderedParts.push(
+            <strong key={`bold-${match.index}`} className="font-bold text-white">
+                {match[1]}
+            </strong>,
+        )
+
+        lastIndex = markerRegex.lastIndex
+    }
+
+    if (lastIndex < text.length) {
+        renderedParts.push(text.slice(lastIndex))
+    }
+
+    return renderedParts.map((part, index) =>
+        typeof part === 'string' ? <span key={`text-${index}`}>{part}</span> : part,
+    )
+}
+
 const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
     const contentRef = useRef(null)
     const [isExpanded, setIsExpanded] = useState(false)
@@ -270,8 +299,8 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
             <article
                 className="rounded-[10px] border border-white/8 transition-all duration-300 relative"
                 style={{
-                    background: '#ffffff',
-                    borderColor: 'rgba(15, 23, 42, 0.08)',
+                    background: 'linear-gradient(180deg, rgba(8, 21, 56, 0.72) 0%, rgba(8, 21, 56, 0.5) 100%)',
+                    borderColor: 'rgba(255, 255, 255, 0.1)',
                     backdropFilter: 'blur(10px)',
                     WebkitBackdropFilter: 'blur(10px)',
                 }}
@@ -287,16 +316,16 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
                 >
                     <p
                         ref={contentRef}
-                        className="p-4 md:p-6 text-[15px] leading-[24px] tracking-[0.08em] text-black/90 md:text-[16px] md:leading-[26px] transition-all duration-300"
+                        className="p-4 md:p-6 text-[15px] leading-[24px] tracking-[0.08em] text-white/85 md:text-[16px] md:leading-[26px] transition-all duration-300"
                         style={{
                             minHeight: '404px',
                             margin: 0,
                             whiteSpace: 'pre-line',
                             fontFamily: 'Arial, sans-serif',
-
+                            
                         }}
                     >
-                        {content}
+                        {renderContentWithBoldMarkers(content)}
                     </p>
                 </div>
 
@@ -309,7 +338,7 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
                             left: 0,
                             right: 0,
                             height: '120px',
-                            background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%)',
+                            background: 'linear-gradient(to bottom, rgba(8, 21, 56, 0) 0%, rgba(8, 21, 56, 0.96) 100%)',
                             pointerEvents: 'none',
                             borderRadius: '0 0 10px 10px',
                         }}
