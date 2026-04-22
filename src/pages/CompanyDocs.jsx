@@ -388,8 +388,15 @@ const renderContentWithBoldMarkers = (text) => {
 
 const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
     const contentRef = useRef(null)
+    const contentScrollRef = useRef(null)
+    const contentTrackRef = useRef(null)
+    const contentThumbRef = useRef(null)
+    const contentThumbDragRef = useRef({ isDragging: false, startY: 0, startScrollTop: 0 })
     const [isExpanded, setIsExpanded] = useState(false)
     const [isOverflowing, setIsOverflowing] = useState(false)
+
+    const contentThumbHeight = 27
+    const contentTrackInset = 13
 
     useEffect(() => {
         if (contentRef.current) {
@@ -402,7 +409,109 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
             // Reset expanded state when content changes
             setIsExpanded(false)
         }
+
+        if (contentScrollRef.current) {
+            contentScrollRef.current.scrollTop = 0
+        }
+
+        if (contentThumbRef.current) {
+            contentThumbRef.current.style.transform = 'translateY(0px)'
+        }
     }, [content, onOverflowChange])
+
+    const syncContentThumb = () => {
+        const scrollContainer = contentScrollRef.current
+        const trackElement = contentTrackRef.current
+        const thumbElement = contentThumbRef.current
+
+        if (!scrollContainer || !trackElement || !thumbElement) {
+            return
+        }
+
+        const { scrollHeight, clientHeight, scrollTop } = scrollContainer
+        const trackHeight = Math.max(trackElement.clientHeight, 0)
+
+        if (scrollHeight <= clientHeight) {
+            thumbElement.style.transform = 'translateY(0px)'
+            return
+        }
+
+        const maxThumbTop = Math.max(trackHeight - contentThumbHeight, 0)
+        const maxScrollTop = scrollHeight - clientHeight
+        const nextThumbTop = maxScrollTop > 0 ? (scrollTop / maxScrollTop) * maxThumbTop : 0
+
+        const clampedThumbTop = Math.max(0, Math.min(nextThumbTop, maxThumbTop))
+        thumbElement.style.transform = `translateY(${clampedThumbTop}px)`
+    }
+
+    useEffect(() => {
+        syncContentThumb()
+    }, [content, isExpanded])
+
+    useEffect(() => {
+        const handleResize = () => {
+            syncContentThumb()
+        }
+
+        window.addEventListener('resize', handleResize)
+
+        return () => {
+            window.removeEventListener('resize', handleResize)
+        }
+    }, [])
+
+    const handleContentThumbMouseDown = (event) => {
+        if (!isExpanded) {
+            return
+        }
+
+        event.preventDefault()
+
+        const scrollContainer = contentScrollRef.current
+        if (!scrollContainer) {
+            return
+        }
+
+        contentThumbDragRef.current = {
+            isDragging: true,
+            startY: event.clientY,
+            startScrollTop: scrollContainer.scrollTop,
+        }
+        document.body.style.userSelect = 'none'
+
+        const handleMouseMove = (moveEvent) => {
+            const currentScrollContainer = contentScrollRef.current
+            const currentTrack = contentTrackRef.current
+            if (!currentScrollContainer || !contentThumbDragRef.current.isDragging) {
+                return
+            }
+
+            if (!currentTrack) {
+                return
+            }
+
+            const maxScrollTop = currentScrollContainer.scrollHeight - currentScrollContainer.clientHeight
+            const maxThumbTop = Math.max(currentTrack.clientHeight - contentThumbHeight, 0)
+
+            if (maxScrollTop <= 0 || maxThumbTop <= 0) {
+                return
+            }
+
+            const deltaY = moveEvent.clientY - contentThumbDragRef.current.startY
+            const scrollRatio = maxScrollTop / maxThumbTop
+            currentScrollContainer.scrollTop = contentThumbDragRef.current.startScrollTop + deltaY * scrollRatio
+        }
+
+        const handleMouseUp = () => {
+            contentThumbDragRef.current.isDragging = false
+            document.body.style.userSelect = ''
+            window.removeEventListener('mousemove', handleMouseMove)
+            window.removeEventListener('mouseup', handleMouseUp)
+        }
+
+        window.addEventListener('mousemove', handleMouseMove)
+        window.addEventListener('mouseup', handleMouseUp)
+    }
 
     const handleToggleExpanded = () => {
         setIsExpanded((previousValue) => {
@@ -428,11 +537,16 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
             >
                 {/* Scrollable Content */}
                 <div
+                    ref={contentScrollRef}
+                    className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                    onScroll={syncContentThumb}
                     style={{
                         position: 'relative',
                         overflowX: 'hidden',
                         overflowY: isExpanded ? 'auto' : 'hidden',
                         maxHeight: '404px',
+                        scrollbarWidth: 'none',
+                        msOverflowStyle: 'none',
                     }}
                 >
                     <p
@@ -443,12 +557,22 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
                             margin: 0,
                             whiteSpace: 'pre-line',
                             fontFamily: 'Arial, sans-serif',
-                            
+
                         }}
                     >
                         {renderContentWithBoldMarkers(content)}
                     </p>
                 </div>
+
+                {isExpanded && isOverflowing ? (
+                    <div className="pointer-events-none absolute bottom-[13px] right-3 top-[13px]">
+                        <ContentScrollThumb
+                            trackRef={contentTrackRef}
+                            thumbRef={contentThumbRef}
+                            onThumbMouseDown={handleContentThumbMouseDown}
+                        />
+                    </div>
+                ) : null}
 
                 {/* Fade Overlay */}
                 {isOverflowing && !isExpanded && (
@@ -588,6 +712,28 @@ const SidebarScrollFrame = ({ trackHeight, thumbTop, onThumbMouseDown }) => (
         >
             <svg width="10" height="73" viewBox="0 0 10 73" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <rect x="0.75" y="0.75" width="8.5" height="71.5" rx="4.25" stroke="white" strokeOpacity="0.5" strokeWidth="1.5" />
+            </svg>
+        </button>
+    </div>
+)
+
+const ContentScrollThumb = ({ trackRef, thumbRef, onThumbMouseDown }) => (
+    <div ref={trackRef} className="relative h-full w-[8px]">
+        <button
+            ref={thumbRef}
+            type="button"
+            aria-label="Scroll content"
+            onMouseDown={onThumbMouseDown}
+            className="absolute left-0 top-0 w-[8px] bg-transparent p-0 focus:outline-none"
+            style={{
+                height: '27px',
+                cursor: 'default',
+                pointerEvents: 'auto',
+                willChange: 'transform',
+            }}
+        >
+            <svg width="8" height="27" viewBox="0 0 8 27" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="0.75" y="0.75" width="6.5" height="25.5" rx="3.25" stroke="white" strokeOpacity="0.5" strokeWidth="1.5" />
             </svg>
         </button>
     </div>
