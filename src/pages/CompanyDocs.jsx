@@ -11,6 +11,12 @@ const CompanyDocs = () => {
     const [hasAcknowledged, setHasAcknowledged] = useState(false)
     const [isContentOverflowing, setIsContentOverflowing] = useState(false)
     const [hasOpenedLongContent, setHasOpenedLongContent] = useState(false)
+    const sidebarScrollRef = useRef(null)
+    const sidebarThumbDragRef = useRef({ isDragging: false, startY: 0, startScrollTop: 0 })
+    const [sidebarThumbTop, setSidebarThumbTop] = useState(0)
+    const [sidebarTrackHeight, setSidebarTrackHeight] = useState(0)
+
+    const sidebarThumbHeight = 73
 
     const selectedDocument = useMemo(
         () => findDocumentNode(documentTree, selectedDocumentId),
@@ -66,8 +72,104 @@ const CompanyDocs = () => {
         setHasAcknowledged(true)
     }
 
+    const syncSidebarThumb = () => {
+        const scrollContainer = sidebarScrollRef.current
+        if (!scrollContainer) {
+            return
+        }
+
+        const { scrollHeight, clientHeight, scrollTop } = scrollContainer
+        const trackHeight = clientHeight
+        setSidebarTrackHeight(trackHeight)
+
+        if (scrollHeight <= clientHeight) {
+            setSidebarThumbTop(0)
+            return
+        }
+
+        const maxThumbTop = Math.max(trackHeight - sidebarThumbHeight, 0)
+        const maxScrollTop = scrollHeight - clientHeight
+        const nextThumbTop = maxScrollTop > 0 ? (scrollTop / maxScrollTop) * maxThumbTop : 0
+
+        setSidebarThumbTop(nextThumbTop)
+    }
+
+    useEffect(() => {
+        syncSidebarThumb()
+    }, [expandedSectionIds, selectedDocumentId])
+
+    useEffect(() => {
+        const handleResize = () => {
+            syncSidebarThumb()
+        }
+
+        window.addEventListener('resize', handleResize)
+
+        return () => {
+            window.removeEventListener('resize', handleResize)
+        }
+    }, [])
+
+    const handleSidebarWheel = (event) => {
+        const scrollContainer = event.currentTarget
+        const hasScrollableContent = scrollContainer.scrollHeight > scrollContainer.clientHeight
+
+        if (!hasScrollableContent) {
+            return
+        }
+
+        scrollContainer.scrollTop += event.deltaY
+        syncSidebarThumb()
+        event.preventDefault()
+    }
+
+    const handleSidebarThumbMouseDown = (event) => {
+        event.preventDefault()
+
+        const scrollContainer = sidebarScrollRef.current
+        if (!scrollContainer) {
+            return
+        }
+
+        sidebarThumbDragRef.current = {
+            isDragging: true,
+            startY: event.clientY,
+            startScrollTop: scrollContainer.scrollTop,
+        }
+        document.body.style.userSelect = 'none'
+
+        const handleMouseMove = (moveEvent) => {
+            const currentScrollContainer = sidebarScrollRef.current
+            if (!currentScrollContainer || !sidebarThumbDragRef.current.isDragging) {
+                return
+            }
+
+            const maxScrollTop = currentScrollContainer.scrollHeight - currentScrollContainer.clientHeight
+            const maxThumbTop = Math.max(sidebarTrackHeight - sidebarThumbHeight, 0)
+
+            if (maxScrollTop <= 0 || maxThumbTop <= 0) {
+                return
+            }
+
+            const deltaY = moveEvent.clientY - sidebarThumbDragRef.current.startY
+            const scrollRatio = maxScrollTop / maxThumbTop
+            currentScrollContainer.scrollTop = sidebarThumbDragRef.current.startScrollTop + deltaY * scrollRatio
+            syncSidebarThumb()
+        }
+
+        const handleMouseUp = () => {
+            sidebarThumbDragRef.current.isDragging = false
+            document.body.style.userSelect = ''
+            window.removeEventListener('mousemove', handleMouseMove)
+            window.removeEventListener('mouseup', handleMouseUp)
+        }
+
+        window.addEventListener('mousemove', handleMouseMove)
+        window.addEventListener('mouseup', handleMouseUp)
+    }
+
     return (
-        <div className="relative min-h-screen w-full overflow-hidden font-[jost] text-white" style={{ background: '#000' }}>
+        <div className="relative min-h-screen w-full overflow-x-hidden font-[jost] text-white" style={{ background: '#000' }}>
             {/* Background */}
             <div className="absolute inset-0 z-0">
                 <div
@@ -152,20 +254,39 @@ const CompanyDocs = () => {
                                 {/* Document and Acknowledgement Area */}
                                 <div className="mt-10 grid grid-cols-1 gap-4 lg:grid-cols-[240px_1fr] lg:gap-5">
                                     <nav
-                                        className="rounded-[10px] border border-white/8 p-3"
+                                        className="relative h-[470px] rounded-[10px] border border-white/8 p-3"
                                         style={{
                                             background: 'rgba(46, 109, 194, 0.16)',
                                             backdropFilter: 'blur(10px)',
                                             WebkitBackdropFilter: 'blur(10px)',
                                         }}
                                     >
-                                        <Sidebar
-                                            items={documentTree}
-                                            activeDocumentId={selectedDocumentId}
-                                            expandedSectionIds={expandedSectionIds}
-                                            onSectionSelect={handleSectionSelect}
-                                            onDocumentSelect={handleDocumentSelect}
-                                        />
+                                        <div
+                                            className="h-full overflow-y-auto overscroll-contain pr-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                                            ref={sidebarScrollRef}
+                                            onScroll={syncSidebarThumb}
+                                            onWheel={handleSidebarWheel}
+                                            style={{
+                                                scrollbarWidth: 'none',
+                                                msOverflowStyle: 'none',
+                                            }}
+                                        >
+                                            <Sidebar
+                                                items={documentTree}
+                                                activeDocumentId={selectedDocumentId}
+                                                expandedSectionIds={expandedSectionIds}
+                                                onSectionSelect={handleSectionSelect}
+                                                onDocumentSelect={handleDocumentSelect}
+                                            />
+                                        </div>
+
+                                        <div className="absolute bottom-3 right-2 top-3">
+                                            <SidebarScrollFrame
+                                                trackHeight={sidebarTrackHeight}
+                                                thumbTop={sidebarThumbTop}
+                                                onThumbMouseDown={handleSidebarThumbMouseDown}
+                                            />
+                                        </div>
                                     </nav>
 
                                     <div className="space-y-4">
@@ -448,6 +569,28 @@ const HorizontalDivider = () => (
     <svg width="118" height="2" viewBox="0 0 150 2" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M1 1H148.5" stroke="white" strokeOpacity="0.05" strokeWidth="2" strokeLinecap="round" />
     </svg>
+)
+
+const SidebarScrollFrame = ({ trackHeight, thumbTop, onThumbMouseDown }) => (
+    <div className="relative h-full w-[10px]">
+        <button
+            type="button"
+            aria-label="Scroll sidebar"
+            onMouseDown={onThumbMouseDown}
+            className="absolute left-0 w-[10px] bg-transparent p-0 focus:outline-none"
+            style={{
+                top: `${thumbTop}px`,
+                height: '73px',
+                cursor: 'default',
+                pointerEvents: 'auto',
+                opacity: trackHeight > 73 ? 1 : 0.4,
+            }}
+        >
+            <svg width="10" height="73" viewBox="0 0 10 73" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="0.75" y="0.75" width="8.5" height="71.5" rx="4.25" stroke="white" strokeOpacity="0.5" strokeWidth="1.5" />
+            </svg>
+        </button>
+    </div>
 )
 
 const DoxLogo = () => (
