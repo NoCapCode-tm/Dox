@@ -535,10 +535,23 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
                     WebkitBackdropFilter: 'blur(10px)',
                 }}
             >
+                <div
+                    className="pointer-events-none absolute inset-0 z-0 rounded-[10px]"
+                    style={{
+                        backgroundImage: 'url(/dox-bg.png)',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
+                        mixBlendMode: 'multiply',
+                        filter: 'brightness(0) contrast(1.08)',
+                        opacity: 0.46,
+                    }}
+                />
+
                 {/* Scrollable Content */}
                 <div
                     ref={contentScrollRef}
-                    className="[scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                    className="relative z-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
                     onScroll={syncContentThumb}
                     style={{
                         position: 'relative',
