@@ -161,6 +161,12 @@ const Dashboard = () => {
           'radial-gradient(1400px 1000px at 0% 0%, #5B7AB5 0%, #1D2A43 45%, #0B1019 75%, #040608 100%)',
       }}
     >
+      <style>{`
+        @keyframes fadeSlideUp {
+          0% { opacity: 0; transform: translateY(20px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
       {isLoading && <Loader fullScreen={true} message="Loading dashboard..." />}
       {/* Decorative Background grid/wires*/}
       <div
@@ -246,7 +252,7 @@ const Dashboard = () => {
 
         {/* 8 Step Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full mb-16">
-          {steps.map((step) => (
+          {steps.map((step, index) => (
             <div
               key={step.num}
               className="flex flex-col justify-between p-6 rounded-[10px] h-full min-h-[234px]"
@@ -255,6 +261,9 @@ const Dashboard = () => {
                 border: '1px solid rgba(255, 255, 255, 0.08)',
                 backdropFilter: 'blur(10px)',
                 boxShadow: 'inset 1px 1px 0px rgba(255, 255, 255, 0.15), inset -1px -1px 0px rgba(255, 255, 255, 0.03)',
+                opacity: 0,
+                animation: !isLoading ? 'fadeSlideUp 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards' : 'none',
+                animationDelay: `${index * 0.1}s`,
               }}
             >
               <div>
