@@ -161,6 +161,32 @@ const Dashboard = () => {
           'radial-gradient(1400px 1000px at 0% 0%, #5B7AB5 0%, #1D2A43 45%, #0B1019 75%, #040608 100%)',
       }}
     >
+      <style>{`
+        @keyframes fadeSlideUp {
+          0% { opacity: 0; transform: translateY(20px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 767px) {
+          .step-card:nth-child(1) { animation-delay: 0.0s; }
+          .step-card:nth-child(2) { animation-delay: 0.1s; }
+          .step-card:nth-child(3) { animation-delay: 0.2s; }
+          .step-card:nth-child(4) { animation-delay: 0.3s; }
+          .step-card:nth-child(5) { animation-delay: 0.4s; }
+          .step-card:nth-child(6) { animation-delay: 0.5s; }
+          .step-card:nth-child(7) { animation-delay: 0.6s; }
+          .step-card:nth-child(8) { animation-delay: 0.7s; }
+        }
+        @media (min-width: 768px) and (max-width: 1023px) {
+          .step-card:nth-child(1), .step-card:nth-child(2) { animation-delay: 0.0s; }
+          .step-card:nth-child(3), .step-card:nth-child(4) { animation-delay: 0.15s; }
+          .step-card:nth-child(5), .step-card:nth-child(6) { animation-delay: 0.3s; }
+          .step-card:nth-child(7), .step-card:nth-child(8) { animation-delay: 0.45s; }
+        }
+        @media (min-width: 1024px) {
+          .step-card:nth-child(1), .step-card:nth-child(2), .step-card:nth-child(3), .step-card:nth-child(4) { animation-delay: 0.0s; }
+          .step-card:nth-child(5), .step-card:nth-child(6), .step-card:nth-child(7), .step-card:nth-child(8) { animation-delay: 0.25s; }
+        }
+      `}</style>
       {isLoading && <Loader fullScreen={true} message="Loading dashboard..." />}
       {/* Decorative Background grid/wires*/}
       <div
@@ -246,15 +272,20 @@ const Dashboard = () => {
 
         {/* 8 Step Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full mb-16">
-          {steps.map((step) => (
+          {steps.map((step, index) => (
             <div
               key={step.num}
-              className="flex flex-col justify-between p-6 rounded-[10px] h-full min-h-[234px]"
+              className="step-card flex flex-col justify-between p-6 rounded-[10px] h-full min-h-[234px]"
               style={{
                 backgroundColor: 'rgba(21, 27, 35, 0.2)',
                 border: '1px solid rgba(255, 255, 255, 0.08)',
                 backdropFilter: 'blur(10px)',
                 boxShadow: 'inset 1px 1px 0px rgba(255, 255, 255, 0.15), inset -1px -1px 0px rgba(255, 255, 255, 0.03)',
+                opacity: 0,
+                animationName: !isLoading ? 'fadeSlideUp' : 'none',
+                animationDuration: '1.6s',
+                animationTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
+                animationFillMode: 'forwards',
               }}
             >
               <div>

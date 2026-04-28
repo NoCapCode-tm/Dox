@@ -11,6 +11,12 @@ const CompanyDocs = () => {
     const [hasAcknowledged, setHasAcknowledged] = useState(false)
     const [isContentOverflowing, setIsContentOverflowing] = useState(false)
     const [hasOpenedLongContent, setHasOpenedLongContent] = useState(false)
+    const sidebarScrollRef = useRef(null)
+    const sidebarThumbDragRef = useRef({ isDragging: false, startY: 0, startScrollTop: 0 })
+    const [sidebarThumbTop, setSidebarThumbTop] = useState(0)
+    const [sidebarTrackHeight, setSidebarTrackHeight] = useState(0)
+
+    const sidebarThumbHeight = 73
 
     const selectedDocument = useMemo(
         () => findDocumentNode(documentTree, selectedDocumentId),
@@ -66,8 +72,104 @@ const CompanyDocs = () => {
         setHasAcknowledged(true)
     }
 
+    const syncSidebarThumb = () => {
+        const scrollContainer = sidebarScrollRef.current
+        if (!scrollContainer) {
+            return
+        }
+
+        const { scrollHeight, clientHeight, scrollTop } = scrollContainer
+        const trackHeight = clientHeight
+        setSidebarTrackHeight(trackHeight)
+
+        if (scrollHeight <= clientHeight) {
+            setSidebarThumbTop(0)
+            return
+        }
+
+        const maxThumbTop = Math.max(trackHeight - sidebarThumbHeight, 0)
+        const maxScrollTop = scrollHeight - clientHeight
+        const nextThumbTop = maxScrollTop > 0 ? (scrollTop / maxScrollTop) * maxThumbTop : 0
+
+        setSidebarThumbTop(nextThumbTop)
+    }
+
+    useEffect(() => {
+        syncSidebarThumb()
+    }, [expandedSectionIds, selectedDocumentId])
+
+    useEffect(() => {
+        const handleResize = () => {
+            syncSidebarThumb()
+        }
+
+        window.addEventListener('resize', handleResize)
+
+        return () => {
+            window.removeEventListener('resize', handleResize)
+        }
+    }, [])
+
+    const handleSidebarWheel = (event) => {
+        const scrollContainer = event.currentTarget
+        const hasScrollableContent = scrollContainer.scrollHeight > scrollContainer.clientHeight
+
+        if (!hasScrollableContent) {
+            return
+        }
+
+        scrollContainer.scrollTop += event.deltaY
+        syncSidebarThumb()
+        event.preventDefault()
+    }
+
+    const handleSidebarThumbMouseDown = (event) => {
+        event.preventDefault()
+
+        const scrollContainer = sidebarScrollRef.current
+        if (!scrollContainer) {
+            return
+        }
+
+        sidebarThumbDragRef.current = {
+            isDragging: true,
+            startY: event.clientY,
+            startScrollTop: scrollContainer.scrollTop,
+        }
+        document.body.style.userSelect = 'none'
+
+        const handleMouseMove = (moveEvent) => {
+            const currentScrollContainer = sidebarScrollRef.current
+            if (!currentScrollContainer || !sidebarThumbDragRef.current.isDragging) {
+                return
+            }
+
+            const maxScrollTop = currentScrollContainer.scrollHeight - currentScrollContainer.clientHeight
+            const maxThumbTop = Math.max(sidebarTrackHeight - sidebarThumbHeight, 0)
+
+            if (maxScrollTop <= 0 || maxThumbTop <= 0) {
+                return
+            }
+
+            const deltaY = moveEvent.clientY - sidebarThumbDragRef.current.startY
+            const scrollRatio = maxScrollTop / maxThumbTop
+            currentScrollContainer.scrollTop = sidebarThumbDragRef.current.startScrollTop + deltaY * scrollRatio
+            syncSidebarThumb()
+        }
+
+        const handleMouseUp = () => {
+            sidebarThumbDragRef.current.isDragging = false
+            document.body.style.userSelect = ''
+            window.removeEventListener('mousemove', handleMouseMove)
+            window.removeEventListener('mouseup', handleMouseUp)
+        }
+
+        window.addEventListener('mousemove', handleMouseMove)
+        window.addEventListener('mouseup', handleMouseUp)
+    }
+
     return (
-        <div className="relative min-h-screen w-full overflow-hidden font-[jost] text-white" style={{ background: '#000' }}>
+        <div className="relative min-h-screen w-full overflow-x-hidden font-[jost] text-white" style={{ background: '#000' }}>
             {/* Background */}
             <div className="absolute inset-0 z-0">
                 <div
@@ -152,20 +254,39 @@ const CompanyDocs = () => {
                                 {/* Document and Acknowledgement Area */}
                                 <div className="mt-10 grid grid-cols-1 gap-4 lg:grid-cols-[240px_1fr] lg:gap-5">
                                     <nav
-                                        className="rounded-[10px] border border-white/8 p-3"
+                                        className="relative h-[470px] rounded-[10px] border border-white/8 p-3"
                                         style={{
                                             background: 'rgba(46, 109, 194, 0.16)',
                                             backdropFilter: 'blur(10px)',
                                             WebkitBackdropFilter: 'blur(10px)',
                                         }}
                                     >
-                                        <Sidebar
-                                            items={documentTree}
-                                            activeDocumentId={selectedDocumentId}
-                                            expandedSectionIds={expandedSectionIds}
-                                            onSectionSelect={handleSectionSelect}
-                                            onDocumentSelect={handleDocumentSelect}
-                                        />
+                                        <div
+                                            className="h-full overflow-y-auto overscroll-contain pr-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                                            ref={sidebarScrollRef}
+                                            onScroll={syncSidebarThumb}
+                                            onWheel={handleSidebarWheel}
+                                            style={{
+                                                scrollbarWidth: 'none',
+                                                msOverflowStyle: 'none',
+                                            }}
+                                        >
+                                            <Sidebar
+                                                items={documentTree}
+                                                activeDocumentId={selectedDocumentId}
+                                                expandedSectionIds={expandedSectionIds}
+                                                onSectionSelect={handleSectionSelect}
+                                                onDocumentSelect={handleDocumentSelect}
+                                            />
+                                        </div>
+
+                                        <div className="absolute bottom-3 right-2 top-3">
+                                            <SidebarScrollFrame
+                                                trackHeight={sidebarTrackHeight}
+                                                thumbTop={sidebarThumbTop}
+                                                onThumbMouseDown={handleSidebarThumbMouseDown}
+                                            />
+                                        </div>
                                     </nav>
 
                                     <div className="space-y-4">
@@ -236,10 +357,46 @@ const CompanyDocs = () => {
     )
 }
 
+const renderContentWithBoldMarkers = (text) => {
+    const markerRegex = /§b§([\s\S]*?)§\/b§/g
+    const renderedParts = []
+    let lastIndex = 0
+    let match
+
+    while ((match = markerRegex.exec(text)) !== null) {
+        if (match.index > lastIndex) {
+            renderedParts.push(text.slice(lastIndex, match.index))
+        }
+
+        renderedParts.push(
+            <strong key={`bold-${match.index}`} className="font-bold text-white">
+                {match[1]}
+            </strong>,
+        )
+
+        lastIndex = markerRegex.lastIndex
+    }
+
+    if (lastIndex < text.length) {
+        renderedParts.push(text.slice(lastIndex))
+    }
+
+    return renderedParts.map((part, index) =>
+        typeof part === 'string' ? <span key={`text-${index}`}>{part}</span> : part,
+    )
+}
+
 const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
     const contentRef = useRef(null)
+    const contentScrollRef = useRef(null)
+    const contentTrackRef = useRef(null)
+    const contentThumbRef = useRef(null)
+    const contentThumbDragRef = useRef({ isDragging: false, startY: 0, startScrollTop: 0 })
     const [isExpanded, setIsExpanded] = useState(false)
     const [isOverflowing, setIsOverflowing] = useState(false)
+
+    const contentThumbHeight = 27
+    const contentTrackInset = 13
 
     useEffect(() => {
         if (contentRef.current) {
@@ -252,7 +409,109 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
             // Reset expanded state when content changes
             setIsExpanded(false)
         }
+
+        if (contentScrollRef.current) {
+            contentScrollRef.current.scrollTop = 0
+        }
+
+        if (contentThumbRef.current) {
+            contentThumbRef.current.style.transform = 'translateY(0px)'
+        }
     }, [content, onOverflowChange])
+
+    const syncContentThumb = () => {
+        const scrollContainer = contentScrollRef.current
+        const trackElement = contentTrackRef.current
+        const thumbElement = contentThumbRef.current
+
+        if (!scrollContainer || !trackElement || !thumbElement) {
+            return
+        }
+
+        const { scrollHeight, clientHeight, scrollTop } = scrollContainer
+        const trackHeight = Math.max(trackElement.clientHeight, 0)
+
+        if (scrollHeight <= clientHeight) {
+            thumbElement.style.transform = 'translateY(0px)'
+            return
+        }
+
+        const maxThumbTop = Math.max(trackHeight - contentThumbHeight, 0)
+        const maxScrollTop = scrollHeight - clientHeight
+        const nextThumbTop = maxScrollTop > 0 ? (scrollTop / maxScrollTop) * maxThumbTop : 0
+
+        const clampedThumbTop = Math.max(0, Math.min(nextThumbTop, maxThumbTop))
+        thumbElement.style.transform = `translateY(${clampedThumbTop}px)`
+    }
+
+    useEffect(() => {
+        syncContentThumb()
+    }, [content, isExpanded])
+
+    useEffect(() => {
+        const handleResize = () => {
+            syncContentThumb()
+        }
+
+        window.addEventListener('resize', handleResize)
+
+        return () => {
+            window.removeEventListener('resize', handleResize)
+        }
+    }, [])
+
+    const handleContentThumbMouseDown = (event) => {
+        if (!isExpanded) {
+            return
+        }
+
+        event.preventDefault()
+
+        const scrollContainer = contentScrollRef.current
+        if (!scrollContainer) {
+            return
+        }
+
+        contentThumbDragRef.current = {
+            isDragging: true,
+            startY: event.clientY,
+            startScrollTop: scrollContainer.scrollTop,
+        }
+        document.body.style.userSelect = 'none'
+
+        const handleMouseMove = (moveEvent) => {
+            const currentScrollContainer = contentScrollRef.current
+            const currentTrack = contentTrackRef.current
+            if (!currentScrollContainer || !contentThumbDragRef.current.isDragging) {
+                return
+            }
+
+            if (!currentTrack) {
+                return
+            }
+
+            const maxScrollTop = currentScrollContainer.scrollHeight - currentScrollContainer.clientHeight
+            const maxThumbTop = Math.max(currentTrack.clientHeight - contentThumbHeight, 0)
+
+            if (maxScrollTop <= 0 || maxThumbTop <= 0) {
+                return
+            }
+
+            const deltaY = moveEvent.clientY - contentThumbDragRef.current.startY
+            const scrollRatio = maxScrollTop / maxThumbTop
+            currentScrollContainer.scrollTop = contentThumbDragRef.current.startScrollTop + deltaY * scrollRatio
+        }
+
+        const handleMouseUp = () => {
+            contentThumbDragRef.current.isDragging = false
+            document.body.style.userSelect = ''
+            window.removeEventListener('mousemove', handleMouseMove)
+            window.removeEventListener('mouseup', handleMouseUp)
+        }
+
+        window.addEventListener('mousemove', handleMouseMove)
+        window.addEventListener('mouseup', handleMouseUp)
+    }
 
     const handleToggleExpanded = () => {
         setIsExpanded((previousValue) => {
@@ -270,34 +529,63 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
             <article
                 className="rounded-[10px] border border-white/8 transition-all duration-300 relative"
                 style={{
-                    background: '#ffffff',
-                    borderColor: 'rgba(15, 23, 42, 0.08)',
+                    background: 'linear-gradient(180deg, rgba(8, 21, 56, 0.72) 0%, rgba(8, 21, 56, 0.5) 100%)',
+                    borderColor: 'rgba(255, 255, 255, 0.1)',
                     backdropFilter: 'blur(10px)',
                     WebkitBackdropFilter: 'blur(10px)',
                 }}
             >
+                <div
+                    className="pointer-events-none absolute inset-0 z-0 rounded-[10px]"
+                    style={{
+                        backgroundImage: 'url(/dox-bg.png)',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
+                        mixBlendMode: 'multiply',
+                        filter: 'brightness(0) contrast(1.08)',
+                        opacity: 0.46,
+                    }}
+                />
+
                 {/* Scrollable Content */}
                 <div
+                    ref={contentScrollRef}
+                    className="relative z-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                    onScroll={syncContentThumb}
                     style={{
                         position: 'relative',
-                        overflow: isExpanded ? 'visible' : 'hidden',
-                        maxHeight: isExpanded ? 'none' : '404px',
+                        overflowX: 'hidden',
+                        overflowY: isExpanded ? 'auto' : 'hidden',
+                        maxHeight: '404px',
+                        scrollbarWidth: 'none',
+                        msOverflowStyle: 'none',
                     }}
                 >
                     <p
                         ref={contentRef}
-                        className="p-4 md:p-6 text-[15px] leading-[24px] tracking-[0.08em] text-black/90 md:text-[16px] md:leading-[26px] transition-all duration-300"
+                        className="p-4 md:p-6 text-[15px] leading-[24px] tracking-[0.08em] text-white/85 md:text-[16px] md:leading-[26px] transition-all duration-300"
                         style={{
-                            minHeight: isExpanded ? 'auto' : '404px',
+                            minHeight: '404px',
                             margin: 0,
                             whiteSpace: 'pre-line',
                             fontFamily: 'Arial, sans-serif',
-                            
+
                         }}
                     >
-                        {content}
+                        {renderContentWithBoldMarkers(content)}
                     </p>
                 </div>
+
+                {isExpanded && isOverflowing ? (
+                    <div className="pointer-events-none absolute bottom-[13px] right-3 top-[13px]">
+                        <ContentScrollThumb
+                            trackRef={contentTrackRef}
+                            thumbRef={contentThumbRef}
+                            onThumbMouseDown={handleContentThumbMouseDown}
+                        />
+                    </div>
+                ) : null}
 
                 {/* Fade Overlay */}
                 {isOverflowing && !isExpanded && (
@@ -308,7 +596,7 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
                             left: 0,
                             right: 0,
                             height: '120px',
-                            background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%)',
+                            background: 'linear-gradient(to bottom, rgba(8, 21, 56, 0) 0%, rgba(8, 21, 56, 0.96) 100%)',
                             pointerEvents: 'none',
                             borderRadius: '0 0 10px 10px',
                         }}
@@ -418,6 +706,50 @@ const HorizontalDivider = () => (
     <svg width="118" height="2" viewBox="0 0 150 2" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M1 1H148.5" stroke="white" strokeOpacity="0.05" strokeWidth="2" strokeLinecap="round" />
     </svg>
+)
+
+const SidebarScrollFrame = ({ trackHeight, thumbTop, onThumbMouseDown }) => (
+    <div className="relative h-full w-[10px]">
+        <button
+            type="button"
+            aria-label="Scroll sidebar"
+            onMouseDown={onThumbMouseDown}
+            className="absolute left-0 w-[10px] bg-transparent p-0 focus:outline-none"
+            style={{
+                top: `${thumbTop}px`,
+                height: '73px',
+                cursor: 'default',
+                pointerEvents: 'auto',
+                opacity: trackHeight > 73 ? 1 : 0.4,
+            }}
+        >
+            <svg width="10" height="73" viewBox="0 0 10 73" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="0.75" y="0.75" width="8.5" height="71.5" rx="4.25" stroke="white" strokeOpacity="0.5" strokeWidth="1.5" />
+            </svg>
+        </button>
+    </div>
+)
+
+const ContentScrollThumb = ({ trackRef, thumbRef, onThumbMouseDown }) => (
+    <div ref={trackRef} className="relative h-full w-[8px]">
+        <button
+            ref={thumbRef}
+            type="button"
+            aria-label="Scroll content"
+            onMouseDown={onThumbMouseDown}
+            className="absolute left-0 top-0 w-[8px] bg-transparent p-0 focus:outline-none"
+            style={{
+                height: '27px',
+                cursor: 'default',
+                pointerEvents: 'auto',
+                willChange: 'transform',
+            }}
+        >
+            <svg width="8" height="27" viewBox="0 0 8 27" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="0.75" y="0.75" width="6.5" height="25.5" rx="3.25" stroke="white" strokeOpacity="0.5" strokeWidth="1.5" />
+            </svg>
+        </button>
+    </div>
 )
 
 const DoxLogo = () => (

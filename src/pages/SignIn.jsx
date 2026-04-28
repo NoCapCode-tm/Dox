@@ -13,6 +13,7 @@ const SignIn = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -71,6 +72,16 @@ const SignIn = () => {
           "linear-gradient(116.04deg, #0A0E14 18.26%, #112B53 51.38%, #0A0E14 78.49%)",
       }}
     >
+      <style>{`
+        @keyframes slideInRight {
+          0% { transform: translateX(100vw); opacity: 0; }
+          100% { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideInLeft {
+          0% { transform: translateX(-100vw); opacity: 0; }
+          100% { transform: translateX(0); opacity: 1; }
+        }
+      `}</style>
       {isLoading && <Loader fullScreen={true} message="Signing in..." />}
       {/* Group 260 — "Atla" decorative text*/}
       <div
@@ -79,6 +90,7 @@ const SignIn = () => {
           top: 0,
           left: 0,
           zIndex: 0,
+          animation: "slideInRight 3.5s cubic-bezier(0.22, 1, 0.36, 1) forwards",
         }}
       >
         {/* Atla shadow layer */}
@@ -130,6 +142,7 @@ const SignIn = () => {
           bottom: 0,
           left: 0,
           zIndex: 0,
+          animation: "slideInLeft 3.5s cubic-bezier(0.22, 1, 0.36, 1) forwards",
         }}
       >
         {/* NCC shadow layer */}
@@ -212,7 +225,7 @@ const SignIn = () => {
 
         {/* Inner fields box */}
         <div
-          className="mt-[16px] w-full max-w-[392px] rounded-[16px] px-[26px] py-[19px] flex flex-col"
+          className="mt-[16px] w-full max-w-[350px] rounded-[16px] px-[26px] py-[19px] flex flex-col"
           style={{
             backgroundColor: "rgba(255,255,255,0.05)",
             border: "0.8px solid rgba(255,255,255,0.1)",
@@ -261,12 +274,21 @@ const SignIn = () => {
                 }
               }}
               placeholder="Enter your password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               autoComplete="current-password"
               className="flex-1 bg-transparent border-none outline-none font-[Jost] text-[14px] caret-white"
               style={{ color: "rgba(255,255,255,0.65)" }}
               aria-label="Password"
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="shrink-0 bg-transparent border-none outline-none p-0 cursor-pointer"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              aria-pressed={showPassword}
+            >
+              {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+            </button>
           </div>
         </div>
 
@@ -275,7 +297,7 @@ const SignIn = () => {
           type="button"
           onClick={handleSignIn}
           disabled={!canSubmit || isLoading}
-          className="mt-[16px] w-full max-w-[392px] h-[56px] rounded-[14px] flex items-center justify-center gap-[4px] transition-opacity disabled:opacity-50 disabled:cursor-not-allowed hover:enabled:opacity-90"
+          className="mt-[16px] w-full max-w-[350px] h-[56px] rounded-[14px] flex items-center justify-center gap-[4px] transition-opacity disabled:opacity-50 disabled:cursor-not-allowed hover:enabled:opacity-90"
           style={{
             position: "relative",
             zIndex: 30,
@@ -371,6 +393,70 @@ const LockIcon = () => (
       stroke="rgba(255,255,255,0.65)"
       strokeWidth="1.5"
       strokeLinejoin="round"
+    />
+  </svg>
+);
+
+/**
+ * EyeIcon
+ */
+const EyeIcon = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    className="shrink-0"
+  >
+    <path
+      d="M1.5 8s2.2-3.5 6.5-3.5S14.5 8 14.5 8s-2.2 3.5-6.5 3.5S1.5 8 1.5 8Z"
+      stroke="rgba(255,255,255,0.65)"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+    <circle
+      cx="8"
+      cy="8"
+      r="2"
+      stroke="rgba(255,255,255,0.65)"
+      strokeWidth="1.5"
+    />
+  </svg>
+);
+
+/**
+ * EyeOffIcon
+ */
+const EyeOffIcon = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    className="shrink-0"
+  >
+    <path
+      d="M1.5 8s2.2-3.5 6.5-3.5S14.5 8 14.5 8s-2.2 3.5-6.5 3.5S1.5 8 1.5 8Z"
+      stroke="rgba(255,255,255,0.65)"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+    <circle
+      cx="8"
+      cy="8"
+      r="2"
+      stroke="rgba(255,255,255,0.65)"
+      strokeWidth="1.5"
+    />
+    <path
+      d="M2.5 13.5 13.5 2.5"
+      stroke="rgba(255,255,255,0.65)"
+      strokeWidth="1.5"
+      strokeLinecap="round"
     />
   </svg>
 );
