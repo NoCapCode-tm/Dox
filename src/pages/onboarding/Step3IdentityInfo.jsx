@@ -186,8 +186,8 @@ const Step3IdentityInfo = () => {
             {/* Row 3 */}
             <FormField label="Passport-size Photograph ( JPG/PNG )" required>
               <FileInput
-                file={form.passportPhoto}
-                onChange={(f) => handleFile('passportPhoto', f)}
+                file={form.passportimage}
+                onChange={(f) => handleFile('passportimage', f)}
               />
             </FormField>
 
