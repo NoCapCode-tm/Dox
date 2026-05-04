@@ -130,21 +130,21 @@ export const saveStep2EmergencyInfo = async (step2Data) => {
 
 export const saveStep3IdentityInfo = async (step3Data) => {
     const body = new FormData();
-    body.append("govid1", step3Data.govIdNumber || "");
-    body.append("govid2", step3Data.secondaryIdNumber || "");
+    body.append("govid1", step3Data.govid1 || "");
+    body.append("govid2", step3Data.govid2 || "");
 
     if (step3Data.govIdFile) {
-        body.append("govid1image", step3Data.govIdFile);
-        body.append("aadharimage", step3Data.govIdFile);
+        body.append("govid1image", step3Data.govid1image);
+        body.append("aadharimage", step3Data.govid1image);
     }
 
     if (step3Data.secondaryIdFile) {
-        body.append("govid2image", step3Data.secondaryIdFile);
-        body.append("panimage", step3Data.secondaryIdFile);
+        body.append("govid2image", step3Data.govid2image);
+        body.append("panimage", step3Data.govid2image);
     }
 
     if (step3Data.passportPhoto) {
-        body.append("passportimage", step3Data.passportPhoto);
+        body.append("passportimage", step3Data.passportimage);
     }
 
     if (step3Data.studentIdFile) {
