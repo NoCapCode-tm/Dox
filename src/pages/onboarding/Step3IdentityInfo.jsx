@@ -7,9 +7,9 @@ import { saveStep3IdentityInfo, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
 
 const REQUIRED_STEP3_FIELDS = [
-  { key: 'govIdNumber', label: 'Government-issued ID Number' },
-  { key: 'govIdFile', label: 'Upload Government-issued ID' },
-  { key: 'passportPhoto', label: 'Passport-size Photograph' },
+  { key: 'govid1', label: 'Government-issued ID Number' },
+  { key: 'govid1image', label: 'Upload Government-issued ID' },
+  { key: 'passportimage', label: 'Passport-size Photograph' },
 ];
 
 /**
