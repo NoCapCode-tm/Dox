@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 import SignIn from '../pages/SignIn.jsx'
 import Dashboard from '../pages/Dashboard.jsx'
 import Completion from '../pages/Completion.jsx'
@@ -12,7 +12,7 @@ import ReviewApproval from '../pages/ReviewApproval.jsx'
  */
 const AppRouter = () => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<SignIn />} />
         <Route path="/dashboard" element={<Dashboard />} />
@@ -26,7 +26,7 @@ const AppRouter = () => {
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 
