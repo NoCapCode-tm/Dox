@@ -33,8 +33,8 @@ const Step3IdentityInfo = () => {
           const serverSecondaryId = data.documents?.govid2?.number != null ? String(data.documents.govid2.number) : '';
 
           // Preserve values already present in context when navigating back.
-          updateFormData('step3', 'govIdNumber', form.govIdNumber || serverGovId);
-          updateFormData('step3', 'secondaryIdNumber', form.secondaryIdNumber || serverSecondaryId);
+          updateFormData('step3', 'govid1', form.govid1 || serverGovId);
+          updateFormData('step3', 'govid2', form.govid2 || serverSecondaryId);
         }
       } catch (error) {
         console.warn('Could not prefill Step 3 data:', error?.message);
@@ -154,32 +154,32 @@ const Step3IdentityInfo = () => {
             {/* Row 1 */}
             <FormField label="Government-issued ID Number" required>
               <TextInput
-                value={form.govIdNumber}
-                onChange={(v) => handleChange('govIdNumber', v)}
+                value={form.govid1}
+                onChange={(v) => handleChange('govid1', v)}
                 placeholder="Passport, National ID, Driver's License..."
               />
             </FormField>
 
             <FormField label="Upload Government-issued ID ( JPG/PNG )" required>
               <FileInput
-                file={form.govIdFile}
-                onChange={(f) => handleFile('govIdFile', f)}
+                file={form.govid1image}
+                onChange={(f) => handleFile('govid1image', f)}
               />
             </FormField>
 
             {/* Row 2 */}
             <FormField label="Secondary Government-issued ID Number" ifAvailable>
               <TextInput
-                value={form.secondaryIdNumber}
-                onChange={(v) => handleChange('secondaryIdNumber', v)}
+                value={form.govid2}
+                onChange={(v) => handleChange('govid2', v)}
                 placeholder="Passport, National ID, Driver's License..."
               />
             </FormField>
 
             <FormField label="Upload Secondar-ID( JPG/PNG )" ifAvailable>
               <FileInput
-                file={form.secondaryIdFile}
-                onChange={(f) => handleFile('secondaryIdFile', f)}
+                file={form.govid2image}
+                onChange={(f) => handleFile('govid2image', f)}
               />
             </FormField>
 
