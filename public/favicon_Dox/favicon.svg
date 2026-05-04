@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="1000"><metadata><rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"><rdf:Description><dc:creator>RealFaviconGenerator</dc:creator><dc:source>https://realfavicongenerator.net</dc:source></rdf:Description></rdf:RDF></metadata><style>
+    #light-icon {
+      display: inline;
+    }
+    #dark-icon {
+      display: none;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      #light-icon {
+        display: none;
+      }
+      #dark-icon {
+        display: inline;
+      }
+    }
+  </style><g id="light-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="1000"><g clip-path="url(#SvgjsClipPath1301)"><rect width="1000" height="1000" fill="#102d79"></rect><g transform="matrix(11.666666666666666,0,0,11.666666666666666,161.66666666666669,150)"><svg xmlns="http://www.w3.org/2000/svg" width="58" height="60" viewBox="0 0 58 60" fill="none"><path d="M26.2461 0C45.8802 0 56.8044 15.1032 57.3232 29.8057C57.583 37.1692 55.286 44.761 49.9727 50.5596C44.5858 56.4384 36.534 60 26.2461 60H0L4.29492 57H26.2461C35.8089 57 43.0162 53.7109 47.7607 48.5332C52.4719 43.3919 54.5611 36.6 54.3252 29.9121C53.8537 16.5473 44.0012 3 26.2461 3H4.0332L0.675781 0.654297V0H26.2461ZM26.2461 8C40.8691 8 48.9352 18.9528 49.3281 30.0879C49.5243 35.6499 47.7817 41.1092 44.0742 45.1553C40.4001 49.1647 34.6007 52 26.2461 52H11.4541L15.749 49H26.2461C33.876 49 38.8305 46.4366 41.8623 43.1279C44.9675 39.7391 46.5024 35.0807 46.3301 30.1943C45.9844 20.3969 38.9901 11 26.2461 11H14.9629L15.1348 10.7539L11.1924 8H26.2461Z" fill="white"></path></svg></g></g><defs><clipPath id="SvgjsClipPath1301"><rect width="1000" height="1000" x="0" y="0" rx="350" ry="350"></rect></clipPath></defs></svg></g><g id="dark-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="1000"><g clip-path="url(#SvgjsClipPath1302)"><rect width="1000" height="1000" fill="#102d79"></rect><g transform="matrix(11.666666666666666,0,0,11.666666666666666,161.66666666666669,150)"><svg xmlns="http://www.w3.org/2000/svg" width="58" height="60" viewBox="0 0 58 60" fill="none"><path d="M26.2461 0C45.8802 0 56.8044 15.1032 57.3232 29.8057C57.583 37.1692 55.286 44.761 49.9727 50.5596C44.5858 56.4384 36.534 60 26.2461 60H0L4.29492 57H26.2461C35.8089 57 43.0162 53.7109 47.7607 48.5332C52.4719 43.3919 54.5611 36.6 54.3252 29.9121C53.8537 16.5473 44.0012 3 26.2461 3H4.0332L0.675781 0.654297V0H26.2461ZM26.2461 8C40.8691 8 48.9352 18.9528 49.3281 30.0879C49.5243 35.6499 47.7817 41.1092 44.0742 45.1553C40.4001 49.1647 34.6007 52 26.2461 52H11.4541L15.749 49H26.2461C33.876 49 38.8305 46.4366 41.8623 43.1279C44.9675 39.7391 46.5024 35.0807 46.3301 30.1943C45.9844 20.3969 38.9901 11 26.2461 11H14.9629L15.1348 10.7539L11.1924 8H26.2461Z" fill="white"></path></svg></g></g><defs><clipPath id="SvgjsClipPath1302"><rect width="1000" height="1000" x="0" y="0" rx="350" ry="350"></rect></clipPath></defs></svg></g></svg>
