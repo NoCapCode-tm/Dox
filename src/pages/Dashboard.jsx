@@ -272,7 +272,7 @@ const Dashboard = () => {
 
         {/* 8 Step Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full mb-16">
-          {steps.map((step, index) => (
+          {steps.map((step) => (
             <div
               key={step.num}
               className="step-card flex flex-col justify-between p-6 rounded-[10px] h-full min-h-[234px]"
