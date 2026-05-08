@@ -4,154 +4,104 @@ const LegalAgreements = () => {
     const navigate = useNavigate()
 
     return (
-        /* Page Shell */
         <div
-            className="relative min-h-screen w-full overflow-hidden font-[Jost] text-white"
-            style={{ background: '#000' }}
+            className="relative min-h-screen w-full flex flex-col md:flex-row font-[Jost] text-white"
+            style={{ background: 'linear-gradient(119.18deg, #0A0E14 2.67%, #141C28 96.61%)' }}
         >
-            {/* Base Background Gradients */}
-            <div className="absolute inset-0 z-0">
-                <div
-                    className="absolute top-0 left-0 w-1/2 h-full"
-                    style={{
-                        background:
-                            'conic-gradient(from 89.78deg at 50% 41%, #0A1F56 0deg, #00184D 219.41deg, #0A1F56 309.85deg, #0D2460 360deg)',
-                    }}
-                />
-                <div
-                    className="absolute top-0 right-0 w-1/2 h-full"
-                    style={{
-                        background:
-                            'conic-gradient(from 89.78deg at 50% 41%, #0A1F56 0deg, #00184D 219.41deg, #0A1F56 309.85deg, #0D2460 360deg)',
-                        transform: 'matrix(-1, 0, 0, 1, 0, 0)',
-                    }}
-                />
-            </div>
-
-
-            {/* Pattern Overlay */}
-            <div
-                className="absolute inset-0 z-0"
-                style={{
-                    backgroundImage: 'url(/dox-bg.png)',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                    mixBlendMode: 'multiply',
-                    filter: 'brightness(0) contrast(1.08)',
-                    opacity: 0.62,
-                }}
-            />
-
-            <div
-                className="absolute inset-0 z-0"
-                style={{
-                    background:
-                        'linear-gradient(180deg, #000000 20%, #5492EC 52%, #000000 100%)',
-                    mixBlendMode: 'multiply',
-                }}
-            />
-
-            {/* Main Frame */}
-            <div className="relative z-10 max-w-[1240px] mx-auto px-4 md:px-8 py-8 md:py-10">
-                <div
-                    className="relative rounded-[12px] border border-white/8 overflow-hidden"
-                    style={{
-                        background:
-                            'linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(153, 153, 153, 0.02) 100%)',
-                        backdropFilter: 'blur(8px)',
-                        WebkitBackdropFilter: 'blur(8px)',
-                    }}
-                >
-                    <div className="grid grid-cols-1 md:grid-cols-[140px_1fr] min-h-[760px]">
-                        {/* Sidebar */}
-                        <aside className="relative p-4 md:p-3">
-                            <div className="hidden md:flex absolute right-0 top-[18px] bottom-[18px] pointer-events-none items-stretch">
-                                <VerticalDivider />
-                            </div>
-                            <DoxLogo />
-                            <p className="text-[11px] leading-[16px] text-white/65 mt-1">Employee Onboarding</p>
-                            <div className="my-5 pr-6">
-                                <HorizontalDivider />
-                            </div>
-
-                            <div className="flex md:flex-col gap-3 md:gap-8">
-                                <StepBadge number="1" active />
-                                <StepBadge number="2" />
-                                <StepBadge number="3" />
-                            </div>
-                        </aside>
-
-                        {/* Main Content */}
-                        <section className="relative p-5 md:p-8 lg:p-10">
-                            <div className="relative z-10">
-                                <h1 className="text-[28px] leading-[34px] font-normal">Legal Agreements</h1>
-                                <p className="mt-1 text-white/70 text-[16px] leading-[24px] max-w-[820px]">
-                                    Please review and sign the following documents to proceed with your onboarding.
-                                </p>
-
-                                {/* Agreement Cards */}
-                                <div className="mt-10 space-y-8">
-                                    <AgreementCard
-                                        title="Offer Letter"
-                                        description="Your official employment offer letter containing role, compensation, and benefits details."
-                                        status="Signed"
-                                        signed
-                                        actionLabel="View Signed Document"
-                                        onAction={() => { }}
-                                        icon={<OfferIcon />}
-                                    />
-
-                                    <AgreementCard
-                                        title="Non-Disclosure Agreement (NDA)"
-                                        description="Confidentiality agreement protecting company information and intellectual property."
-                                        status="Pending"
-                                        actionLabel="Sign via SignWell"
-                                        onAction={() => { }}
-                                        icon={<NdaIcon />}
-                                    />
-                                </div>
-
-                                {/* Footer Actions */}
-                                <div className="mt-8 flex items-center justify-between">
-                                    <button
-                                        type="button"
-                                        onClick={() => navigate('/welcome')}
-                                        className="px-7 py-2.5 rounded-[10px] border border-white/50 text-[16px] leading-[22px] text-white/90 hover:bg-white/5 transition-colors inline-flex items-center gap-2"
-                                    >
-                                        <BackArrowIcon />
-                                        Back
-                                    </button>
-
-                                    <button
-                                        type="button"
-                                        onClick={() => navigate('/dashboard')}
-                                        className="px-7 py-2.5 rounded-[10px] border border-white/40 text-[16px] leading-[22px] text-white/90 hover:bg-white/5 transition-colors inline-flex items-center gap-2"
-                                    >
-                                        Continue
-                                        <ForwardArrowIcon />
-                                    </button>
-                                </div>
-                            </div>
-                        </section>
+            {/* Sidebar */}
+            <aside className="w-full md:w-[130px] lg:w-[140px] shrink-0 border-b md:border-b-0 md:border-r border-white/10 flex flex-col bg-[#0A0E14] md:bg-transparent sticky md:relative top-0 z-20">
+                
+                {/* Mobile View: Compact Layout */}
+                <div className="md:hidden px-6 py-4 flex items-center justify-between">
+                    <div>
+                        <DoxLogo />
+                        <p className="text-[10px] leading-[14px] text-white/50 mt-1">Employee Onboarding</p>
+                    </div>
+                    <div className="flex gap-2">
+                        <div className="w-9 h-9 rounded-[8px] flex items-center justify-center text-[16px] bg-white/20 text-white font-medium">1</div>
+                        <div className="w-9 h-9 rounded-[8px] flex items-center justify-center text-[16px] bg-[#4B6089]/30 text-white/60 font-medium">2</div>
+                        <div className="w-9 h-9 rounded-[8px] flex items-center justify-center text-[16px] bg-[#4B6089]/30 text-white/60 font-medium">3</div>
                     </div>
                 </div>
-            </div>
+
+                {/* Desktop View: Full Cells Layout */}
+                <div className="hidden md:flex flex-col h-full">
+                    {/* Logo Cell */}
+                    <div className="h-[120px] lg:h-[140px] flex flex-col justify-center px-6 border-b border-white/10 shrink-0">
+                        <DoxLogo />
+                        <p className="text-[10px] leading-[14px] text-white/50 mt-1.5">Employee Onboarding</p>
+                    </div>
+
+                    {/* Steps */}
+                    <div className="flex-1 flex flex-col">
+                        <div className="aspect-square flex items-center justify-center border-b border-white/10 bg-white/5">
+                            <span className="text-[28px] lg:text-[32px] text-white">1</span>
+                        </div>
+                        <div className="aspect-square flex items-center justify-center border-b border-white/10">
+                            <span className="text-[28px] lg:text-[32px] text-white/30">2</span>
+                        </div>
+                        <div className="aspect-square flex items-center justify-center border-b border-white/10">
+                            <span className="text-[28px] lg:text-[32px] text-white/30">3</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            {/* Main Content Area */}
+            <main className="flex-1 flex items-center justify-center p-6 md:p-12 lg:p-20">
+                <div className="w-full max-w-[900px] border border-white/10 rounded-[16px] p-8 md:p-12">
+                    <h1 className="text-[32px] leading-tight font-normal text-white">Legal Agreements</h1>
+                    <p className="mt-2 text-[16px] text-white/60">
+                        Please review and sign the following documents to proceed with your onboarding.
+                    </p>
+
+                    {/* Agreement Cards */}
+                    <div className="mt-10 space-y-6">
+                        <AgreementCard
+                            title="Offer Letter"
+                            description="Your official employment offer letter containing role, compensation, and benefits details."
+                            status="Signed"
+                            signed
+                            actionLabel="View Signed Document"
+                            onAction={() => { }}
+                            icon={<OfferIcon />}
+                        />
+
+                        <AgreementCard
+                            title="Non-Disclosure Agreement (NDA)"
+                            description="Confidentiality agreement protecting company information and intellectual property."
+                            status="Pending"
+                            actionLabel="Sign via SignWell"
+                            onAction={() => { }}
+                            icon={<NdaIcon />}
+                        />
+                    </div>
+
+                    {/* Footer Actions */}
+                    <div className="mt-12 flex items-center justify-between">
+                        <button
+                            type="button"
+                            onClick={() => navigate('/welcome')}
+                            className="px-6 py-2.5 rounded-[8px] border border-white/20 text-[15px] font-medium text-white/80 hover:bg-white/5 transition-colors inline-flex items-center gap-2"
+                        >
+                            <BackArrowIcon />
+                            Back
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={() => navigate('/dashboard')}
+                            className="px-6 py-2.5 rounded-[8px] border border-white/20 text-[15px] font-medium text-white/80 hover:bg-white/5 transition-colors inline-flex items-center gap-2"
+                        >
+                            Continue
+                            <ForwardArrowIcon />
+                        </button>
+                    </div>
+                </div>
+            </main>
         </div>
     )
 }
-
-const StepBadge = ({ number, active = false }) => (
-    <div
-        className="w-[56px] h-[56px] rounded-[10px] flex items-center justify-center text-[34px] leading-none"
-        style={{
-            background: active ? 'rgba(255,255,255,0.18)' : 'rgba(75, 96, 137, 0.35)',
-            color: '#ffffff',
-        }}
-    >
-        {number}
-    </div>
-)
 
 const BackArrowIcon = () => (
     <svg width="16" height="14" viewBox="0 0 16 14" fill="none" aria-hidden="true">
@@ -169,40 +119,42 @@ const ForwardArrowIcon = () => (
 
 const AgreementCard = ({ title, description, status, actionLabel, onAction, icon, signed = false }) => (
     <div
-        className="relative rounded-[10px] p-4 md:p-6 border border-white/8"
+        className="relative rounded-[12px] p-6 border border-white/10"
         style={{
-            background: 'rgba(46, 109, 194, 0.1)',
-            backdropFilter: 'blur(10px)',
-            WebkitBackdropFilter: 'blur(10px)',
+            background: 'rgba(255, 255, 255, 0.02)'
         }}
     >
-        <div className="absolute top-4 right-4 px-2 py-0.5 rounded-[6px] text-[12px] leading-[16px] inline-flex items-center gap-1" style={{
-            background: signed ? 'rgba(6, 214, 160, 0.2)' : 'rgba(255,255,255,0.16)',
-            color: signed ? '#06D6A0' : 'rgba(255,255,255,0.85)',
+        <div className="absolute top-6 right-6 px-3 py-1.5 rounded-[6px] text-[13px] font-medium leading-none inline-flex items-center gap-1.5" style={{
+            background: signed ? 'rgba(6, 214, 160, 0.15)' : 'rgba(255,255,255,0.05)',
+            color: signed ? '#06D6A0' : 'rgba(255,255,255,0.6)',
         }}>
             {signed ? <StatusSignedIcon /> : <StatusPendingIcon />}
             {status}
         </div>
 
-        <div className="flex items-start gap-3 pr-20">
-            <div className="w-10 h-10 rounded-[10px] bg-white/16 flex items-center justify-center shrink-0">
+        <div className="flex items-start gap-4 pr-28">
+            <div className="w-12 h-12 rounded-[10px] bg-white/[0.04] border border-white/[0.05] flex items-center justify-center shrink-0">
                 {icon}
             </div>
-            <div>
-                <h3 className="text-[35, 40, 46, 1] text-[24px] leading-[32px] font-normal text-white">{title}</h3>
-                <p className="mt-2 text-[16px] leading-[24px] text-white/70 max-w-[760px]">{description}</p>
+            <div className="pt-0.5">
+                <h3 className="text-[20px] font-medium text-white/90 leading-none">{title}</h3>
+                <p className="mt-2 text-[15px] text-white/50 leading-relaxed">{description}</p>
+                
+                <button
+                    type="button"
+                    onClick={onAction}
+                    className="mt-5 px-5 py-2.5 rounded-[8px] text-[14px] font-medium transition-colors inline-flex items-center gap-2"
+                    style={{ 
+                        background: signed ? 'rgba(255,255,255,0.08)' : 'transparent',
+                        border: signed ? '1px solid transparent' : '1px solid rgba(255,255,255,0.15)',
+                        color: 'rgba(255,255,255,0.9)'
+                    }}
+                >
+                    {signed ? <ButtonCheckIcon /> : <ButtonSignwellIcon />}
+                    {actionLabel}
+                </button>
             </div>
         </div>
-
-        <button
-            type="button"
-            onClick={onAction}
-            className="mt-6 px-4 py-2.5 rounded-[10px] border border-white/50 text-[16px] leading-[22px] text-white/90 hover:bg-white/6 transition-colors inline-flex items-center gap-2"
-            style={{ background: signed ? 'rgba(92, 141, 231, 0.4)' : 'transparent' }}
-        >
-            {signed ? <ButtonCheckIcon /> : <ButtonSignwellIcon />}
-            {actionLabel}
-        </button>
     </div>
 )
 
@@ -231,18 +183,6 @@ const ButtonSignwellIcon = () => (
         <path d="M13.2 3.0H17.2V7.0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         <path d="M17.2 3.0L8.6 11.4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         <rect x="4" y="6.1" width="9.9" height="9.9" rx="2.1" stroke="currentColor" strokeWidth="1.9" />
-    </svg>
-)
-
-const VerticalDivider = () => (
-    <svg className="h-full w-auto" width="2" height="797" viewBox="0 0 2 797" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="none">
-        <path d="M1 1L1 795.024" stroke="white" strokeOpacity="0.05" strokeWidth="2" strokeLinecap="round" />
-    </svg>
-)
-
-const HorizontalDivider = () => (
-    <svg width="118" height="2" viewBox="0 0 150 2" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M1 1H148.5" stroke="white" strokeOpacity="0.05" strokeWidth="2" strokeLinecap="round" />
     </svg>
 )
 
