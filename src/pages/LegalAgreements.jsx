@@ -5,86 +5,84 @@ const LegalAgreements = () => {
 
     return (
         <div
-            className="relative min-h-screen w-full font-[Jost] text-white"
+            className="relative h-screen w-screen overflow-auto font-[Jost] text-white"
             style={{ background: 'linear-gradient(119.18deg, #0A0E14 2.67%, #141C28 96.61%)' }}
         >
-            {/* Top-Left Logo Square - No Padding */}
-            <div className="absolute top-0 left-0 w-32 h-32 border border-white/20 rounded-lg flex flex-col items-center justify-center z-20">
-                <DoxLogo />
-                <p className="text-[10px] leading-[14px] text-white/50 mt-2">Employee Onboarding</p>
+            {/* Sidebar */}
+            {/* DOX logo square fixed to top-left */}
+            <div className="absolute top-0 left-0 z-50">
+                <div className="w-32 h-32 border border-white/20 rounded-lg flex flex-col items-center justify-center bg-transparent">
+                    <DoxLogo />
+                    <p className="text-[10px] leading-[14px] text-white/50 mt-2">Employee Onboarding</p>
+                </div>
             </div>
 
-            {/* Frame Lines Starting from Center of Logo Square */}
-            {/* Top Border Line - starts from center right of logo square */}
-            <div className="absolute left-32 right-0 h-px" style={{ top: '64px', background: 'rgba(173, 173, 173, 0.5)' }}></div>
-
-            {/* Bottom Border Line */}
-            <div className="absolute left-0 right-0 bottom-12 h-px" style={{ background: 'rgba(173, 173, 173, 0.5)' }}></div>
-
-            {/* Left Border Line - starts from center bottom of logo square */}
-            <div className="absolute top-32 bottom-0 w-px" style={{ left: '64px', background: 'rgba(173, 173, 173, 0.5)' }}></div>
-
-            {/* Right Border Line */}
-            <div className="absolute top-0 bottom-0 right-12 w-px" style={{ background: 'rgba(173, 173, 173, 0.5)' }}></div>
-
-            {/* Corners */}
-            <div className="absolute top-0 left-0 w-12 h-12 border-t border-l border-white/20 rounded-tl-lg"></div>
-            <div className="absolute top-0 right-0 w-12 h-12 border-t border-r border-white/20 rounded-tr-lg"></div>
-            <div className="absolute bottom-0 left-0 w-12 h-12 border-b border-l border-white/20 rounded-bl-lg"></div>
-            <div className="absolute bottom-0 right-0 w-12 h-12 border-b border-r border-white/20 rounded-br-lg"></div>
-
-            {/* Main Content Area */}
-            <main className="flex-1 flex items-center justify-center p-12" style={{ marginLeft: '80px', marginTop: '80px' }}>
-                <div className="w-full max-w-[900px] p-8 md:p-12">
-                    <h1 className="text-[32px] leading-tight font-normal text-white">Legal Agreements</h1>
-                    <p className="mt-2 text-[16px] text-white/60">
-                        Please review and sign the following documents to proceed with your onboarding.
-                    </p>
-
-                    {/* Agreement Cards */}
-                    <div className="mt-10 space-y-6">
-                        <AgreementCard
-                            title="Offer Letter"
-                            description="Your official employment offer letter containing role, compensation, and benefits details."
-                            status="Signed"
-                            signed
-                            actionLabel="View Signed Document"
-                            onAction={() => { }}
-                            icon={<OfferIcon />}
-                        />
-
-                        <AgreementCard
-                            title="Non-Disclosure Agreement (NDA)"
-                            description="Confidentiality agreement protecting company information and intellectual property."
-                            status="Pending"
-                            actionLabel="Sign via SignWell"
-                            onAction={() => { }}
-                            icon={<NdaIcon />}
-                        />
-                    </div>
-
-                    {/* Footer Actions */}
-                    <div className="mt-12 flex items-center justify-between">
-                        <button
-                            type="button"
-                            onClick={() => navigate('/welcome')}
-                            className="px-6 py-2.5 rounded-[8px] border border-white/20 text-[15px] font-medium text-white/80 hover:bg-white/5 transition-colors inline-flex items-center gap-2"
-                        >
-                            <BackArrowIcon />
-                            Back
-                        </button>
-
-                        <button
-                            type="button"
-                            onClick={() => navigate('/dashboard')}
-                            className="px-6 py-2.5 rounded-[8px] border border-white/20 text-[15px] font-medium text-white/80 hover:bg-white/5 transition-colors inline-flex items-center gap-2"
-                        >
-                            Continue
-                            <ForwardArrowIcon />
-                        </button>
-                    </div>
+            {/* Sidebar (steps only) - no right border to avoid extra line */}
+            <aside className="fixed left-0 top-0 h-full w-[120px] md:w-[140px] z-30 flex flex-col bg-transparent pt-36">
+                <div className="flex-1 flex flex-col items-center justify-start mt-4 gap-4 px-4">
+                    <div className="w-10 h-10 rounded-[8px] flex items-center justify-center text-[16px] bg-white/10 text-white font-medium">1</div>
+                    <div className="w-10 h-10 rounded-[8px] flex items-center justify-center text-[16px] bg-white/5 text-white/60 font-medium">2</div>
+                    <div className="w-10 h-10 rounded-[8px] flex items-center justify-center text-[16px] bg-white/5 text-white/60 font-medium">3</div>
                 </div>
-            </main>
+            </aside>
+
+            {/* Framed container starting from center of logo square */}
+            {/* Use margins so frame participates in document flow and its bottom is visible */}
+            <div className="relative" style={{ marginLeft: 64, marginTop: 64, marginRight: 24, marginBottom: 48, zIndex: 20 }}>
+                <div className="w-full border border-white/10 rounded-[10px] relative">
+                    {/* Main Content */}
+                    {/* Frame grows with content; page scrolls when needed */}
+                    <main className="w-full flex flex-col items-start justify-center">
+                        <div className="w-full max-w-[900px] p-8 md:p-12 mt-8">
+                            <h1 className="text-[32px] leading-tight font-normal text-white">Legal Agreements</h1>
+                            <p className="mt-2 text-[16px] text-white/60">
+                                Please review and sign the following documents to proceed with your onboarding.
+                            </p>
+
+                            <div className="mt-10 space-y-6">
+                                <AgreementCard
+                                    title="Offer Letter"
+                                    description="Your official employment offer letter containing role, compensation, and benefits details."
+                                    status="Signed"
+                                    signed
+                                    actionLabel="View Signed Document"
+                                    onAction={() => { }}
+                                    icon={<OfferIcon />}
+                                />
+
+                                <AgreementCard
+                                    title="Non-Disclosure Agreement (NDA)"
+                                    description="Confidentiality agreement protecting company information and intellectual property."
+                                    status="Pending"
+                                    actionLabel="Sign via SignWell"
+                                    onAction={() => { }}
+                                    icon={<NdaIcon />}
+                                />
+                            </div>
+
+                            <div className="mt-12 flex items-center justify-between">
+                                <button
+                                    type="button"
+                                    onClick={() => navigate('/welcome')}
+                                    className="px-6 py-2.5 rounded-[8px] border border-white/20 text-[15px] font-medium text-white/80 hover:bg-white/5 transition-colors inline-flex items-center gap-2"
+                                >
+                                    <BackArrowIcon />
+                                    Back
+                                </button>
+
+                                <button
+                                    type="button"
+                                    onClick={() => navigate('/dashboard')}
+                                    className="px-6 py-2.5 rounded-[8px] border border-white/20 text-[15px] font-medium text-white/80 hover:bg-white/5 transition-colors inline-flex items-center gap-2"
+                                >
+                                    Continue
+                                    <ForwardArrowIcon />
+                                </button>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </div>
         </div>
     )
 }
