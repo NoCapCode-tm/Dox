@@ -15,7 +15,8 @@ const LegalAgreements = () => {
                     className="w-32 h-32 flex flex-col items-center justify-center"
                     style={{
                         background: '#0A0E14',
-                        border: '0.5px solid rgba(173, 173, 173, 0.5)',
+                        borderRight: '0.5px solid rgba(173, 173, 173, 0.5)',
+                        borderBottom: '0.5px solid rgba(173, 173, 173, 0.5)',
                         borderRadius: '0px 0px 10px 0px',
                     }}
                 >
