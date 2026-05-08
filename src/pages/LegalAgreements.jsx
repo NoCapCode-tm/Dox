@@ -11,7 +11,14 @@ const LegalAgreements = () => {
             {/* Sidebar */}
             {/* DOX logo square fixed to top-left */}
             <div className="absolute top-0 left-0 z-50">
-                <div className="w-32 h-32 border border-white/20 rounded-lg flex flex-col items-center justify-center bg-transparent">
+                <div
+                    className="w-32 h-32 flex flex-col items-center justify-center"
+                    style={{
+                        background: '#0A0E14',
+                        border: '0.5px solid rgba(173, 173, 173, 0.5)',
+                        borderRadius: '0px 0px 10px 0px',
+                    }}
+                >
                     <DoxLogo />
                     <p className="text-[10px] leading-[14px] text-white/50 mt-2">Employee Onboarding</p>
                 </div>
