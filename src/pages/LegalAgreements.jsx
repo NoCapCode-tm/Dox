@@ -5,51 +5,37 @@ const LegalAgreements = () => {
 
     return (
         <div
-            className="relative min-h-screen w-full flex flex-col md:flex-row font-[Jost] text-white"
+            className="relative min-h-screen w-full font-[Jost] text-white"
             style={{ background: 'linear-gradient(119.18deg, #0A0E14 2.67%, #141C28 96.61%)' }}
         >
-            {/* Sidebar */}
-            <aside className="w-full md:w-[130px] lg:w-[140px] shrink-0 border-b md:border-b-0 md:border-r border-white/10 flex flex-col bg-[#0A0E14] md:bg-transparent sticky md:relative top-0 z-20">
-                
-                {/* Mobile View: Compact Layout */}
-                <div className="md:hidden px-6 py-4 flex items-center justify-between">
-                    <div>
-                        <DoxLogo />
-                        <p className="text-[10px] leading-[14px] text-white/50 mt-1">Employee Onboarding</p>
-                    </div>
-                    <div className="flex gap-2">
-                        <div className="w-9 h-9 rounded-[8px] flex items-center justify-center text-[16px] bg-white/20 text-white font-medium">1</div>
-                        <div className="w-9 h-9 rounded-[8px] flex items-center justify-center text-[16px] bg-[#4B6089]/30 text-white/60 font-medium">2</div>
-                        <div className="w-9 h-9 rounded-[8px] flex items-center justify-center text-[16px] bg-[#4B6089]/30 text-white/60 font-medium">3</div>
-                    </div>
-                </div>
+            {/* Top-Left Logo Square - No Padding */}
+            <div className="absolute top-0 left-0 w-32 h-32 border border-white/20 rounded-lg flex flex-col items-center justify-center z-20">
+                <DoxLogo />
+                <p className="text-[10px] leading-[14px] text-white/50 mt-2">Employee Onboarding</p>
+            </div>
 
-                {/* Desktop View: Full Cells Layout */}
-                <div className="hidden md:flex flex-col h-full">
-                    {/* Logo Cell */}
-                    <div className="h-[120px] lg:h-[140px] flex flex-col justify-center px-6 border-b border-white/10 shrink-0">
-                        <DoxLogo />
-                        <p className="text-[10px] leading-[14px] text-white/50 mt-1.5">Employee Onboarding</p>
-                    </div>
+            {/* Frame Lines Starting from Center of Logo Square */}
+            {/* Top Border Line - starts from center right of logo square */}
+            <div className="absolute left-32 right-0 h-px" style={{ top: '64px', background: 'rgba(173, 173, 173, 0.5)' }}></div>
 
-                    {/* Steps */}
-                    <div className="flex-1 flex flex-col">
-                        <div className="aspect-square flex items-center justify-center border-b border-white/10 bg-white/5">
-                            <span className="text-[28px] lg:text-[32px] text-white">1</span>
-                        </div>
-                        <div className="aspect-square flex items-center justify-center border-b border-white/10">
-                            <span className="text-[28px] lg:text-[32px] text-white/30">2</span>
-                        </div>
-                        <div className="aspect-square flex items-center justify-center border-b border-white/10">
-                            <span className="text-[28px] lg:text-[32px] text-white/30">3</span>
-                        </div>
-                    </div>
-                </div>
-            </aside>
+            {/* Bottom Border Line */}
+            <div className="absolute left-0 right-0 bottom-12 h-px" style={{ background: 'rgba(173, 173, 173, 0.5)' }}></div>
+
+            {/* Left Border Line - starts from center bottom of logo square */}
+            <div className="absolute top-32 bottom-0 w-px" style={{ left: '64px', background: 'rgba(173, 173, 173, 0.5)' }}></div>
+
+            {/* Right Border Line */}
+            <div className="absolute top-0 bottom-0 right-12 w-px" style={{ background: 'rgba(173, 173, 173, 0.5)' }}></div>
+
+            {/* Corners */}
+            <div className="absolute top-0 left-0 w-12 h-12 border-t border-l border-white/20 rounded-tl-lg"></div>
+            <div className="absolute top-0 right-0 w-12 h-12 border-t border-r border-white/20 rounded-tr-lg"></div>
+            <div className="absolute bottom-0 left-0 w-12 h-12 border-b border-l border-white/20 rounded-bl-lg"></div>
+            <div className="absolute bottom-0 right-0 w-12 h-12 border-b border-r border-white/20 rounded-br-lg"></div>
 
             {/* Main Content Area */}
-            <main className="flex-1 flex items-center justify-center p-6 md:p-12 lg:p-20">
-                <div className="w-full max-w-[900px] border border-white/10 rounded-[16px] p-8 md:p-12">
+            <main className="flex-1 flex items-center justify-center p-12" style={{ marginLeft: '80px', marginTop: '80px' }}>
+                <div className="w-full max-w-[900px] p-8 md:p-12">
                     <h1 className="text-[32px] leading-tight font-normal text-white">Legal Agreements</h1>
                     <p className="mt-2 text-[16px] text-white/60">
                         Please review and sign the following documents to proceed with your onboarding.
@@ -139,12 +125,12 @@ const AgreementCard = ({ title, description, status, actionLabel, onAction, icon
             <div className="pt-0.5">
                 <h3 className="text-[20px] font-medium text-white/90 leading-none">{title}</h3>
                 <p className="mt-2 text-[15px] text-white/50 leading-relaxed">{description}</p>
-                
+
                 <button
                     type="button"
                     onClick={onAction}
                     className="mt-5 px-5 py-2.5 rounded-[8px] text-[14px] font-medium transition-colors inline-flex items-center gap-2"
-                    style={{ 
+                    style={{
                         background: signed ? 'rgba(255,255,255,0.08)' : 'transparent',
                         border: signed ? '1px solid transparent' : '1px solid rgba(255,255,255,0.15)',
                         color: 'rgba(255,255,255,0.9)'
