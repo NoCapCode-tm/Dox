@@ -25,12 +25,48 @@ const LegalAgreements = () => {
                 </div>
             </div>
 
-            {/* Sidebar (steps only) - no right border to avoid extra line */}
-            <aside className="fixed left-0 top-0 h-full w-[120px] md:w-[140px] z-30 flex flex-col bg-transparent pt-36">
-                <div className="flex-1 flex flex-col items-center justify-start mt-4 gap-4 px-4">
-                    <div className="w-10 h-10 rounded-[8px] flex items-center justify-center text-[16px] bg-white/10 text-white font-medium">1</div>
-                    <div className="w-10 h-10 rounded-[8px] flex items-center justify-center text-[16px] bg-white/5 text-white/60 font-medium">2</div>
-                    <div className="w-10 h-10 rounded-[8px] flex items-center justify-center text-[16px] bg-white/5 text-white/60 font-medium">3</div>
+            {/* Sidebar (steps only) */}
+            <aside className="fixed left-0 top-0 h-full z-30 flex flex-col bg-transparent pt-36">
+                <div className="flex flex-col gap-6">
+                    {/* Active step 1 */}
+                    <div
+                        className="flex items-center justify-center text-[32px] font-medium text-white"
+                        style={{
+                            width: '79px',
+                            height: '84px',
+                            background: '#1C2027',
+                            border: '0.5px solid rgba(173, 173, 173, 0.5)',
+                            borderRadius: '0px 10px 10px 0px',
+                        }}
+                    >
+                        1
+                    </div>
+                    {/* Inactive step 2 */}
+                    <div
+                        className="flex items-center justify-center text-[32px] font-medium text-white/60"
+                        style={{
+                            width: '79px',
+                            height: '84px',
+                            background: '#0A0E14',
+                            border: '0.5px solid rgba(173, 173, 173, 0.5)',
+                            borderRadius: '0px 10px 10px 0px',
+                        }}
+                    >
+                        2
+                    </div>
+                    {/* Inactive step 3 */}
+                    <div
+                        className="flex items-center justify-center text-[32px] font-medium text-white/60"
+                        style={{
+                            width: '79px',
+                            height: '84px',
+                            background: '#0A0E14',
+                            border: '0.5px solid rgba(173, 173, 173, 0.5)',
+                            borderRadius: '0px 10px 10px 0px',
+                        }}
+                    >
+                        3
+                    </div>
                 </div>
             </aside>
 
