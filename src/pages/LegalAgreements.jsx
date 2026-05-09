@@ -9,11 +9,13 @@ const LegalAgreements = () => {
             style={{ background: 'linear-gradient(119.18deg, #0A0E14 2.67%, #141C28 96.61%)' }}
         >
             {/* Sidebar */}
-            {/* DOX logo square fixed to top-left */}
+            {/* DOX logo square */}
             <div className="absolute top-0 left-0 z-50">
                 <div
-                    className="w-32 h-32 flex flex-col items-center justify-center"
+                    className="flex flex-col items-center justify-center"
                     style={{
+                        width: '12vw',
+                        height: '16vh',
                         background: '#0A0E14',
                         borderRight: '0.5px solid rgba(173, 173, 173, 0.5)',
                         borderBottom: '0.5px solid rgba(173, 173, 173, 0.5)',
@@ -25,15 +27,16 @@ const LegalAgreements = () => {
                 </div>
             </div>
 
-            {/* Sidebar (steps only) */}
-            <aside className="fixed left-0 top-0 h-full z-30 flex flex-col bg-transparent pt-36">
-                <div className="flex flex-col gap-6">
+            {/* Sidebar steps */}
+            <aside className="fixed left-0 top-0 h-full z-30 flex flex-col bg-transparent" style={{ paddingTop: '32vh' }}>
+                <div className="flex flex-col gap-9">
                     {/* Active step 1 */}
                     <div
-                        className="flex items-center justify-center text-[32px] font-medium text-white"
+                        className="flex items-center justify-center font-medium text-white"
                         style={{
-                            width: '79px',
-                            height: '84px',
+                            width: '5vw',
+                            height: '10vh',
+                            fontSize: '2.2vw',
                             background: '#1C2027',
                             border: '0.5px solid rgba(173, 173, 173, 0.5)',
                             borderRadius: '0px 10px 10px 0px',
@@ -43,10 +46,11 @@ const LegalAgreements = () => {
                     </div>
                     {/* Inactive step 2 */}
                     <div
-                        className="flex items-center justify-center text-[32px] font-medium text-white/60"
+                        className="flex items-center justify-center font-medium text-white/60"
                         style={{
-                            width: '79px',
-                            height: '84px',
+                            width: '5vw',
+                            height: '10vh',
+                            fontSize: '2.2vw',
                             background: '#0A0E14',
                             border: '0.5px solid rgba(173, 173, 173, 0.5)',
                             borderRadius: '0px 10px 10px 0px',
@@ -56,10 +60,11 @@ const LegalAgreements = () => {
                     </div>
                     {/* Inactive step 3 */}
                     <div
-                        className="flex items-center justify-center text-[32px] font-medium text-white/60"
+                        className="flex items-center justify-center font-medium text-white/60"
                         style={{
-                            width: '79px',
-                            height: '84px',
+                            width: '5vw',
+                            height: '10vh',
+                            fontSize: '2.2vw',
                             background: '#0A0E14',
                             border: '0.5px solid rgba(173, 173, 173, 0.5)',
                             borderRadius: '0px 10px 10px 0px',
@@ -70,12 +75,10 @@ const LegalAgreements = () => {
                 </div>
             </aside>
 
-            {/* Framed container starting from center of logo square */}
-            {/* Use margins so frame participates in document flow and its bottom is visible */}
+            {/* Framed container*/}
             <div className="relative" style={{ marginLeft: 64, marginTop: 64, marginRight: 24, marginBottom: 48, zIndex: 20 }}>
                 <div className="w-full border border-white/10 rounded-[10px] relative">
                     {/* Main Content */}
-                    {/* Frame grows with content; page scrolls when needed */}
                     <main className="w-full flex flex-col items-start justify-center">
                         <div className="w-full max-w-[900px] p-8 md:p-12 mt-8">
                             <h1 className="text-[32px] leading-tight font-normal text-white">Legal Agreements</h1>
