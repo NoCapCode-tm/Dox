@@ -12,7 +12,7 @@ const LegalAgreements = () => {
             {/* DOX logo square */}
             <div className="absolute top-0 left-0 z-50">
                 <div
-                    className="flex flex-col items-center justify-center"
+                    className="flex flex-col items-center justify-center overflow-hidden"
                     style={{
                         width: '12vw',
                         height: '16vh',
@@ -23,7 +23,7 @@ const LegalAgreements = () => {
                     }}
                 >
                     <DoxLogo />
-                    <p className="text-[10px] leading-[14px] text-white/50 mt-2">Employee Onboarding</p>
+                    <p className="leading-none text-white/50 mt-1" style={{ fontSize: 'clamp(12px, 0.65vw, 12px)' }}>Employee Onboarding</p>
                 </div>
             </div>
 
@@ -75,12 +75,12 @@ const LegalAgreements = () => {
                 </div>
             </aside>
 
-            {/* Framed container*/}
-            <div className="relative" style={{ marginLeft: 64, marginTop: 64, marginRight: 24, marginBottom: 48, zIndex: 20 }}>
+            {/* Framed container - starts from center of small DOX square */}
+            <div className="relative" style={{ marginLeft: '4.5vw', marginTop: '8vh', marginRight: '3vw', marginBottom: '5vh', zIndex: 20 }}>
                 <div className="w-full border border-white/10 rounded-[10px] relative">
                     {/* Main Content */}
                     <main className="w-full flex flex-col items-start justify-center">
-                        <div className="w-full max-w-[900px] p-8 md:p-12 mt-8">
+                        <div className="w-full max-w-[900px] p-8 md:p-12 mt-8" style={{ marginLeft: '4vw' }}>
                             <h1 className="text-[32px] leading-tight font-normal text-white">Legal Agreements</h1>
                             <p className="mt-2 text-[16px] text-white/60">
                                 Please review and sign the following documents to proceed with your onboarding.
