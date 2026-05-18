@@ -180,12 +180,12 @@ const ForwardArrowIcon = () => (
 
 const AgreementCard = ({ title, description, status, actionLabel, onAction, icon, signed = false }) => (
     <div
-        className="relative rounded-xl p-6 border border-white/10"
+        className="relative rounded-xl border border-white/10 p-4 sm:p-6"
         style={{
             background: 'rgba(255, 255, 255, 0.02)'
         }}
     >
-        <div className="absolute top-6 right-6 px-3 py-1.5 rounded-md text-[13px] font-medium leading-none inline-flex items-center gap-1.5" style={{
+        <div className="absolute top-6 right-3 sm:top-6 sm:right-6 px-2.5 py-1 rounded-md text-[11px] sm:text-[13px] font-medium leading-none inline-flex items-center gap-1" style={{
             background: signed ? 'rgba(6, 214, 160, 0.15)' : 'rgba(255,255,255,0.05)',
             color: signed ? '#06D6A0' : 'rgba(255,255,255,0.6)',
         }}>
@@ -193,18 +193,18 @@ const AgreementCard = ({ title, description, status, actionLabel, onAction, icon
             {status}
         </div>
 
-        <div className="flex items-start gap-4 pr-28">
-            <div className="w-12 h-12 rounded-[10px] bg-white/4 border border-white/5 flex items-center justify-center shrink-0">
+        <div className="flex flex-col items-start gap-3 pr-0 sm:flex-row sm:gap-4 sm:pr-28">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-[10px] bg-white/4 border border-white/5 flex items-center justify-center shrink-0">
                 {icon}
             </div>
-            <div className="pt-0.5">
-                <h3 className="text-[20px] font-medium text-white/90 leading-none">{title}</h3>
-                <p className="mt-2 text-[15px] text-white/50 leading-relaxed">{description}</p>
+            <div className="pt-0 sm:pt-0.5 w-full">
+                <h3 className="text-[16px] sm:text-[20px] font-medium text-white/90 leading-tight">{title}</h3>
+                <p className="mt-1.5 text-[13px] sm:mt-2 sm:text-[15px] text-white/50 leading-snug sm:leading-relaxed">{description}</p>
 
                 <button
                     type="button"
                     onClick={onAction}
-                    className="mt-5 px-5 py-2.5 rounded-lg text-[14px] font-medium transition-colors inline-flex items-center gap-2"
+                    className="mt-4 w-full justify-center px-4 py-2 rounded-lg text-[12px] sm:mt-5 sm:w-auto sm:px-5 sm:py-2.5 sm:text-[14px] font-medium transition-colors inline-flex items-center gap-2"
                     style={{
                         background: signed ? 'rgba(255,255,255,0.08)' : 'transparent',
                         border: signed ? '1px solid transparent' : '1px solid rgba(255,255,255,0.15)',
