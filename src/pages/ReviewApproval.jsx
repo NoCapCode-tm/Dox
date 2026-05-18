@@ -191,11 +191,11 @@ const ReviewApproval = () => {
                                 </div>
                             </div>
 
-                            <div className="mt-10 flex flex-col items-stretch justify-between gap-4 sm:flex-row sm:items-center sm:mt-12">
+                            <div className="mt-10 flex items-center justify-between gap-4 sm:mt-12">
                                 <button
                                     type="button"
                                     onClick={() => navigate('/legal-agreements')}
-                                    className="w-full justify-center px-6 py-2.5 rounded-[10px] border text-[14px] font-normal text-white/70 hover:bg-white/5 transition-colors inline-flex items-center gap-2 sm:w-auto sm:text-[16px]"
+                                    className="px-6 py-2.5 rounded-[10px] border text-[14px] font-normal text-white/70 hover:bg-white/5 transition-colors inline-flex items-center gap-2 sm:text-[16px]"
                                     style={{ borderColor: 'rgba(255, 255, 255, 0.7)' }}
                                 >
                                     <BackArrowIcon />
@@ -205,7 +205,7 @@ const ReviewApproval = () => {
                                 <button
                                     type="button"
                                     onClick={() => navigate('/dashboard')}
-                                    className="w-full justify-center px-6 py-2.5 rounded-[10px] border text-[14px] font-normal text-white/70 hover:bg-white/5 transition-colors inline-flex items-center gap-2 sm:w-auto sm:text-[16px]"
+                                    className="px-6 py-2.5 rounded-[10px] border text-[14px] font-normal text-white/70 hover:bg-white/5 transition-colors inline-flex items-center gap-2 sm:text-[16px]"
                                     style={{ borderColor: 'rgba(255, 255, 255, 0.7)' }}
                                 >
                                     Continue
