@@ -20,9 +20,10 @@ const ReviewApproval = () => {
 
     return (
         <div
-            className="relative h-screen w-screen overflow-auto font-[Jost] text-white"
+            className="relative h-screen w-screen overflow-hidden font-[Jost] text-white"
             style={{ background: 'linear-gradient(119.18deg, #0A0E14 2.67%, #141C28 96.61%)' }}
         >
+            <style>{`.no-scrollbar::-webkit-scrollbar{display:none} .no-scrollbar{scrollbar-width:none; -ms-overflow-style:none;}`}</style>
             {/* Mobile top navbar */}
             <div className="fixed top-0 left-0 right-0 z-50 flex items-stretch justify-between border-b border-white/10 bg-[#0A0E14] md:hidden">
                 <div
@@ -136,12 +137,15 @@ const ReviewApproval = () => {
                 </div>
             </aside>
 
-            {/* Framed container - starts from center of small DOX square */}
+            {/* Framed container  */}
             <div className="relative" style={{ marginLeft: '4.5vw', marginTop: '8vh', marginRight: '3vw', marginBottom: '5vh', zIndex: 20 }}>
-                <div className="w-full border rounded-[10px] relative pb-10" style={{ borderColor: 'rgba(173, 173, 173, 0.5)' }}>
+                <div className="w-full border rounded-[10px] relative pb-10 no-scrollbar" style={{ borderColor: 'rgba(173, 173, 173, 0.5)', maxHeight: 'calc(100vh - 12vh)', overflowY: 'auto' }}>
                     {/* Main Content */}
                     <main className="w-full flex flex-col items-start justify-center">
-                        <div className="w-full max-w-256.75 px-4 py-6 pt-24 sm:px-6 md:p-12 md:pt-4 mt-4 mx-auto">
+                        <div
+                            className="w-full max-w-256.75 px-4 py-6 pt-24 sm:px-6 md:p-12 md:pt-4 mt-4 mx-auto"
+                            style={{ paddingLeft: 'clamp(16px, 6vw, 40px)', paddingTop: 'clamp(50px, 7vw, 70px)' }}
+                        >
                             <h1 className="text-[28px] leading-tight font-normal text-white sm:text-[32px] md:text-[36px] md:leading-9">Review &amp; Approval</h1>
                             <p className="mt-3 text-[16px] text-white sm:mt-4 sm:text-[20px] md:text-[24px]">
                                 Your onboarding submission is being reviewed by the HR team.
