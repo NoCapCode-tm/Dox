@@ -29,9 +29,24 @@ const LegalAgreements = () => {
                 </div>
 
                 <div className="flex flex-1 items-center justify-around gap-2 px-2 py-2">
-                    {[1, 2, 3].map((n) => (
-                        <div key={n} className="flex min-w-0 flex-1 items-center justify-center rounded-[10px] border text-center font-medium" style={{ height: 'clamp(42px,10vw,56px)', fontSize: 'clamp(12px,3.5vw,16px)', background: '#0A0E14', borderColor: 'rgba(173,173,173,0.5)', color: 'rgba(255,255,255,0.55)' }}>{n}</div>
-                    ))}
+                    {[1, 2, 3].map((n) => {
+                        const isActive = n === 1
+                        return (
+                            <div
+                                key={n}
+                                className="flex min-w-0 flex-1 items-center justify-center rounded-[10px] border text-center font-medium"
+                                style={{
+                                    height: 'clamp(42px,10vw,56px)',
+                                    fontSize: 'clamp(12px,3.5vw,16px)',
+                                    background: isActive ? '#1C2027' : '#0A0E14',
+                                    borderColor: 'rgba(173,173,173,0.5)',
+                                    color: isActive ? '#FFFFFF' : 'rgba(255,255,255,0.55)'
+                                }}
+                            >
+                                {n}
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
 
