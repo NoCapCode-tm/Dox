@@ -5,12 +5,39 @@ const LegalAgreements = () => {
 
     return (
         <div
-            className="relative h-screen w-screen overflow-auto font-[Jost] text-white"
+            className="relative h-screen w-screen overflow-hidden font-[Jost] text-white"
             style={{ background: 'linear-gradient(119.18deg, #0A0E14 2.67%, #141C28 96.61%)' }}
         >
+            <style>{`.no-scrollbar::-webkit-scrollbar{display:none} .no-scrollbar{scrollbar-width:none; -ms-overflow-style:none;}`}</style>
+            {/* Mobile top navbar */}
+            <div className="fixed top-0 left-0 right-0 z-50 flex items-stretch justify-between border-b border-white/10 bg-[#0A0E14] md:hidden">
+                <div
+                    className="flex flex-col items-center justify-center overflow-hidden shrink-0"
+                    style={{
+                        width: 'clamp(86px, 28vw, 112px)',
+                        height: 'clamp(64px, 14vw, 74px)',
+                        background: '#0A0E14',
+                        borderRight: '0.5px solid rgba(173, 173, 173, 0.5)',
+                        borderBottom: '0.5px solid rgba(173, 173, 173, 0.5)',
+                        borderRadius: '0px 0px 10px 0px',
+                    }}
+                >
+                    <div style={{ transform: 'scale(0.62)', transformOrigin: 'center' }}>
+                        <DoxLogo />
+                    </div>
+                    <p className="leading-none text-white/50 text-[8px] mt-0.5 text-center px-1">Employee Onboarding</p>
+                </div>
+
+                <div className="flex flex-1 items-center justify-around gap-2 px-2 py-2">
+                    {[1, 2, 3].map((n) => (
+                        <div key={n} className="flex min-w-0 flex-1 items-center justify-center rounded-[10px] border text-center font-medium" style={{ height: 'clamp(42px,10vw,56px)', fontSize: 'clamp(12px,3.5vw,16px)', background: '#0A0E14', borderColor: 'rgba(173,173,173,0.5)', color: 'rgba(255,255,255,0.55)' }}>{n}</div>
+                    ))}
+                </div>
+            </div>
+
             {/* Sidebar */}
             {/* DOX logo square */}
-            <div className="absolute top-0 left-0 z-50">
+            <div className="absolute top-0 left-0 z-50 hidden md:block">
                 <div
                     className="flex flex-col items-center justify-center overflow-hidden"
                     style={{
@@ -22,13 +49,15 @@ const LegalAgreements = () => {
                         borderRadius: '0px 0px 10px 0px',
                     }}
                 >
-                    <DoxLogo />
-                    <p className="leading-none text-white/50 mt-1" style={{ fontSize: 'clamp(12px, 0.65vw, 12px)' }}>Employee Onboarding</p>
+                    <div style={{ transform: 'scale(0.82)', transformOrigin: 'center' }}>
+                        <DoxLogo />
+                    </div>
+                    <p className="leading-none text-white/50 mt-1" style={{ fontSize: 'clamp(10px, 0.65vw, 12px)' }}>Employee Onboarding</p>
                 </div>
             </div>
 
             {/* Sidebar steps */}
-            <aside className="fixed left-0 top-0 h-full z-30 flex flex-col bg-transparent" style={{ paddingTop: '32vh' }}>
+            <aside className="fixed left-0 top-0 h-full z-30 hidden flex-col bg-transparent md:flex" style={{ paddingTop: '32vh' }}>
                 <div className="flex flex-col gap-9">
                     {/* Active step 1 */}
                     <div
@@ -77,10 +106,11 @@ const LegalAgreements = () => {
 
             {/* Framed container  */}
             <div className="relative" style={{ marginLeft: '4.5vw', marginTop: '8vh', marginRight: '3vw', marginBottom: '5vh', zIndex: 20 }}>
-                <div className="w-full border border-white/10 rounded-[10px] relative">
+                <div className="w-full border border-white/10 rounded-[10px] relative no-scrollbar" style={{ borderColor: 'rgba(173, 173, 173, 0.5)', maxHeight: 'calc(100vh - 12vh)', overflowY: 'auto' }}>
                     {/* Main Content */}
                     <main className="w-full flex flex-col items-start justify-center">
-                        <div className="w-full max-w-[900px] p-8 md:p-12 mt-8" style={{ marginLeft: '4vw' }}>
+                        <div className="w-full max-w-225 p-8 md:p-12 mt-8 mx-auto"
+                            style={{ marginLeft: '6vw', paddingLeft: 'clamp(16px, 6vw, 40px)', paddingTop: 'clamp(50px, 7vw, 70px)' }}>
                             <h1 className="text-[32px] leading-tight font-normal text-white">Legal Agreements</h1>
                             <p className="mt-2 text-[16px] text-white/60">
                                 Please review and sign the following documents to proceed with your onboarding.
@@ -111,7 +141,7 @@ const LegalAgreements = () => {
                                 <button
                                     type="button"
                                     onClick={() => navigate('/welcome')}
-                                    className="px-6 py-2.5 rounded-[8px] border border-white/20 text-[15px] font-medium text-white/80 hover:bg-white/5 transition-colors inline-flex items-center gap-2"
+                                    className="px-6 py-2.5 rounded-lg border border-white/20 text-[15px] font-medium text-white/80 hover:bg-white/5 transition-colors inline-flex items-center gap-2"
                                 >
                                     <BackArrowIcon />
                                     Back
@@ -120,7 +150,7 @@ const LegalAgreements = () => {
                                 <button
                                     type="button"
                                     onClick={() => navigate('/dashboard')}
-                                    className="px-6 py-2.5 rounded-[8px] border border-white/20 text-[15px] font-medium text-white/80 hover:bg-white/5 transition-colors inline-flex items-center gap-2"
+                                    className="px-6 py-2.5 rounded-lg border border-white/20 text-[15px] font-medium text-white/80 hover:bg-white/5 transition-colors inline-flex items-center gap-2"
                                 >
                                     Continue
                                     <ForwardArrowIcon />
@@ -150,12 +180,12 @@ const ForwardArrowIcon = () => (
 
 const AgreementCard = ({ title, description, status, actionLabel, onAction, icon, signed = false }) => (
     <div
-        className="relative rounded-[12px] p-6 border border-white/10"
+        className="relative rounded-xl p-6 border border-white/10"
         style={{
             background: 'rgba(255, 255, 255, 0.02)'
         }}
     >
-        <div className="absolute top-6 right-6 px-3 py-1.5 rounded-[6px] text-[13px] font-medium leading-none inline-flex items-center gap-1.5" style={{
+        <div className="absolute top-6 right-6 px-3 py-1.5 rounded-md text-[13px] font-medium leading-none inline-flex items-center gap-1.5" style={{
             background: signed ? 'rgba(6, 214, 160, 0.15)' : 'rgba(255,255,255,0.05)',
             color: signed ? '#06D6A0' : 'rgba(255,255,255,0.6)',
         }}>
@@ -164,7 +194,7 @@ const AgreementCard = ({ title, description, status, actionLabel, onAction, icon
         </div>
 
         <div className="flex items-start gap-4 pr-28">
-            <div className="w-12 h-12 rounded-[10px] bg-white/[0.04] border border-white/[0.05] flex items-center justify-center shrink-0">
+            <div className="w-12 h-12 rounded-[10px] bg-white/4 border border-white/5 flex items-center justify-center shrink-0">
                 {icon}
             </div>
             <div className="pt-0.5">
@@ -174,7 +204,7 @@ const AgreementCard = ({ title, description, status, actionLabel, onAction, icon
                 <button
                     type="button"
                     onClick={onAction}
-                    className="mt-5 px-5 py-2.5 rounded-[8px] text-[14px] font-medium transition-colors inline-flex items-center gap-2"
+                    className="mt-5 px-5 py-2.5 rounded-lg text-[14px] font-medium transition-colors inline-flex items-center gap-2"
                     style={{
                         background: signed ? 'rgba(255,255,255,0.08)' : 'transparent',
                         border: signed ? '1px solid transparent' : '1px solid rgba(255,255,255,0.15)',
