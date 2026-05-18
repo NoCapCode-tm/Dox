@@ -75,7 +75,7 @@ const LegalAgreements = () => {
                 </div>
             </aside>
 
-            {/* Framed container - starts from center of small DOX square */}
+            {/* Framed container  */}
             <div className="relative" style={{ marginLeft: '4.5vw', marginTop: '8vh', marginRight: '3vw', marginBottom: '5vh', zIndex: 20 }}>
                 <div className="w-full border border-white/10 rounded-[10px] relative">
                     {/* Main Content */}
