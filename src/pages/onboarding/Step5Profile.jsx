@@ -193,7 +193,7 @@ const Step5Profile = () => {
               <SelectInput
                 value={form.areasOfExpertise}
                 onChange={(v) => handleChange('areasOfExpertise', v)}
-                placeholder="Dropdown options: UI/UX Design, Frontend Development, Backend Development"
+                placeholder="UI/UX Design, Frontend Development, Backend Development"
                 options={[
                   'UI/UX Design',
                   'Frontend Development',
@@ -242,7 +242,7 @@ const Step5Profile = () => {
               <TextInput
                 value={form.duration}
                 onChange={(v) => handleChange('duration', v)}
-                placeholder="e.g. 2nd Year / 4th Semester"
+                placeholder="Duration"
               />
             </FormField>
 
@@ -250,7 +250,7 @@ const Step5Profile = () => {
               <TextInput
                 value={form.keyResponsibilities}
                 onChange={(v) => handleChange('keyResponsibilities', v)}
-                placeholder="e.g. 2nd Year / 4th Semester"
+                placeholder="Your Responsibilities"
               />
             </FormField>
           </div>
