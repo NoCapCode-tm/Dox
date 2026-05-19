@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+import { isValidUrl } from '../../utils/validation';
 import { showMissingRequiredFieldsToast } from '../../utils/requiredFieldToast';
 import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep5ProfileInfo, getCurrentUser } from '../../api/employeeApi';
@@ -76,6 +77,22 @@ const Step5Profile = () => {
 
   const handleNext = async () => {
     if (showMissingRequiredFieldsToast(form, REQUIRED_STEP5_FIELDS).length > 0) {
+      return;
+    }
+
+    // Validate optional URLs if provided
+    if (form.portfolioLink && !isValidUrl(form.portfolioLink)) {
+      toast.error('Please enter a valid portfolio URL (include http/https)');
+      return;
+    }
+
+    if (form.githubProfile && !isValidUrl(form.githubProfile)) {
+      toast.error('Please enter a valid GitHub profile URL');
+      return;
+    }
+
+    if (form.linkedinUrl && !isValidUrl(form.linkedinUrl)) {
+      toast.error('Please enter a valid LinkedIn profile URL');
       return;
     }
 
