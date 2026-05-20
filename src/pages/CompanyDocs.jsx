@@ -284,26 +284,8 @@ const CompanyDocs = () => {
             {/* Framed container */}
             <div className="relative" style={{ marginLeft: '4.5vw', marginTop: '8vh', marginRight: '3vw', marginBottom: '5vh', zIndex: 20 }}>
                 <div className="w-full border rounded-[10px] relative no-scrollbar" style={{ borderColor: 'rgba(173, 173, 173, 0.5)', maxHeight: 'calc(100vh - 12vh)', overflowY: 'auto' }}>
-                    {/* Sidebar and Content Layout */}
-                    <div className="grid min-h-[760px] grid-cols-1 md:grid-cols-[140px_1fr]">
-                        <aside className="relative p-4 md:p-3">
-                            {/* Sidebar */}
-                            <div className="pointer-events-none absolute right-0 top-[18px] bottom-[18px] hidden items-stretch md:flex">
-                                <VerticalDivider />
-                            </div>
-                            <DoxLogo />
-                            <p className="mt-1 text-[11px] leading-[16px] text-white/65">Employee Onboarding</p>
-                            <div className="my-5 pr-6">
-                                <HorizontalDivider />
-                            </div>
-
-                            <div className="flex gap-3 md:flex-col md:gap-8">
-                                <StepBadge number="1" />
-                                <StepBadge number="2" active />
-                                <StepBadge number="3" />
-                            </div>
-                        </aside>
-
+                    {/* Content Layout */}
+                    <div className="grid min-h-[760px]">
                         <section className="relative p-5 md:p-8 lg:p-10">
                             <div className="relative z-10">
                                 <h1 className="text-[28px] font-normal leading-[34px]">Company Docs</h1>
