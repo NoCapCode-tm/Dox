@@ -169,61 +169,121 @@ const CompanyDocs = () => {
     }
 
     return (
-        <div className="relative min-h-screen w-full overflow-x-hidden font-[jost] text-white" style={{ background: '#000' }}>
-            {/* Background */}
-            <div className="absolute inset-0 z-0">
-                <div
-                    className="absolute top-0 left-0 h-full w-1/2"
-                    style={{
-                        background:
-                            'conic-gradient(from 89.78deg at 50% 41%, #0A1F56 0deg, #00184D 219.41deg, #0A1F56 309.85deg, #0D2460 360deg)',
-                    }}
-                />
-                <div
-                    className="absolute top-0 right-0 h-full w-1/2"
-                    style={{
-                        background:
-                            'conic-gradient(from 89.78deg at 50% 41%, #0A1F56 0deg, #00184D 219.41deg, #0A1F56 309.85deg, #0D2460 360deg)',
-                        transform: 'matrix(-1, 0, 0, 1, 0, 0)',
-                    }}
-                />
-            </div>
+        <div className="relative h-screen w-screen overflow-hidden font-[Jost] text-white" style={{ background: 'linear-gradient(119.18deg, #0A0E14 2.67%, #141C28 96.61%)' }}>
+            <style>{`.no-scrollbar::-webkit-scrollbar{display:none} .no-scrollbar{scrollbar-width:none; -ms-overflow-style:none;}`}</style>
 
-            {/* Background Overlay */}
-            <div
-                className="absolute inset-0 z-0"
-                style={{
-                    backgroundImage: 'url(/dox-bg.png)',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                    mixBlendMode: 'multiply',
-                    filter: 'brightness(0) contrast(1.08)',
-                    opacity: 0.62,
-                }}
-            />
-
-            {/* Blue Gradient Overlay */}
-            <div
-                className="absolute inset-0 z-0"
-                style={{
-                    background:
-                        'linear-gradient(180deg, #000000 20%, #5492EC 52%, #000000 100%)',
-                    mixBlendMode: 'multiply',
-                }}
-            />
-
-            {/* Main Content */}
-            <div className="relative z-10 mx-auto w-full max-w-[1240px] px-4 py-8 md:px-8 md:py-10">
+            {/* Mobile top navbar */}
+            <div className="fixed top-0 left-0 right-0 z-50 flex items-stretch justify-between border-b border-white/10 bg-[#0A0E14] md:hidden">
                 <div
-                    className="relative overflow-hidden rounded-[12px] border border-white/8"
+                    className="flex flex-col items-center justify-center overflow-hidden shrink-0"
                     style={{
-                        background:
-                            'linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(153, 153, 153, 0.02) 100%)',
-                        backdropFilter: 'blur(8px)',
-                        WebkitBackdropFilter: 'blur(8px)',
+                        width: 'clamp(86px, 28vw, 112px)',
+                        height: 'clamp(64px, 14vw, 74px)',
+                        background: '#0A0E14',
+                        borderRight: '0.5px solid rgba(173, 173, 173, 0.5)',
+                        borderBottom: '0.5px solid rgba(173, 173, 173, 0.5)',
+                        borderRadius: '0px 0px 10px 0px',
                     }}
                 >
+                    <div style={{ transform: 'scale(0.62)', transformOrigin: 'center' }}>
+                        <DoxLogo />
+                    </div>
+                    <p className="leading-none text-white/50 text-[8px] mt-0.5 text-center px-1">Employee Onboarding</p>
+                </div>
+
+                <div className="flex flex-1 items-center justify-around gap-2 px-2 py-2">
+                    {[1, 2, 3].map((n) => {
+                        const isActive = n === 2
+                        return (
+                            <div
+                                key={n}
+                                className="flex min-w-0 flex-1 items-center justify-center rounded-[10px] border text-center font-medium"
+                                style={{
+                                    height: 'clamp(42px, 10vw, 56px)',
+                                    fontSize: 'clamp(12px, 3.5vw, 16px)',
+                                    background: isActive ? '#1C2027' : '#0A0E14',
+                                    borderColor: 'rgba(173, 173, 173, 0.5)',
+                                    color: isActive ? '#FFFFFF' : 'rgba(255, 255, 255, 0.55)'
+                                }}
+                            >
+                                {n}
+                            </div>
+                        )
+                    })}
+                </div>
+            </div>
+
+            {/* Sidebar DOX logo square for md+ */}
+            <div className="absolute top-0 left-0 z-50 hidden md:block">
+                <div
+                    className="flex flex-col items-center justify-center overflow-hidden"
+                    style={{
+                        width: '12vw',
+                        height: '16vh',
+                        background: '#0A0E14',
+                        borderRight: '0.5px solid rgba(173, 173, 173, 0.5)',
+                        borderBottom: '0.5px solid rgba(173, 173, 173, 0.5)',
+                        borderRadius: '0px 0px 10px 0px',
+                    }}
+                >
+                    <div style={{ transform: 'scale(0.82)', transformOrigin: 'center' }}>
+                        <DoxLogo />
+                    </div>
+                    <p className="leading-none text-white/50 mt-1" style={{ fontSize: 'clamp(10px, 0.65vw, 12px)' }}>Employee Onboarding</p>
+                </div>
+            </div>
+
+            {/* Sidebar steps */}
+            <aside className="fixed left-0 top-0 h-full z-30 hidden flex-col bg-transparent md:flex" style={{ paddingTop: '32vh' }}>
+                <div className="flex flex-col gap-9">
+                    <div
+                        className="flex items-center justify-center font-medium"
+                        style={{
+                            width: '5vw',
+                            height: '10vh',
+                            fontSize: '2.2vw',
+                            background: '#0A0E14',
+                            border: '0.5px solid rgba(173, 173, 173, 0.5)',
+                            borderRadius: '0px 10px 10px 0px',
+                            color: '#848689',
+                        }}
+                    >
+                        1
+                    </div>
+                    <div
+                        className="flex items-center justify-center font-medium"
+                        style={{
+                            width: '5vw',
+                            height: '10vh',
+                            fontSize: '2.2vw',
+                            background: '#1C2027',
+                            border: '0.5px solid rgba(173, 173, 173, 0.5)',
+                            borderRadius: '0px 10px 10px 0px',
+                            color: '#FFFFFF',
+                        }}
+                    >
+                        2
+                    </div>
+                    <div
+                        className="flex items-center justify-center font-medium"
+                        style={{
+                            width: '5vw',
+                            height: '10vh',
+                            fontSize: '2.2vw',
+                            background: '#0A0E14',
+                            border: '0.5px solid rgba(173, 173, 173, 0.5)',
+                            borderRadius: '0px 10px 10px 0px',
+                            color: 'rgba(255, 255, 255, 0.5)',
+                        }}
+                    >
+                        3
+                    </div>
+                </div>
+            </aside>
+
+            {/* Framed container */}
+            <div className="relative" style={{ marginLeft: '4.5vw', marginTop: '8vh', marginRight: '3vw', marginBottom: '5vh', zIndex: 20 }}>
+                <div className="w-full border rounded-[10px] relative no-scrollbar" style={{ borderColor: 'rgba(173, 173, 173, 0.5)', maxHeight: 'calc(100vh - 12vh)', overflowY: 'auto' }}>
                     {/* Sidebar and Content Layout */}
                     <div className="grid min-h-[760px] grid-cols-1 md:grid-cols-[140px_1fr]">
                         <aside className="relative p-4 md:p-3">
