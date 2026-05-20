@@ -298,7 +298,7 @@ const CompanyDocs = () => {
                                     <nav
                                         className="relative h-[470px] rounded-[10px] border border-white/8 p-3"
                                         style={{
-                                            background: 'rgba(46, 109, 194, 0.16)',
+                                            background: 'rgba(28, 32, 39, 0.65)',
                                             backdropFilter: 'blur(10px)',
                                             WebkitBackdropFilter: 'blur(10px)',
                                         }}
@@ -580,18 +580,7 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
                     WebkitBackdropFilter: 'blur(10px)',
                 }}
             >
-                <div
-                    className="pointer-events-none absolute inset-0 z-0 rounded-[10px]"
-                    style={{
-                        backgroundImage: 'url(/dox-bg.png)',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        backgroundRepeat: 'no-repeat',
-                        mixBlendMode: 'multiply',
-                        filter: 'brightness(0) contrast(1.08)',
-                        opacity: 0.46,
-                    }}
-                />
+                
 
                 {/* Scrollable Content */}
                 <div
