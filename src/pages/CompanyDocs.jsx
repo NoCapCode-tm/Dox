@@ -340,9 +340,10 @@ const CompanyDocs = () => {
 
                                         {/* Acknowledgement Panel */}
                                         <section
-                                            className="rounded-[10px] border border-white/8 p-4 md:p-6"
+                                            className="rounded-[10px] border p-4 md:p-6"
                                             style={{
-                                                background: 'rgba(46, 109, 194, 0.1)',
+                                                background: 'rgba(28, 32, 39, 0.65)',
+                                                border: '0.5px solid rgba(255, 255, 255, 0.5)',
                                                 backdropFilter: 'blur(10px)',
                                                 WebkitBackdropFilter: 'blur(10px)',
                                             }}
