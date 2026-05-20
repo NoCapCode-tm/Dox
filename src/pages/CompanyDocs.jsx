@@ -287,7 +287,7 @@ const CompanyDocs = () => {
                     {/* Content Layout */}
                     <div className="grid min-h-[760px]">
                         <section className="relative p-5 md:p-8 lg:p-10">
-                            <div className="relative z-10">
+                            <div className="relative z-10" style={{ paddingLeft: 'clamp(36px, 6.5vw, 100px)' }}>
                                 <h1 className="text-[28px] font-normal leading-[34px]">Company Docs</h1>
                                 <p className="mt-1 max-w-[820px] text-[16px] leading-[24px] text-white/70">
                                     Please review and understand our policies and culture.
