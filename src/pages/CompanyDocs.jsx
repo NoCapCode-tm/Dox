@@ -332,13 +332,28 @@ const CompanyDocs = () => {
                                     </nav>
 
                                     <div className="space-y-4">
-                                        <ExpandableContent
-                                            content={selectedDocument.content}
-                                            onOverflowChange={setIsContentOverflowing}
-                                            onExpanded={() => setHasOpenedLongContent(true)}
-                                        />
+                                        <section
+                                            className="rounded-[10px] border border-white/50 p-4 md:p-6"
+                                            style={{
+                                                background: 'rgba(28, 32, 39, 0.42)',
+                                                backdropFilter: 'blur(10px)',
+                                                WebkitBackdropFilter: 'blur(10px)',
+                                            }}
+                                        >
+                                            <ExpandableContent
+                                                content={selectedDocument.content}
+                                                onOverflowChange={setIsContentOverflowing}
+                                                onExpanded={() => setHasOpenedLongContent(true)}
+                                            />
 
-                                        {/* Acknowledgement Panel */}
+                                            <div className="mt-4 rounded-[5px] bg-[rgba(28,32,39,0.65)] px-3 py-3 text-white">
+                                                <p className="text-[16px] leading-[24px] font-normal">Need Help?</p>
+                                                <p className="mt-1 text-[14px] leading-[24px] text-white/90">
+                                                    Reach out to DOX or your assigned onboarding buddy.
+                                                </p>
+                                            </div>
+                                        </section>
+
                                         <section
                                             className="rounded-[10px] border p-4 md:p-6"
                                             style={{
@@ -348,7 +363,7 @@ const CompanyDocs = () => {
                                                 WebkitBackdropFilter: 'blur(10px)',
                                             }}
                                         >
-                                            <label className="flex cursor-pointer items-start gap-3 text-[14px] leading-[20px] text-white/70 md:text-[15px] md:leading-[22px]">
+                                            <label className="flex cursor-pointer items-start gap-3 text-[14px] leading-[20px] text-white/65 md:text-[15px] md:leading-[22px]">
                                                 <input
                                                     type="checkbox"
                                                     checked={hasAcknowledged}
