@@ -574,13 +574,13 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
             <article
                 className="rounded-[10px] border border-white/8 transition-all duration-300 relative"
                 style={{
-                    background: 'linear-gradient(180deg, rgba(8, 21, 56, 0.72) 0%, rgba(8, 21, 56, 0.5) 100%)',
+                    background: 'rgba(0, 0, 0, 0.54)',
                     borderColor: 'rgba(255, 255, 255, 0.1)',
                     backdropFilter: 'blur(10px)',
                     WebkitBackdropFilter: 'blur(10px)',
                 }}
             >
-                
+
 
                 {/* Scrollable Content */}
                 <div
@@ -630,7 +630,7 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
                             left: 0,
                             right: 0,
                             height: '120px',
-                            background: 'linear-gradient(to bottom, rgba(8, 21, 56, 0) 0%, rgba(8, 21, 56, 0.96) 100%)',
+                            background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.96) 100%)',
                             pointerEvents: 'none',
                             borderRadius: '0 0 10px 10px',
                         }}
