@@ -1,9 +1,48 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { showMissingRequiredFieldsToast } from '../../utils/requiredFieldToast';
 import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep7SystemInfo, getCurrentUser } from '../../api/employeeApi';
+
+//IANA time zones for the dropdown.
+const TIMEZONES = [
+  'UTC',
+  'Etc/GMT+12',
+  'Pacific/Midway',
+  'Pacific/Honolulu',
+  'America/Anchorage',
+  'America/Los_Angeles',
+  'America/Denver',
+  'America/Chicago',
+  'America/New_York',
+  'America/Sao_Paulo',
+  'Atlantic/Azores',
+  'Europe/London',
+  'Europe/Dublin',
+  'Europe/Lisbon',
+  'Europe/London',
+  'Europe/Berlin',
+  'Europe/Paris',
+  'Europe/Moscow',
+  'Africa/Cairo',
+  'Africa/Johannesburg',
+  'Asia/Jerusalem',
+  'Europe/Istanbul',
+  'Asia/Dubai',
+  'Asia/Karachi',
+  'Asia/Kolkata',
+  'Asia/Dhaka',
+  'Asia/Bangkok',
+  'Asia/Singapore',
+  'Asia/Hong_Kong',
+  'Asia/Tokyo',
+  'Asia/Seoul',
+  'Australia/Perth',
+  'Australia/Sydney',
+  'Pacific/Auckland',
+  'Pacific/Fiji'
+];
 import Loader from '../../components/ui/Loader';
 
 const REQUIRED_STEP7_FIELDS = [
@@ -183,10 +222,11 @@ const Step7SystemInfo = () => {
             </FormField>
 
             <FormField label="Time Zone" required>
-              <TextInput
+              <TimezoneSelect
                 value={form.timeZone}
                 onChange={(v) => handleChange('timeZone', v)}
-                placeholder="Enter"
+                options={TIMEZONES}
+                placeholder="Select time zone"
               />
             </FormField>
 
@@ -303,6 +343,80 @@ const SelectInput = ({ value, onChange, options, placeholder }) => (
     ))}
   </select>
 );
+
+/**
+ * TimezoneSelect — custom dropdown
+ */
+const TimezoneSelect = ({ value, onChange, options, placeholder }) => {
+  const [open, setOpen] = useState(false);
+  const containerRef = useRef(null);
+  const [maxHeightPx, setMaxHeightPx] = useState(260);
+  const selectedLabel = value || placeholder;
+
+  useEffect(() => {
+    const handleOutside = (e) => {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleOutside);
+    return () => document.removeEventListener('mousedown', handleOutside);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    // compute available space above the button (viewport-relative)
+    const rect = containerRef.current.getBoundingClientRect();
+    const availableAbove = Math.max(80, Math.floor(rect.top - 24)); // leave some padding, minimum 80px
+    setMaxHeightPx(availableAbove);
+  }, [open]);
+
+  return (
+    <div className="relative" ref={containerRef}>
+      <button
+        type="button"
+        onClick={() => setOpen((s) => !s)}
+        className="w-full h-[53px] rounded-[10px] px-[20px] text-left flex items-center justify-between"
+        style={{
+          backgroundColor: 'rgba(255,255,255,0.05)',
+          border: '0.8px solid rgba(255,255,255,0.1)',
+          color: value ? '#FFFFFF' : '#6A7282',
+        }}
+      >
+        <span className="truncate">{selectedLabel}</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 9l6 6 6-6" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+
+      {open && (
+        <div
+          className="absolute left-0 right-0 rounded-[8px] shadow-lg"
+          style={{
+            zIndex: 60,
+            bottom: 'calc(100% + 8px)',
+            maxHeight: `${maxHeightPx}px`,
+            overflowY: 'auto',
+            backgroundColor: '#0A0E14',
+            border: '0.8px solid rgba(255,255,255,0.08)',
+          }}
+        >
+          {options.map((opt) => (
+            <button
+              key={opt}
+              type="button"
+              onClick={() => { onChange(opt); setOpen(false); }}
+              className="w-full text-left px-[16px] py-[10px] hover:bg-white/6"
+              style={{ color: '#FFFFFF' }}
+            >
+              {opt}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 /**
  * NavItem — single navbar link

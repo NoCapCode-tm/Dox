@@ -5,6 +5,105 @@ import Loader from '../components/ui/Loader';
 
 const AUTH_SESSION_KEY = 'emp-auth-session';
 
+const hasValue = (value) => {
+  if (value == null) return false;
+  if (typeof value === 'string') return value.trim().length > 0;
+  if (typeof value === 'boolean') return value;
+  if (Array.isArray(value)) return value.length > 0;
+  if (typeof value === 'object') return Object.values(value).some(hasValue);
+  return Boolean(value);
+};
+
+const isStep1Filled = (data) =>
+  hasValue(data?.name) ||
+  hasValue(data?.Emails?.email) ||
+  hasValue(data?.phone?.permanent) ||
+  hasValue(data?.phone?.alternate) ||
+  hasValue(data?.dob) ||
+  hasValue(data?.gender) ||
+  hasValue(data?.address?.permanent) ||
+  hasValue(data?.address?.communication) ||
+  hasValue(data?.address?.country) ||
+  hasValue(data?.address?.state) ||
+  hasValue(data?.address?.city);
+
+const isStep2Filled = (data) =>
+  hasValue(data?.emergency?.contactname) ||
+  hasValue(data?.emergency?.contactnumber) ||
+  hasValue(data?.emergency?.contactemail) ||
+  hasValue(data?.emergency?.contactrelation) ||
+  hasValue(data?.emergency?.contactcountry);
+
+const isStep3Filled = (data) =>
+  hasValue(data?.documents?.govid1?.number) ||
+  hasValue(data?.documents?.govid1?.image) ||
+  hasValue(data?.documents?.govid2?.number) ||
+  hasValue(data?.documents?.govid2?.image) ||
+  hasValue(data?.documents?.passport?.image) ||
+  hasValue(data?.documents?.student?.image) ||
+  hasValue(data?.documents?.aadharimage) ||
+  hasValue(data?.documents?.panimage) ||
+  hasValue(data?.documents?.passportimage) ||
+  hasValue(data?.documents?.collegeid);
+
+const isStep4Filled = (data) =>
+  hasValue(data?.Qualificationdetails?.highestqualification) ||
+  hasValue(data?.Qualificationdetails?.coursename) ||
+  hasValue(data?.Qualificationdetails?.collegename) ||
+  hasValue(data?.Qualificationdetails?.year) ||
+  hasValue(data?.Qualificationdetails?.expectedgraduation);
+
+const isStep5Filled = (data) =>
+  hasValue(data?.professionaldetails?.github) ||
+  hasValue(data?.professionaldetails?.portfolio) ||
+  hasValue(data?.professionaldetails?.Linkedin) ||
+  hasValue(data?.professionaldetails?.expertise) ||
+  hasValue(data?.professionaldetails?.technical) ||
+  hasValue(data?.professionaldetails?.Previousexperience) ||
+  hasValue(data?.professionaldetails?.previousexperience);
+
+const isStep6Filled = (data) =>
+  hasValue(data?.bankdetails?.Indian?.acholdername) ||
+  hasValue(data?.bankdetails?.Indian?.accountno) ||
+  hasValue(data?.bankdetails?.Indian?.ifsc) ||
+  hasValue(data?.bankdetails?.Indian?.bankname) ||
+  hasValue(data?.bankdetails?.Indian?.branchname) ||
+  hasValue(data?.bankdetails?.Indian?.upi) ||
+  hasValue(data?.bankdetails?.International?.acholdername) ||
+  hasValue(data?.bankdetails?.International?.accountno) ||
+  hasValue(data?.bankdetails?.International?.swift) ||
+  hasValue(data?.bankdetails?.International?.bankname) ||
+  hasValue(data?.bankdetails?.International?.platform);
+
+const isStep7Filled = (data) =>
+  hasValue(data?.systemdetails?.devicetype) ||
+  hasValue(data?.systemdetails?.os) ||
+  hasValue(data?.systemdetails?.laptopavailaibility) ||
+  hasValue(data?.systemdetails?.internet) ||
+  hasValue(data?.systemdetails?.timezone) ||
+  hasValue(data?.systemdetails?.weeklyavailaibility);
+
+const isStep8Filled = (data) =>
+  hasValue(data?.signature) ||
+  hasValue(data?.date) ||
+  hasValue(data?.agreed) ||
+  hasValue(data?.completionStartedAt);
+
+const getCompletedStepsFromUser = (payload) => {
+  const data = payload?.message || payload?.data || payload || {};
+
+  return {
+    step1: isStep1Filled(data),
+    step2: isStep2Filled(data),
+    step3: isStep3Filled(data),
+    step4: isStep4Filled(data),
+    step5: isStep5Filled(data),
+    step6: isStep6Filled(data),
+    step7: isStep7Filled(data),
+    step8: isStep8Filled(data),
+  };
+};
+
 /**
  * Dashboard
  * Grid layout with 8 steps and 3 info cards
@@ -15,6 +114,7 @@ const Dashboard = () => {
   const [authError, setAuthError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [completedSteps, setCompletedSteps] = useState({});
   const userMenuRef = useRef(null);
 
   useEffect(() => {
@@ -33,6 +133,7 @@ const Dashboard = () => {
         const response = await getCurrentUser();
         const name = response?.data?.name || response?.message?.name || '';
         setUserName(name);
+        setCompletedSteps(getCompletedStepsFromUser(response));
       } catch (error) {
         setAuthError(error?.message || 'Session expired. Please sign in again.');
         if (error?.status === 401 || error?.status === 403) {
@@ -71,6 +172,11 @@ const Dashboard = () => {
     };
   }, []);
 
+  useEffect(() => {
+    //dashboard should reflect backend state.
+    setCompletedSteps({});
+  }, []);
+
   const handleStartStep = (stepNumber) => {
     // Navigates to the respective step in the onboarding flow
     navigate(`/onboarding/step${stepNumber}`);
@@ -86,6 +192,8 @@ const Dashboard = () => {
   };
 
   const avatarCharacter = (userName?.trim()?.charAt(0) || 'U').toUpperCase();
+
+  const getStepActionLabel = (stepIndex) => (completedSteps[`step${stepIndex}`] ? 'Update' : 'Start');
 
   const steps = [
     {
@@ -200,7 +308,7 @@ const Dashboard = () => {
       {/* Header/Logo area */}
       <div className="w-full px-8 pt-8 pb-2 flex items-start justify-between relative z-30">
         <div className="flex flex-col">
-          <DoxLogo width="69" />
+          <DoxLogo width="110" />
           <span className="text-[12px] text-white/65 leading-[20px] mt-2 tracking-wide font-normal">
             Employee Onboarding
           </span>
@@ -310,7 +418,7 @@ const Dashboard = () => {
                     '1px 1px 2px rgba(64, 88, 125, 0.3), -1px -1px 2px rgba(34, 48, 67, 0.5), inset -5px 5px 10px rgba(34, 48, 67, 0.2), inset 5px -5px 10px rgba(34, 48, 67, 0.2), inset -5px -5px 10px rgba(64, 88, 125, 0.9), inset 5px 5px 13px rgba(34, 48, 67, 0.9)',
                 }}
               >
-                <span className="text-[16px] text-white font-normal">Start</span>
+                <span className="text-[16px] text-white font-normal">{getStepActionLabel(step.stepIndex)}</span>
                 <ArrowRightIcon className="w-[16px] h-[16px] transition-transform group-hover:translate-x-1" />
               </button>
             </div>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+import { isValidEmail, isValidPhone } from '../../utils/validation';
 import { showMissingRequiredFieldsToast } from '../../utils/requiredFieldToast';
 import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep2EmergencyInfo, getCurrentUser } from '../../api/employeeApi';
@@ -50,6 +51,18 @@ const Step2EmergencyInfo = () => {
 
   const handleNext = async () => {
     if (showMissingRequiredFieldsToast(form, REQUIRED_STEP2_FIELDS).length > 0) {
+      return;
+    }
+
+    // Validate contact phone
+    if (!isValidPhone(form.contactPhone)) {
+      toast.error('Please enter a valid emergency contact phone number (include country code)');
+      return;
+    }
+
+    // Validate email only if provided
+    if (form.contactEmail && !isValidEmail(form.contactEmail)) {
+      toast.error('Please enter a valid emergency contact email');
       return;
     }
 
