@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 /**
- * Welcome page - Redesigned to match the new Figma CSS and mockup layout
+ * Welcome page
  */
 const Welcome = () => {
     const navigate = useNavigate();
@@ -56,7 +56,7 @@ const Welcome = () => {
                         />
                     </div>
 
-                    {/* Topographic pattern overlay */}
+                    {/*overlay */}
                     <div
                         className="absolute inset-0 z-0"
                         style={{
@@ -99,11 +99,7 @@ const Welcome = () => {
                         <div className="mb-[16px] md:mb-[24px] flex justify-center w-full max-w-[280px] md:max-w-[463px]">
                             <LargeDoxLogo />
                         </div>
-
-                        {/* Tubelight effect */}
-                        <div className="mt-auto mb-[20px] w-full flex justify-center">
-                            <Tubelight />
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -218,29 +214,6 @@ const SignIcon = () => (
         {/* Lines of text */}
         <path d="M8 13h8M8 17h8" stroke="white" strokeWidth="2" strokeLinecap="round" />
     </svg>
-);
-
-const Tubelight = () => (
-    <div className="relative w-full max-w-[860px] h-[44px] md:h-[56px] pointer-events-none overflow-hidden">
-        <div
-            className="absolute left-[8%] right-[8%] top-[8px] h-[2px] md:h-[3px] rounded-full"
-            style={{
-                background: 'linear-gradient(90deg, rgba(151,201,255,0) 0%, rgba(151,201,255,0.9) 20%, rgba(202,231,255,1) 50%, rgba(151,201,255,0.9) 80%, rgba(151,201,255,0) 100%)',
-            }}
-        />
-        <div
-            className="absolute left-[4%] right-[4%] top-[0px] h-[34px] md:h-[42px]"
-            style={{
-                background: 'radial-gradient(95% 75% at 50% 0%, rgba(112,172,255,0.42) 0%, rgba(112,172,255,0.22) 42%, rgba(112,172,255,0.09) 66%, rgba(112,172,255,0) 100%)',
-            }}
-        />
-        <div
-            className="absolute left-[16%] right-[16%] top-[0px] h-[22px] md:h-[28px]"
-            style={{
-                background: 'radial-gradient(80% 70% at 50% 0%, rgba(168,214,255,0.45) 0%, rgba(168,214,255,0.18) 55%, rgba(168,214,255,0) 100%)',
-            }}
-        />
-    </div>
 );
 
 /** Large centered DOX logo  */
