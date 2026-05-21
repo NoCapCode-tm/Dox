@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 /**
- * Welcome page
+ * Welcome page - Redesigned to match the new Figma CSS and mockup layout
  */
 const Welcome = () => {
     const navigate = useNavigate();
@@ -9,14 +9,14 @@ const Welcome = () => {
     const cards = [
         {
             title: 'Onboarding Information',
-            desc: 'All information will be used for preparing your offer letter and agreements.',
+            desc: 'All information will be used for preparing your offer letter and agreements..',
             icon: <OnboardingIcon />,
             onClick: () => navigate('/dashboard'),
         },
         {
             title: 'Read Company Docs',
             desc: 'Understand our policies and culture',
-            icon: <DocsIcon />,
+            icon: <BookIcon />,
             onClick: () => navigate('/company-docs'),
         },
         {
@@ -29,118 +29,98 @@ const Welcome = () => {
 
     return (
         <div
-            className="relative min-h-screen w-full overflow-hidden font-[Jost] text-white"
-            style={{ background: '#000' }}
+            className="relative min-h-screen w-full overflow-x-hidden font-[Jost] text-white flex flex-col items-center pb-[40px]"
+            style={{ background: 'linear-gradient(117.18deg, #0A0E14 0%, #131B27 98.99%)' }}
         >
-            {/* Background — two mirrored conic rectangles */}
-            <div className="absolute inset-0 z-0">
+            {/* Banner Container */}
+            <div className="relative w-full max-w-[1440px] mx-auto px-4 pt-[29px] md:px-[29px]">
                 <div
-                    className="absolute top-0 left-0 w-1/2 h-full"
-                    style={{
-                        background:
-                            'conic-gradient(from 89.78deg at 50% 41%, #0A1F56 0deg, #00184D 219.41deg, #101828 309.85deg, #111111 360deg)',
-                    }}
-                />
-                <div
-                    className="absolute top-0 right-0 w-1/2 h-full"
-                    style={{
-                        background:
-                            'conic-gradient(from 89.78deg at 50% 41%, #0A1F56 0deg, #00184D 219.41deg, #101828 309.85deg, #111111 360deg)',
-                        transform: 'matrix(-1, 0, 0, 1, 0, 0)',
-                    }}
-                />
-            </div>
-
-            {/* Topographic pattern overlay */}
-            <div
-                className="absolute inset-0 z-0"
-                style={{
-                    backgroundImage: 'url(/dox-bg.png)',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                    mixBlendMode: 'multiply',
-                    filter: 'brightness(0) contrast(1.08)',
-                    opacity: 0.62,
-                }}
-            />
-
-            {/* Blue gradient overlay */}
-            <div
-                className="absolute inset-0 z-0"
-                style={{
-                    background:
-                        'linear-gradient(180deg, #000000 30%, #5492EC 60%, #000000 100%)',
-                    mixBlendMode: 'multiply',
-                }}
-            />
-
-            {/* Scrollbar indicator */}
-            <div
-                className="absolute right-[20px] z-20 hidden lg:block"
-                style={{
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    width: '12px',
-                    height: '120px',
-                    background: 'rgba(0,0,0,0.004)',
-                    border: '3px solid rgba(255,255,255,0.38)',
-                    borderRadius: '5px',
-                }}
-            />
-
-            {/* Content */}
-            <div className="relative z-10 flex flex-col min-h-screen">
-
-                {/* Header — DOX logo */}
-                <div className="px-[35px] pt-[35px]">
-                    <DoxLogo />
-                    <span className="block text-[12px] text-white/65 leading-[20px] mt-[6px] font-normal tracking-wide">
-                        Employee Onboarding
-                    </span>
-                </div>
-
-                {/* Main content */}
-                <div className="flex-1 flex flex-col items-center px-4 pt-8 md:pt-10 pb-6">
-
-                    {/* Welcome to */}
-                    <p
-                        className="font-[Jost] font-light text-[clamp(32px,3.3vw,48px)] leading-[36px] text-center mb-[8px]"
-                        style={{
-                            background: 'linear-gradient(180deg, #4882FF 0%, #000000 100%)',
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent',
-                            backgroundClip: 'text',
-                        }}
-                    >
-                        Welcome to
-                    </p>
-
-                    {/* Large DOX logo */}
-                    <div className="relative z-10 mb-[24px] md:mb-[32px] flex justify-center">
-                        <LargeDoxLogo />
+                    className="relative w-full h-[320px] md:h-[478px] rounded-[24px] overflow-hidden flex flex-col items-center justify-start"
+                >
+                    {/* Background — two mirrored conic rectangles */}
+                    <div className="absolute inset-0 z-0">
+                        <div
+                            className="absolute top-0 left-0 w-1/2 h-full"
+                            style={{
+                                background:
+                                    'conic-gradient(from 89.78deg at 50% 39.45%, #FFFFFF 0deg, #00184D 219.41deg, #101828 309.85deg, #111111 360deg)',
+                            }}
+                        />
+                        <div
+                            className="absolute top-0 right-0 w-1/2 h-full"
+                            style={{
+                                background:
+                                    'conic-gradient(from 89.78deg at 50% 39.45%, #FFFFFF 0deg, #00184D 219.41deg, #101828 309.85deg, #111111 360deg)',
+                                transform: 'scaleX(-1)',
+                            }}
+                        />
                     </div>
 
-                    {/* Tubelight effect */}
-                    <Tubelight />
+                    {/* Topographic pattern overlay */}
+                    <div
+                        className="absolute inset-0 z-0"
+                        style={{
+                            backgroundImage: 'url(/dox-bg.png)',
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            backgroundRepeat: 'no-repeat',
+                            mixBlendMode: 'multiply',
+                            filter: 'brightness(0) contrast(1.08)',
+                            opacity: 0.62,
+                        }}
+                    />
 
-                    {/* 3 Task Cards */}
-                    <div className="relative w-full max-w-[1170px] mx-auto px-4 mt-[8px] md:mt-[12px]">
-                        <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-[24px] md:gap-[60px]">
-                            {cards.map((card, i) => (
-                                <TaskCard key={i} {...card} />
-                            ))}
+                    {/* Blue gradient overlay */}
+                    <div
+                        className="absolute inset-0 z-0"
+                        style={{
+                            background:
+                                'linear-gradient(180deg, #FFFFFF 14.42%, #5492EC 43.27%, #000000 100%)',
+                            mixBlendMode: 'multiply',
+                        }}
+                    />
+
+                    {/* Content */}
+                    <div className="relative z-10 flex flex-col items-center w-full h-full pt-[60px] md:pt-[118px] px-4">
+                        {/* Welcome to */}
+                        <p
+                            className="font-[Jost] font-light text-[24px] md:text-[48px] leading-[30px] md:leading-[36px] text-center mb-[8px] md:mb-[16px] select-none"
+                            style={{
+                                background: 'linear-gradient(180deg, #4882FF 0%, #000000 100%)',
+                                WebkitBackgroundClip: 'text',
+                                WebkitTextFillColor: 'transparent',
+                                backgroundClip: 'text',
+                            }}
+                        >
+                            Welcome to
+                        </p>
+
+                        {/* Large DOX logo */}
+                        <div className="mb-[16px] md:mb-[24px] flex justify-center w-full max-w-[280px] md:max-w-[463px]">
+                            <LargeDoxLogo />
+                        </div>
+
+                        {/* Tubelight effect */}
+                        <div className="mt-auto mb-[20px] w-full flex justify-center">
+                            <Tubelight />
                         </div>
                     </div>
-
                 </div>
-
-                {/* Footer */}
-                <p className="text-center text-[clamp(14px,1.4vw,20px)] font-light leading-[24px] pb-[32px] px-4" style={{ color: 'rgba(255,255,255,0.65)' }}>
-                    Please complete the following onboarding steps to unlock full access.
-                </p>
-
             </div>
+
+            {/* 3 Task Cards */}
+            <div className="relative w-full max-w-[1170.88px] mx-auto px-4 mt-[40px] md:mt-[133px]">
+                <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-[24px] md:gap-[60px]">
+                    {cards.map((card, i) => (
+                        <TaskCard key={i} {...card} />
+                    ))}
+                </div>
+            </div>
+
+            {/* Footer */}
+            <p className="text-center text-[16px] md:text-[20px] font-light leading-[24px] mt-[40px] md:mt-[96px] px-4 w-full max-w-[573px] mx-auto" style={{ color: 'rgba(216, 216, 216, 0.65)' }}>
+                Please complete the following onboarding steps to unlock full access.
+            </p>
         </div>
     );
 };
@@ -150,65 +130,61 @@ const Welcome = () => {
  */
 const TaskCard = ({ title, desc, icon, onClick }) => (
     <div
-        className="relative flex flex-col overflow-hidden p-[20px]"
+        className="relative w-full md:w-[350.29px] h-[234px] rounded-[10px] overflow-hidden"
         style={{
-            backgroundColor: '#0B0F152B',
-            backgroundImage: 'linear-gradient(180deg, rgba(18, 24, 34, 0.62) 0%, rgba(10, 14, 20, 0.88) 100%)',
-            borderRadius: '10px',
-            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08)',
+            boxSizing: 'border-box',
+            border: '1px solid rgba(255, 255, 255, 0.15)',
+            background: 'rgba(19, 27, 39, 0.3)',
+            backdropFilter: 'blur(10px)',
         }}
     >
+        {/* Icon pill */}
         <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-                background: 'linear-gradient(180deg, rgba(11, 15, 21, 0.88) 0%, rgba(11, 15, 21, 0.82) 100%)',
-            }}
-        />
-
-        <div className="relative z-10 flex flex-col h-full">
-            {/* Pending badge */}
-            <div
-                className="absolute top-[20px] right-[20px] flex items-center gap-[6px] px-[8px] py-[2px] rounded-[5px]"
-                style={{ background: 'rgba(255,255,255,0.15)' }}
-            >
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                    <rect x="1" y="1" width="10" height="10" rx="5" stroke="white" strokeWidth="1" />
-                </svg>
-                <span className="font-[Jost] font-normal text-[12px] leading-[16px] text-white">Pending</span>
-            </div>
-
-            {/* Icon pill */}
-            <div
-                className="w-[48px] h-[48px] rounded-[8px] flex items-center justify-center mb-[auto] mt-0"
-                style={{ background: 'rgba(255,255,255,0.15)', padding: '12px 12px 0px' }}
-            >
-                {icon}
-            </div>
-
-            {/* Title + desc */}
-            <div className="mt-[24px] mb-[16px]">
-                <h3 className="font-[Jost] font-normal text-[16px] leading-[24px] text-white mb-[4px]">
-                    {title}
-                </h3>
-                <p className="font-[Jost] font-normal text-[14px] leading-[20px]" style={{ color: 'rgba(255,255,255,0.65)' }}>
-                    {desc}
-                </p>
-            </div>
-
-            {/* Start button */}
-            <button
-                type="button"
-                onClick={onClick}
-                className="flex items-center gap-[8px] w-fit px-[17px] py-[10px] rounded-[10px] font-[Jost] font-normal text-[16px] leading-[24px] text-white transition-opacity hover:opacity-80 active:scale-95"
-                style={{ border: '1px solid rgba(255,255,255,0.5)' }}
-            >
-                Start
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                    <path d="M3.33334 8H12.6667" stroke="white" strokeWidth="1.333" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M8 3.33334L12.6667 8.00001L8 12.6667" stroke="white" strokeWidth="1.333" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-            </button>
+            className="absolute left-[20.8px] top-[20.8px] w-[48px] h-[48px] rounded-[8px] flex items-center justify-center"
+            style={{ background: 'rgba(255, 255, 255, 0.15)' }}
+        >
+            {icon}
         </div>
+
+        {/* Pending Badge */}
+        <div
+            className="absolute right-[20.8px] top-[20.8px] flex items-center gap-[6px] px-[8px] py-[2px] rounded-[5px]"
+            style={{
+                background: 'rgba(255, 255, 255, 0.15)',
+                width: '75.18px',
+                height: '19.99px',
+                boxSizing: 'border-box',
+            }}
+        >
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" className="w-[12px] h-[12px] flex-shrink-0">
+                <circle cx="6" cy="6" r="5" stroke="white" strokeWidth="1" />
+            </svg>
+            <span className="font-[Jost] font-normal text-[12px] leading-[16px] text-white select-none">Pending</span>
+        </div>
+
+        {/* Title + desc */}
+        <div className="absolute left-[24.8px] top-[89.8px] w-[calc(100%-49.6px)] flex flex-col gap-[4px]">
+            <h3 className="font-[Jost] font-normal text-[16px] leading-[24px] text-white m-0 select-none">
+                {title}
+            </h3>
+            <p className="font-[Jost] font-normal text-[14px] leading-[20px] text-white/65 m-0 line-clamp-2 select-none">
+                {desc}
+            </p>
+        </div>
+
+        {/* Start button */}
+        <button
+            type="button"
+            onClick={onClick}
+            className="absolute left-[25px] top-[169px] w-[91px] h-[40px] flex items-center justify-center gap-[8px] rounded-[10px] font-[Jost] font-normal text-[16px] leading-[24px] text-white transition-all hover:bg-white/10 active:scale-95 cursor-pointer"
+            style={{ border: '1px solid rgba(255, 255, 255, 0.5)', boxSizing: 'border-box' }}
+        >
+            <span className="select-none">Start</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="w-[16px] h-[16px]">
+                <path d="M3.33334 8H12.6667" stroke="white" strokeWidth="1.333" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M8 3.33334L12.6667 8.00001L8 12.6667" stroke="white" strokeWidth="1.333" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+        </button>
     </div>
 );
 
@@ -222,24 +198,30 @@ const OnboardingIcon = () => (
     </svg>
 );
 
-const DocsIcon = () => (
+const BookIcon = () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M12 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9l-8-6z" stroke="white" strokeWidth="2" strokeLinejoin="round" />
-        <path d="M12 3v6h6" stroke="white" strokeWidth="2" strokeLinejoin="round" />
-        <path d="M8 13h8M8 17h5" stroke="white" strokeWidth="2" strokeLinecap="round" />
+        {/* Spine / Divider */}
+        <path d="M12 5v14" stroke="white" strokeWidth="2" strokeLinecap="round" />
+        {/* Left Page */}
+        <path d="M12 5C10 3 6 3 4 5v13c2-2 6-2 8 0" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        {/* Right Page */}
+        <path d="M12 5C14 3 18 3 20 5v13c-2-2-6-2-8 0" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
 );
 
 const SignIcon = () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <rect x="4" y="2" width="16" height="20" rx="2" stroke="white" strokeWidth="2" />
-        <path d="M8 7h8M8 11h8M8 15h5" stroke="white" strokeWidth="2" strokeLinecap="round" />
-        <path d="M14 17l2-2 2 2" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        {/* Document outer border with cut-out for folded corner */}
+        <path d="M4 2h10l6 6v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V2z" stroke="white" strokeWidth="2" strokeLinejoin="round" />
+        {/* Folded corner line */}
+        <path d="M14 2v6h6" stroke="white" strokeWidth="2" strokeLinejoin="round" />
+        {/* Lines of text */}
+        <path d="M8 13h8M8 17h8" stroke="white" strokeWidth="2" strokeLinecap="round" />
     </svg>
 );
 
 const Tubelight = () => (
-    <div className="relative w-full max-w-[860px] h-[44px] md:h-[56px] mb-[10px] md:mb-[16px] pointer-events-none overflow-hidden">
+    <div className="relative w-full max-w-[860px] h-[44px] md:h-[56px] pointer-events-none overflow-hidden">
         <div
             className="absolute left-[8%] right-[8%] top-[8px] h-[2px] md:h-[3px] rounded-full"
             style={{
@@ -261,35 +243,11 @@ const Tubelight = () => (
     </div>
 );
 
-/** Small header DOX logo */
-const DoxLogo = () => (
-    <svg width="69" height="19" viewBox="0 0 75 19" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="DOX logo">
-        {/* D */}
-        <g transform="translate(0 0)">
-            <path d="M0.400771 17.25C0.400771 17.25 -2.35803 17.25 6.60085 17.25C15.5597 17.25 14.6954 1.25 6.60085 1.25C-1.49371 1.25 0.400771 1.25 0.400771 1.25" stroke="white" strokeWidth="2.5" strokeLinecap="butt" />
-        </g>
-        {/* O */}
-        <g transform="translate(17 0)">
-            <path d="M13.8492 17.25C13.8492 17.25 16.608 17.25 7.64915 17.25C-1.30974 17.25 -0.445418 1.25 7.64915 1.25C15.7437 1.25 13.8492 1.25 13.8492 1.25" stroke="white" strokeWidth="2.5" strokeLinecap="butt" />
-        </g>
-        <g transform="translate(27 0)">
-            <path d="M0.400771 17.25C0.400771 17.25 -2.35803 17.25 6.60085 17.25C15.5597 17.25 14.6954 1.25 6.60085 1.25C-1.49371 1.25 0.400771 1.25 0.400771 1.25" stroke="white" strokeWidth="2.5" strokeLinecap="butt" />
-        </g>
-        {/* X */}
-        <g transform="translate(45 0)">
-            <path d="M0.400771 17.25C0.400771 17.25 -2.35803 17.25 6.60085 17.25C15.5597 17.25 14.6954 1.25 6.60085 1.25C-1.49371 1.25 0.400771 1.25 0.400771 1.25" stroke="white" strokeWidth="2.5" strokeLinecap="butt" />
-        </g>
-        <g transform="translate(56 0)">
-            <path d="M13.8492 17.25C13.8492 17.25 16.608 17.25 7.64915 17.25C-1.30974 17.25 -0.445418 1.25 7.64915 1.25C15.7437 1.25 13.8492 1.25 13.8492 1.25" stroke="white" strokeWidth="2.5" strokeLinecap="butt" />
-        </g>
-    </svg>
-);
-
 /** Large centered DOX logo  */
 const LargeDoxLogo = () => {
     const scale = 'clamp(200px, 24vw, 340px)';
     return (
-        <div style={{ width: 'min(100%, ' + scale + ')' }}>
+        <div style={{ width: 'min(100%, ' + scale + ')' }} className="w-full">
             <svg width="463" height="119" viewBox="0 0 463 119" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="DOX large logo" style={{ width: '100%', height: 'auto', display: 'block' }}>
                 <defs>
                     <linearGradient id="paint0_linear_1326_384" x1="231.241" y1="0" x2="231.241" y2="119" gradientUnits="userSpaceOnUse">
