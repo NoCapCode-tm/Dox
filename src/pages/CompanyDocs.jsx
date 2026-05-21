@@ -600,7 +600,7 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
                 <div className="relative overflow-hidden min-h-[404px]">
                     <div
                         aria-hidden="true"
-                        className="pointer-events-none absolute left-20 top-0 z-0 select-none whitespace-nowrap opacity-100"
+                        className="pointer-events-none absolute left-20 top-10 z-0 select-none whitespace-nowrap opacity-100"
                         style={{
                             width: '1164px',
                             height: '129px',
@@ -609,8 +609,8 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
                             fontWeight: 600,
                             fontSize: '200px',
                             lineHeight: '24px',
-                            color: 'rgba(255, 255, 255, 0.22)',
-                            textShadow: '0 0 24px rgba(255, 255, 255, 0.08)',
+                            color: 'rgba(255, 255, 255, 0.1)',
+                            textShadow: '0 0 24px rgba(255, 255, 255, 0.05)',
                             letterSpacing: '-0.06em',
                             transform: 'rotate(90deg)',
                             transformOrigin: 'left top',
