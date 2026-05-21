@@ -600,7 +600,7 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
                 <div className="relative overflow-hidden min-h-[404px]">
                     <div
                         aria-hidden="true"
-                        className="pointer-events-none absolute left-[28px] top-[96px] z-0 select-none whitespace-nowrap opacity-100"
+                        className="pointer-events-none absolute left-20 top-0 z-0 select-none whitespace-nowrap opacity-100"
                         style={{
                             width: '1164px',
                             height: '129px',
@@ -616,7 +616,7 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
                             transformOrigin: 'left top',
                         }}
                     >
-                        NoCapCode
+                        no cap code
                     </div>
 
                     <div
