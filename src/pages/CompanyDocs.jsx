@@ -213,7 +213,7 @@ const CompanyDocs = () => {
                 </div>
             </div>
 
-            {/* Sidebar DOX logo square for md+ */}
+            {/* Sidebar DOX logo square */}
             <div className="absolute top-0 left-0 z-50 hidden md:block">
                 <div
                     className="flex flex-col items-center justify-center overflow-hidden"
@@ -335,9 +335,9 @@ const CompanyDocs = () => {
                                         <section
                                             className="rounded-[10px] border border-white/50 p-4 md:p-6"
                                             style={{
-                                                background: 'rgba(28, 32, 39, 0.42)',
-                                                backdropFilter: 'blur(10px)',
-                                                WebkitBackdropFilter: 'blur(10px)',
+                                                background: '0A0E14',
+                                                // backdropFilter: 'blur(10px)',
+                                                //WebkitBackdropFilter: 'blur(10px)',
                                             }}
                                         >
                                             <ExpandableContent
@@ -353,11 +353,11 @@ const CompanyDocs = () => {
                                                 </p>
                                             </div>
                                         </section>
-
+                                        {/*confirmation  */}
                                         <section
                                             className="rounded-[10px] border p-4 md:p-6"
                                             style={{
-                                                background: 'rgba(28, 32, 39, 0.65)',
+                                                background: '0A0E14',
                                                 border: '0.5px solid rgba(255, 255, 255, 0.5)',
                                                 backdropFilter: 'blur(10px)',
                                                 WebkitBackdropFilter: 'blur(10px)',
@@ -588,7 +588,7 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
         <div className="space-y-2">
             {/* Document Card */}
             <article
-                className="rounded-[10px] border border-white/8 transition-all duration-300 relative"
+                className="rounded-[10px] border border-white/8 transition-all duration-300 relative overflow-hidden"
                 style={{
                     background: 'rgba(0, 0, 0, 0.54)',
                     borderColor: 'rgba(255, 255, 255, 0.1)',
@@ -596,35 +596,56 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
                     WebkitBackdropFilter: 'blur(10px)',
                 }}
             >
-
-
                 {/* Scrollable Content */}
-                <div
-                    ref={contentScrollRef}
-                    className="relative z-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-                    onScroll={syncContentThumb}
-                    style={{
-                        position: 'relative',
-                        overflowX: 'hidden',
-                        overflowY: isExpanded ? 'auto' : 'hidden',
-                        maxHeight: '404px',
-                        scrollbarWidth: 'none',
-                        msOverflowStyle: 'none',
-                    }}
-                >
-                    <p
-                        ref={contentRef}
-                        className="p-4 md:p-6 text-[15px] leading-[24px] tracking-[0.08em] text-white/85 md:text-[16px] md:leading-[26px] transition-all duration-300"
+                <div className="relative overflow-hidden min-h-[404px]">
+                    <div
+                        aria-hidden="true"
+                        className="pointer-events-none absolute left-[28px] top-[96px] z-0 select-none whitespace-nowrap opacity-100"
                         style={{
-                            minHeight: '404px',
-                            margin: 0,
-                            whiteSpace: 'pre-line',
-                            fontFamily: 'Arial, sans-serif',
-
+                            width: '1164px',
+                            height: '129px',
+                            fontFamily: 'Jost, sans-serif',
+                            fontStyle: 'normal',
+                            fontWeight: 600,
+                            fontSize: '200px',
+                            lineHeight: '24px',
+                            color: 'rgba(255, 255, 255, 0.22)',
+                            textShadow: '0 0 24px rgba(255, 255, 255, 0.08)',
+                            letterSpacing: '-0.06em',
+                            transform: 'rotate(90deg)',
+                            transformOrigin: 'left top',
                         }}
                     >
-                        {renderContentWithBoldMarkers(content)}
-                    </p>
+                        NoCapCode
+                    </div>
+
+                    <div
+                        ref={contentScrollRef}
+                        className="relative z-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                        onScroll={syncContentThumb}
+                        style={{
+                            position: 'relative',
+                            overflowX: 'hidden',
+                            overflowY: isExpanded ? 'auto' : 'hidden',
+                            maxHeight: '404px',
+                            scrollbarWidth: 'none',
+                            msOverflowStyle: 'none',
+                        }}
+                    >
+                        <p
+                            ref={contentRef}
+                            className="p-4 md:p-6 text-[15px] leading-[24px] tracking-[0.08em] text-white/85 md:text-[16px] md:leading-[26px] transition-all duration-300"
+                            style={{
+                                minHeight: '404px',
+                                margin: 0,
+                                whiteSpace: 'pre-line',
+                                fontFamily: 'Arial, sans-serif',
+
+                            }}
+                        >
+                            {renderContentWithBoldMarkers(content)}
+                        </p>
+                    </div>
                 </div>
 
                 {isExpanded && isOverflowing ? (
