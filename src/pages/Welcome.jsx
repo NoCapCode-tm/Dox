@@ -81,7 +81,7 @@ const Welcome = () => {
                     />
 
                     {/* Content */}
-                    <div className="relative z-10 flex flex-col items-center w-full h-full pt-[6005px] md:pt-[118px] px-4">
+                    <div className="relative z-10 flex flex-col items-center w-full h-full pt-[60px] md:pt-[118px] px-4">
                         {/* Welcome to */}
                         <p
                             className="font-[Jost] font-light text-[24px] md:text-[48px] leading-[30px] md:leading-[36px] text-center mb-[8px] md:mb-[16px] select-none"
@@ -99,7 +99,7 @@ const Welcome = () => {
                         <div className="mb-[16px] md:mb-[24px] flex justify-center w-full max-w-[280px] md:max-w-[463px]">
                             <LargeDoxLogo />
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
