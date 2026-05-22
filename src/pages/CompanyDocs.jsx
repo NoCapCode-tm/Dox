@@ -460,7 +460,7 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
         }
     }, [])
 
-    const handleContentThumbMouseDown = (event) => {
+    const handleContentThumbPointerDown = (event) => {
         if (!isExpanded) {
             return
         }
@@ -471,6 +471,8 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
         if (!scrollContainer) {
             return
         }
+
+        event.currentTarget.setPointerCapture?.(event.pointerId)
 
         contentThumbDragRef.current = {
             isDragging: true,
@@ -500,6 +502,7 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
             const deltaY = moveEvent.clientY - contentThumbDragRef.current.startY
             const scrollRatio = maxScrollTop / maxThumbTop
             currentScrollContainer.scrollTop = contentThumbDragRef.current.startScrollTop + deltaY * scrollRatio
+            syncContentThumb()
         }
 
         const handleMouseUp = () => {
@@ -514,14 +517,14 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
     }
 
     const handleToggleExpanded = () => {
-        setIsExpanded((previousValue) => {
-            const nextValue = !previousValue
-            if (nextValue) {
-                onExpanded?.()
-            }
-            return nextValue
-        })
+        setIsExpanded((previousValue) => !previousValue)
     }
+
+    useEffect(() => {
+        if (isExpanded) {
+            onExpanded?.()
+        }
+    }, [isExpanded, onExpanded])
 
     return (
         <div className="space-y-2">
@@ -578,11 +581,11 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
                 </div>
 
                 {isExpanded && isOverflowing ? (
-                    <div className="pointer-events-none absolute bottom-[13px] right-3 top-[13px]">
+                    <div className="absolute bottom-[13px] right-3 top-[13px] z-20 pointer-events-auto">
                         <ContentScrollThumb
                             trackRef={contentTrackRef}
                             thumbRef={contentThumbRef}
-                            onThumbMouseDown={handleContentThumbMouseDown}
+                            onThumbPointerDown={handleContentThumbPointerDown}
                         />
                     </div>
                 ) : null}
@@ -730,18 +733,20 @@ const SidebarScrollFrame = ({ trackHeight, thumbTop, onThumbMouseDown }) => (
     </div>
 )
 
-const ContentScrollThumb = ({ trackRef, thumbRef, onThumbMouseDown }) => (
-    <div ref={trackRef} className="relative h-full w-[8px]">
+const ContentScrollThumb = ({ trackRef, thumbRef, onThumbPointerDown }) => (
+    <div ref={trackRef} className="relative h-full w-[8px] z-20">
         <button
             ref={thumbRef}
             type="button"
             aria-label="Scroll content"
-            onMouseDown={onThumbMouseDown}
-            className="absolute left-0 top-0 w-[8px] bg-transparent p-0 focus:outline-none"
+            onPointerDown={onThumbPointerDown}
+            className="absolute left-0 top-0 z-20 w-[8px] bg-transparent p-0 focus:outline-none"
             style={{
                 height: '27px',
                 cursor: 'default',
                 pointerEvents: 'auto',
+                touchAction: 'none',
+                userSelect: 'none',
                 willChange: 'transform',
             }}
         >
