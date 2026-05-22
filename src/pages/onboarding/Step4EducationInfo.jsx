@@ -155,7 +155,7 @@ const Step4EducationInfo = () => {
               <SelectInput
                 value={form.highestQualification}
                 onChange={(v) => handleChange('highestQualification', v)}
-                placeholder="Dropdown options: High School, Diploma, Undergraduate"
+                placeholder="High School, Diploma, Undergraduate"
                 options={[
                   'High School',
                   'Diploma',
@@ -187,7 +187,7 @@ const Step4EducationInfo = () => {
               <TextInput
                 value={form.graduationYear}
                 onChange={(v) => handleChange('graduationYear', v)}
-                placeholder="Placeholder: e.g. 2nd Year / 4th Semester"
+                placeholder="e.g. 2nd Year / 4th Semester"
               />
             </FormField>
 
