@@ -38,23 +38,27 @@ const Welcome = () => {
                     className="relative w-full h-[320px] md:h-[478px] rounded-[24px] overflow-hidden flex flex-col items-center justify-start"
                 >
                     {/* Background — two mirrored conic rectangles */}
-                    <div className="absolute inset-0 z-0">
-                        <div
-                            className="absolute top-19 left-0 w-1/2 h-full"
-                            style={{
-                                background:
-                                    'conic-gradient(from 89.78deg at 50% 38.45%, #FFFFFF 0deg, #00184D 219.41deg, #101828 309.85deg, #111111 360deg)',
-                            }}
-                        />
-                        <div
-                            className="absolute top-19 right-0 w-1/2 h-full"
-                            style={{
-                                background:
-                                    'conic-gradient(from 89.78deg at 50% 38.45%, #FFFFFF 0deg, #00184D 219.41deg, #101828 309.85deg, #111111 360deg)',
-                                transform: 'scaleX(-1)',
-                            }}
-                        />
-                    </div>
+<div className="absolute inset-0 z-0">
+    <div
+        className="absolute left-0 w-1/2"
+        style={{
+            top: '25%',
+            bottom: 0,
+            background:
+                'conic-gradient(from 89.78deg at 50% 38.45%, #FFFFFF 0deg, #00184D 219.41deg, #101828 309.85deg, #111111 360deg)',
+        }}
+    />
+    <div
+        className="absolute right-0 w-1/2"
+        style={{
+            top: '25%',
+            bottom: 0,
+            transform: 'scaleX(-1)',
+            background:
+                'conic-gradient(from 89.78deg at 50% 38.45%, #FFFFFF 0deg, #00184D 219.41deg, #101828 309.85deg, #111111 360deg)',
+        }}
+    />
+</div>
 
                     {/*overlay */}
                     <div
@@ -99,7 +103,7 @@ const Welcome = () => {
                         <div className="mb-[16px] md:mb-[24px] flex justify-center w-full max-w-[280px] md:max-w-[463px]">
                             <LargeDoxLogo />
                         </div>
-
+                        
                     </div>
                 </div>
             </div>
