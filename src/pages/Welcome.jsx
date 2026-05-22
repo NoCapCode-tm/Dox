@@ -40,17 +40,17 @@ const Welcome = () => {
                     {/* Background — two mirrored conic rectangles */}
                     <div className="absolute inset-0 z-0">
                         <div
-                            className="absolute top-0 left-0 w-1/2 h-full"
+                            className="absolute top-19 left-0 w-1/2 h-full"
                             style={{
                                 background:
-                                    'conic-gradient(from 89.78deg at 50% 39.45%, #FFFFFF 0deg, #00184D 219.41deg, #101828 309.85deg, #111111 360deg)',
+                                    'conic-gradient(from 89.78deg at 50% 38.45%, #FFFFFF 0deg, #00184D 219.41deg, #101828 309.85deg, #111111 360deg)',
                             }}
                         />
                         <div
-                            className="absolute top-0 right-0 w-1/2 h-full"
+                            className="absolute top-19 right-0 w-1/2 h-full"
                             style={{
                                 background:
-                                    'conic-gradient(from 89.78deg at 50% 39.45%, #FFFFFF 0deg, #00184D 219.41deg, #101828 309.85deg, #111111 360deg)',
+                                    'conic-gradient(from 89.78deg at 50% 38.45%, #FFFFFF 0deg, #00184D 219.41deg, #101828 309.85deg, #111111 360deg)',
                                 transform: 'scaleX(-1)',
                             }}
                         />
@@ -81,7 +81,7 @@ const Welcome = () => {
                     />
 
                     {/* Content */}
-                    <div className="relative z-10 flex flex-col items-center w-full h-full pt-[60px] md:pt-[118px] px-4">
+                    <div className="relative z-10 flex flex-col items-center w-full h-full pt-[6005px] md:pt-[118px] px-4">
                         {/* Welcome to */}
                         <p
                             className="font-[Jost] font-light text-[24px] md:text-[48px] leading-[30px] md:leading-[36px] text-center mb-[8px] md:mb-[16px] select-none"
