@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { loginEmployee } from "../api/employeeApi";
 import Loader from "../components/ui/Loader";
-
-const AUTH_SESSION_KEY = "emp-auth-session";
+import { setAuthSession } from "../utils/auth";
 
 /**
  * SignIn page
@@ -48,11 +47,10 @@ const SignIn = () => {
 
       // Backend expects "userid", map the current email field value.
       await loginEmployee({ userid: email.trim(), password });
-      localStorage.setItem(AUTH_SESSION_KEY, "active");
+      setAuthSession();
       toast.success("Login successful");
-      navigate("/dashboard");
+      navigate("/welcome");
     } catch (error) {
-      localStorage.removeItem(AUTH_SESSION_KEY);
       const message = isInvalidCredentialError(error)
         ? "Incorrect credentials"
         : "Sign in failed. Please try again.";
