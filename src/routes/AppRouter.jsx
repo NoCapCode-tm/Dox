@@ -7,6 +7,15 @@ import Welcome from '../pages/Welcome.jsx'
 import CompanyDocs from '../pages/CompanyDocs.jsx'
 import LegalAgreements from '../pages/LegalAgreements.jsx'
 import ReviewApproval from '../pages/ReviewApproval.jsx'
+import { isAuthenticated } from '../utils/auth'
+
+const PrivateRoute = ({ children }) => {
+  return isAuthenticated() ? children : <Navigate to="/" replace />
+}
+
+const PublicRoute = ({ children }) => {
+  return isAuthenticated() ? <Navigate to="/welcome" replace /> : children
+}
 /**
  * AppRouter — defines all client-side routes for the application.
  */
@@ -14,17 +23,17 @@ const AppRouter = () => {
   return (
     <HashRouter>
       <Routes>
-        <Route path="/" element={<SignIn />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/completion" element={<Completion />} />
-        <Route path="/welcome" element={<Welcome />} />
-        <Route path="/company-docs" element={<CompanyDocs />} />
-        <Route path="/legal-agreements" element={<LegalAgreements />} />
-        <Route path="/review-approval" element={<ReviewApproval />} />
+        <Route path="/" element={<PublicRoute><SignIn /></PublicRoute>} />
+        <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+        <Route path="/completion" element={<PrivateRoute><Completion /></PrivateRoute>} />
+        <Route path="/welcome" element={<PrivateRoute><Welcome /></PrivateRoute>} />
+        <Route path="/company-docs" element={<PrivateRoute><CompanyDocs /></PrivateRoute>} />
+        <Route path="/legal-agreements" element={<PrivateRoute><LegalAgreements /></PrivateRoute>} />
+        <Route path="/review-approval" element={<PrivateRoute><ReviewApproval /></PrivateRoute>} />
 
-        <Route path="/onboarding/*" element={<OnboardingLayout />} />
+        <Route path="/onboarding/*" element={<PrivateRoute><OnboardingLayout /></PrivateRoute>} />
 
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<Navigate to={isAuthenticated() ? '/welcome' : '/'} replace />} />
       </Routes>
     </HashRouter>
   )
