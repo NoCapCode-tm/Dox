@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { clearAuthToken, getCurrentUser } from '../api/employeeApi';
 import Loader from '../components/ui/Loader';
-
-const AUTH_SESSION_KEY = 'emp-auth-session';
+import { AUTH_SESSION_KEY, clearAuthSession, isAuthenticated } from '../utils/auth';
 
 const hasValue = (value) => {
   if (value == null) return false;
@@ -123,8 +122,7 @@ const Dashboard = () => {
         setIsLoading(true);
         setAuthError('');
 
-        const session = localStorage.getItem(AUTH_SESSION_KEY);
-        if (!session) {
+        if (!isAuthenticated()) {
           setUserName('');
           navigate('/', { replace: true });
           return;
@@ -184,7 +182,7 @@ const Dashboard = () => {
 
   const handleLogout = () => {
     clearAuthToken();
-    localStorage.removeItem(AUTH_SESSION_KEY);
+    clearAuthSession();
     setUserName('');
     setAuthError('');
     setIsUserMenuOpen(false);
