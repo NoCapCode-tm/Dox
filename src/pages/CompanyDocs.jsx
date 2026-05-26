@@ -188,7 +188,7 @@ const CompanyDocs = () => {
             <style>{`.no-scrollbar::-webkit-scrollbar{display:none} .no-scrollbar{scrollbar-width:none; -ms-overflow-style:none;}`}</style>
 
             {/* Mobile layout */}
-            <div className="fixed inset-0 z-40 overflow-hidden bg-[linear-gradient(171.66deg,#0C1119_40.66%,#141C28_99.3%)] md:hidden">
+            <div className="fixed inset-0 z-40 overflow-hidden bg-[linear-gradient(171.66deg,#0C1119_40.66%,#141C28_99.3%)] lg:hidden">
                 <div
                     className="absolute top-0 left-0 overflow-hidden"
                     style={{
@@ -352,7 +352,7 @@ const CompanyDocs = () => {
             </div>
 
             {/* Mobile top navbar */}
-            <div className="fixed top-0 left-0 right-0 z-50 flex items-stretch justify-between border-b border-white/10 bg-[#0A0E14] md:hidden">
+            <div className="fixed top-0 left-0 right-0 z-50 flex items-stretch justify-between border-b border-white/10 bg-[#0A0E14] lg:hidden">
                 <div
                     className="flex flex-col items-center justify-center overflow-hidden shrink-0"
                     style={{
@@ -393,7 +393,7 @@ const CompanyDocs = () => {
             </div>
 
             {/* Sidebar DOX logo square */}
-            <div className="absolute top-0 left-0 z-50 hidden md:block">
+            <div className="absolute top-0 left-0 z-50 hidden lg:block">
                 <div
                     className="flex flex-col items-center justify-center overflow-hidden"
                     style={{
@@ -413,7 +413,7 @@ const CompanyDocs = () => {
             </div>
 
             {/* Sidebar steps */}
-            <aside className="fixed left-0 top-0 h-full z-30 hidden flex-col bg-transparent md:flex" style={{ paddingTop: '32vh' }}>
+            <aside className="fixed left-0 top-0 h-full z-30 hidden flex-col bg-transparent lg:flex" style={{ paddingTop: '32vh' }}>
                 <div className="flex flex-col gap-9">
                     <div
                         className="flex items-center justify-center font-medium"
@@ -461,7 +461,7 @@ const CompanyDocs = () => {
             </aside>
 
             {/* Framed container */}
-            <div className="relative hidden md:block" style={{ marginLeft: '4.5vw', marginTop: '8vh', marginRight: '3vw', marginBottom: '5vh', zIndex: 20 }}>
+            <div className="relative hidden lg:block" style={{ marginLeft: '4.5vw', marginTop: '8vh', marginRight: '3vw', marginBottom: '5vh', zIndex: 20 }}>
                 <div className="w-full border rounded-[10px] relative no-scrollbar" style={{ borderColor: 'rgba(173, 173, 173, 0.5)', maxHeight: 'calc(100vh - 12vh)', overflowY: 'auto' }}>
                     {/* Content Layout */}
                     <div className="grid min-h-[760px]">
