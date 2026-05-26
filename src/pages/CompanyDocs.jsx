@@ -216,7 +216,10 @@ const CompanyDocs = () => {
                     </div>
 
                     <div className="mt-6 relative">
-                        <div className="flex h-10 overflow-x-auto rounded-[10px] border border-white bg-transparent no-scrollbar">
+                        <div
+                            className="flex overflow-x-auto rounded-[10px] border border-white bg-transparent no-scrollbar"
+                            style={{ height: 'clamp(42px, 4.8vw, 48px)' }}
+                        >
                             {documentTree.map((section) => {
                                 const isActive = mobileActiveSection?.id === section.id
                                 return (
