@@ -9,6 +9,7 @@ const CompanyDocs = () => {
     const [selectedDocumentId, setSelectedDocumentId] = useState('section-1-about-nocapcode')
     const [expandedSectionIds, setExpandedSectionIds] = useState([])
     const [mobileActiveSectionId, setMobileActiveSectionId] = useState('section-1-about-nocapcode')
+    const [mobileSectionMenuOpen, setMobileSectionMenuOpen] = useState(true)
     const [hasAcknowledged, setHasAcknowledged] = useState(false)
     const [isContentOverflowing, setIsContentOverflowing] = useState(false)
     const [hasOpenedLongContent, setHasOpenedLongContent] = useState(false)
@@ -39,6 +40,9 @@ const CompanyDocs = () => {
     const handleSectionSelect = (sectionId, hasChildren) => {
         handleSelect(sectionId)
         setMobileActiveSectionId(sectionId)
+        setMobileSectionMenuOpen((previousValue) =>
+            previousValue && mobileActiveSectionId === sectionId ? false : true,
+        )
 
         if (hasChildren) {
             setExpandedSectionIds((previousIds) =>
@@ -53,6 +57,7 @@ const CompanyDocs = () => {
         handleSelect(documentId)
         if (parentSectionId) {
             setMobileActiveSectionId(parentSectionId)
+            setMobileSectionMenuOpen(true)
         }
 
         if (parentSectionId) {
@@ -189,18 +194,13 @@ const CompanyDocs = () => {
                     style={{
                         width: '172px',
                         height: '87px',
-                        background: '#0A0E14',
-                        border: '0.5px solid rgba(173, 173, 173, 0.5)',
-                        borderTop: 'none',
-                        borderLeft: 'none',
-                        borderRadius: '0px 0px 10px 0px',
                     }}
                 >
-                    <div className="absolute left-[64px] top-[44px]" style={{ transform: 'scale(0.62)', transformOrigin: 'left top' }}>
+                    <div className="absolute left-[16px] top-[11px]" style={{ transform: 'scale(0.62)', transformOrigin: 'left top' }}>
                         <DoxLogo />
                     </div>
                     <p
-                        className="absolute left-[64px] top-[56px] leading-none text-white/65"
+                        className="absolute left-[16px] top-[36px] leading-none text-white/65"
                         style={{ fontSize: '10px', fontWeight: 400 }}
                     >
                         Employee Onboarding
@@ -216,14 +216,26 @@ const CompanyDocs = () => {
                     </div>
 
                     <div className="mt-6 relative">
-                        <div className="flex h-[36px] overflow-x-auto rounded-[10px] border border-white bg-transparent no-scrollbar">
+                        <div className="flex h-10 overflow-x-auto rounded-[10px] border border-white bg-transparent no-scrollbar">
                             {documentTree.map((section) => {
                                 const isActive = mobileActiveSection?.id === section.id
                                 return (
                                     <button
                                         key={section.id}
                                         type="button"
-                                        onClick={() => handleSectionSelect(section.id, Boolean(section.children?.length))}
+                                        onClick={() => {
+                                            const hasChildren = Boolean(section.children?.length)
+                                            handleSelect(section.id)
+                                            setMobileActiveSectionId(section.id)
+
+                                            if (hasChildren) {
+                                                setMobileSectionMenuOpen((previousValue) =>
+                                                    mobileActiveSectionId === section.id ? !previousValue : true,
+                                                )
+                                            } else {
+                                                setMobileSectionMenuOpen(false)
+                                            }
+                                        }}
                                         onMouseEnter={() => setMobileActiveSectionId(section.id)}
                                         onFocus={() => setMobileActiveSectionId(section.id)}
                                         className="flex h-full shrink-0 items-center justify-between gap-2 border-r border-white/10 px-4 text-left transition-colors last:border-r-0"
@@ -250,7 +262,7 @@ const CompanyDocs = () => {
                             })}
                         </div>
 
-                        {mobileActiveSection?.children?.length ? (
+                        {mobileSectionMenuOpen && mobileActiveSection?.children?.length ? (
                             <div className="mt-2 rounded-[10px] border border-white/20 bg-[#0A0E14] p-2 shadow-[0_12px_28px_rgba(0,0,0,0.28)]">
                                 <div className="max-h-[210px] overflow-y-auto pr-1 no-scrollbar">
                                     {mobileActiveSection.children.map((child) => {
