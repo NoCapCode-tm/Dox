@@ -113,8 +113,18 @@ const Welcome = () => {
                 </div>
             </div>
 
-            {/* Footer */}
-            <p className="text-center text-[16px] md:text-[20px] font-light leading-[24px] mt-[40px] md:mt-[96px] px-4 w-full max-w-[573px] mx-auto" style={{ color: 'rgba(216, 216, 216, 0.65)' }}>
+                {/* Footer */}
+                <p className="
+                text-center
+                text-[14px] sm:text-[16px] md:text-[18px]
+                font-light
+                leading-[22px] md:leading-[28px]
+                mt-[40px] md:mt-[90px]
+                px-4
+                whitespace-normal md:whitespace-nowrap
+                max-w-full
+                mx-auto" 
+                style={{ color: 'rgba(216, 216, 216, 0.65)' }}>
                 Please complete the following onboarding steps to unlock full access.
             </p>
         </div>
