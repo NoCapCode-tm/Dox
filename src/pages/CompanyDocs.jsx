@@ -8,6 +8,8 @@ const CompanyDocs = () => {
     const navigate = useNavigate()
     const [selectedDocumentId, setSelectedDocumentId] = useState('section-1-about-nocapcode')
     const [expandedSectionIds, setExpandedSectionIds] = useState([])
+    const [mobileActiveSectionId, setMobileActiveSectionId] = useState('section-1-about-nocapcode')
+    const [mobileSectionMenuOpen, setMobileSectionMenuOpen] = useState(true)
     const [hasAcknowledged, setHasAcknowledged] = useState(false)
     const [isContentOverflowing, setIsContentOverflowing] = useState(false)
     const [hasOpenedLongContent, setHasOpenedLongContent] = useState(false)
@@ -23,6 +25,11 @@ const CompanyDocs = () => {
         [selectedDocumentId],
     )
 
+    const mobileActiveSection = useMemo(
+        () => documentTree.find((item) => item.id === mobileActiveSectionId) ?? documentTree[0],
+        [mobileActiveSectionId],
+    )
+
     const handleSelect = (id) => {
         setSelectedDocumentId(id)
         setHasAcknowledged(false)
@@ -32,6 +39,10 @@ const CompanyDocs = () => {
 
     const handleSectionSelect = (sectionId, hasChildren) => {
         handleSelect(sectionId)
+        setMobileActiveSectionId(sectionId)
+        setMobileSectionMenuOpen((previousValue) =>
+            previousValue && mobileActiveSectionId === sectionId ? false : true,
+        )
 
         if (hasChildren) {
             setExpandedSectionIds((previousIds) =>
@@ -44,6 +55,10 @@ const CompanyDocs = () => {
 
     const handleDocumentSelect = (documentId, parentSectionId) => {
         handleSelect(documentId)
+        if (parentSectionId) {
+            setMobileActiveSectionId(parentSectionId)
+            setMobileSectionMenuOpen(true)
+        }
 
         if (parentSectionId) {
             setExpandedSectionIds((previousIds) =>
@@ -172,8 +187,153 @@ const CompanyDocs = () => {
         <div className="relative h-screen w-screen overflow-hidden font-[Jost] text-white" style={{ background: 'linear-gradient(119.18deg, #0A0E14 2.67%, #141C28 96.61%)' }}>
             <style>{`.no-scrollbar::-webkit-scrollbar{display:none} .no-scrollbar{scrollbar-width:none; -ms-overflow-style:none;}`}</style>
 
+            {/* Mobile layout */}
+            <div className="fixed inset-0 z-40 overflow-hidden bg-[linear-gradient(171.66deg,#0C1119_40.66%,#141C28_99.3%)] lg:hidden">
+                <div
+                    className="absolute top-0 left-0 overflow-hidden"
+                    style={{
+                        width: '172px',
+                        height: '87px',
+                    }}
+                >
+                    <div className="absolute left-[16px] top-[11px]" style={{ transform: 'scale(0.62)', transformOrigin: 'left top' }}>
+                        <DoxLogo />
+                    </div>
+                    <p
+                        className="absolute left-[16px] top-[36px] leading-none text-white/65"
+                        style={{ fontSize: '10px', fontWeight: 400 }}
+                    >
+                        Employee Onboarding
+                    </p>
+                </div>
+
+                <div className="absolute left-0 right-0 top-[90px] bottom-[72px] overflow-y-auto px-6 pb-6 pt-0">
+                    <div className="pt-0">
+                        <h1 className="text-[24px] leading-[24px] font-normal text-white">Company Docs</h1>
+                        <p className="mt-4 max-w-[357px] text-[16px] leading-[24px] text-white/65">
+                            Please review and understand our policies and culture.
+                        </p>
+                    </div>
+
+                    <div className="mt-6 relative">
+                        <div
+                            className="flex overflow-x-auto rounded-[10px] border border-white bg-transparent no-scrollbar"
+                            style={{ height: 'clamp(42px, 4.8vw, 48px)' }}
+                        >
+                            {documentTree.map((section) => {
+                                const isActive = mobileActiveSection?.id === section.id
+                                return (
+                                    <button
+                                        key={section.id}
+                                        type="button"
+                                        onClick={() => {
+                                            const hasChildren = Boolean(section.children?.length)
+                                            handleSelect(section.id)
+                                            setMobileActiveSectionId(section.id)
+
+                                            if (hasChildren) {
+                                                setMobileSectionMenuOpen((previousValue) =>
+                                                    mobileActiveSectionId === section.id ? !previousValue : true,
+                                                )
+                                            } else {
+                                                setMobileSectionMenuOpen(false)
+                                            }
+                                        }}
+                                        onMouseEnter={() => setMobileActiveSectionId(section.id)}
+                                        onFocus={() => setMobileActiveSectionId(section.id)}
+                                        className="flex h-full shrink-0 items-center justify-between gap-2 border-r border-white/10 px-4 text-left transition-colors last:border-r-0"
+                                        style={{
+                                            minWidth: '126px',
+                                            background: isActive ? '#1C2027' : 'transparent',
+                                            color: '#FFFFFF',
+                                            fontSize: '12px',
+                                            lineHeight: '20px',
+                                            fontWeight: 400,
+                                        }}
+                                    >
+                                        <span className="truncate">{section.title}</span>
+                                        {section.children?.length ? (
+                                            <span
+                                                className="inline-flex shrink-0 transition-transform"
+                                                style={{ transform: isActive ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                                            >
+                                                <ChevronDownIcon />
+                                            </span>
+                                        ) : null}
+                                    </button>
+                                )
+                            })}
+                        </div>
+
+                        {mobileSectionMenuOpen && mobileActiveSection?.children?.length ? (
+                            <div className="mt-2 rounded-[10px] border border-white/20 bg-[#0A0E14] p-2 shadow-[0_12px_28px_rgba(0,0,0,0.28)]">
+                                <div className="max-h-[210px] overflow-y-auto pr-1 no-scrollbar">
+                                    {mobileActiveSection.children.map((child) => {
+                                        const isChildActive = selectedDocumentId === child.id
+                                        return (
+                                            <button
+                                                key={child.id}
+                                                type="button"
+                                                onClick={() => handleDocumentSelect(child.id, mobileActiveSection.id)}
+                                                className="flex w-full items-start rounded-[8px] px-3 py-2 text-left transition-colors hover:bg-white/6"
+                                                style={{
+                                                    color: isChildActive ? '#FFFFFF' : 'rgba(255,255,255,0.82)',
+                                                    fontSize: '12px',
+                                                    lineHeight: '18px',
+                                                    fontWeight: 400,
+                                                }}
+                                            >
+                                                <span className="block whitespace-normal break-words">{child.title}</span>
+                                            </button>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                        ) : null}
+                    </div>
+
+                    <div className="mt-8 rounded-[10px] border border-white/10 bg-[rgba(0,0,0,0.54)] p-4">
+                        <ExpandableContent
+                            content={selectedDocument.content}
+                            onOverflowChange={setIsContentOverflowing}
+                            onExpanded={() => setHasOpenedLongContent(true)}
+                        />
+
+                        <div className="mt-4 rounded-[5px] bg-[rgba(255,255,255,0.1)] px-3 py-3 text-white">
+                            <p className="text-[16px] leading-[24px] font-normal">Need Help?</p>
+                            <p className="mt-1 text-[12px] leading-[24px] text-white/90">
+                                Reach out to DOX or your assigned onboarding buddy.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="mt-4 rounded-[10px] border border-white/50 p-4">
+                        <label className="flex cursor-pointer items-start gap-3 text-[14px] leading-[20px] text-white/65">
+                            <input
+                                type="checkbox"
+                                checked={hasAcknowledged}
+                                onChange={handleAcknowledgeChange}
+                                className="mt-1 h-4 w-4 rounded border-white/35 bg-transparent text-[#6EA8FF] focus:ring-0 focus:ring-offset-0"
+                            />
+                            <span>I have read and understood this document.</span>
+                        </label>
+
+                        <button
+                            type="button"
+                            onClick={handleMarkAsRead}
+                            disabled={hasAcknowledged}
+                            className="mt-4 inline-flex items-center gap-2 rounded-[10px] border border-white/35 px-5 py-2.5 text-[15px] leading-[22px] text-white/90 transition-colors hover:bg-white/6 disabled:cursor-default disabled:bg-white/10 disabled:text-white/55"
+                        >
+                            <ReadIcon />
+                            {hasAcknowledged ? 'Document Marked as Read' : 'Mark as Read & Continue'}
+                        </button>
+                    </div>
+                </div>
+                       
+            </div>
+
             {/* Mobile top navbar */}
-            <div className="fixed top-0 left-0 right-0 z-50 flex items-stretch justify-between border-b border-white/10 bg-[#0A0E14] md:hidden">
+            <div className="fixed top-0 left-0 right-0 z-50 flex items-stretch justify-between border-b border-white/10 bg-[#0A0E14] lg:hidden">
                 <div
                     className="flex flex-col items-center justify-center overflow-hidden shrink-0"
                     style={{
@@ -214,7 +374,7 @@ const CompanyDocs = () => {
             </div>
 
             {/* Sidebar DOX logo square */}
-            <div className="absolute top-0 left-0 z-50 hidden md:block">
+            <div className="absolute top-0 left-0 z-50 hidden lg:block">
                 <div
                     className="flex flex-col items-center justify-center overflow-hidden"
                     style={{
@@ -234,7 +394,7 @@ const CompanyDocs = () => {
             </div>
 
             {/* Sidebar steps */}
-            <aside className="fixed left-0 top-0 h-full z-30 hidden flex-col bg-transparent md:flex" style={{ paddingTop: '32vh' }}>
+            <aside className="fixed left-0 top-0 h-full z-30 hidden flex-col bg-transparent lg:flex" style={{ paddingTop: '32vh' }}>
                 <div className="flex flex-col gap-9">
                     <div
                         className="flex items-center justify-center font-medium"
@@ -282,7 +442,7 @@ const CompanyDocs = () => {
             </aside>
 
             {/* Framed container */}
-            <div className="relative" style={{ marginLeft: '4.5vw', marginTop: '8vh', marginRight: '3vw', marginBottom: '5vh', zIndex: 20 }}>
+            <div className="relative hidden lg:block" style={{ marginLeft: '4.5vw', marginTop: '8vh', marginRight: '3vw', marginBottom: '5vh', zIndex: 20 }}>
                 <div className="w-full border rounded-[10px] relative no-scrollbar" style={{ borderColor: 'rgba(173, 173, 173, 0.5)', maxHeight: 'calc(100vh - 12vh)', overflowY: 'auto' }}>
                     {/* Content Layout */}
                     <div className="grid min-h-[760px]">
