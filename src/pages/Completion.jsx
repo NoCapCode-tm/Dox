@@ -95,7 +95,7 @@ const Completion = () => {
 
 				<button
 					type="button"
-					onClick={() => navigate('/dashboard')}
+					onClick={() => navigate('/welcome')}
 					className="mt-[90px] h-[40px] w-[187px] rounded-[10px] flex items-center justify-center gap-[7px] transition-opacity hover:opacity-90 active:scale-95"
 					style={{
 						background: '#314460',
@@ -109,7 +109,7 @@ const Completion = () => {
 
 				<div className="mt-[22px] text-[16px] leading-[24px] font-normal text-white/65">
 					Questions or need help?{' '}
-					<a href="#" className="text-[#1B6CE5] hover:underline">
+					<a href="mailto:hr@nocapcode.cloud" className="text-[#1B6CE5] hover:underline">
 						Contact HR Support
 					</a>
 				</div>
