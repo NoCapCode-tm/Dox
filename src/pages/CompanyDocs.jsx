@@ -329,29 +329,7 @@ const CompanyDocs = () => {
                         </button>
                     </div>
                 </div>
-
-                <div className="absolute bottom-[24px] left-1/2 z-50 flex -translate-x-1/2 items-center">
-                    <div className="flex h-[43px] w-[156px] overflow-hidden rounded-[10px] border border-white/50">
-                        {[1, 2, 3].map((number) => {
-                            const isActive = number === 2
-                            return (
-                                <div
-                                    key={number}
-                                    className="flex h-full w-[52px] items-center justify-center border-r border-white/50 last:border-r-0"
-                                    style={{
-                                        background: isActive ? '#1C2027' : '#0A0E14',
-                                        color: isActive ? '#FFFFFF' : 'rgba(255,255,255,0.5)',
-                                        fontSize: '20px',
-                                        lineHeight: '24px',
-                                        fontWeight: 400,
-                                    }}
-                                >
-                                    {number}
-                                </div>
-                            )
-                        })}
-                    </div>
-                </div>
+                       
             </div>
 
             {/* Mobile top navbar */}
