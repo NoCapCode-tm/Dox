@@ -7,6 +7,9 @@ import { isValidEmail, isValidPhone } from '../../utils/validation';
 import Loader from '../../components/ui/Loader';
 import { showMissingRequiredFieldsToast } from '../../utils/requiredFieldToast';
 
+// Import your standard CSS
+import './css/Step1PersonalInfo.css';
+
 const REQUIRED_STEP1_FIELDS = [
   { key: 'fullName', label: 'Full Name' },
   { key: 'personalEmail', label: 'Personal Email ID' },
@@ -64,6 +67,7 @@ const Step1PersonalInfo = () => {
       }
     };
     prefillFormData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /** Update a single field */
@@ -113,42 +117,22 @@ const Step1PersonalInfo = () => {
   };
 
   return (
-    <div
-      className="relative min-h-screen w-full overflow-x-hidden flex flex-col font-[Jost] text-white"
-      style={{
-        background: 'linear-gradient(121.47deg, #0A0E14 49.53%, #161F2C 104.45%)',
-      }}
-    >
+    <div className="step1-wrapper">
       {isSavingStep && <Loader fullScreen={true} message="Saving and loading next step..." />}
+      
       {/* Grid lines */}
-      <div
-        className="absolute inset-0 pointer-events-none select-none z-0"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)',
-          backgroundSize: '115px 115px',
-        }}
-      />
+      <div className="step1-grid-lines" />
 
       {/* ── Header ── */}
-      <div className="w-full px-[35px] pt-[35px] pb-0 flex flex-col relative z-10">
+      <div className="step1-header">
         <DoxLogo width="69" />
-        <span className="text-[12px] text-white/65 leading-[20px] mt-[6px] font-normal tracking-wide">
-          Employee Onboarding
-        </span>
+        <span>Employee Onboarding</span>
       </div>
 
       {/* ── Step Navbar ── */}
-      <div className="w-full px-4 md:px-[64px] mt-[24px] relative z-10">
-        <nav
-          className="w-full max-w-[1312px] mx-auto h-[81px] rounded-[10px] flex items-center px-[16px] overflow-x-auto"
-          style={{
-            backgroundColor: '#0A0E14',
-            border: '0.8px solid rgba(255,255,255,0.1)',
-          }}
-        >
-          <div className="flex items-center justify-between w-full">
-            {/* Home — active */}
+      <div className="step1-nav-container">
+        <nav className="step1-nav">
+          <div className="step1-nav-inner">
             <NavItem label="Home" icon={<HomeIcon />} />
             <NavItem label="Personal Info" icon={<PersonIcon />} active />
             <NavItem label="Emergency Info" icon={<SirenIcon />} />
@@ -163,45 +147,30 @@ const Step1PersonalInfo = () => {
       </div>
 
       {/* ── Page content ── */}
-      <main className="flex-1 w-full max-w-[1440px] mx-auto px-4 md:px-[111px] pt-[48px] pb-[80px] relative z-10">
+      <main className="step1-main">
 
         {/* Step label */}
-        <p
-          className="font-[Jost] font-medium leading-[20px] mb-[30px]"
-          style={{ fontSize: '48px', color: '#314460' }}
-        >
-          Step 1 of 8
-        </p>
+        <p className="step1-step-label">Step 1 of 8</p>
 
         {/* Heading + subtitle */}
-        <div className="flex flex-col gap-0 mb-[40px]">
-          <h1
-            className="font-[Jost] font-extralight text-[24px] leading-[40px] text-white"
-          >
-            Basic Personal Information
-          </h1>
-          <p className="text-[16px] leading-[24px] font-normal" style={{ color: '#99A1AF' }}>
-            Please provide your basic details for official records and communication.
-            Fields marked with <span style={{ color: '#FF6467' }}>*</span> are mandatory.
+        <div className="step1-heading-container">
+          <h1 className="step1-h1">Basic Personal Information</h1>
+          <p className="step1-subtitle">
+            Please provide your basic details for official records and communication. 
+            Fields marked with <span className="step1-mandatory">*</span> are mandatory.
           </p>
         </div>
 
         {/* ── Form Card ── */}
-        <div
-          className="w-full rounded-[16px] px-[40px] py-[40px]"
-          style={{
-            backgroundColor: 'rgba(10,14,20,0.6)',
-            border: '0.8px solid rgba(255,255,255,0.1)',
-          }}
-        >
+        <div className="step1-form-card">
+          
           {/* 2-column grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[230px] gap-y-[24px]">
-
+          <div className="step1-form-grid">
             <FormField label="Full Name (as per Government ID)" required>
               <TextInput
                 value={form.fullName}
                 onChange={(v) => handleChange('fullName', v)}
-                placeholder="Enter full name"
+                placeholder="e.g. Rahul Sharma"
               />
             </FormField>
 
@@ -209,7 +178,7 @@ const Step1PersonalInfo = () => {
               <TextInput
                 value={form.personalEmail}
                 onChange={(v) => handleChange('personalEmail', v)}
-                placeholder="your.email@example.com"
+                placeholder="rahul.sharma@example.com"
                 inputMode="email"
               />
             </FormField>
@@ -218,7 +187,7 @@ const Step1PersonalInfo = () => {
               <TextInput
                 value={form.phoneWhatsapp}
                 onChange={(v) => handleChange('phoneWhatsapp', v)}
-                placeholder="+91 XXXXXXXXXX"
+                placeholder="+91 98765 43210"
                 inputMode="tel"
               />
             </FormField>
@@ -234,7 +203,7 @@ const Step1PersonalInfo = () => {
               <TextInput
                 value={form.countryOfCitizenship}
                 onChange={(v) => handleChange('countryOfCitizenship', v)}
-                placeholder="Enter your country"
+                placeholder="e.g. India"
               />
             </FormField>
 
@@ -242,7 +211,7 @@ const Step1PersonalInfo = () => {
               <TextInput
                 value={form.stateProvince}
                 onChange={(v) => handleChange('stateProvince', v)}
-                placeholder="Enter your state/province"
+                placeholder="e.g. Maharashtra"
               />
             </FormField>
 
@@ -250,7 +219,7 @@ const Step1PersonalInfo = () => {
               <TextInput
                 value={form.city}
                 onChange={(v) => handleChange('city', v)}
-                placeholder="Enter your city"
+                placeholder="e.g. Mumbai"
               />
             </FormField>
 
@@ -262,46 +231,37 @@ const Step1PersonalInfo = () => {
                 placeholder="Select gender"
               />
             </FormField>
-
           </div>
 
-          {/* Address fields — full width left col + right col phone */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[230px] gap-y-[24px] mt-[24px]">
-
-            <div className="flex flex-col gap-[24px]">
+          {/* Address fields */}
+          <div className="step1-form-grid step1-form-grid-mt">
+            <div className="step1-flex-col">
               <FormField label="Permanent Address" required>
                 <TextareaInput
                   value={form.permanentAddress}
                   onChange={(v) => handleChange('permanentAddress', v)}
-                  placeholder="Enter permanent address"
+                  placeholder="e.g. 123, MG Road, Andheri West, Mumbai, 400058"
                 />
               </FormField>
 
               <FormField label="Communication Address" required>
-                {/* Checkbox */}
-                <label className="flex items-center gap-[12px] mb-[8px] cursor-pointer w-fit">
-                  <div
-                    className="w-[20px] h-[20px] rounded-[3px] flex items-center justify-center shrink-0"
-                    style={{
-                      backgroundColor: form.sameAsPermanent ? '#314460' : '#151B23',
-                      border: '0.8px solid rgba(255,255,255,0.2)',
-                    }}
-                    onClick={() => handleChange('sameAsPermanent', !form.sameAsPermanent)}
-                  >
+                <label 
+                  className="step1-checkbox-label"
+                  onClick={() => handleChange('sameAsPermanent', !form.sameAsPermanent)}
+                >
+                  <div className={`step1-checkbox-box ${form.sameAsPermanent ? 'checked' : ''}`}>
                     {form.sameAsPermanent && (
                       <svg width="12" height="9" viewBox="0 0 12 9" fill="none">
                         <path d="M1 4L4.5 7.5L11 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     )}
                   </div>
-                  <span className="text-[16px] leading-[20px] font-normal" style={{ color: '#99A1AF' }}>
-                    Same as permanent address
-                  </span>
+                  <span className="step1-checkbox-text">Same as permanent address</span>
                 </label>
                 <TextareaInput
                   value={form.communicationAddress}
                   onChange={(v) => handleChange('communicationAddress', v)}
-                  placeholder="Enter communication address"
+                  placeholder="e.g. 456, Linking Road, Malad West, Mumbai, 400064"
                   disabled={form.sameAsPermanent}
                 />
               </FormField>
@@ -311,39 +271,30 @@ const Step1PersonalInfo = () => {
               <TextInput
                 value={form.phoneWithCode}
                 onChange={(v) => handleChange('phoneWithCode', v)}
-                placeholder="+91 XXXXXXXXXX"
+                placeholder="+91 98765 43210"
                 inputMode="tel"
               />
             </FormField>
-
           </div>
         </div>
 
         {/* ── Next Button ── */}
-        <div className="flex mt-[32px]">
+        <div className="step1-button-container">
           <button
             type="button"
             onClick={handleNext}
             disabled={isSavingStep}
-            className="h-[36px] sm:h-[40px] w-full sm:w-auto px-[12px] sm:px-[24px] rounded-[10px] flex items-center justify-center gap-[8px] transition-opacity hover:opacity-90 active:scale-95"
-            style={{
-              backgroundColor: '#314460',
-              boxShadow:
-                '1px 1px 2px rgba(64,88,125,0.3), -1px -1px 2px rgba(34,48,67,0.5), inset -5px 5px 10px rgba(34,48,67,0.2), inset 5px -5px 10px rgba(34,48,67,0.2), inset -5px -5px 10px rgba(64,88,125,0.9), inset 5px 5px 13px rgba(34,48,67,0.9)',
-              opacity: isSavingStep ? 0.7 : 1,
-            }}
+            className="step1-next-btn"
           >
-            <span className="text-[13px] sm:text-[16px] font-medium text-white leading-[18px] sm:leading-[24px] text-center">
-              <span className="sm:hidden">{isSavingStep ? 'Saving...' : 'Next'}</span>
-              <span className="hidden sm:inline">{isSavingStep ? 'Saving Step 1...' : 'Next: Emergency Contact Information'}</span>
+            <span className="step1-btn-text">
+              <span className="step1-btn-text-sm">{isSavingStep ? 'Saving...' : 'Next'}</span>
+              <span className="step1-btn-text-lg">{isSavingStep ? 'Saving Step 1...' : 'Next: Emergency Contact Information'}</span>
             </span>
             <ArrowRightIcon />
           </button>
         </div>
 
-        {stepError ? (
-          <p className="mt-[12px] text-[14px] text-[#FF9EA0]">{stepError}</p>
-        ) : null}
+        {stepError && <p className="step1-error-text">{stepError}</p>}
 
       </main>
     </div>
@@ -352,117 +303,60 @@ const Step1PersonalInfo = () => {
 
 /* ── Sub-components ── */
 
-/**
- * FormField — label + required asterisk wrapper
- * @param {string} label
- * @param {boolean} required
- * @param {React.ReactNode} children
- */
 const FormField = ({ label, required, children }) => (
-  <div className="flex flex-col gap-[12px]">
-    <label className="flex items-center gap-[4px]">
-      <span
-        className="font-[Jost] font-medium text-[18px] leading-[20px]"
-        style={{ color: '#D1D5DC' }}
-      >
-        {label}
-      </span>
-      {required && (
-        <span className="font-[Jost] font-medium text-[14px] leading-[20px]" style={{ color: '#FF6467' }}>
-          *
-        </span>
-      )}
+  <div className="step1-form-field">
+    <label className="step1-field-label-container">
+      <span className="step1-field-label">{label}</span>
+      {required && <span className="step1-field-asterisk">*</span>}
     </label>
     {children}
   </div>
 );
 
-/**
- * TextInput — standard single-line input
- */
 const TextInput = ({ value, onChange, placeholder, inputMode, disabled }) => (
   <input
-    value={value}
+    value={value || ''}
     onChange={(e) => onChange(e.target.value)}
     placeholder={placeholder}
     inputMode={inputMode}
     disabled={disabled}
-    className="w-full h-[53px] rounded-[10px] px-[20px] bg-transparent border-none outline-none font-[Jost] text-[16px] leading-[23px] caret-white disabled:opacity-50"
-    style={{
-      backgroundColor: '#151B23',
-      border: '0.8px solid rgba(255,255,255,0.1)',
-      color: value ? '#FFFFFF' : '#6A7282',
-    }}
+    className="step1-input"
   />
 );
 
-/**
- * DateInput 
- */
 const DateInput = ({ value, onChange }) => (
   <input
     type="date"
-    value={value}
+    value={value || ''}
     onChange={(e) => onChange(e.target.value)}
-    className="w-full h-[53px] rounded-[10px] px-[20px] outline-none font-[Jost] text-[16px] leading-[23px] caret-white"
-    style={{
-      backgroundColor: '#151B23',
-      border: '0.8px solid rgba(255,255,255,0.1)',
-      color: value ? '#FFFFFF' : '#6A7282',
-      colorScheme: 'dark',
-    }}
+    className={`step1-date ${!value ? 'empty' : ''}`}
   />
 );
 
-/**
- * SelectInput — dropdown styled 
- */
 const SelectInput = ({ value, onChange, options, placeholder }) => (
   <select
-    value={value}
+    value={value || ''}
     onChange={(e) => onChange(e.target.value)}
-    className="w-full h-[53px] rounded-[10px] px-[20px] outline-none font-[Jost] text-[16px] leading-[23px] appearance-none cursor-pointer"
-    style={{
-      backgroundColor: '#151B23',
-      border: '0.8px solid rgba(255,255,255,0.1)',
-      color: value ? '#FFFFFF' : '#6A7282',
-      colorScheme: 'dark',
-    }}
+    className={`step1-select ${!value ? 'empty' : ''}`}
   >
     <option value="" disabled hidden>{placeholder}</option>
     {options.map((opt) => (
-      <option key={opt} value={opt} style={{ backgroundColor: '#151B23', color: '#FFFFFF' }}>
-        {opt}
-      </option>
+      <option key={opt} value={opt}>{opt}</option>
     ))}
   </select>
 );
 
-/**
- * TextareaInput — multi-line textarea
- */
 const TextareaInput = ({ value, onChange, placeholder, disabled }) => (
   <textarea
-    value={value}
+    value={value || ''}
     onChange={(e) => onChange(e.target.value)}
     placeholder={placeholder}
     disabled={disabled}
     rows={4}
-    className="w-full rounded-[10px] px-[20px] py-[14px] outline-none font-[Jost] text-[16px] leading-[24px] resize-none caret-white disabled:opacity-50"
-    style={{
-      backgroundColor: '#151B23',
-      border: '0.8px solid rgba(255,255,255,0.1)',
-      color: value ? '#FFFFFF' : '#6A7282',
-    }}
+    className="step1-textarea"
   />
 );
 
-/**
- * NavItem — single navbar link
- * @param {string} label
- * @param {React.ReactNode} icon
- * @param {boolean} active
- */
 const NavItem = ({ label, icon, active }) => {
   const navigate = useNavigate();
   const routeByLabel = {
@@ -482,24 +376,15 @@ const NavItem = ({ label, icon, active }) => {
     <button
       type="button"
       onClick={() => targetPath && !active && navigate(targetPath)}
-      className="flex items-center gap-[8px] px-[16px] py-[10px] rounded-[10px] cursor-pointer whitespace-nowrap"
-      style={{ backgroundColor: active ? '#314460' : 'transparent' }}
+      className={`step1-nav-item ${active ? 'active' : ''}`}
     >
-      <span style={{ color: active ? '#51A2FF' : 'rgba(255,255,255,0.65)' }}>
-        {icon}
-      </span>
-      <span
-        className="font-[Jost] font-normal text-[15px] leading-[20px]"
-        style={{ color: active ? '#51A2FF' : 'rgba(255,255,255,0.65)' }}
-      >
-        {label}
-      </span>
+      <span className="step1-nav-icon">{icon}</span>
+      <span className="step1-nav-label">{label}</span>
     </button>
   );
 };
 
 /* ── Icon Components ── */
-
 const ArrowRightIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
     <path d="M3.33334 8H12.6667" stroke="white" strokeWidth="1.333" strokeLinecap="round" strokeLinejoin="round" />
@@ -571,9 +456,6 @@ const DeclarationIcon = () => (
   </svg>
 );
 
-/**
- * DoxLogo minimal component
- */
 const DoxLogo = ({ width = '69', fill = '#FFFFFF' }) => (
   <svg width={width} viewBox="0 0 339 95" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="DOX logo">
     <g>

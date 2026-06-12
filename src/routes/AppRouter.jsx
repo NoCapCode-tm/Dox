@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import SignIn from '../pages/SignIn.jsx'
 import Dashboard from '../pages/Dashboard.jsx'
 import Completion from '../pages/Completion.jsx'
@@ -7,6 +7,9 @@ import Welcome from '../pages/Welcome.jsx'
 import CompanyDocs from '../pages/CompanyDocs.jsx'
 import LegalAgreements from '../pages/LegalAgreements.jsx'
 import ReviewApproval from '../pages/ReviewApproval.jsx'
+<<<<<<< HEAD
+
+=======
 import { isAuthenticated } from '../utils/auth'
 
 const PrivateRoute = ({ children }) => {
@@ -16,12 +19,13 @@ const PrivateRoute = ({ children }) => {
 const PublicRoute = ({ children }) => {
   return isAuthenticated() ? <Navigate to="/welcome" replace /> : children
 }
+>>>>>>> 28dccfce5f6b6f56183a75cab6ea7221a359bb5a
 /**
  * AppRouter — defines all client-side routes for the application.
  */
 const AppRouter = () => {
   return (
-    <HashRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route path="/" element={<PublicRoute><SignIn /></PublicRoute>} />
         <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
@@ -35,7 +39,7 @@ const AppRouter = () => {
 
         <Route path="*" element={<Navigate to={isAuthenticated() ? '/welcome' : '/'} replace />} />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   )
 }
 
