@@ -6,6 +6,9 @@ import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep2EmergencyInfo, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
 
+// Import your standard CSS
+import './css/Step2EmergencyInfo.css';
+
 const REQUIRED_STEP2_FIELDS = [
   { key: 'contactName', label: 'Emergency Contact Name' },
   { key: 'contactPhone', label: 'Emergency Contact Phone' },
@@ -41,6 +44,7 @@ const Step2EmergencyInfo = () => {
       }
     };
     prefillFormData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /** Update a single field */
@@ -67,41 +71,22 @@ const Step2EmergencyInfo = () => {
   };
 
   return (
-    <div
-      className="relative min-h-screen w-full overflow-x-hidden flex flex-col font-[Jost] text-white"
-      style={{
-        background: 'linear-gradient(121.47deg, #0A0E14 49.53%, #161F2C 104.45%)',
-      }}
-    >
+    <div className="step2-wrapper">
       {isSavingStep && <Loader fullScreen={true} message="Saving and loading next step..." />}
+      
       {/* Grid lines */}
-      <div
-        className="absolute inset-0 pointer-events-none select-none z-0"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)',
-          backgroundSize: '115px 115px',
-        }}
-      />
+      <div className="step2-grid-lines" />
 
-      {/*  Header  */}
-      <div className="w-full px-[35px] pt-[35px] pb-0 flex flex-col relative z-10">
+      {/* Header  */}
+      <div className="step2-header">
         <DoxLogo width="69" />
-        <span className="text-[12px] text-white/65 leading-[20px] mt-[6px] font-normal tracking-wide">
-          Employee Onboarding
-        </span>
+        <span>Employee Onboarding</span>
       </div>
 
-      {/*  Step Navbar  */}
-      <div className="w-full px-4 md:px-[64px] mt-[24px] relative z-10">
-        <nav
-          className="w-full max-w-[1312px] mx-auto h-[81px] rounded-[10px] flex items-center px-[16px] overflow-x-auto"
-          style={{
-            backgroundColor: '#0A0E14',
-            border: '0.8px solid rgba(255,255,255,0.1)',
-          }}
-        >
-          <div className="flex items-center justify-between w-full">
+      {/* Step Navbar  */}
+      <div className="step2-nav-container">
+        <nav className="step2-nav">
+          <div className="step2-nav-inner">
             <NavItem label="Home" icon={<HomeIcon />} />
             <NavItem label="Personal Info" icon={<PersonIcon />} />
             <NavItem label="Emergency Info" icon={<SirenIcon />} active />
@@ -115,37 +100,22 @@ const Step2EmergencyInfo = () => {
         </nav>
       </div>
 
-      {/*  Page Content  */}
-      <main className="flex-1 w-full max-w-[1440px] mx-auto px-4 md:px-[111px] pt-[48px] pb-[80px] relative z-10">
+      {/* Page Content  */}
+      <main className="step2-main">
 
         {/* Step label */}
-        <p
-          className="font-[Jost] font-medium leading-[20px] mb-[30px]"
-          style={{ fontSize: '48px', color: '#314460' }}
-        >
-          Step 2 of 8
-        </p>
+        <p className="step2-step-label">Step 2 of 8</p>
 
         {/* Heading + subtitle */}
-        <div className="flex flex-col gap-0 mb-[40px]">
-          <h1 className="font-[Jost] font-extralight text-[24px] leading-[40px] text-white">
-            Emergency Contact Information
-          </h1>
-          <p className="text-[16px] leading-[24px] font-normal" style={{ color: '#99A1AF' }}>
-            Maintained for safety and HR compliance.
-          </p>
+        <div className="step2-heading-container">
+          <h1 className="step2-h1">Emergency Contact Information</h1>
+          <p className="step2-subtitle">Maintained for safety and HR compliance.</p>
         </div>
 
-        {/*Form Card*/}
-        <div
-          className="w-full rounded-[16px] px-[40px] py-[44px]"
-          style={{
-            backgroundColor: 'rgba(10,14,20,0.6)',
-            border: '0.8px solid rgba(255,255,255,0.1)',
-          }}
-        >
+        {/* Form Card */}
+        <div className="step2-form-card">
           {/* 2-column grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[230px] gap-y-[24px]">
+          <div className="step2-form-grid">
 
             <FormField label="Emergency Contact Name" required>
               <TextInput
@@ -184,7 +154,7 @@ const Step2EmergencyInfo = () => {
           </div>
 
           {/* Country of Residence — left col only */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[230px] mt-[24px]">
+          <div className="step2-form-grid step2-form-grid-mt">
             <FormField label="Country of Residence" required>
               <TextInput
                 value={form.countryOfResidence}
@@ -195,22 +165,17 @@ const Step2EmergencyInfo = () => {
           </div>
         </div>
 
-        {/*  Navigation Buttons  */}
-        <div className="flex items-center sm:justify-between gap-[8px] sm:gap-[12px] mt-[32px]">
+        {/* Navigation Buttons  */}
+        <div className="step2-button-container">
 
           {/* Previous button */}
           <button
             type="button"
             onClick={() => navigate('/onboarding/step1')}
-            className="h-[36px] sm:h-[40px] flex-1 sm:flex-none min-w-0 px-[12px] sm:px-[20px] rounded-[10px] flex items-center justify-center gap-[8px] transition-opacity hover:opacity-90 active:scale-95"
-            style={{
-              backgroundColor: 'rgba(255,255,255,0.3)',
-            }}
+            className="step2-prev-btn"
           >
             <ArrowLeftIcon />
-            <span className="text-[13px] sm:text-[16px] font-normal text-white leading-[18px] sm:leading-[24px] text-center">
-              Previous
-            </span>
+            <span className="step2-btn-text">Previous</span>
           </button>
 
           {/* Next button */}
@@ -218,86 +183,47 @@ const Step2EmergencyInfo = () => {
             type="button"
             onClick={handleNext}
             disabled={isSavingStep}
-            className="h-[36px] sm:h-[40px] flex-1 sm:flex-none min-w-0 px-[12px] sm:px-[24px] rounded-[10px] flex items-center justify-center gap-[8px] transition-opacity hover:opacity-90 active:scale-95"
-            style={{
-              backgroundColor: '#314460',
-              boxShadow:
-                '1px 1px 2px rgba(64,88,125,0.3), -1px -1px 2px rgba(34,48,67,0.5), inset -5px 5px 10px rgba(34,48,67,0.2), inset 5px -5px 10px rgba(34,48,67,0.2), inset -5px -5px 10px rgba(64,88,125,0.9), inset 5px 5px 13px rgba(34,48,67,0.9)',
-              opacity: isSavingStep ? 0.7 : 1,
-            }}
+            className="step2-next-btn"
           >
-            <span className="text-[13px] sm:text-[16px] font-medium text-white leading-[18px] sm:leading-[24px] text-center">
-              <span className="sm:hidden">{isSavingStep ? 'Saving...' : 'Next'}</span>
-              <span className="hidden sm:inline">{isSavingStep ? 'Saving Step 2...' : 'Next: Identity Information'}</span>
+            <span className="step2-btn-text">
+              <span className="step2-btn-text-sm">{isSavingStep ? 'Saving...' : 'Next'}</span>
+              <span className="step2-btn-text-lg">{isSavingStep ? 'Saving Step 2...' : 'Next: Identity Information'}</span>
             </span>
             <ArrowRightIcon />
           </button>
 
         </div>
 
-        {stepError ? (
-          <p className="mt-[12px] text-[14px] text-[#FF9EA0]">{stepError}</p>
-        ) : null}
+        {stepError && <p className="step2-error-text">{stepError}</p>}
 
       </main>
     </div>
   );
 };
 
-/*  Sub-components  */
+/* Sub-components  */
 
-/**
- * FormField — label + optional/required marker wrapper
- * @param {string} label
- * @param {boolean} required
- * @param {boolean} optional
- * @param {React.ReactNode} children
- */
 const FormField = ({ label, required, optional, children }) => (
-  <div className="flex flex-col gap-[12px]">
-    <label className="flex items-center gap-[4px]">
-      <span
-        className="font-[Jost] font-medium text-[18px] leading-[20px]"
-        style={{ color: '#D1D5DC' }}
-      >
-        {label}
-      </span>
-      {required && (
-        <span className="font-[Jost] font-medium text-[14px] leading-[20px]" style={{ color: '#FF6467' }}>
-          *
-        </span>
-      )}
-      {optional && (
-        <span className="font-[Jost] font-normal text-[14px] leading-[20px] ml-[4px]" style={{ color: '#99A1AF' }}>
-          (Optional)
-        </span>
-      )}
+  <div className="step2-form-field">
+    <label className="step2-field-label-container">
+      <span className="step2-field-label">{label}</span>
+      {required && <span className="step2-field-asterisk">*</span>}
+      {optional && <span className="step2-field-optional">(Optional)</span>}
     </label>
     {children}
   </div>
 );
 
-/**
- * TextInput — standard single-line input
- */
 const TextInput = ({ value, onChange, placeholder, inputMode }) => (
   <input
-    value={value}
+    value={value || ''}
     onChange={(e) => onChange(e.target.value)}
     placeholder={placeholder}
     inputMode={inputMode}
-    className="w-full h-[53px] rounded-[10px] px-[20px] outline-none font-[Jost] text-[16px] leading-[23px] caret-white"
-    style={{
-      backgroundColor: 'rgba(255,255,255,0.05)',
-      border: '0.8px solid rgba(255,255,255,0.1)',
-      color: value ? '#FFFFFF' : '#6A7282',
-    }}
+    className="step2-input"
   />
 );
 
-/**
- * NavItem — single navbar link
- */
 const NavItem = ({ label, icon, active }) => {
   const navigate = useNavigate();
   const routeByLabel = {
@@ -317,23 +243,15 @@ const NavItem = ({ label, icon, active }) => {
     <button
       type="button"
       onClick={() => targetPath && !active && navigate(targetPath)}
-      className="flex items-center gap-[8px] px-[16px] py-[10px] rounded-[10px] cursor-pointer whitespace-nowrap"
-      style={{ backgroundColor: active ? '#314460' : 'transparent' }}
+      className={`step2-nav-item ${active ? 'active' : ''}`}
     >
-      <span style={{ color: active ? '#51A2FF' : 'rgba(255,255,255,0.65)' }}>
-        {icon}
-      </span>
-      <span
-        className="font-[Jost] font-normal text-[15px] leading-[20px]"
-        style={{ color: active ? '#51A2FF' : 'rgba(255,255,255,0.65)' }}
-      >
-        {label}
-      </span>
+      <span className="step2-nav-icon">{icon}</span>
+      <span className="step2-nav-label">{label}</span>
     </button>
   );
 };
 
-/*  Icon Components  */
+/* Icon Components  */
 
 const ArrowRightIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -413,9 +331,6 @@ const DeclarationIcon = () => (
   </svg>
 );
 
-/**
- * DoxLogo minimal component
- */
 const DoxLogo = ({ width = '69', fill = '#FFFFFF' }) => (
   <svg width={width} viewBox="0 0 339 95" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="DOX logo">
     <g>

@@ -4,6 +4,9 @@ import { toast } from "react-hot-toast";
 import { loginEmployee } from "../api/employeeApi";
 import Loader from "../components/ui/Loader";
 
+// Import standard CSS
+import "./css/SignIn.css";
+
 const AUTH_SESSION_KEY = "emp-auth-session";
 
 /**
@@ -43,7 +46,6 @@ const SignIn = () => {
 
     try {
       setIsLoading(true);
-
       setErrorMessage("");
 
       // Backend expects "userid", map the current email field value.
@@ -65,182 +67,50 @@ const SignIn = () => {
   };
 
   return (
-    <div
-      className="relative h-screen w-full overflow-hidden flex flex-col items-center justify-center"
-      style={{
-        background:
-          "linear-gradient(116.04deg, #0A0E14 18.26%, #112B53 51.38%, #0A0E14 78.49%)",
-      }}
-    >
-      <style>{`
-        @keyframes slideInRight {
-          0% { transform: translateX(100vw); opacity: 0; }
-          100% { transform: translateX(0); opacity: 1; }
-        }
-        @keyframes slideInLeft {
-          0% { transform: translateX(-100vw); opacity: 0; }
-          100% { transform: translateX(0); opacity: 1; }
-        }
-      `}</style>
+    <div className="signin-wrapper">
       {isLoading && <Loader fullScreen={true} message="Signing in..." />}
-      {/* Group 260 — "Atla" decorative text*/}
-      <div
-        className="absolute pointer-events-none select-none w-full"
-        style={{
-          top: 0,
-          left: 0,
-          zIndex: 0,
-          animation: "slideInRight 3.5s cubic-bezier(0.22, 1, 0.36, 1) forwards",
-        }}
-      >
+      
+      {/* Group 260 — "Atla" decorative text */}
+      <div className="signin-bg-atla-container">
         {/* Atla shadow layer */}
-        <div
-          className="absolute"
-          style={{
-            fontFamily: "Jomolhari, serif",
-            fontSize: "55vw",
-            fontWeight: 400,
-            lineHeight: "1",
-            color: "rgba(0,0,0,0.46)",
-            filter: "blur(11.1px)",
-            top: 0,
-            left: "-3vw",
-            transform: "translate(0, -72%)",
-            whiteSpace: "nowrap",
-          }}
-        >
-          Atla
-        </div>
-
+        <div className="signin-bg-atla-shadow">Atla</div>
         {/* Atla gradient layer */}
-        <div
-          className="absolute"
-          style={{
-            fontFamily: "Jomolhari, serif",
-            fontSize: "55vw",
-            fontWeight: 400,
-            lineHeight: "1",
-            background:
-              "linear-gradient(95.73deg, #000000 8.34%, #FFFFFF 63.47%, #0A0E14 94.62%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-            top: 0,
-            left: "-3vw",
-            transform: "translate(0, -72%)",
-            whiteSpace: "nowrap",
-          }}
-        >
-          Atla
-        </div>
+        <div className="signin-bg-atla-gradient">Atla</div>
       </div>
 
-      {/*Group 261 — "NCC" decorative text*/}
-      <div
-        className="absolute pointer-events-none select-none w-full"
-        style={{
-          bottom: 0,
-          left: 0,
-          zIndex: 0,
-          animation: "slideInLeft 3.5s cubic-bezier(0.22, 1, 0.36, 1) forwards",
-        }}
-      >
+      {/* Group 261 — "NCC" decorative text */}
+      <div className="signin-bg-ncc-container">
         {/* NCC shadow layer */}
-        <div
-          className="absolute"
-          style={{
-            fontFamily: "Jomolhari, serif",
-            fontSize: "40vw",
-            fontWeight: 400,
-            lineHeight: "1",
-            color: "rgba(0,0,0,0.49)",
-            filter: "blur(13.65px)",
-            bottom: 0,
-            left: "50%",
-            transform: "translate(-50%, 60%)",
-            whiteSpace: "nowrap",
-          }}
-        >
-          NCC
-        </div>
+        <div className="signin-bg-ncc-shadow">NCC</div>
         {/* NCC gradient layer */}
-        <div
-          className="absolute"
-          style={{
-            fontFamily: "Jomolhari, serif",
-            fontSize: "40vw",
-            fontWeight: 400,
-            lineHeight: "1",
-            background:
-              "linear-gradient(93.02deg, #6C6C6C 24.98%, #FFFFFF 45.65%, #050505 75.35%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-            bottom: 0,
-            left: "50%",
-            transform: "translate(-50%, 60%)",
-            whiteSpace: "nowrap",
-          }}
-        >
-          NCC
-        </div>
+        <div className="signin-bg-ncc-gradient">NCC</div>
       </div>
 
       {/* ── Main Content Wrapper ── */}
-      <div
-        className="relative flex flex-col items-center w-full px-4 mt-[1vh]"
-        style={{ maxWidth: "471px", zIndex: 20 }}
-      >
+      <div className="signin-main-content">
+        
         {/* Union — DOX logo pill above card */}
-        <div
-          className="flex items-center justify-center mb-[6px]"
-          style={{ flexShrink: 0 }}
-        >
+        <div className="signin-logo-wrap">
           <DoxLogo useFilter={true} fill="#152C4F" width="min(260px, 55vw)" />
         </div>
 
         {/* Title */}
-        <div className="flex items-center gap-[6px] h-[33px]">
-          <span
-            className="font-[Jost] text-[24px] text-[#FFFFFF]"
-            style={{ fontWeight: 200 }}
-          >
-            Sign
-          </span>
-          <span
-            className="font-[Jost] text-[24px] text-[#86B2F4]"
-            style={{ fontWeight: 200 }}
-          >
-            In
-          </span>
+        <div className="signin-title-container">
+          <span className="signin-title-white">Sign</span>
+          <span className="signin-title-blue">In</span>
         </div>
 
         {/* Subtitle */}
-        <p
-          className="mt-[1px] font-[Jost] text-[15px] font-normal text-center leading-[28px]"
-          style={{ color: "rgba(255,255,255,0.65)" }}
-        >
-          Access your onboarding portal
-        </p>
+        <p className="signin-subtitle">Access your onboarding portal</p>
 
         {/* Inner fields box */}
-        <div
-          className="mt-[16px] w-full max-w-[350px] rounded-[16px] px-[26px] py-[19px] flex flex-col"
-          style={{
-            backgroundColor: "rgba(255,255,255,0.05)",
-            border: "0.8px solid rgba(255,255,255,0.1)",
-          }}
-        >
+        <div className="signin-form-box">
+          
           {/* Email label */}
-          <div className="h-[20px] flex items-center font-[Jost] text-[14px] font-medium text-[#FFFFFF]">
-            Email Address
-          </div>
+          <div className="signin-label">Email Address</div>
 
           {/* Email input */}
-          <div
-            className="mt-[6px] w-full h-[45px] rounded-[10px] flex items-center gap-[10px] px-[16px]"
-            style={{ backgroundColor: "rgba(201,201,201,0.1)" }}
-          >
+          <div className="signin-input-container">
             <MailIcon />
             <input
               value={email}
@@ -248,22 +118,16 @@ const SignIn = () => {
               placeholder="your.email@example.com"
               inputMode="email"
               autoComplete="email"
-              className="flex-1 bg-transparent border-none outline-none font-[Jost] text-[14px] caret-white"
-              style={{ color: "rgba(255,255,255,0.65)" }}
+              className="signin-input"
               aria-label="Email address"
             />
           </div>
 
           {/* Password label */}
-          <div className="mt-[16px] h-[20px] flex items-center font-[Jost] text-[14px] font-medium text-[#FFFFFF]">
-            Password
-          </div>
+          <div className="signin-label mt-16">Password</div>
 
           {/* Password input */}
-          <div
-            className="mt-[6px] w-full h-[45px] rounded-[10px] flex items-center gap-[10px] px-[16px]"
-            style={{ backgroundColor: "rgba(201,201,201,0.1)" }}
-          >
+          <div className="signin-input-container">
             <LockIcon />
             <input
               value={password}
@@ -276,14 +140,13 @@ const SignIn = () => {
               placeholder="Enter your password"
               type={showPassword ? "text" : "password"}
               autoComplete="current-password"
-              className="flex-1 bg-transparent border-none outline-none font-[Jost] text-[14px] caret-white"
-              style={{ color: "rgba(255,255,255,0.65)" }}
+              className="signin-input"
               aria-label="Password"
             />
             <button
               type="button"
               onClick={() => setShowPassword((prev) => !prev)}
-              className="shrink-0 bg-transparent border-none outline-none p-0 cursor-pointer"
+              className="signin-toggle-btn"
               aria-label={showPassword ? "Hide password" : "Show password"}
               aria-pressed={showPassword}
             >
@@ -297,43 +160,25 @@ const SignIn = () => {
           type="button"
           onClick={handleSignIn}
           disabled={!canSubmit || isLoading}
-          className="mt-[16px] w-full max-w-[350px] h-[56px] rounded-[14px] flex items-center justify-center gap-[4px] transition-opacity disabled:opacity-50 disabled:cursor-not-allowed hover:enabled:opacity-90"
-          style={{
-            position: "relative",
-            zIndex: 30,
-            backgroundColor: "#314460",
-            border: "1px solid #FFFFFF",
-            boxShadow: "1px 1px 2px rgba(64,88,125,0.3), -1px -1px 2px rgba(34,48,67,0.5), inset -5px 5px 10px rgba(34,48,67,0.2), inset 5px -5px 10px rgba(34,48,67,0.2), inset -5px -5px 10px rgba(64,88,125,0.9), inset 5px 5px 13px rgba(34,48,67,0.9)",
-          }}
+          className="signin-submit-btn"
         >
-          <span className="font-[Jost] text-[15px] font-medium text-[#FFFFFF]">
+          <span className="signin-btn-text">
             {isLoading ? "Signing In..." : "Sign In →"}
           </span>
         </button>
 
-        {errorMessage ? (
-          <p className="mt-[10px] text-[13px] text-[#FF9EA0] text-center max-w-[392px]">
+        {errorMessage && (
+          <p className="signin-error-text">
             {errorMessage}
           </p>
-        ) : null}
+        )}
 
       </div>
 
       {/* Footer — DOX logo + gradient text */}
-      <div
-        className="absolute bottom-[3vh] left-1/2 -translate-x-1/2 flex flex-col items-center gap-[6px]"
-        style={{ zIndex: 20 }}
-      >
+      <div className="signin-footer">
         <DoxLogo fill="#FFFFFF" width="95" />
-        <p
-          className="font-[Jost] text-[14px] font-normal text-center m-0"
-          style={{
-            background: "linear-gradient(90deg, #195AC0 0%, #FFFFFF 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-          }}
-        >
+        <p className="signin-footer-text">
           Powered by Atlas × NoCapCode Infrastructure
         </p>
       </div>
@@ -341,9 +186,8 @@ const SignIn = () => {
   );
 };
 
-/**
- * MailIcon
- */
+/* ── SVGs ── */
+
 const MailIcon = () => (
   <svg
     width="15"
@@ -352,7 +196,7 @@ const MailIcon = () => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     aria-hidden="true"
-    className="shrink-0"
+    className="signin-icon-shrink"
   >
     <path
       d="M2.5 4.5h11v7h-11v-7Z"
@@ -369,9 +213,6 @@ const MailIcon = () => (
   </svg>
 );
 
-/**
- * LockIcon
- */
 const LockIcon = () => (
   <svg
     width="15"
@@ -380,7 +221,7 @@ const LockIcon = () => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     aria-hidden="true"
-    className="shrink-0"
+    className="signin-icon-shrink"
   >
     <path
       d="M4.5 7v-1.5a3.5 3.5 0 1 1 7 0V7"
@@ -397,9 +238,6 @@ const LockIcon = () => (
   </svg>
 );
 
-/**
- * EyeIcon
- */
 const EyeIcon = () => (
   <svg
     width="16"
@@ -408,7 +246,7 @@ const EyeIcon = () => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     aria-hidden="true"
-    className="shrink-0"
+    className="signin-icon-shrink"
   >
     <path
       d="M1.5 8s2.2-3.5 6.5-3.5S14.5 8 14.5 8s-2.2 3.5-6.5 3.5S1.5 8 1.5 8Z"
@@ -426,9 +264,6 @@ const EyeIcon = () => (
   </svg>
 );
 
-/**
- * EyeOffIcon
- */
 const EyeOffIcon = () => (
   <svg
     width="16"
@@ -437,7 +272,7 @@ const EyeOffIcon = () => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     aria-hidden="true"
-    className="shrink-0"
+    className="signin-icon-shrink"
   >
     <path
       d="M1.5 8s2.2-3.5 6.5-3.5S14.5 8 14.5 8s-2.2 3.5-6.5 3.5S1.5 8 1.5 8Z"
@@ -461,11 +296,6 @@ const EyeOffIcon = () => (
   </svg>
 );
 
-/**
- * DoxLogo
- * @param {string} width - responsive width
- * @param {boolean} useFilter - apply Figma embossed filter (true for Union, false for footer)
- */
 const DoxLogo = ({ width = "95", useFilter = false, fill = "#FFFFFF" }) => (
   <svg
     width={width}

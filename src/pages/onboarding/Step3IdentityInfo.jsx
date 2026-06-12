@@ -6,6 +6,9 @@ import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep3IdentityInfo, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
 
+// Import your standard CSS
+import './css/Step3IdentityInfo.css';
+
 const REQUIRED_STEP3_FIELDS = [
   { key: 'govid1', label: 'Government-issued ID Number' },
   { key: 'govid1image', label: 'Upload Government-issued ID' },
@@ -41,6 +44,7 @@ const Step3IdentityInfo = () => {
       }
     };
     prefillFormData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /** Update a text field */
@@ -72,41 +76,22 @@ const Step3IdentityInfo = () => {
   };
 
   return (
-    <div
-      className="relative min-h-screen w-full overflow-x-hidden flex flex-col font-[Jost] text-white"
-      style={{
-        background: 'linear-gradient(121.47deg, #0A0E14 49.53%, #161F2C 104.45%)',
-      }}
-    >
+    <div className="step3-wrapper">
       {isSavingStep && <Loader fullScreen={true} message="Saving and loading next step..." />}
+      
       {/* Grid lines */}
-      <div
-        className="absolute inset-0 pointer-events-none select-none z-0"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)',
-          backgroundSize: '115px 115px',
-        }}
-      />
+      <div className="step3-grid-lines" />
 
       {/* Header */}
-      <div className="w-full px-[35px] pt-[35px] pb-0 flex flex-col relative z-10">
+      <div className="step3-header">
         <DoxLogo width="69" />
-        <span className="text-[12px] text-white/65 leading-[20px] mt-[6px] font-normal tracking-wide">
-          Employee Onboarding
-        </span>
+        <span>Employee Onboarding</span>
       </div>
 
       {/* Step Navbar */}
-      <div className="w-full px-4 md:px-[64px] mt-[24px] relative z-10">
-        <nav
-          className="w-full max-w-[1312px] mx-auto h-[81px] rounded-[10px] flex items-center px-[16px] overflow-x-auto"
-          style={{
-            backgroundColor: '#0A0E14',
-            border: '0.8px solid rgba(255,255,255,0.1)',
-          }}
-        >
-          <div className="flex items-center justify-between w-full">
+      <div className="step3-nav-container">
+        <nav className="step3-nav">
+          <div className="step3-nav-inner">
             <NavItem label="Home" icon={<HomeIcon />} />
             <NavItem label="Personal Info" icon={<PersonIcon />} />
             <NavItem label="Emergency Info" icon={<SirenIcon />} />
@@ -121,35 +106,22 @@ const Step3IdentityInfo = () => {
       </div>
 
       {/* Page Content */}
-      <main className="flex-1 w-full max-w-[1440px] mx-auto px-4 md:px-[111px] pt-[48px] pb-[80px] relative z-10">
+      <main className="step3-main">
 
         {/* Step label */}
-        <p
-          className="font-[Jost] font-medium leading-[20px] mb-[30px]"
-          style={{ fontSize: '48px', color: '#314460' }}
-        >
-          Step 3 of 8
-        </p>
+        <p className="step3-step-label">Step 3 of 8</p>
 
         {/* Heading + subtitle */}
-        <div className="flex flex-col gap-0 mb-[40px]">
-          <h1 className="font-[Jost] font-extralight text-[24px] leading-[40px] text-white">
-            Identity Information
-          </h1>
-          <p className="text-[16px] leading-[24px] font-normal" style={{ color: '#99A1AF' }}>
+        <div className="step3-heading-container">
+          <h1 className="step3-h1">Identity Information</h1>
+          <p className="step3-subtitle">
             Upload your identity details for verification and official documentation.
           </p>
         </div>
 
         {/* Form Card */}
-        <div
-          className="w-full rounded-[16px] px-[40px] py-[44px]"
-          style={{
-            backgroundColor: 'rgba(10,14,20,0.6)',
-            border: '0.8px solid rgba(255,255,255,0.1)',
-          }}
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[230px] gap-y-[24px]">
+        <div className="step3-form-card">
+          <div className="step3-form-grid">
 
             {/* Row 1 */}
             <FormField label="Government-issued ID Number" required>
@@ -202,40 +174,31 @@ const Step3IdentityInfo = () => {
         </div>
 
         {/* Navigation Buttons */}
-        <div className="flex items-center sm:justify-between gap-[8px] sm:gap-[12px] mt-[32px]">
+        <div className="step3-button-container">
           <button
             type="button"
             onClick={() => navigate('/onboarding/step2')}
-            className="h-[36px] sm:h-[40px] flex-1 sm:flex-none min-w-0 px-[12px] sm:px-[20px] rounded-[10px] flex items-center justify-center gap-[8px] transition-opacity hover:opacity-90 active:scale-95"
-            style={{ backgroundColor: 'rgba(255,255,255,0.3)' }}
+            className="step3-prev-btn"
           >
             <ArrowLeftIcon />
-            <span className="text-[13px] sm:text-[16px] font-normal text-white leading-[18px] sm:leading-[24px] text-center">Previous</span>
+            <span className="step3-btn-text">Previous</span>
           </button>
 
           <button
             type="button"
             onClick={handleNext}
             disabled={isSavingStep}
-            className="h-[36px] sm:h-[40px] flex-1 sm:flex-none min-w-0 px-[12px] sm:px-[24px] rounded-[10px] flex items-center justify-center gap-[8px] transition-opacity hover:opacity-90 active:scale-95"
-            style={{
-              backgroundColor: '#314460',
-              boxShadow:
-                '1px 1px 2px rgba(64,88,125,0.3), -1px -1px 2px rgba(34,48,67,0.5), inset -5px 5px 10px rgba(34,48,67,0.2), inset 5px -5px 10px rgba(34,48,67,0.2), inset -5px -5px 10px rgba(64,88,125,0.9), inset 5px 5px 13px rgba(34,48,67,0.9)',
-              opacity: isSavingStep ? 0.7 : 1,
-            }}
+            className="step3-next-btn"
           >
-            <span className="text-[13px] sm:text-[16px] font-medium text-white leading-[18px] sm:leading-[24px] text-center">
-              <span className="sm:hidden">{isSavingStep ? 'Saving...' : 'Next'}</span>
-              <span className="hidden sm:inline">{isSavingStep ? 'Saving Step 3...' : 'Next: Education Details'}</span>
+            <span className="step3-btn-text">
+              <span className="step3-btn-text-sm">{isSavingStep ? 'Saving...' : 'Next'}</span>
+              <span className="step3-btn-text-lg">{isSavingStep ? 'Saving Step 3...' : 'Next: Education Details'}</span>
             </span>
             <ArrowRightIcon />
           </button>
         </div>
 
-        {stepError ? (
-          <p className="mt-[12px] text-[14px] text-[#FF9EA0]">{stepError}</p>
-        ) : null}
+        {stepError && <p className="step3-error-text">{stepError}</p>}
 
       </main>
     </div>
@@ -244,103 +207,50 @@ const Step3IdentityInfo = () => {
 
 /* Sub-components */
 
-/**
- * FormField — label wrapper with required/optional/ifAvailable/ifStudent markers
- */
 const FormField = ({ label, required, ifAvailable, ifStudent, children }) => (
-  <div className="flex flex-col gap-[12px]">
-    <label className="flex items-center gap-[4px] flex-wrap">
-      <span className="font-[Jost] font-medium text-[18px] leading-[20px]" style={{ color: '#D1D5DC' }}>
-        {label}
-      </span>
-      {required && (
-        <span className="font-[Jost] font-medium text-[14px]" style={{ color: '#FF6467' }}>*</span>
-      )}
-      {ifAvailable && (
-        <span className="font-[Jost] font-normal text-[14px] ml-[4px]" style={{ color: '#99A1AF' }}>
-          (If Available)
-        </span>
-      )}
-      {ifStudent && (
-        <span className="font-[Jost] font-normal text-[14px] ml-[4px]" style={{ color: '#99A1AF' }}>
-          (If Student)
-        </span>
-      )}
+  <div className="step3-form-field">
+    <label className="step3-field-label-container">
+      <span className="step3-field-label">{label}</span>
+      {required && <span className="step3-field-asterisk">*</span>}
+      {ifAvailable && <span className="step3-field-hint">(If Available)</span>}
+      {ifStudent && <span className="step3-field-hint">(If Student)</span>}
     </label>
     {children}
   </div>
 );
 
-/**
- * TextInput — standard single-line input
- */
 const TextInput = ({ value, onChange, placeholder }) => (
   <input
-    value={value}
+    value={value || ''}
     onChange={(e) => onChange(e.target.value)}
     placeholder={placeholder}
-    className="w-full h-[53px] rounded-[10px] px-[20px] outline-none font-[Jost] text-[16px] leading-[23px] caret-white"
-    style={{
-      backgroundColor: 'rgba(255,255,255,0.05)',
-      border: '0.8px solid rgba(255,255,255,0.1)',
-      color: value ? '#FFFFFF' : '#6A7282',
-    }}
+    className="step3-input"
   />
 );
 
-/**
- * FileInput — file upload field with Choose file button inside
- */
 const FileInput = ({ file, onChange }) => {
-  const inputRef = useState(null);
-
-  const handleClick = () => {
-    document.getElementById(`file-${Math.random()}`);
-  };
-
   return (
-    <div
-      className="w-full h-[60px] rounded-[10px] flex items-center px-[10px]"
-      style={{
-        backgroundColor: 'rgba(255,255,255,0.05)',
-        border: '0.8px solid rgba(255,255,255,0.1)',
-      }}
-    >
-      <label className="cursor-pointer">
-        <div
-          className="h-[40px] px-[16px] rounded-[10px] flex items-center justify-center"
-          style={{
-            backgroundColor: '#314460',
-            boxShadow:
-              '1px 1px 2px rgba(64,88,125,0.3), -1px -1px 2px rgba(34,48,67,0.5), inset -5px 5px 10px rgba(34,48,67,0.2), inset 5px -5px 10px rgba(34,48,67,0.2), inset -5px -5px 10px rgba(64,88,125,0.9), inset 5px 5px 13px rgba(34,48,67,0.9)',
-          }}
-        >
-          <span className="font-[Jost] font-medium text-[16px] text-white leading-[24px]">Choose file</span>
+    <div className="step3-file-container">
+      <label className="step3-file-label">
+        <div className="step3-file-btn">
+          <span className="step3-file-btn-text">Choose file</span>
         </div>
         <input
           type="file"
           accept="image/jpeg,image/png"
-          className="hidden"
+          className="step3-hidden-input"
           onChange={(e) => onChange(e.target.files?.[0] || null)}
         />
       </label>
-      {file && (
-        <span className="ml-[12px] text-[14px] font-[Jost] truncate max-w-[200px]" style={{ color: '#99A1AF' }}>
-          {file.name}
-        </span>
-      )}
-      {!file && (
-        <span className="ml-[12px] text-[14px] font-[Jost]" style={{ color: '#6A7282' }}>
-          No file chosen
-        </span>
+      {file ? (
+        <span className="step3-file-name">{file.name}</span>
+      ) : (
+        <span className="step3-file-empty">No file chosen</span>
       )}
     </div>
   );
 };
 
-/**
- * NavItem — single navbar link
- */
 const NavItem = ({ label, icon, active }) => {
   const navigate = useNavigate();
   const routeByLabel = {
@@ -360,16 +270,10 @@ const NavItem = ({ label, icon, active }) => {
     <button
       type="button"
       onClick={() => targetPath && !active && navigate(targetPath)}
-      className="flex items-center gap-[8px] px-[16px] py-[10px] rounded-[10px] cursor-pointer whitespace-nowrap"
-      style={{ backgroundColor: active ? '#314460' : 'transparent' }}
+      className={`step3-nav-item ${active ? 'active' : ''}`}
     >
-      <span style={{ color: active ? '#51A2FF' : 'rgba(255,255,255,0.65)' }}>{icon}</span>
-      <span
-        className="font-[Jost] font-normal text-[15px] leading-[20px]"
-        style={{ color: active ? '#51A2FF' : 'rgba(255,255,255,0.65)' }}
-      >
-        {label}
-      </span>
+      <span className="step3-nav-icon">{icon}</span>
+      <span className="step3-nav-label">{label}</span>
     </button>
   );
 };

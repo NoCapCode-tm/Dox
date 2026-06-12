@@ -1,0 +1,379 @@
+/* Step1PersonalInfo.css */
+
+.step1-wrapper {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Jost', sans-serif;
+  color: #FFFFFF;
+  background: linear-gradient(121.47deg, #0A0E14 49.53%, #161F2C 104.45%);
+}
+
+.step1-grid-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), 
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 115px 115px;
+}
+
+/* --- Mobile First (Default) --- */
+
+.step1-header {
+  width: 100%;
+  padding: 20px 20px 0; /* Reduced for mobile */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 10;
+}
+
+.step1-header span {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 20px;
+  margin-top: 6px;
+  font-weight: 400;
+  letter-spacing: 0.025em;
+}
+
+.step1-nav-container {
+  width: 100%;
+  padding: 0 16px;
+  margin-top: 24px;
+  position: relative;
+  z-index: 10;
+}
+
+.step1-nav {
+  width: 100%;
+  max-width: 1312px;
+  margin: 0 auto;
+  height: 81px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  overflow-x: auto;
+  background-color: #0A0E14;
+  border: 0.8px solid rgba(255, 255, 255, 0.1);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.step1-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.step1-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 16px;
+}
+
+.step1-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.step1-nav-item.active {
+  background-color: #314460;
+}
+
+.step1-nav-icon {
+  color: rgba(255, 255, 255, 0.65);
+}
+.step1-nav-item.active .step1-nav-icon {
+  color: #51A2FF;
+}
+
+.step1-nav-label {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  color: rgba(255, 255, 255, 0.65);
+}
+.step1-nav-item.active .step1-nav-label {
+  color: #51A2FF;
+}
+
+.step1-main {
+  flex: 1;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 32px 16px 80px; /* Reduced top padding for mobile */
+  position: relative;
+  z-index: 10;
+}
+
+.step1-step-label {
+  font-family: 'Jost', sans-serif;
+  font-weight: 500;
+  line-height: 20px;
+  margin-bottom: 20px;
+  font-size: 32px; /* Scaled down for mobile */
+  color: #314460;
+}
+
+.step1-heading-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 32px;
+}
+
+.step1-h1 {
+  font-family: 'Jost', sans-serif;
+  font-weight: 200;
+  font-size: 24px;
+  line-height: 36px;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.step1-subtitle {
+  font-size: 15px;
+  line-height: 24px;
+  font-weight: 400;
+  color: #99A1AF;
+  margin: 0;
+}
+
+.step1-mandatory {
+  color: #FF6467;
+}
+
+.step1-form-card {
+  width: 100%;
+  border-radius: 16px;
+  padding: 24px; /* Reduced for mobile */
+  background-color: rgba(10, 14, 20, 0.6);
+  border: 0.8px solid rgba(255, 255, 255, 0.1);
+}
+
+.step1-form-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* 1 Column for Mobile */
+  row-gap: 24px;
+}
+
+.step1-form-grid-mt {
+  margin-top: 24px;
+}
+
+.step1-flex-col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.step1-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.step1-field-label-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.step1-field-label {
+  font-family: 'Jost', sans-serif;
+  font-weight: 500;
+  font-size: 16px; /* Scaled slightly for mobile */
+  line-height: 20px;
+  color: #D1D5DC;
+}
+
+.step1-field-asterisk {
+  font-family: 'Jost', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #FF6467;
+}
+
+.step1-input, .step1-date, .step1-select, .step1-textarea {
+  width: 100%;
+  border-radius: 10px;
+  outline: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 16px;
+  caret-color: #FFFFFF;
+  background-color: #151B23;
+  border: 0.8px solid rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+}
+
+.step1-input, .step1-date, .step1-select {
+  height: 50px;
+  padding: 0 16px;
+}
+
+.step1-textarea {
+  padding: 14px 16px;
+  line-height: 24px;
+  resize: none;
+}
+
+.step1-input::placeholder, .step1-textarea::placeholder {
+  color: #6A7282;
+}
+
+.step1-input:disabled, .step1-textarea:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.step1-date, .step1-select {
+  color-scheme: dark;
+}
+.step1-date.empty, .step1-select.empty {
+  color: #6A7282;
+}
+
+.step1-select {
+  appearance: none;
+  cursor: pointer;
+}
+.step1-select option {
+  background-color: #151B23;
+  color: #FFFFFF;
+}
+
+.step1-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.step1-checkbox-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 0.8px solid rgba(255, 255, 255, 0.2);
+  background-color: #151B23;
+}
+
+.step1-checkbox-box.checked {
+  background-color: #314460;
+}
+
+.step1-checkbox-text {
+  font-size: 15px;
+  color: #99A1AF;
+}
+
+.step1-button-container {
+  display: flex;
+  margin-top: 32px;
+}
+
+.step1-next-btn {
+  height: 44px;
+  width: 100%;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity 0.2s, transform 0.1s;
+  background-color: #314460;
+  box-shadow: 
+    1px 1px 2px rgba(64,88,125,0.3), 
+    -1px -1px 2px rgba(34,48,67,0.5), 
+    inset -5px 5px 10px rgba(34,48,67,0.2), 
+    inset 5px -5px 10px rgba(34,48,67,0.2), 
+    inset -5px -5px 10px rgba(64,88,125,0.9), 
+    inset 5px 5px 13px rgba(34,48,67,0.9);
+  border: none;
+  cursor: pointer;
+}
+
+.step1-next-btn:hover { opacity: 0.9; }
+.step1-next-btn:active { transform: scale(0.95); }
+.step1-next-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+.step1-btn-text {
+  font-size: 15px;
+  font-weight: 500;
+  color: #FFFFFF;
+}
+
+.step1-btn-text-sm { display: inline; }
+.step1-btn-text-lg { display: none; }
+.step1-error-text { margin-top: 12px; font-size: 14px; color: #FF9EA0; }
+
+/* --- Tablet Devices (768px and up) --- */
+@media (min-width: 768px) {
+  .step1-header { padding: 35px 35px 0; }
+  .step1-nav-container { padding: 0 40px; }
+  
+  .step1-main {
+    padding: 48px 40px 80px; 
+  }
+  
+  .step1-step-label { font-size: 40px; margin-bottom: 24px; }
+  .step1-h1 { font-size: 28px; }
+  .step1-field-label { font-size: 18px; }
+  
+  .step1-form-card { padding: 32px; }
+  
+  /* Switch to 2 columns on Tablet */
+  .step1-form-grid {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 40px; /* Safe gap for Tablets */
+  }
+
+  .step1-next-btn {
+    height: 40px;
+    width: auto;
+    padding: 0 24px;
+  }
+  .step1-btn-text-sm { display: none; }
+  .step1-btn-text-lg { display: inline; }
+}
+
+/* --- Laptops and Small Desktops (1024px and up) --- */
+@media (min-width: 1024px) {
+  .step1-main { padding-left: 80px; padding-right: 80px; }
+  .step1-nav-container { padding: 0 64px; }
+  .step1-step-label { font-size: 48px; margin-bottom: 30px; }
+  .step1-form-card { padding: 40px; }
+  
+  /* Widen the gap safely for normal laptops */
+  .step1-form-grid { column-gap: 100px; }
+}
+
+/* --- Ultra-Wide Desktops (1440px and up) --- */
+@media (min-width: 1440px) {
+  .step1-main { padding-left: 111px; padding-right: 111px; }
+  /* Original Figma extra-wide gap */
+  .step1-form-grid { column-gap: 230px; }
+}
