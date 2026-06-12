@@ -4,15 +4,12 @@ import { toast } from "react-hot-toast";
 import { loginEmployee } from "../api/employeeApi";
 import Loader from "../components/ui/Loader";
 import { setAuthSession } from "../utils/auth";
-<<<<<<< HEAD
 
 // Import standard CSS
 import "./css/SignIn.css";
 
 const AUTH_SESSION_KEY = "emp-auth-session";
-=======
-import { setAuthSession } from "../utils/auth";
->>>>>>> 28dccfce5f6b6f56183a75cab6ea7221a359bb5a
+
 
 /**
  * SignIn page

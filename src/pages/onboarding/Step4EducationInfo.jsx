@@ -123,11 +123,8 @@ const Step4EducationInfo = () => {
               <SelectInput
                 value={form.highestQualification}
                 onChange={(v) => handleChange('highestQualification', v)}
-<<<<<<< HEAD
                 placeholder="Select highest qualification"
-=======
-                placeholder="High School, Diploma, Undergraduate"
->>>>>>> 28dccfce5f6b6f56183a75cab6ea7221a359bb5a
+
                 options={[
                   'High School',
                   'Diploma',
@@ -159,11 +156,7 @@ const Step4EducationInfo = () => {
               <TextInput
                 value={form.graduationYear}
                 onChange={(v) => handleChange('graduationYear', v)}
-<<<<<<< HEAD
-                placeholder="e.g. 2024 or 2025"
-=======
                 placeholder="e.g. 2nd Year / 4th Semester"
->>>>>>> 28dccfce5f6b6f56183a75cab6ea7221a359bb5a
               />
             </FormField>
 
