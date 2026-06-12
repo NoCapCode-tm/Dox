@@ -1,0 +1,592 @@
+/* Step8Declaration.css */
+
+.step8-wrapper {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Jost', sans-serif;
+  color: #FFFFFF;
+  background: linear-gradient(121.47deg, #0A0E14 49.53%, #161F2C 104.45%);
+}
+
+.step8-grid-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), 
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 115px 115px;
+}
+
+/* --- Mobile First (Default) --- */
+
+.step8-header {
+  width: 100%;
+  padding: 20px 20px 0; /* Reduced for mobile */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 10;
+}
+
+.step8-header span {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 20px;
+  margin-top: 6px;
+  font-weight: 400;
+  letter-spacing: 0.025em;
+}
+
+/* Navigation */
+.step8-nav-container {
+  width: 100%;
+  padding: 0 16px;
+  margin-top: 24px;
+  position: relative;
+  z-index: 10;
+}
+
+.step8-nav {
+  width: 100%;
+  max-width: 1312px;
+  margin: 0 auto;
+  height: 81px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  overflow-x: auto;
+  background-color: #0A0E14;
+  border: 0.8px solid rgba(255, 255, 255, 0.1);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.step8-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.step8-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 16px;
+}
+
+.step8-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.step8-nav-item.active {
+  background-color: #314460;
+}
+
+.step8-nav-icon {
+  color: rgba(255, 255, 255, 0.65);
+}
+.step8-nav-item.active .step8-nav-icon {
+  color: #51A2FF;
+}
+
+.step8-nav-label {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  color: rgba(255, 255, 255, 0.65);
+}
+.step8-nav-item.active .step8-nav-label {
+  color: #51A2FF;
+}
+
+/* Main Content Area */
+.step8-main {
+  flex: 1;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 32px 16px 80px; /* Reduced for mobile */
+  position: relative;
+  z-index: 10;
+}
+
+.step8-step-label {
+  font-family: 'Jost', sans-serif;
+  font-weight: 500;
+  line-height: 20px;
+  margin-bottom: 20px;
+  font-size: 32px; /* Scaled down for mobile */
+  color: #314460;
+}
+
+.step8-heading-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 32px;
+}
+
+.step8-h1 {
+  font-family: 'Jost', sans-serif;
+  font-weight: 200;
+  font-size: 24px;
+  line-height: 36px;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.step8-subtitle {
+  font-size: 15px;
+  line-height: 24px;
+  font-weight: 400;
+  color: #99A1AF;
+  margin: 0;
+}
+
+/* Application Summary Details */
+.step8-section-h2 {
+  font-family: 'Jost', sans-serif;
+  font-weight: 200;
+  font-size: 20px; /* Scaled down for mobile */
+  line-height: 28px;
+  color: #FFFFFF;
+  margin-bottom: 20px;
+}
+
+.step8-summary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+/* Review Section Component */
+.step8-review-card {
+  width: 100%;
+  border-radius: 14px;
+  padding: 0 16px; /* Reduced for mobile */
+  background-color: rgba(10, 14, 20, 0.75);
+  border: 0.8px solid rgba(255, 255, 255, 0.1);
+}
+
+.step8-review-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 0.8px solid rgba(255, 255, 255, 0.1);
+}
+
+.step8-review-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.step8-review-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(49, 68, 96, 0.2);
+  color: #314460;
+}
+
+.step8-review-title {
+  font-family: 'Jost', sans-serif;
+  font-weight: 500;
+  font-size: 16px; /* Scaled for mobile */
+  line-height: 24px;
+  color: #FFFFFF;
+}
+
+.step8-review-edit-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: #314460;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.step8-review-edit-btn:hover {
+  opacity: 0.8;
+}
+
+.step8-review-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 0;
+}
+
+/* Review Rows - Stacked on Mobile */
+.step8-review-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.step8-review-label {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #99A1AF;
+}
+
+.step8-review-value {
+  font-family: 'Jost', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #ffffff; /* Colorized on mobile to stand out when stacked */
+  text-align: left;
+  margin-left: 0;
+}
+
+/* Declaration Block */
+.step8-decl-wrapper {
+  width: 100%;
+  border-radius: 14px;
+  padding: 16px; /* Reduced for mobile */
+  margin-bottom: 32px;
+  background-color: rgba(10, 14, 20, 0.65);
+  border: 0.8px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 0 26px rgba(0, 0, 0, 0.35);
+}
+
+.step8-decl-h2 {
+  font-family: 'Jost', sans-serif;
+  font-weight: 200;
+  font-size: 22px;
+  line-height: 30px;
+  color: #FFFFFF;
+  margin-bottom: 16px;
+}
+
+/* Notice Cards */
+.step8-notice-card {
+  width: 100%;
+  border-radius: 10px;
+  padding: 20px; /* Reduced for mobile */
+  margin-bottom: 24px;
+  background-color: rgba(59, 130, 246, 0.05);
+  border: 0.8px solid rgba(59, 130, 246, 0.2);
+}
+
+.step8-notice-title {
+  font-family: 'Jost', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FFFFFF;
+  margin-bottom: 12px;
+  margin-top: 0;
+}
+
+.step8-notice-text {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 15px; /* Reduced for mobile */
+  line-height: 26px;
+  color: #D1D5DC;
+  margin: 0;
+}
+
+.step8-notice-text-alt {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 26px;
+  color: #D1D5DC;
+  margin: 0;
+}
+
+.step8-confirm-title {
+  font-family: 'Jost', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FFFFFF;
+  margin-bottom: 16px;
+  margin-top: 0;
+}
+
+/* Form Card inside Declaration */
+.step8-form-card {
+  width: 100%;
+  border-radius: 10px;
+  padding: 24px; /* Reduced for mobile */
+  margin-bottom: 32px;
+  background-color: rgba(10, 14, 20, 0.6);
+  border: 0.8px solid rgba(255, 255, 255, 0.1);
+}
+
+.step8-form-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* 1 Column for mobile */
+  row-gap: 24px;
+}
+
+.step8-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.step8-field-label-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.step8-field-label {
+  font-family: 'Jost', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: #D1D5DC;
+}
+
+.step8-field-asterisk {
+  color: #FF6467;
+  font-size: 14px;
+}
+
+/* Digital Signature Input */
+.step8-sign-container {
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 0.8px solid rgba(255, 255, 255, 0.1);
+}
+
+.step8-sign-btn {
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  font-family: 'Jost', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #FFFFFF;
+  background-color: #314460;
+  border: none;
+  cursor: pointer;
+  box-shadow: 
+    1px 1px 2px rgba(64,88,125,0.3), 
+    -1px -1px 2px rgba(34,48,67,0.5), 
+    inset -5px 5px 10px rgba(34,48,67,0.2), 
+    inset 5px -5px 10px rgba(34,48,67,0.2), 
+    inset -5px -5px 10px rgba(64,88,125,0.9), 
+    inset 5px 5px 13px rgba(34,48,67,0.9);
+}
+
+.step8-sign-status {
+  font-size: 13px;
+  font-family: 'Jost', sans-serif;
+  color: #99A1AF;
+}
+
+/* Inputs */
+.step8-input, .step8-date {
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+  padding: 0 16px;
+  outline: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 16px;
+  caret-color: #FFFFFF;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 0.8px solid rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+}
+
+.step8-input::placeholder { color: #6A7282; }
+.step8-date { color-scheme: dark; }
+.step8-date.empty { color: #6A7282; }
+
+/* Agreement Checkbox */
+.step8-agree-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  margin-bottom: 24px;
+  width: fit-content;
+}
+
+.step8-checkbox-box {
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.step8-checkbox-box.checked { background-color: #314460; }
+
+.step8-agree-text {
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 24px;
+  color: #FFFFFF;
+}
+
+/* Buttons Stack vertically on Mobile */
+.step8-button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.step8-prev-btn, .step8-submit-btn {
+  height: 44px;
+  width: 100%;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity 0.2s, transform 0.1s;
+  border: none;
+  cursor: pointer;
+}
+
+.step8-prev-btn { background-color: rgba(255, 255, 255, 0.3); }
+
+.step8-submit-btn {
+  background-color: #314460;
+  box-shadow: 
+    1px 1px 2px rgba(64,88,125,0.3), 
+    -1px -1px 2px rgba(34,48,67,0.5), 
+    inset -5px 5px 10px rgba(34,48,67,0.2), 
+    inset 5px -5px 10px rgba(34,48,67,0.2), 
+    inset -5px -5px 10px rgba(64,88,125,0.9), 
+    inset 5px 5px 13px rgba(34,48,67,0.9);
+}
+
+.step8-prev-btn:hover, .step8-submit-btn:hover { opacity: 0.9; }
+.step8-prev-btn:active, .step8-submit-btn:active { transform: scale(0.95); }
+.step8-submit-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+.step8-btn-text {
+  font-size: 15px;
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
+.step8-error-text {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #FF9EA0;
+  text-align: center;
+}
+
+/* --- Tablet Devices (768px and up) --- */
+@media (min-width: 768px) {
+  .step8-header { padding: 35px 35px 0; }
+  .step8-nav-container { padding: 0 40px; }
+  .step8-main { padding: 48px 40px 80px; }
+  
+  .step8-step-label { font-size: 40px; margin-bottom: 24px; }
+  .step8-h1 { font-size: 28px; }
+  .step8-section-h2 { font-size: 24px; margin-bottom: 24px; }
+  
+  /* Return review cards to horizontal layout */
+  .step8-review-card { padding: 0 24px; }
+  .step8-review-icon { width: 36px; height: 36px; border-radius: 10px; }
+  .step8-review-title { font-size: 18px; }
+  .step8-review-content { gap: 12px; }
+  .step8-review-row { flex-direction: row; align-items: flex-start; justify-content: space-between; }
+  .step8-review-value { text-align: right; margin-left: 24px; color: #FFFFFF; }
+
+  /* Declaration UI Scaling */
+  .step8-decl-wrapper { padding: 24px; }
+  .step8-decl-h2 { font-size: 24px; }
+  
+  .step8-notice-card { padding: 32px; margin-bottom: 32px; }
+  .step8-notice-title { font-size: 18px; }
+  .step8-notice-text, .step8-notice-text-alt { font-size: 18px; line-height: 29px; }
+  
+  .step8-confirm-title { font-size: 18px; margin-bottom: 24px; }
+  
+  .step8-form-card { padding: 40px; }
+  .step8-field-label { font-size: 18px; }
+  
+  .step8-sign-container, .step8-input, .step8-date { height: 53px; }
+  .step8-sign-btn { height: 40px; font-size: 16px; }
+
+  .step8-agree-label { margin-bottom: 40px; gap: 16px; }
+  .step8-agree-text { font-size: 16px; }
+
+  /* Switch to 2 columns on Tablet */
+  .step8-form-grid {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 40px; 
+  }
+
+  /* Side-by-side buttons on Tablet */
+  .step8-button-container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .step8-prev-btn, .step8-submit-btn { width: auto; height: 40px; padding: 0 24px; }
+  .step8-btn-text { font-size: 16px; }
+  
+  .step8-error-text { text-align: left; }
+}
+
+/* --- Laptops and Small Desktops (1024px and up) --- */
+@media (min-width: 1024px) {
+  .step8-main { padding-left: 80px; padding-right: 80px; }
+  .step8-nav-container { padding: 0 64px; }
+  .step8-step-label { font-size: 48px; margin-bottom: 30px; }
+  .step8-form-card { padding: 44px 40px; }
+  
+  /* Widen the gap safely for normal laptops */
+  .step8-form-grid { column-gap: 100px; }
+}
+
+/* --- Ultra-Wide Desktops (1440px and up) --- */
+@media (min-width: 1440px) {
+  .step8-main { padding-left: 111px; padding-right: 111px; }
+  /* Original Figma extra-wide gap */
+  .step8-form-grid { column-gap: 230px; }
+}

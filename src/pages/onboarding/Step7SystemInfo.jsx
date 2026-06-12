@@ -6,6 +6,9 @@ import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep7SystemInfo, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
 
+// Import standard CSS
+import './css/Step7SystemInfo.css';
+
 const REQUIRED_STEP7_FIELDS = [
   { key: 'laptopAvailability', label: 'Laptop Availability' },
   { key: 'primaryDeviceType', label: 'Primary Device Type' },
@@ -43,6 +46,7 @@ const Step7SystemInfo = () => {
       }
     };
     prefillFormData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (field, value) =>
@@ -67,42 +71,23 @@ const Step7SystemInfo = () => {
   };
 
   return (
-    <div
-      className="relative min-h-screen w-full overflow-x-hidden flex flex-col font-[Jost] text-white"
-      style={{
-        background: 'linear-gradient(121.47deg, #0A0E14 49.53%, #161F2C 104.45%)',
-      }}
-    >
+    <div className="step7-wrapper">
       {isSavingStep && <Loader fullScreen={true} message="Saving and loading next step..." />}
+      
       {/* Grid lines */}
-      <div
-        className="absolute inset-0 pointer-events-none select-none z-0"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)',
-          backgroundSize: '115px 115px',
-        }}
-      />
+      <div className="step7-grid-lines" />
 
       {/* Header */}
-      <div className="w-full px-[35px] pt-[35px] pb-0 flex flex-col relative z-10">
+      <div className="step7-header">
         <DoxLogo width="69" />
-        <span className="text-[12px] text-white/65 leading-[20px] mt-[6px] font-normal tracking-wide">
-          Employee Onboarding
-        </span>
+        <span>Employee Onboarding</span>
       </div>
 
       {/* Step Navbar */}
-      <div className="w-full px-4 md:px-[64px] mt-[24px] relative z-10">
-        <nav
-          className="w-full max-w-[1312px] mx-auto h-[81px] rounded-[10px] flex items-center px-[16px] overflow-x-auto"
-          style={{
-            backgroundColor: '#0A0E14',
-            border: '0.8px solid rgba(255,255,255,0.1)',
-          }}
-        >
-          <div className="flex items-center justify-between w-full">
-            <NavItem label="Home" icon={<HomeIcon />} href="/dashboard" />
+      <div className="step7-nav-container">
+        <nav className="step7-nav">
+          <div className="step7-nav-inner">
+            <NavItem label="Home" icon={<HomeIcon />} />
             <NavItem label="Personal Info" icon={<PersonIcon />} />
             <NavItem label="Emergency Info" icon={<SirenIcon />} />
             <NavItem label="Identity" icon={<IdIcon />} />
@@ -116,35 +101,22 @@ const Step7SystemInfo = () => {
       </div>
 
       {/* Page Content */}
-      <main className="flex-1 w-full max-w-[1440px] mx-auto px-4 md:px-[111px] pt-[48px] pb-[80px] relative z-10">
+      <main className="step7-main">
 
         {/* Step label */}
-        <p
-          className="font-[Jost] font-medium leading-[20px] mb-[30px]"
-          style={{ fontSize: '48px', color: '#314460' }}
-        >
-          Step 7 of 8
-        </p>
+        <p className="step7-step-label">Step 7 of 8</p>
 
         {/* Heading + subtitle */}
-        <div className="flex flex-col gap-0 mb-[32px]">
-          <h1 className="font-[Jost] font-extralight text-[24px] leading-[40px] text-white">
-            Work Environment & Technical Setup
-          </h1>
-          <p className="text-[16px] leading-[24px] font-normal" style={{ color: '#99A1AF' }}>
+        <div className="step7-heading-container">
+          <h1 className="step7-h1">Work Environment & Technical Setup</h1>
+          <p className="step7-subtitle">
             Helps IT and operations understand working conditions.
           </p>
         </div>
 
         {/* Form Card */}
-        <div
-          className="w-full rounded-[10px] px-[40px] py-[40px]"
-          style={{
-            backgroundColor: 'rgba(10,14,20,0.6)',
-            border: '0.8px solid rgba(255,255,255,0.1)',
-          }}
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[230px] gap-y-[24px]">
+        <div className="step7-form-card">
+          <div className="step7-form-grid">
 
             <FormField label="Laptop Availability" required>
               <SelectInput
@@ -202,40 +174,31 @@ const Step7SystemInfo = () => {
         </div>
 
         {/* Navigation Buttons */}
-        <div className="flex items-center sm:justify-between gap-[8px] sm:gap-[12px] mt-[32px]">
+        <div className="step7-button-container">
           <button
             type="button"
             onClick={() => navigate('/onboarding/step6')}
-            className="h-[36px] sm:h-[40px] flex-1 sm:flex-none min-w-0 px-[12px] sm:px-[20px] rounded-[10px] flex items-center justify-center gap-[8px] transition-opacity hover:opacity-90 active:scale-95"
-            style={{ backgroundColor: 'rgba(255,255,255,0.3)' }}
+            className="step7-prev-btn"
           >
             <ArrowLeftIcon />
-            <span className="text-[13px] sm:text-[16px] font-normal text-white leading-[18px] sm:leading-[24px] text-center">Previous</span>
+            <span className="step7-btn-text">Previous</span>
           </button>
 
           <button
             type="button"
             onClick={handleNext}
             disabled={isSavingStep}
-            className="h-[36px] sm:h-[40px] flex-1 sm:flex-none min-w-0 px-[12px] sm:px-[24px] rounded-[10px] flex items-center justify-center gap-[8px] transition-opacity hover:opacity-90 active:scale-95"
-            style={{
-              backgroundColor: '#314460',
-              boxShadow:
-                '1px 1px 2px rgba(64,88,125,0.3), -1px -1px 2px rgba(34,48,67,0.5), inset -5px 5px 10px rgba(34,48,67,0.2), inset 5px -5px 10px rgba(34,48,67,0.2), inset -5px -5px 10px rgba(64,88,125,0.9), inset 5px 5px 13px rgba(34,48,67,0.9)',
-              opacity: isSavingStep ? 0.7 : 1,
-            }}
+            className="step7-next-btn"
           >
-            <span className="text-[13px] sm:text-[16px] font-medium text-white leading-[18px] sm:leading-[24px] text-center">
-              <span className="sm:hidden">{isSavingStep ? 'Saving...' : 'Next'}</span>
-              <span className="hidden sm:inline">{isSavingStep ? 'Saving Step 7...' : 'Next: System Details'}</span>
+            <span className="step7-btn-text">
+              <span className="step7-btn-text-sm">{isSavingStep ? 'Saving...' : 'Next'}</span>
+              <span className="step7-btn-text-lg">{isSavingStep ? 'Saving Step 7...' : 'Next: System Details'}</span>
             </span>
             <ArrowRightIcon />
           </button>
         </div>
 
-        {stepError ? (
-          <p className="mt-[12px] text-[14px] text-[#FF9EA0]">{stepError}</p>
-        ) : null}
+        {stepError && <p className="step7-error-text">{stepError}</p>}
 
       </main>
     </div>
@@ -244,69 +207,38 @@ const Step7SystemInfo = () => {
 
 /* Sub-components */
 
-/**
- * FormField — label wrapper with required/optional marker
- */
 const FormField = ({ label, required, children }) => (
-  <div className="flex flex-col gap-[12px]">
-    <label className="flex items-center gap-[4px]">
-      <span className="font-[Jost] font-bold text-[18px] leading-[20px]" style={{ color: '#D1D5DC' }}>
-        {label}
-      </span>
-      {required && (
-        <span className="font-[Jost] font-medium text-[14px] leading-[20px]" style={{ color: '#FF6467' }}>
-          *
-        </span>
-      )}
+  <div className="step7-form-field">
+    <label className="step7-field-label-container">
+      <span className="step7-field-label">{label}</span>
+      {required && <span className="step7-field-asterisk">*</span>}
     </label>
     {children}
   </div>
 );
 
-/**
- * TextInput — standard single-line input
- */
 const TextInput = ({ value, onChange, placeholder }) => (
   <input
-    value={value}
+    value={value || ''}
     onChange={(e) => onChange(e.target.value)}
     placeholder={placeholder}
-    className="w-full h-[53px] rounded-[10px] px-[20px] outline-none font-[Jost] text-[16px] leading-[23px] caret-white"
-    style={{
-      backgroundColor: 'rgba(255,255,255,0.05)',
-      border: '0.8px solid rgba(255,255,255,0.1)',
-      color: value ? '#FFFFFF' : '#6A7282',
-    }}
+    className="step7-input"
   />
 );
 
-/**
- * SelectInput — dropdown styled to match other inputs
- */
 const SelectInput = ({ value, onChange, options, placeholder }) => (
   <select
-    value={value}
+    value={value || ''}
     onChange={(e) => onChange(e.target.value)}
-    className="w-full h-[53px] rounded-[10px] px-[20px] outline-none font-[Jost] text-[16px] leading-[23px] appearance-none cursor-pointer"
-    style={{
-      backgroundColor: 'rgba(255,255,255,0.05)',
-      border: '0.8px solid rgba(255,255,255,0.1)',
-      color: value ? '#FFFFFF' : '#6A7282',
-      colorScheme: 'dark',
-    }}
+    className={`step7-select ${!value ? 'empty' : ''}`}
   >
     <option value="" disabled hidden>{placeholder}</option>
     {options.map((opt) => (
-      <option key={opt} value={opt} style={{ backgroundColor: '#151B23', color: '#FFFFFF' }}>
-        {opt}
-      </option>
+      <option key={opt} value={opt}>{opt}</option>
     ))}
   </select>
 );
 
-/**
- * NavItem — single navbar link
- */
 const NavItem = ({ label, icon, active }) => {
   const navigate = useNavigate();
   const routeByLabel = {
@@ -326,16 +258,10 @@ const NavItem = ({ label, icon, active }) => {
     <button
       type="button"
       onClick={() => targetPath && !active && navigate(targetPath)}
-      className="flex items-center gap-[8px] px-[16px] py-[10px] rounded-[10px] cursor-pointer whitespace-nowrap"
-      style={{ backgroundColor: active ? '#314460' : 'transparent' }}
+      className={`step7-nav-item ${active ? 'active' : ''}`}
     >
-      <span style={{ color: active ? '#51A2FF' : 'rgba(255,255,255,0.65)' }}>{icon}</span>
-      <span
-        className="font-[Jost] font-normal text-[15px] leading-[20px]"
-        style={{ color: active ? '#51A2FF' : 'rgba(255,255,255,0.65)' }}
-      >
-        {label}
-      </span>
+      <span className="step7-nav-icon">{icon}</span>
+      <span className="step7-nav-label">{label}</span>
     </button>
   );
 };
