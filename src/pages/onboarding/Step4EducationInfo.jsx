@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { showMissingRequiredFieldsToast } from '../../utils/requiredFieldToast';
@@ -124,7 +124,6 @@ const Step4EducationInfo = () => {
                 value={form.highestQualification}
                 onChange={(v) => handleChange('highestQualification', v)}
                 placeholder="Select highest qualification"
-
                 options={[
                   'High School',
                   'Diploma',
@@ -225,18 +224,56 @@ const TextInput = ({ value, onChange, placeholder }) => (
   />
 );
 
-const SelectInput = ({ value, onChange, options, placeholder }) => (
-  <select
-    value={value || ''}
-    onChange={(e) => onChange(e.target.value)}
-    className={`step4-select ${!value ? 'empty' : ''}`}
-  >
-    <option value="" disabled hidden>{placeholder}</option>
-    {options.map((opt) => (
-      <option key={opt} value={opt}>{opt}</option>
-    ))}
-  </select>
-);
+// Custom Dropdown Implementation
+const SelectInput = ({ value, onChange, options, placeholder }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (containerRef.current && !containerRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <div className="step4-custom-select-container" ref={containerRef}>
+      <div 
+        className={`step4-input step4-custom-select-trigger ${!value ? 'empty' : ''}`}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span>{value || placeholder}</span>
+        <svg 
+          className={`step4-select-arrow ${isOpen ? 'open' : ''}`} 
+          width="12" height="12" viewBox="0 0 12 12" fill="none"
+        >
+          <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </div>
+
+      {isOpen && (
+        <div className="step4-custom-select-dropdown">
+          {options.map((opt) => (
+            <div 
+              key={opt} 
+              className={`step4-custom-select-option ${value === opt ? 'selected' : ''}`}
+              onClick={() => {
+                onChange(opt);
+                setIsOpen(false);
+              }}
+            >
+              {opt}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const NavItem = ({ label, icon, active }) => {
   const navigate = useNavigate();
