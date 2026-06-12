@@ -7,9 +7,6 @@ import Welcome from '../pages/Welcome.jsx'
 import CompanyDocs from '../pages/CompanyDocs.jsx'
 import LegalAgreements from '../pages/LegalAgreements.jsx'
 import ReviewApproval from '../pages/ReviewApproval.jsx'
-<<<<<<< HEAD
-
-=======
 import { isAuthenticated } from '../utils/auth'
 
 const PrivateRoute = ({ children }) => {
@@ -19,10 +16,7 @@ const PrivateRoute = ({ children }) => {
 const PublicRoute = ({ children }) => {
   return isAuthenticated() ? <Navigate to="/welcome" replace /> : children
 }
->>>>>>> 28dccfce5f6b6f56183a75cab6ea7221a359bb5a
-/**
- * AppRouter — defines all client-side routes for the application.
- */
+
 const AppRouter = () => {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
