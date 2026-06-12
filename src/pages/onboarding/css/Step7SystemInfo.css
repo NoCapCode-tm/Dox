@@ -28,7 +28,7 @@
 
 .step7-header {
   width: 100%;
-  padding: 20px 20px 0; /* Reduced for mobile */
+  padding: 20px 20px 0;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -44,7 +44,6 @@
   letter-spacing: 0.025em;
 }
 
-/* Navigation */
 .step7-nav-container {
   width: 100%;
   padding: 0 16px;
@@ -94,16 +93,9 @@
   outline: none;
 }
 
-.step7-nav-item.active {
-  background-color: #314460;
-}
-
-.step7-nav-icon {
-  color: rgba(255, 255, 255, 0.65);
-}
-.step7-nav-item.active .step7-nav-icon {
-  color: #51A2FF;
-}
+.step7-nav-item.active { background-color: #314460; }
+.step7-nav-icon { color: rgba(255, 255, 255, 0.65); }
+.step7-nav-item.active .step7-nav-icon { color: #51A2FF; }
 
 .step7-nav-label {
   font-family: 'Jost', sans-serif;
@@ -112,17 +104,14 @@
   line-height: 20px;
   color: rgba(255, 255, 255, 0.65);
 }
-.step7-nav-item.active .step7-nav-label {
-  color: #51A2FF;
-}
+.step7-nav-item.active .step7-nav-label { color: #51A2FF; }
 
-/* Main Content Area */
 .step7-main {
   flex: 1;
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 32px 16px 80px; /* Reduced for mobile */
+  padding: 32px 16px 80px;
   position: relative;
   z-index: 10;
 }
@@ -132,7 +121,7 @@
   font-weight: 500;
   line-height: 20px;
   margin-bottom: 20px;
-  font-size: 32px; /* Scaled down for mobile */
+  font-size: 32px;
   color: #314460;
 }
 
@@ -159,22 +148,20 @@
   margin: 0;
 }
 
-/* Form Layout */
 .step7-form-card {
   width: 100%;
   border-radius: 10px;
-  padding: 24px; /* Reduced for mobile */
+  padding: 24px;
   background-color: rgba(10, 14, 20, 0.6);
   border: 0.8px solid rgba(255, 255, 255, 0.1);
 }
 
 .step7-form-grid {
   display: grid;
-  grid-template-columns: 1fr; /* 1 Column for Mobile */
+  grid-template-columns: 1fr;
   row-gap: 24px;
 }
 
-/* Form Fields */
 .step7-form-field {
   display: flex;
   flex-direction: column;
@@ -190,7 +177,7 @@
 
 .step7-field-label {
   font-family: 'Jost', sans-serif;
-  font-weight: 700; /* As requested in JSX */
+  font-weight: 700;
   font-size: 16px;
   line-height: 20px;
   color: #D1D5DC;
@@ -203,10 +190,9 @@
   color: #FF6467;
 }
 
-/* Inputs and Selects */
-.step7-input, .step7-select {
+.step7-input {
   width: 100%;
-  height: 50px; /* Standardized mobile height */
+  height: 50px;
   border-radius: 10px;
   padding: 0 16px;
   outline: none;
@@ -219,39 +205,99 @@
   color: #FFFFFF;
 }
 
-.step7-input::placeholder {
-  color: #6A7282;
+.step7-input::placeholder { color: #6A7282; }
+
+/* ----------------------------------
+   CUSTOM DROPDOWN STYLES (NEW)
+------------------------------------- */
+.step7-custom-select-container {
+  position: relative;
+  width: 100%;
 }
 
-.step7-select {
-  appearance: none;
+.step7-custom-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   cursor: pointer;
-  color-scheme: dark;
+  user-select: none;
 }
 
-.step7-select.empty {
+.step7-custom-select-trigger.empty {
   color: #6A7282;
 }
 
-.step7-select option {
-  background-color: #151B23;
+.step7-select-arrow {
+  transition: transform 0.2s ease;
+  color: #99A1AF;
+}
+
+.step7-select-arrow.open {
+  transform: rotate(180deg);
+}
+
+.step7-custom-select-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  max-height: 280px;
+  overflow-y: auto;
+  background-color: #121820; /* Dark background matching your screenshot */
+  border: 0.8px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  z-index: 50;
+  padding: 8px 0;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* Custom Scrollbar for Dropdown */
+.step7-custom-select-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+.step7-custom-select-dropdown::-webkit-scrollbar-thumb {
+  background-color: #314460;
+  border-radius: 4px;
+}
+
+.step7-custom-select-option {
+  padding: 12px 16px;
+  font-family: 'Jost', sans-serif;
+  font-size: 15px;
   color: #FFFFFF;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
 }
 
-.step7-select option:disabled {
-  color: #6A7282;
+/* The exact light blue hover state from your screenshot */
+.step7-custom-select-option:hover {
+  background-color: #9EC8FF;
+  color: #0A0E14; /* Dark text for contrast against bright blue */
 }
+
+/* Selected state styling */
+.step7-custom-select-option.selected {
+  background-color: rgba(158, 200, 255, 0.1);
+  color: #9EC8FF;
+}
+
+.step7-custom-select-option.selected:hover {
+  background-color: #9EC8FF;
+  color: #0A0E14;
+}
+/* ---------------------------------- */
+
 
 /* Buttons */
 .step7-button-container {
   display: flex;
-  flex-direction: column; /* Stack vertically on mobile */
+  flex-direction: column;
   gap: 12px;
   margin-top: 32px;
 }
 
 .step7-prev-btn, .step7-next-btn {
-  height: 44px; /* Taller touch target for mobile */
+  height: 44px;
   width: 100%;
   border-radius: 10px;
   display: flex;
@@ -263,9 +309,7 @@
   cursor: pointer;
 }
 
-.step7-prev-btn {
-  background-color: rgba(255, 255, 255, 0.3);
-}
+.step7-prev-btn { background-color: rgba(255, 255, 255, 0.3); }
 
 .step7-next-btn {
   background-color: #314460;
@@ -305,30 +349,16 @@
 @media (min-width: 768px) {
   .step7-header { padding: 35px 35px 0; }
   .step7-nav-container { padding: 0 40px; }
-  
   .step7-main { padding: 48px 40px 80px; }
-  
   .step7-step-label { font-size: 40px; margin-bottom: 24px; }
   .step7-h1 { font-size: 28px; }
   .step7-field-label { font-size: 18px; }
-  
   .step7-form-card { padding: 32px; }
   
-  /* Switch to 2 columns on Tablet */
-  .step7-form-grid {
-    grid-template-columns: 1fr 1fr;
-    column-gap: 40px; 
-  }
+  .step7-form-grid { grid-template-columns: 1fr 1fr; column-gap: 40px; }
 
-  .step7-button-container {
-    flex-direction: row; /* Horizontal on tablet */
-    justify-content: space-between;
-  }
-
-  .step7-prev-btn, .step7-next-btn {
-    height: 40px;
-    width: auto;
-  }
+  .step7-button-container { flex-direction: row; justify-content: space-between; }
+  .step7-prev-btn, .step7-next-btn { height: 40px; width: auto; }
   .step7-prev-btn { padding: 0 20px; }
   .step7-next-btn { padding: 0 24px; }
   
@@ -345,14 +375,11 @@
   .step7-nav-container { padding: 0 64px; }
   .step7-step-label { font-size: 48px; margin-bottom: 30px; }
   .step7-form-card { padding: 40px; }
-  
-  /* Widen the gap safely for normal laptops */
   .step7-form-grid { column-gap: 100px; }
 }
 
 /* --- Ultra-Wide Desktops (1440px and up) --- */
 @media (min-width: 1440px) {
   .step7-main { padding-left: 111px; padding-right: 111px; }
-  /* Original Figma extra-wide gap */
   .step7-form-grid { column-gap: 230px; }
 }

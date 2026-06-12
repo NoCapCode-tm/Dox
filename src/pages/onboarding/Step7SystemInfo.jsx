@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { showMissingRequiredFieldsToast } from '../../utils/requiredFieldToast';
@@ -272,18 +272,61 @@ const FormField = ({ label, required, children }) => (
   </div>
 );
 
-const SelectInput = ({ value, onChange, options, placeholder }) => (
-  <select
-    value={value || ''}
-    onChange={(e) => onChange(e.target.value)}
-    className={`step7-select ${!value ? 'empty' : ''}`}
-  >
-    <option value="" disabled hidden>{placeholder}</option>
-    {options.map((opt) => (
-      <option key={opt} value={opt}>{opt}</option>
-    ))}
-  </select>
-);
+// -----------------------------------------------------------------
+// CUSTOM SELECT COMPONENT TO MATCH DESIGN
+// -----------------------------------------------------------------
+const SelectInput = ({ value, onChange, options, placeholder }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Close dropdown if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleSelect = (opt) => {
+    onChange(opt);
+    setIsOpen(false);
+  };
+
+  return (
+    <div className="step7-custom-select-container" ref={dropdownRef}>
+      <div 
+        className={`step7-input step7-custom-select-trigger ${!value ? 'empty' : ''}`}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span>{value || placeholder}</span>
+        <svg 
+          className={`step7-select-arrow ${isOpen ? 'open' : ''}`} 
+          width="12" height="8" viewBox="0 0 12 8" fill="none"
+        >
+          <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </div>
+      
+      {isOpen && (
+        <div className="step7-custom-select-dropdown">
+          {options.map((opt) => (
+            <div 
+              key={opt}
+              className={`step7-custom-select-option ${value === opt ? 'selected' : ''}`}
+              onClick={() => handleSelect(opt)}
+            >
+              {opt}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+// -----------------------------------------------------------------
 
 const NavItem = ({ label, icon, active }) => {
   const navigate = useNavigate();
