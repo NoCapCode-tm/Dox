@@ -247,19 +247,11 @@ const Step7SystemInfo = () => {
             </FormField>
 
             <FormField label="Time Zone" required>
-<<<<<<< HEAD
               <SelectInput
                 value={form.timeZone}
                 onChange={(v) => handleChange('timeZone', v)}
                 options={TIMEZONE_OPTIONS}
                 placeholder="Select your Time Zone"
-=======
-              <TimezoneSelect
-                value={form.timeZone}
-                onChange={(v) => handleChange('timeZone', v)}
-                options={TIMEZONES}
-                placeholder="Select time zone"
->>>>>>> 28dccfce5f6b6f56183a75cab6ea7221a359bb5a
               />
             </FormField>
 
@@ -375,8 +367,6 @@ const SelectInput = ({ value, onChange, options, placeholder }) => {
 };
 // -----------------------------------------------------------------
 
-<<<<<<< HEAD
-=======
 /**
  * TimezoneSelect — custom dropdown
  */
@@ -454,7 +444,6 @@ const TimezoneSelect = ({ value, onChange, options, placeholder }) => {
 /**
  * NavItem — single navbar link
  */
->>>>>>> 28dccfce5f6b6f56183a75cab6ea7221a359bb5a
 const NavItem = ({ label, icon, active }) => {
   const navigate = useNavigate();
   const routeByLabel = {
