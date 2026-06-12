@@ -6,6 +6,9 @@ import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep8Declaration, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
 
+// Import standard CSS
+import './css/Step8Declaration.css';
+
 const REQUIRED_STEP8_FIELDS = [
     { key: 'signature', label: 'Digital Signature' },
     { key: 'fullName', label: 'Full Name' },
@@ -16,17 +19,13 @@ const REQUIRED_STEP8_FIELDS = [
 /**
  * Step8Declaration
  * Onboarding Step 8 of 8 — Declaration & Agreement
- * Sections:
- *   1. Application Summary 
- *   2. Declaration 
- *   3. Digital Confirmation 
- *   4. Compliance
  */
 const Step8Declaration = () => {
     const navigate = useNavigate();
     const { formData, updateFormData } = useOnboardingContext();
     const [isSavingStep, setIsSavingStep] = useState(false);
     const [stepError, setStepError] = useState('');
+    
     const step8 = formData.step8;
     const step1 = formData.step1;
     const step2 = formData.step2;
@@ -51,6 +50,7 @@ const Step8Declaration = () => {
             }
         };
         prefillFormData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleSubmit = async () => {
@@ -75,41 +75,22 @@ const Step8Declaration = () => {
     };
 
     return (
-        <div
-            className="relative min-h-screen w-full overflow-x-hidden flex flex-col font-[Jost] text-white"
-            style={{
-                background: 'linear-gradient(121.47deg, #0A0E14 49.53%, #161F2C 104.45%)',
-            }}
-        >
+        <div className="step8-wrapper">
             {isSavingStep && <Loader fullScreen={true} message="Saving and completing onboarding..." />}
+            
             {/* Grid lines */}
-            <div
-                className="absolute inset-0 pointer-events-none select-none z-0"
-                style={{
-                    backgroundImage:
-                        'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)',
-                    backgroundSize: '115px 115px',
-                }}
-            />
+            <div className="step8-grid-lines" />
 
             {/* Header */}
-            <div className="w-full px-[35px] pt-[35px] pb-0 flex flex-col relative z-10">
+            <div className="step8-header">
                 <DoxLogo width="69" />
-                <span className="text-[12px] text-white/65 leading-[20px] mt-[6px] font-normal tracking-wide">
-                    Employee Onboarding
-                </span>
+                <span>Employee Onboarding</span>
             </div>
 
             {/* Step Navbar */}
-            <div className="w-full px-4 md:px-[64px] mt-[24px] relative z-10">
-                <nav
-                    className="w-full max-w-[1312px] mx-auto h-[81px] rounded-[10px] flex items-center px-[16px] overflow-x-auto"
-                    style={{
-                        backgroundColor: '#0A0E14',
-                        border: '0.8px solid rgba(255,255,255,0.1)',
-                    }}
-                >
-                    <div className="flex items-center justify-between w-full">
+            <div className="step8-nav-container">
+                <nav className="step8-nav">
+                    <div className="step8-nav-inner">
                         <NavItem label="Home" icon={<HomeIcon />} />
                         <NavItem label="Personal Info" icon={<PersonIcon />} />
                         <NavItem label="Emergency Info" icon={<SirenIcon />} />
@@ -124,32 +105,23 @@ const Step8Declaration = () => {
             </div>
 
             {/* Page Content */}
-            <main className="flex-1 w-full max-w-[1440px] mx-auto px-4 md:px-[111px] pt-[48px] pb-[80px] relative z-10">
+            <main className="step8-main">
 
                 {/* Step label */}
-                <p
-                    className="font-[Jost] font-medium leading-[20px] mb-[30px]"
-                    style={{ fontSize: '48px', color: '#314460' }}
-                >
-                    Step 8 of 8
-                </p>
+                <p className="step8-step-label">Step 8 of 8</p>
 
                 {/* Heading + subtitle */}
-                <div className="flex flex-col gap-0 mb-[32px]">
-                    <h1 className="font-[Jost] font-extralight text-[24px] leading-[40px] text-white">
-                        Declaration & Agreement
-                    </h1>
-                    <p className="text-[16px] leading-[24px] font-normal" style={{ color: '#99A1AF' }}>
+                <div className="step8-heading-container">
+                    <h1 className="step8-h1">Declaration & Agreement</h1>
+                    <p className="step8-subtitle">
                         This section confirms authenticity and compliance with company policies.
                     </p>
                 </div>
 
                 {/* Application Summary */}
-                <h2 className="font-[Jost] font-extralight text-[24px] leading-[32px] text-white mb-[24px]">
-                    Application Summary
-                </h2>
+                <h2 className="step8-section-h2">Application Summary</h2>
 
-                <div className="flex flex-col gap-[24px] mb-[40px]">
+                <div className="step8-summary-list">
                     <ReviewSection
                         title="Basic Personal Information"
                         icon={<PersonIcon size={20} />}
@@ -256,124 +228,72 @@ const Step8Declaration = () => {
                 </div>
 
                 {/* Declaration + confirmation container */}
-                <div
-                    className="w-full rounded-[14px] p-[24px] mb-[32px]"
-                    style={{
-                        backgroundColor: 'rgba(10,14,20,0.65)',
-                        border: '0.8px solid rgba(255,255,255,0.18)',
-                        boxShadow: '0 0 26px rgba(0,0,0,0.35)',
-                    }}
-                >
-                    <h2 className="font-[Jost] font-extralight text-[24px] leading-[32px] text-white mb-[16px]">
-                        Declaration
-                    </h2>
+                <div className="step8-decl-wrapper">
+                    
+                    <h2 className="step8-decl-h2">Declaration</h2>
 
                     {/* Employee Declaration */}
-                    <div
-                        className="w-full rounded-[10px] px-[32px] py-[32px] mb-[32px]"
-                        style={{
-                            backgroundColor: 'rgba(59,130,246,0.05)',
-                            border: '0.8px solid rgba(59,130,246,0.2)',
-                        }}
-                    >
-                        <h3 className="font-[Jost] font-medium text-[18px] leading-[28px] text-white mb-[12px]">
-                            Employee Declaration
-                        </h3>
-                        <p className="font-[Jost] font-normal text-[18px] leading-[29px]" style={{ color: '#D1D5DC' }}>
-                            I confirm that the information provided above is accurate and complete.{'\n'}
-                            I agree to comply with NoCapCode policies and the internal handbook.{'\n'}
-                            I acknowledge the confidentiality and data protection obligations.{'\n'}
+                    <div className="step8-notice-card">
+                        <h3 className="step8-notice-title">Employee Declaration</h3>
+                        <p className="step8-notice-text">
+                            I confirm that the information provided above is accurate and complete.<br />
+                            I agree to comply with NoCapCode policies and the internal handbook.<br />
+                            I acknowledge the confidentiality and data protection obligations.<br />
                             I understand that any misrepresentation may result in termination.
                         </p>
                     </div>
 
                     {/* Digital Confirmation */}
-                    <h3 className="font-[Jost] font-medium text-[18px] leading-[28px] text-white mb-[24px]">
-                        Digital Confirmation
-                    </h3>
+                    <h3 className="step8-confirm-title">Digital Confirmation</h3>
 
-                    <div
-                        className="w-full rounded-[10px] px-[40px] py-[44px] mb-[32px]"
-                        style={{
-                            backgroundColor: 'rgba(10,14,20,0.6)',
-                            border: '0.8px solid rgba(255,255,255,0.1)',
-                        }}
-                    >
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[230px] gap-y-[24px]">
+                    <div className="step8-form-card">
+                        <div className="step8-form-grid">
 
-                            {/* Digital Signature — with Click button */}
-                            <div className="flex flex-col gap-[12px]">
-                                <label className="flex items-center gap-[4px]">
-                                    <span className="font-[Jost] font-bold text-[18px] leading-[20px]" style={{ color: '#D1D5DC' }}>
-                                        Digital Signature
-                                    </span>
-                                    <span style={{ color: '#FF6467' }} className="text-[14px]">*</span>
+                            {/* Digital Signature */}
+                            <div className="step8-form-field">
+                                <label className="step8-field-label-container">
+                                    <span className="step8-field-label">Digital Signature</span>
+                                    <span className="step8-field-asterisk">*</span>
                                 </label>
-                                <div
-                                    className="w-full h-[53px] rounded-[10px] px-[10px] flex items-center gap-[12px]"
-                                    style={{
-                                        backgroundColor: 'rgba(255,255,255,0.05)',
-                                        border: '0.8px solid rgba(255,255,255,0.1)',
-                                    }}
-                                >
+                                <div className="step8-sign-container">
                                     <button
                                         type="button"
                                         onClick={() => updateFormData('step8', 'signature', 'signed')}
-                                        className="h-[40px] px-[20px] rounded-[10px] shrink-0 font-[Jost] font-medium text-[16px] text-white"
-                                        style={{
-                                            backgroundColor: '#314460',
-                                            boxShadow:
-                                                '1px 1px 2px rgba(64,88,125,0.3), -1px -1px 2px rgba(34,48,67,0.5), inset -5px 5px 10px rgba(34,48,67,0.2), inset 5px -5px 10px rgba(34,48,67,0.2), inset -5px -5px 10px rgba(64,88,125,0.9), inset 5px 5px 13px rgba(34,48,67,0.9)',
-                                        }}
+                                        className="step8-sign-btn"
                                     >
                                         {step8.signature ? '✓ Signed' : 'Click'}
                                     </button>
                                     {step8.signature && (
-                                        <span className="text-[14px] font-[Jost]" style={{ color: '#99A1AF' }}>Signature captured</span>
+                                        <span className="step8-sign-status">Signature captured</span>
                                     )}
                                 </div>
                             </div>
 
                             {/* Full Name */}
-                            <div className="flex flex-col gap-[12px]">
-                                <label className="flex items-center gap-[4px]">
-                                    <span className="font-[Jost] font-bold text-[18px] leading-[20px]" style={{ color: '#D1D5DC' }}>
-                                        Full Name
-                                    </span>
-                                    <span style={{ color: '#FF6467' }} className="text-[14px]">*</span>
+                            <div className="step8-form-field">
+                                <label className="step8-field-label-container">
+                                    <span className="step8-field-label">Full Name</span>
+                                    <span className="step8-field-asterisk">*</span>
                                 </label>
                                 <input
-                                    value={step8.fullName}
+                                    value={step8.fullName || ''}
                                     onChange={(e) => updateFormData('step8', 'fullName', e.target.value)}
                                     placeholder="Enter full name as per ID"
-                                    className="w-full h-[53px] rounded-[10px] px-[20px] outline-none font-[Jost] text-[16px] caret-white"
-                                    style={{
-                                        backgroundColor: 'rgba(255,255,255,0.05)',
-                                        border: '0.8px solid rgba(255,255,255,0.1)',
-                                        color: step8.fullName ? '#FFFFFF' : '#6A7282',
-                                    }}
+                                    className="step8-input"
                                 />
                             </div>
 
                             {/* Date of Submission */}
-                            <div className="flex flex-col gap-[12px]">
-                                <label className="flex items-center gap-[4px]">
-                                    <span className="font-[Jost] font-bold text-[18px] leading-[20px]" style={{ color: '#D1D5DC' }}>
-                                        Date of Submission
-                                    </span>
-                                    <span style={{ color: '#FF6467' }} className="text-[14px]">*</span>
+                            <div className="step8-form-field">
+                                <label className="step8-field-label-container">
+                                    <span className="step8-field-label">Date of Submission</span>
+                                    <span className="step8-field-asterisk">*</span>
                                 </label>
                                 <input
                                     type="date"
-                                    value={step8.dateOfSubmission}
+                                    value={step8.dateOfSubmission || ''}
                                     onChange={(e) => updateFormData('step8', 'dateOfSubmission', e.target.value)}
-                                    className="w-full h-[53px] rounded-[10px] px-[20px] outline-none font-[Jost] text-[16px] caret-white"
-                                    style={{
-                                        backgroundColor: 'rgba(255,255,255,0.05)',
-                                        border: '0.8px solid rgba(255,255,255,0.1)',
-                                        color: step8.dateOfSubmission ? '#FFFFFF' : '#6A7282',
-                                        colorScheme: 'dark',
-                                    }}
+                                    className={`step8-date ${!step8.dateOfSubmission ? 'empty' : ''}`}
                                 />
                             </div>
 
@@ -381,26 +301,16 @@ const Step8Declaration = () => {
                     </div>
 
                     {/* Compliance blue card */}
-                    <div
-                        className="w-full rounded-[10px] px-[32px] py-[32px] mb-[32px]"
-                        style={{
-                            backgroundColor: 'rgba(59,130,246,0.05)',
-                            border: '0.8px solid rgba(59,130,246,0.2)',
-                        }}
-                    >
-                        <p className="font-[Outfit] font-normal text-[18px] leading-[29px]" style={{ color: '#D1D5DC' }}>
+                    <div className="step8-notice-card">
+                        <p className="step8-notice-text-alt">
                             I confirm that the information provided above is accurate and belongs to me, and I understand that this information will be used for preparing my Offer Letter, NDA/IP Agreement, and internal onboarding records.
                         </p>
                     </div>
 
                     {/* I agree checkbox */}
-                    <label className="flex items-center gap-[16px] cursor-pointer mb-[40px]">
+                    <label className="step8-agree-label">
                         <div
-                            className="w-[24px] h-[24px] rounded-[8px] flex items-center justify-center shrink-0"
-                            style={{
-                                backgroundColor: step8.agreed ? '#314460' : 'rgba(255,255,255,0.05)',
-                                border: '1px solid rgba(255,255,255,0.1)',
-                            }}
+                            className={`step8-checkbox-box ${step8.agreed ? 'checked' : ''}`}
                             onClick={() => updateFormData('step8', 'agreed', !step8.agreed)}
                         >
                             {step8.agreed && (
@@ -409,89 +319,59 @@ const Step8Declaration = () => {
                                 </svg>
                             )}
                         </div>
-                        <span className="font-[Jost] font-normal text-[16px] leading-[24px] text-white">
-                            I agree
-                        </span>
-                        <span className="font-[Jost] font-normal text-[16px] leading-[24px]" style={{ color: '#FF6467' }}>*</span>
+                        <span className="step8-agree-text">I agree</span>
+                        <span className="step8-field-asterisk">*</span>
                     </label>
 
                 </div>
 
                 {/* Navigation Buttons */}
-                <div className="flex items-center sm:justify-between gap-[8px] sm:gap-[12px]">
+                <div className="step8-button-container">
                     <button
                         type="button"
                         onClick={() => navigate('/onboarding/step7')}
-                        className="h-[36px] sm:h-[40px] flex-1 sm:flex-none min-w-0 px-[12px] sm:px-[20px] rounded-[10px] flex items-center justify-center gap-[8px] transition-opacity hover:opacity-90 active:scale-95"
-                        style={{ backgroundColor: 'rgba(255,255,255,0.3)' }}
+                        className="step8-prev-btn"
                     >
                         <ArrowLeftIcon />
-                        <span className="text-[13px] sm:text-[16px] font-normal text-white leading-[18px] sm:leading-[24px] text-center">Previous</span>
+                        <span className="step8-btn-text">Previous</span>
                     </button>
 
                     <button
                         type="button"
                         onClick={handleSubmit}
                         disabled={isSavingStep}
-                        className="h-[36px] sm:h-[40px] flex-1 sm:flex-none min-w-0 px-[12px] sm:px-[24px] rounded-[10px] flex items-center justify-center gap-[8px] transition-opacity hover:opacity-90 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
-                        style={{
-                            backgroundColor: '#314460',
-                            boxShadow:
-                                '1px 1px 2px rgba(64,88,125,0.3), -1px -1px 2px rgba(34,48,67,0.5), inset -5px 5px 10px rgba(34,48,67,0.2), inset 5px -5px 10px rgba(34,48,67,0.2), inset -5px -5px 10px rgba(64,88,125,0.9), inset 5px 5px 13px rgba(34,48,67,0.9)',
-                        }}
+                        className="step8-submit-btn"
                     >
-                        <span className="text-[13px] sm:text-[16px] font-medium text-white leading-[18px] sm:leading-[24px] text-center">{isSavingStep ? 'Saving...' : 'Next'}</span>
+                        <span className="step8-btn-text">{isSavingStep ? 'Saving...' : 'Submit Onboarding'}</span>
                         <ArrowRightIcon />
                     </button>
                 </div>
 
-                {stepError ? (
-                    <p className="mt-[12px] text-[14px] text-[#FF9EA0]">{stepError}</p>
-                ) : null}
+                {stepError && <p className="step8-error-text">{stepError}</p>}
 
             </main>
         </div>
     );
 };
 
-/* ── ReviewSection ── */
+/* ── ReviewSection Component ── */
 
-/**
- * ReviewSection 
- * @param {string} title
- * @param {React.ReactNode} icon
- * @param {function} onEdit
- * @param {{ label: string, value: string }[]} items
- */
 const ReviewSection = ({ title, icon, onEdit, items }) => (
-    <div
-        className="w-full rounded-[14px] px-[24px] py-0"
-        style={{
-            backgroundColor: 'rgba(10,14,20,0.75)',
-            border: '0.8px solid rgba(255,255,255,0.1)',
-        }}
-    >
+    <div className="step8-review-card">
         {/* Header row */}
-        <div
-            className="flex items-center justify-between py-[12px]"
-            style={{ borderBottom: '0.8px solid rgba(255,255,255,0.1)' }}
-        >
-            <div className="flex items-center gap-[12px]">
-                <div
-                    className="w-[36px] h-[36px] rounded-[10px] flex items-center justify-center"
-                    style={{ backgroundColor: 'rgba(49,68,96,0.2)' }}
-                >
-                    <span style={{ color: '#314460' }}>{icon}</span>
+        <div className="step8-review-header">
+            <div className="step8-review-header-left">
+                <div className="step8-review-icon">
+                    {icon}
                 </div>
-                <span className="font-[Jost] font-medium text-[18px] leading-[28px] text-white">
+                <span className="step8-review-title">
                     {title}
                 </span>
             </div>
             <button
                 type="button"
                 onClick={onEdit}
-                className="flex items-center gap-[4px] font-[Jost] font-normal text-[14px] leading-[20px] hover:opacity-80"
-                style={{ color: '#314460' }}
+                className="step8-review-edit-btn"
             >
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                     <path d="M1 13h12M9.5 1.5l3 3L4 13H1v-3L9.5 1.5Z" stroke="#314460" strokeWidth="1.17" strokeLinecap="round" strokeLinejoin="round" />
@@ -501,15 +381,11 @@ const ReviewSection = ({ title, icon, onEdit, items }) => (
         </div>
 
         {/* Key-value rows */}
-        <div className="flex flex-col gap-[12px] py-[16px]">
+        <div className="step8-review-content">
             {items.map((item, i) => (
-                <div key={i} className="flex items-start justify-between">
-                    <span className="font-[Jost] font-normal text-[14px] leading-[20px]" style={{ color: '#99A1AF' }}>
-                        {item.label}
-                    </span>
-                    <span className="font-[Jost] font-normal text-[14px] leading-[20px] text-white text-right ml-[24px]">
-                        {item.value}
-                    </span>
+                <div key={i} className="step8-review-row">
+                    <span className="step8-review-label">{item.label}</span>
+                    <span className="step8-review-value">{item.value}</span>
                 </div>
             ))}
         </div>
@@ -537,16 +413,10 @@ const NavItem = ({ label, icon, active }) => {
         <button
             type="button"
             onClick={() => targetPath && !active && navigate(targetPath)}
-            className="flex items-center gap-[8px] px-[16px] py-[10px] rounded-[10px] cursor-pointer whitespace-nowrap"
-            style={{ backgroundColor: active ? '#314460' : 'transparent' }}
+            className={`step8-nav-item ${active ? 'active' : ''}`}
         >
-            <span style={{ color: active ? '#51A2FF' : 'rgba(255,255,255,0.65)' }}>{icon}</span>
-            <span
-                className="font-[Jost] font-normal text-[15px] leading-[20px]"
-                style={{ color: active ? '#51A2FF' : 'rgba(255,255,255,0.65)' }}
-            >
-                {label}
-            </span>
+            <span className="step8-nav-icon">{icon}</span>
+            <span className="step8-nav-label">{label}</span>
         </button>
     );
 };
@@ -624,8 +494,8 @@ const SystemIcon = ({ size = 15 }) => (
     </svg>
 );
 
-const DeclarationIcon = () => (
-    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+const DeclarationIcon = ({ size = 15 }) => (
+    <svg width={size} height={size} viewBox="0 0 15 15" fill="none" aria-hidden="true">
         <rect x="3" y="1" width="9" height="13" rx="1.5" stroke="currentColor" strokeWidth="1.2" />
         <path d="M5.5 5h4M5.5 7.5h4M5.5 10h2.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
     </svg>

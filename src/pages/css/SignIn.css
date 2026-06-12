@@ -1,0 +1,309 @@
+/* SignIn.css */
+
+/* Animations */
+@keyframes slideInRight {
+  0% { transform: translateX(100vw); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  0% { transform: translateX(-100vw); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+/* Layout & Background */
+.signin-wrapper {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(116.04deg, #0A0E14 18.26%, #112B53 51.38%, #0A0E14 78.49%);
+}
+
+/* Background Decorative Texts */
+.signin-bg-atla-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  pointer-events: none;
+  user-select: none;
+  animation: slideInRight 3.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.signin-bg-atla-shadow {
+  position: absolute;
+  font-family: 'Jomolhari', serif;
+  font-size: 55vw;
+  font-weight: 400;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.46);
+  filter: blur(11.1px);
+  top: 0;
+  left: -3vw;
+  transform: translate(0, -72%);
+  white-space: nowrap;
+}
+
+.signin-bg-atla-gradient {
+  position: absolute;
+  font-family: 'Jomolhari', serif;
+  font-size: 55vw;
+  font-weight: 400;
+  line-height: 1;
+  top: 0;
+  left: -3vw;
+  transform: translate(0, -72%);
+  white-space: nowrap;
+  background: linear-gradient(95.73deg, #000000 8.34%, #FFFFFF 63.47%, #0A0E14 94.62%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.signin-bg-ncc-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  pointer-events: none;
+  user-select: none;
+  animation: slideInLeft 3.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.signin-bg-ncc-shadow {
+  position: absolute;
+  font-family: 'Jomolhari', serif;
+  font-size: 40vw;
+  font-weight: 400;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.49);
+  filter: blur(13.65px);
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 60%);
+  white-space: nowrap;
+}
+
+.signin-bg-ncc-gradient {
+  position: absolute;
+  font-family: 'Jomolhari', serif;
+  font-size: 40vw;
+  font-weight: 400;
+  line-height: 1;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 60%);
+  white-space: nowrap;
+  background: linear-gradient(93.02deg, #6C6C6C 24.98%, #FFFFFF 45.65%, #050505 75.35%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Main Content Wrapper */
+.signin-main-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 471px;
+  padding: 0 16px;
+  margin-top: 1vh;
+  z-index: 20;
+}
+
+.signin-logo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6px;
+  flex-shrink: 0;
+}
+
+/* Titles */
+.signin-title-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 33px;
+}
+
+.signin-title-white {
+  font-family: 'Jost', sans-serif;
+  font-size: 24px;
+  font-weight: 200;
+  color: #FFFFFF;
+}
+
+.signin-title-blue {
+  font-family: 'Jost', sans-serif;
+  font-size: 24px;
+  font-weight: 200;
+  color: #86B2F4;
+}
+
+.signin-subtitle {
+  margin-top: 1px;
+  font-family: 'Jost', sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 28px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Form Container */
+.signin-form-box {
+  margin-top: 16px;
+  width: 100%;
+  max-width: 350px;
+  border-radius: 16px;
+  padding: 19px 26px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 0.8px solid rgba(255, 255, 255, 0.1);
+}
+
+.signin-label {
+  height: 20px;
+  display: flex;
+  align-items: center;
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #FFFFFF;
+}
+
+.signin-label.mt-16 {
+  margin-top: 16px;
+}
+
+/* Input Fields */
+.signin-input-container {
+  margin-top: 6px;
+  width: 100%;
+  height: 45px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px;
+  background-color: rgba(201, 201, 201, 0.1);
+}
+
+.signin-input {
+  flex: 1;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  caret-color: #FFFFFF;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.signin-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.signin-toggle-btn {
+  flex-shrink: 0;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Submit Button */
+.signin-submit-btn {
+  margin-top: 16px;
+  position: relative;
+  z-index: 30;
+  width: 100%;
+  max-width: 350px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: opacity 0.2s;
+  background-color: #314460;
+  border: 1px solid #FFFFFF;
+  box-shadow: 
+    1px 1px 2px rgba(64,88,125,0.3), 
+    -1px -1px 2px rgba(34,48,67,0.5), 
+    inset -5px 5px 10px rgba(34,48,67,0.2), 
+    inset 5px -5px 10px rgba(34,48,67,0.2), 
+    inset -5px -5px 10px rgba(64,88,125,0.9), 
+    inset 5px 5px 13px rgba(34,48,67,0.9);
+  cursor: pointer;
+}
+
+.signin-submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.signin-submit-btn:hover:enabled {
+  opacity: 0.9;
+}
+
+.signin-btn-text {
+  font-family: 'Jost', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #FFFFFF;
+}
+
+/* Error Text */
+.signin-error-text {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #FF9EA0;
+  text-align: center;
+  max-width: 392px;
+}
+
+/* Footer */
+.signin-footer {
+  position: absolute;
+  bottom: 3vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 20;
+}
+
+.signin-footer-text {
+  margin: 0;
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+  background: linear-gradient(90deg, #195AC0 0%, #FFFFFF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Utility for icons */
+.signin-icon-shrink {
+  flex-shrink: 0;
+}
