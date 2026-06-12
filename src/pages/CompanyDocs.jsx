@@ -8,6 +8,8 @@ const CompanyDocs = () => {
     const navigate = useNavigate()
     const [selectedDocumentId, setSelectedDocumentId] = useState('section-1-about-nocapcode')
     const [expandedSectionIds, setExpandedSectionIds] = useState([])
+    const [mobileActiveSectionId, setMobileActiveSectionId] = useState('section-1-about-nocapcode')
+    const [mobileSectionMenuOpen, setMobileSectionMenuOpen] = useState(true)
     const [hasAcknowledged, setHasAcknowledged] = useState(false)
     const [isContentOverflowing, setIsContentOverflowing] = useState(false)
     const [hasOpenedLongContent, setHasOpenedLongContent] = useState(false)
@@ -23,6 +25,11 @@ const CompanyDocs = () => {
         [selectedDocumentId],
     )
 
+    const mobileActiveSection = useMemo(
+        () => documentTree.find((item) => item.id === mobileActiveSectionId) ?? documentTree[0],
+        [mobileActiveSectionId],
+    )
+
     const handleSelect = (id) => {
         setSelectedDocumentId(id)
         setHasAcknowledged(false)
@@ -32,6 +39,10 @@ const CompanyDocs = () => {
 
     const handleSectionSelect = (sectionId, hasChildren) => {
         handleSelect(sectionId)
+        setMobileActiveSectionId(sectionId)
+        setMobileSectionMenuOpen((previousValue) =>
+            previousValue && mobileActiveSectionId === sectionId ? false : true,
+        )
 
         if (hasChildren) {
             setExpandedSectionIds((previousIds) =>
@@ -44,6 +55,10 @@ const CompanyDocs = () => {
 
     const handleDocumentSelect = (documentId, parentSectionId) => {
         handleSelect(documentId)
+        if (parentSectionId) {
+            setMobileActiveSectionId(parentSectionId)
+            setMobileSectionMenuOpen(true)
+        }
 
         if (parentSectionId) {
             setExpandedSectionIds((previousIds) =>
@@ -169,83 +184,270 @@ const CompanyDocs = () => {
     }
 
     return (
-        <div className="relative min-h-screen w-full overflow-x-hidden font-[jost] text-white" style={{ background: '#000' }}>
-            {/* Background */}
-            <div className="absolute inset-0 z-0">
-                <div
-                    className="absolute top-0 left-0 h-full w-1/2"
-                    style={{
-                        background:
-                            'conic-gradient(from 89.78deg at 50% 41%, #0A1F56 0deg, #00184D 219.41deg, #0A1F56 309.85deg, #0D2460 360deg)',
-                    }}
-                />
-                <div
-                    className="absolute top-0 right-0 h-full w-1/2"
-                    style={{
-                        background:
-                            'conic-gradient(from 89.78deg at 50% 41%, #0A1F56 0deg, #00184D 219.41deg, #0A1F56 309.85deg, #0D2460 360deg)',
-                        transform: 'matrix(-1, 0, 0, 1, 0, 0)',
-                    }}
-                />
-            </div>
+        <div className="relative h-screen w-screen overflow-hidden font-[Jost] text-white" style={{ background: 'linear-gradient(119.18deg, #0A0E14 2.67%, #141C28 96.61%)' }}>
+            <style>{`.no-scrollbar::-webkit-scrollbar{display:none} .no-scrollbar{scrollbar-width:none; -ms-overflow-style:none;}`}</style>
 
-            {/* Background Overlay */}
-            <div
-                className="absolute inset-0 z-0"
-                style={{
-                    backgroundImage: 'url(/dox-bg.png)',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                    mixBlendMode: 'multiply',
-                    filter: 'brightness(0) contrast(1.08)',
-                    opacity: 0.62,
-                }}
-            />
-
-            {/* Blue Gradient Overlay */}
-            <div
-                className="absolute inset-0 z-0"
-                style={{
-                    background:
-                        'linear-gradient(180deg, #000000 20%, #5492EC 52%, #000000 100%)',
-                    mixBlendMode: 'multiply',
-                }}
-            />
-
-            {/* Main Content */}
-            <div className="relative z-10 mx-auto w-full max-w-[1240px] px-4 py-8 md:px-8 md:py-10">
+            {/* Mobile layout */}
+            <div className="fixed inset-0 z-40 overflow-hidden bg-[linear-gradient(171.66deg,#0C1119_40.66%,#141C28_99.3%)] lg:hidden">
                 <div
-                    className="relative overflow-hidden rounded-[12px] border border-white/8"
+                    className="absolute top-0 left-0 overflow-hidden"
                     style={{
-                        background:
-                            'linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(153, 153, 153, 0.02) 100%)',
-                        backdropFilter: 'blur(8px)',
-                        WebkitBackdropFilter: 'blur(8px)',
+                        width: '172px',
+                        height: '87px',
                     }}
                 >
-                    {/* Sidebar and Content Layout */}
-                    <div className="grid min-h-[760px] grid-cols-1 md:grid-cols-[140px_1fr]">
-                        <aside className="relative p-4 md:p-3">
-                            {/* Sidebar */}
-                            <div className="pointer-events-none absolute right-0 top-[18px] bottom-[18px] hidden items-stretch md:flex">
-                                <VerticalDivider />
-                            </div>
-                            <DoxLogo />
-                            <p className="mt-1 text-[11px] leading-[16px] text-white/65">Employee Onboarding</p>
-                            <div className="my-5 pr-6">
-                                <HorizontalDivider />
-                            </div>
+                    <div className="absolute left-[16px] top-[11px]" style={{ transform: 'scale(0.62)', transformOrigin: 'left top' }}>
+                        <DoxLogo />
+                    </div>
+                    <p
+                        className="absolute left-[16px] top-[36px] leading-none text-white/65"
+                        style={{ fontSize: '10px', fontWeight: 400 }}
+                    >
+                        Employee Onboarding
+                    </p>
+                </div>
 
-                            <div className="flex gap-3 md:flex-col md:gap-8">
-                                <StepBadge number="1" />
-                                <StepBadge number="2" active />
-                                <StepBadge number="3" />
-                            </div>
-                        </aside>
+                <div className="absolute left-0 right-0 top-[90px] bottom-[72px] overflow-y-auto px-6 pb-6 pt-0">
+                    <div className="pt-0">
+                        <h1 className="text-[24px] leading-[24px] font-normal text-white">Company Docs</h1>
+                        <p className="mt-4 max-w-[357px] text-[16px] leading-[24px] text-white/65">
+                            Please review and understand our policies and culture.
+                        </p>
+                    </div>
 
+                    <div className="mt-6 relative">
+                        <div
+                            className="flex overflow-x-auto rounded-[10px] border border-white bg-transparent no-scrollbar"
+                            style={{ height: 'clamp(42px, 4.8vw, 48px)' }}
+                        >
+                            {documentTree.map((section) => {
+                                const isActive = mobileActiveSection?.id === section.id
+                                return (
+                                    <button
+                                        key={section.id}
+                                        type="button"
+                                        onClick={() => {
+                                            const hasChildren = Boolean(section.children?.length)
+                                            handleSelect(section.id)
+                                            setMobileActiveSectionId(section.id)
+
+                                            if (hasChildren) {
+                                                setMobileSectionMenuOpen((previousValue) =>
+                                                    mobileActiveSectionId === section.id ? !previousValue : true,
+                                                )
+                                            } else {
+                                                setMobileSectionMenuOpen(false)
+                                            }
+                                        }}
+                                        onMouseEnter={() => setMobileActiveSectionId(section.id)}
+                                        onFocus={() => setMobileActiveSectionId(section.id)}
+                                        className="flex h-full shrink-0 items-center justify-between gap-2 border-r border-white/10 px-4 text-left transition-colors last:border-r-0"
+                                        style={{
+                                            minWidth: '126px',
+                                            background: isActive ? '#1C2027' : 'transparent',
+                                            color: '#FFFFFF',
+                                            fontSize: '12px',
+                                            lineHeight: '20px',
+                                            fontWeight: 400,
+                                        }}
+                                    >
+                                        <span className="truncate">{section.title}</span>
+                                        {section.children?.length ? (
+                                            <span
+                                                className="inline-flex shrink-0 transition-transform"
+                                                style={{ transform: isActive ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                                            >
+                                                <ChevronDownIcon />
+                                            </span>
+                                        ) : null}
+                                    </button>
+                                )
+                            })}
+                        </div>
+
+                        {mobileSectionMenuOpen && mobileActiveSection?.children?.length ? (
+                            <div className="mt-2 rounded-[10px] border border-white/20 bg-[#0A0E14] p-2 shadow-[0_12px_28px_rgba(0,0,0,0.28)]">
+                                <div className="max-h-[210px] overflow-y-auto pr-1 no-scrollbar">
+                                    {mobileActiveSection.children.map((child) => {
+                                        const isChildActive = selectedDocumentId === child.id
+                                        return (
+                                            <button
+                                                key={child.id}
+                                                type="button"
+                                                onClick={() => handleDocumentSelect(child.id, mobileActiveSection.id)}
+                                                className="flex w-full items-start rounded-[8px] px-3 py-2 text-left transition-colors hover:bg-white/6"
+                                                style={{
+                                                    color: isChildActive ? '#FFFFFF' : 'rgba(255,255,255,0.82)',
+                                                    fontSize: '12px',
+                                                    lineHeight: '18px',
+                                                    fontWeight: 400,
+                                                }}
+                                            >
+                                                <span className="block whitespace-normal break-words">{child.title}</span>
+                                            </button>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                        ) : null}
+                    </div>
+
+                    <div className="mt-8 rounded-[10px] border border-white/10 bg-[rgba(0,0,0,0.54)] p-4">
+                        <ExpandableContent
+                            content={selectedDocument.content}
+                            onOverflowChange={setIsContentOverflowing}
+                            onExpanded={() => setHasOpenedLongContent(true)}
+                        />
+
+                        <div className="mt-4 rounded-[5px] bg-[rgba(255,255,255,0.1)] px-3 py-3 text-white">
+                            <p className="text-[16px] leading-[24px] font-normal">Need Help?</p>
+                            <p className="mt-1 text-[12px] leading-[24px] text-white/90">
+                                Reach out to DOX or your assigned onboarding buddy.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="mt-4 rounded-[10px] border border-white/50 p-4">
+                        <label className="flex cursor-pointer items-start gap-3 text-[14px] leading-[20px] text-white/65">
+                            <input
+                                type="checkbox"
+                                checked={hasAcknowledged}
+                                onChange={handleAcknowledgeChange}
+                                className="mt-1 h-4 w-4 rounded border-white/35 bg-transparent text-[#6EA8FF] focus:ring-0 focus:ring-offset-0"
+                            />
+                            <span>I have read and understood this document.</span>
+                        </label>
+
+                        <button
+                            type="button"
+                            onClick={handleMarkAsRead}
+                            disabled={hasAcknowledged}
+                            className="mt-4 inline-flex items-center gap-2 rounded-[10px] border border-white/35 px-5 py-2.5 text-[15px] leading-[22px] text-white/90 transition-colors hover:bg-white/6 disabled:cursor-default disabled:bg-white/10 disabled:text-white/55"
+                        >
+                            <ReadIcon />
+                            {hasAcknowledged ? 'Document Marked as Read' : 'Mark as Read & Continue'}
+                        </button>
+                    </div>
+                </div>
+                       
+            </div>
+
+            {/* Mobile top navbar */}
+            <div className="fixed top-0 left-0 right-0 z-50 flex items-stretch justify-between border-b border-white/10 bg-[#0A0E14] lg:hidden">
+                <div
+                    className="flex flex-col items-center justify-center overflow-hidden shrink-0"
+                    style={{
+                        width: 'clamp(86px, 28vw, 112px)',
+                        height: 'clamp(64px, 14vw, 74px)',
+                        background: '#0A0E14',
+                        borderRight: '0.5px solid rgba(173, 173, 173, 0.5)',
+                        borderBottom: '0.5px solid rgba(173, 173, 173, 0.5)',
+                        borderRadius: '0px 0px 10px 0px',
+                    }}
+                >
+                    <div style={{ transform: 'scale(0.62)', transformOrigin: 'center' }}>
+                        <DoxLogo />
+                    </div>
+                    <p className="leading-none text-white/50 text-[8px] mt-0.5 text-center px-1">Employee Onboarding</p>
+                </div>
+
+                <div className="flex flex-1 items-center justify-around gap-2 px-2 py-2">
+                    {[1, 2, 3].map((n) => {
+                        const isActive = n === 2
+                        return (
+                            <div
+                                key={n}
+                                className="flex min-w-0 flex-1 items-center justify-center rounded-[10px] border text-center font-medium"
+                                style={{
+                                    height: 'clamp(42px, 10vw, 56px)',
+                                    fontSize: 'clamp(12px, 3.5vw, 16px)',
+                                    background: isActive ? '#1C2027' : '#0A0E14',
+                                    borderColor: 'rgba(173, 173, 173, 0.5)',
+                                    color: isActive ? '#FFFFFF' : 'rgba(255, 255, 255, 0.55)'
+                                }}
+                            >
+                                {n}
+                            </div>
+                        )
+                    })}
+                </div>
+            </div>
+
+            {/* Sidebar DOX logo square */}
+            <div className="absolute top-0 left-0 z-50 hidden lg:block">
+                <div
+                    className="flex flex-col items-center justify-center overflow-hidden"
+                    style={{
+                        width: '12vw',
+                        height: '16vh',
+                        background: '#0A0E14',
+                        borderRight: '0.5px solid rgba(173, 173, 173, 0.5)',
+                        borderBottom: '0.5px solid rgba(173, 173, 173, 0.5)',
+                        borderRadius: '0px 0px 10px 0px',
+                    }}
+                >
+                    <div style={{ transform: 'scale(0.82)', transformOrigin: 'center' }}>
+                        <DoxLogo />
+                    </div>
+                    <p className="leading-none text-white/50 mt-1" style={{ fontSize: 'clamp(10px, 0.65vw, 12px)' }}>Employee Onboarding</p>
+                </div>
+            </div>
+
+            {/* Sidebar steps */}
+            <aside className="fixed left-0 top-0 h-full z-30 hidden flex-col bg-transparent lg:flex" style={{ paddingTop: '32vh' }}>
+                <div className="flex flex-col gap-9">
+                    <div
+                        className="flex items-center justify-center font-medium"
+                        style={{
+                            width: '5vw',
+                            height: '10vh',
+                            fontSize: '2.2vw',
+                            background: '#0A0E14',
+                            border: '0.5px solid rgba(173, 173, 173, 0.5)',
+                            borderRadius: '0px 10px 10px 0px',
+                            color: '#848689',
+                        }}
+                    >
+                        1
+                    </div>
+                    <div
+                        className="flex items-center justify-center font-medium"
+                        style={{
+                            width: '5vw',
+                            height: '10vh',
+                            fontSize: '2.2vw',
+                            background: '#1C2027',
+                            border: '0.5px solid rgba(173, 173, 173, 0.5)',
+                            borderRadius: '0px 10px 10px 0px',
+                            color: '#FFFFFF',
+                        }}
+                    >
+                        2
+                    </div>
+                    <div
+                        className="flex items-center justify-center font-medium"
+                        style={{
+                            width: '5vw',
+                            height: '10vh',
+                            fontSize: '2.2vw',
+                            background: '#0A0E14',
+                            border: '0.5px solid rgba(173, 173, 173, 0.5)',
+                            borderRadius: '0px 10px 10px 0px',
+                            color: 'rgba(255, 255, 255, 0.5)',
+                        }}
+                    >
+                        3
+                    </div>
+                </div>
+            </aside>
+
+            {/* Framed container */}
+            <div className="relative hidden lg:block" style={{ marginLeft: '4.5vw', marginTop: '8vh', marginRight: '3vw', marginBottom: '5vh', zIndex: 20 }}>
+                <div className="w-full border rounded-[10px] relative no-scrollbar" style={{ borderColor: 'rgba(173, 173, 173, 0.5)', maxHeight: 'calc(100vh - 12vh)', overflowY: 'auto' }}>
+                    {/* Content Layout */}
+                    <div className="grid min-h-[760px]">
                         <section className="relative p-5 md:p-8 lg:p-10">
-                            <div className="relative z-10">
+                            <div className="relative z-10" style={{ paddingLeft: 'clamp(36px, 6.5vw, 100px)' }}>
                                 <h1 className="text-[28px] font-normal leading-[34px]">Company Docs</h1>
                                 <p className="mt-1 max-w-[820px] text-[16px] leading-[24px] text-white/70">
                                     Please review and understand our policies and culture.
@@ -256,7 +458,7 @@ const CompanyDocs = () => {
                                     <nav
                                         className="relative h-[470px] rounded-[10px] border border-white/8 p-3"
                                         style={{
-                                            background: 'rgba(46, 109, 194, 0.16)',
+                                            background: 'rgba(28, 32, 39, 0.65)',
                                             backdropFilter: 'blur(10px)',
                                             WebkitBackdropFilter: 'blur(10px)',
                                         }}
@@ -290,22 +492,38 @@ const CompanyDocs = () => {
                                     </nav>
 
                                     <div className="space-y-4">
-                                        <ExpandableContent
-                                            content={selectedDocument.content}
-                                            onOverflowChange={setIsContentOverflowing}
-                                            onExpanded={() => setHasOpenedLongContent(true)}
-                                        />
-
-                                        {/* Acknowledgement Panel */}
                                         <section
-                                            className="rounded-[10px] border border-white/8 p-4 md:p-6"
+                                            className="rounded-[10px] border border-white/50 p-4 md:p-6"
                                             style={{
-                                                background: 'rgba(46, 109, 194, 0.1)',
+                                                background: '0A0E14',
+                                                // backdropFilter: 'blur(10px)',
+                                                //WebkitBackdropFilter: 'blur(10px)',
+                                            }}
+                                        >
+                                            <ExpandableContent
+                                                content={selectedDocument.content}
+                                                onOverflowChange={setIsContentOverflowing}
+                                                onExpanded={() => setHasOpenedLongContent(true)}
+                                            />
+
+                                            <div className="mt-4 rounded-[5px] bg-[rgba(28,32,39,0.65)] px-3 py-3 text-white">
+                                                <p className="text-[16px] leading-[24px] font-normal">Need Help?</p>
+                                                <p className="mt-1 text-[14px] leading-[24px] text-white/90">
+                                                    Reach out to DOX or your assigned onboarding buddy.
+                                                </p>
+                                            </div>
+                                        </section>
+                                        {/*confirmation  */}
+                                        <section
+                                            className="rounded-[10px] border p-4 md:p-6"
+                                            style={{
+                                                background: '0A0E14',
+                                                border: '0.5px solid rgba(255, 255, 255, 0.5)',
                                                 backdropFilter: 'blur(10px)',
                                                 WebkitBackdropFilter: 'blur(10px)',
                                             }}
                                         >
-                                            <label className="flex cursor-pointer items-start gap-3 text-[14px] leading-[20px] text-white/70 md:text-[15px] md:leading-[22px]">
+                                            <label className="flex cursor-pointer items-start gap-3 text-[14px] leading-[20px] text-white/65 md:text-[15px] md:leading-[22px]">
                                                 <input
                                                     type="checkbox"
                                                     checked={hasAcknowledged}
@@ -460,7 +678,7 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
         }
     }, [])
 
-    const handleContentThumbMouseDown = (event) => {
+    const handleContentThumbPointerDown = (event) => {
         if (!isExpanded) {
             return
         }
@@ -471,6 +689,8 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
         if (!scrollContainer) {
             return
         }
+
+        event.currentTarget.setPointerCapture?.(event.pointerId)
 
         contentThumbDragRef.current = {
             isDragging: true,
@@ -500,6 +720,7 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
             const deltaY = moveEvent.clientY - contentThumbDragRef.current.startY
             const scrollRatio = maxScrollTop / maxThumbTop
             currentScrollContainer.scrollTop = contentThumbDragRef.current.startScrollTop + deltaY * scrollRatio
+            syncContentThumb()
         }
 
         const handleMouseUp = () => {
@@ -514,75 +735,85 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
     }
 
     const handleToggleExpanded = () => {
-        setIsExpanded((previousValue) => {
-            const nextValue = !previousValue
-            if (nextValue) {
-                onExpanded?.()
-            }
-            return nextValue
-        })
+        setIsExpanded((previousValue) => !previousValue)
     }
+
+    useEffect(() => {
+        if (isExpanded) {
+            onExpanded?.()
+        }
+    }, [isExpanded, onExpanded])
 
     return (
         <div className="space-y-2">
             {/* Document Card */}
             <article
-                className="rounded-[10px] border border-white/8 transition-all duration-300 relative"
+                className="rounded-[10px] border border-white/8 transition-all duration-300 relative overflow-hidden"
                 style={{
-                    background: 'linear-gradient(180deg, rgba(8, 21, 56, 0.72) 0%, rgba(8, 21, 56, 0.5) 100%)',
+                    background: 'rgba(0, 0, 0, 0.54)',
                     borderColor: 'rgba(255, 255, 255, 0.1)',
                     backdropFilter: 'blur(10px)',
                     WebkitBackdropFilter: 'blur(10px)',
                 }}
             >
-                <div
-                    className="pointer-events-none absolute inset-0 z-0 rounded-[10px]"
-                    style={{
-                        backgroundImage: 'url(/dox-bg.png)',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        backgroundRepeat: 'no-repeat',
-                        mixBlendMode: 'multiply',
-                        filter: 'brightness(0) contrast(1.08)',
-                        opacity: 0.46,
-                    }}
-                />
-
                 {/* Scrollable Content */}
-                <div
-                    ref={contentScrollRef}
-                    className="relative z-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-                    onScroll={syncContentThumb}
-                    style={{
-                        position: 'relative',
-                        overflowX: 'hidden',
-                        overflowY: isExpanded ? 'auto' : 'hidden',
-                        maxHeight: '404px',
-                        scrollbarWidth: 'none',
-                        msOverflowStyle: 'none',
-                    }}
-                >
-                    <p
-                        ref={contentRef}
-                        className="p-4 md:p-6 text-[15px] leading-[24px] tracking-[0.08em] text-white/85 md:text-[16px] md:leading-[26px] transition-all duration-300"
+                <div className="relative overflow-hidden min-h-[404px]">
+                    <div
+                        aria-hidden="true"
+                        className="pointer-events-none absolute left-20 top-10 z-0 select-none whitespace-nowrap opacity-100"
                         style={{
-                            minHeight: '404px',
-                            margin: 0,
-                            whiteSpace: 'pre-line',
-                            fontFamily: 'Arial, sans-serif',
-
+                            width: '1164px',
+                            height: '129px',
+                            fontFamily: 'Jost, sans-serif',
+                            fontStyle: 'normal',
+                            fontWeight: 600,
+                            fontSize: '200px',
+                            lineHeight: '24px',
+                            color: 'rgba(255, 255, 255, 0.1)',
+                            textShadow: '0 0 24px rgba(255, 255, 255, 0.05)',
+                            letterSpacing: '-0.06em',
+                            transform: 'rotate(90deg)',
+                            transformOrigin: 'left top',
                         }}
                     >
-                        {renderContentWithBoldMarkers(content)}
-                    </p>
+                        no cap code
+                    </div>
+
+                    <div
+                        ref={contentScrollRef}
+                        className="relative z-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                        onScroll={syncContentThumb}
+                        style={{
+                            position: 'relative',
+                            overflowX: 'hidden',
+                            overflowY: isExpanded ? 'auto' : 'hidden',
+                            maxHeight: '404px',
+                            scrollbarWidth: 'none',
+                            msOverflowStyle: 'none',
+                        }}
+                    >
+                        <p
+                            ref={contentRef}
+                            className="p-4 md:p-6 text-[15px] leading-[24px] tracking-[0.08em] text-white/85 md:text-[16px] md:leading-[26px] transition-all duration-300"
+                            style={{
+                                minHeight: '404px',
+                                margin: 0,
+                                whiteSpace: 'pre-line',
+                                fontFamily: 'Arial, sans-serif',
+
+                            }}
+                        >
+                            {renderContentWithBoldMarkers(content)}
+                        </p>
+                    </div>
                 </div>
 
                 {isExpanded && isOverflowing ? (
-                    <div className="pointer-events-none absolute bottom-[13px] right-3 top-[13px]">
+                    <div className="absolute bottom-[13px] right-3 top-[13px] z-20 pointer-events-auto">
                         <ContentScrollThumb
                             trackRef={contentTrackRef}
                             thumbRef={contentThumbRef}
-                            onThumbMouseDown={handleContentThumbMouseDown}
+                            onThumbPointerDown={handleContentThumbPointerDown}
                         />
                     </div>
                 ) : null}
@@ -596,7 +827,7 @@ const ExpandableContent = ({ content, onOverflowChange, onExpanded }) => {
                             left: 0,
                             right: 0,
                             height: '120px',
-                            background: 'linear-gradient(to bottom, rgba(8, 21, 56, 0) 0%, rgba(8, 21, 56, 0.96) 100%)',
+                            background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.96) 100%)',
                             pointerEvents: 'none',
                             borderRadius: '0 0 10px 10px',
                         }}
@@ -730,18 +961,20 @@ const SidebarScrollFrame = ({ trackHeight, thumbTop, onThumbMouseDown }) => (
     </div>
 )
 
-const ContentScrollThumb = ({ trackRef, thumbRef, onThumbMouseDown }) => (
-    <div ref={trackRef} className="relative h-full w-[8px]">
+const ContentScrollThumb = ({ trackRef, thumbRef, onThumbPointerDown }) => (
+    <div ref={trackRef} className="relative h-full w-[8px] z-20">
         <button
             ref={thumbRef}
             type="button"
             aria-label="Scroll content"
-            onMouseDown={onThumbMouseDown}
-            className="absolute left-0 top-0 w-[8px] bg-transparent p-0 focus:outline-none"
+            onPointerDown={onThumbPointerDown}
+            className="absolute left-0 top-0 z-20 w-[8px] bg-transparent p-0 focus:outline-none"
             style={{
                 height: '27px',
                 cursor: 'default',
                 pointerEvents: 'auto',
+                touchAction: 'none',
+                userSelect: 'none',
                 willChange: 'transform',
             }}
         >

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep1PersonalInfo, getCurrentUser } from '../../api/employeeApi';
+import { isValidEmail, isValidPhone } from '../../utils/validation';
 import Loader from '../../components/ui/Loader';
 import { showMissingRequiredFieldsToast } from '../../utils/requiredFieldToast';
 
@@ -83,6 +84,22 @@ const Step1PersonalInfo = () => {
 
   const handleNext = async () => {
     if (showMissingRequiredFieldsToast(form, REQUIRED_STEP1_FIELDS).length > 0) {
+      return;
+    }
+
+    // Field-specific validation
+    if (!isValidEmail(form.personalEmail)) {
+      toast.error('Please enter a valid personal email address');
+      return;
+    }
+
+    if (!isValidPhone(form.phoneWhatsapp)) {
+      toast.error('Please enter a valid WhatsApp phone number (include country code)');
+      return;
+    }
+
+    if (!isValidPhone(form.phoneWithCode)) {
+      toast.error('Please enter a valid phone number with country code');
       return;
     }
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+import { isValidUrl } from '../../utils/validation';
 import { showMissingRequiredFieldsToast } from '../../utils/requiredFieldToast';
 import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep5ProfileInfo, getCurrentUser } from '../../api/employeeApi';
@@ -80,6 +81,22 @@ const Step5Profile = () => {
       return;
     }
 
+    // Validate optional URLs if provided
+    if (form.portfolioLink && !isValidUrl(form.portfolioLink)) {
+      toast.error('Please enter a valid portfolio URL (include http/https)');
+      return;
+    }
+
+    if (form.githubProfile && !isValidUrl(form.githubProfile)) {
+      toast.error('Please enter a valid GitHub profile URL');
+      return;
+    }
+
+    if (form.linkedinUrl && !isValidUrl(form.linkedinUrl)) {
+      toast.error('Please enter a valid LinkedIn profile URL');
+      return;
+    }
+
     try {
       setIsSavingStep(true);
       setStepError('');
@@ -146,7 +163,7 @@ const Step5Profile = () => {
               <SelectInput
                 value={form.areasOfExpertise}
                 onChange={(v) => handleChange('areasOfExpertise', v)}
-                placeholder="Dropdown options: UI/UX Design, Frontend Development, Backend Development"
+                placeholder="UI/UX Design, Frontend Development, Backend Development"
                 options={[
                   'UI/UX Design',
                   'Frontend Development',
@@ -193,7 +210,7 @@ const Step5Profile = () => {
               <TextInput
                 value={form.duration}
                 onChange={(v) => handleChange('duration', v)}
-                placeholder="e.g. 2nd Year / 4th Semester"
+                placeholder="Duration"
               />
             </FormField>
 
@@ -201,7 +218,7 @@ const Step5Profile = () => {
               <TextInput
                 value={form.keyResponsibilities}
                 onChange={(v) => handleChange('keyResponsibilities', v)}
-                placeholder="e.g. 2nd Year / 4th Semester"
+                placeholder="Your Responsibilities"
               />
             </FormField>
           </div>

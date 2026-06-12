@@ -19,8 +19,8 @@ const Sidebar = ({
                             onClick={() => onSectionSelect(item.id, Boolean(item.children?.length))}
                             className="flex w-full items-start rounded-lg border border-transparent text-left transition-colors hover:bg-white/6"
                             style={{
-                                backgroundColor: isActive ? 'rgba(255,255,255,0.85)' : 'transparent',
-                                color: isActive ? '#15213A' : 'rgba(255,255,255,0.88)',
+                                backgroundColor: isActive ? 'rgba(255,255,255,0.06)' : 'transparent',
+                                color: isActive ? '#FFFFFF' : 'rgba(255,255,255,0.88)',
                                 paddingTop: '10px',
                                 paddingBottom: '10px',
                                 paddingLeft: '12px',
@@ -51,8 +51,8 @@ const Sidebar = ({
                                             onClick={() => onDocumentSelect(child.id, item.id)}
                                             className="flex w-full items-start rounded-lg border border-transparent text-left transition-colors hover:bg-white/6"
                                             style={{
-                                                backgroundColor: isChildActive ? 'rgba(255,255,255,0.85)' : 'transparent',
-                                                color: isChildActive ? '#15213A' : 'rgba(255,255,255,0.8)',
+                                                backgroundColor: isChildActive ? 'rgba(255,255,255,0.06)' : 'transparent',
+                                                color: isChildActive ? '#FFFFFF' : 'rgba(255,255,255,0.8)',
                                                 paddingTop: '8px',
                                                 paddingBottom: '8px',
                                                 paddingLeft: '12px',
@@ -60,7 +60,6 @@ const Sidebar = ({
                                                 fontSize: '13px',
                                                 lineHeight: '18px',
                                                 fontWeight: 400,
-
                                             }}
                                         >
                                             <span className="block min-w-0 flex-1 whitespace-normal wrap-break-word">
@@ -90,7 +89,7 @@ const ChevronIcon = ({ rotated, active }) => (
             marginTop: '3px',
             transform: rotated ? 'rotate(180deg)' : 'rotate(0deg)',
             transition: 'transform 0.2s ease',
-            color: active ? '#15213A' : 'rgba(255,255,255,0.75)',
+            color: active ? '#FFFFFF' : 'rgba(255,255,255,0.75)',
         }}
     >
         <path d="M3.2 5.2L7 9L10.8 5.2" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
