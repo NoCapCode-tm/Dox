@@ -128,7 +128,7 @@ const Step3IdentityInfo = () => {
               <TextInput
                 value={form.govid1}
                 onChange={(v) => handleChange('govid1', v)}
-                placeholder="Passport, National ID, Driver's License..."
+                placeholder="e.g. ABCDE1234F (PAN) or 1234 5678 9012 (Aadhaar)"
               />
             </FormField>
 
@@ -144,11 +144,11 @@ const Step3IdentityInfo = () => {
               <TextInput
                 value={form.govid2}
                 onChange={(v) => handleChange('govid2', v)}
-                placeholder="Passport, National ID, Driver's License..."
+                placeholder="e.g. MH04 20110012345 (Driving License)"
               />
             </FormField>
 
-            <FormField label="Upload Secondar-ID( JPG/PNG )" ifAvailable>
+            <FormField label="Upload Secondary ID ( JPG/PNG )" ifAvailable>
               <FileInput
                 file={form.govid2image}
                 onChange={(f) => handleFile('govid2image', f)}

@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import SignIn from '../pages/SignIn.jsx'
 import Dashboard from '../pages/Dashboard.jsx'
 import Completion from '../pages/Completion.jsx'
@@ -7,12 +7,13 @@ import Welcome from '../pages/Welcome.jsx'
 import CompanyDocs from '../pages/CompanyDocs.jsx'
 import LegalAgreements from '../pages/LegalAgreements.jsx'
 import ReviewApproval from '../pages/ReviewApproval.jsx'
+
 /**
  * AppRouter — defines all client-side routes for the application.
  */
 const AppRouter = () => {
   return (
-    <HashRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route path="/" element={<SignIn />} />
         <Route path="/dashboard" element={<Dashboard />} />
@@ -26,7 +27,7 @@ const AppRouter = () => {
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   )
 }
 

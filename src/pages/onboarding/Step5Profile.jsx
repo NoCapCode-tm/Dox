@@ -146,7 +146,7 @@ const Step5Profile = () => {
               <SelectInput
                 value={form.areasOfExpertise}
                 onChange={(v) => handleChange('areasOfExpertise', v)}
-                placeholder="Dropdown options: UI/UX Design, Frontend Development, Backend Development"
+                placeholder="Select core expertise area"
                 options={[
                   'UI/UX Design',
                   'Frontend Development',
@@ -164,7 +164,7 @@ const Step5Profile = () => {
               <TextInput
                 value={form.technicalSkills}
                 onChange={(v) => handleChange('technicalSkills', v)}
-                placeholder="Figma, React, Node.js, Webflow, SEO, Data Analysis etc."
+                placeholder="e.g. Figma, React, Node.js, Webflow, SEO"
               />
             </FormField>
           </div>
@@ -177,7 +177,7 @@ const Step5Profile = () => {
               <TextInput
                 value={form.orgName}
                 onChange={(v) => handleChange('orgName', v)}
-                placeholder="Enter institution name"
+                placeholder="e.g. Tech Mahindra, Google, etc."
               />
             </FormField>
 
@@ -185,7 +185,7 @@ const Step5Profile = () => {
               <TextInput
                 value={form.roleTitle}
                 onChange={(v) => handleChange('roleTitle', v)}
-                placeholder="e.g. Frontend Developer, Marketing Analyst"
+                placeholder="e.g. Senior Frontend Engineer"
               />
             </FormField>
 
@@ -193,7 +193,7 @@ const Step5Profile = () => {
               <TextInput
                 value={form.duration}
                 onChange={(v) => handleChange('duration', v)}
-                placeholder="e.g. 2nd Year / 4th Semester"
+                placeholder="e.g. Jan 2021 - Present"
               />
             </FormField>
 
@@ -201,7 +201,7 @@ const Step5Profile = () => {
               <TextInput
                 value={form.keyResponsibilities}
                 onChange={(v) => handleChange('keyResponsibilities', v)}
-                placeholder="e.g. 2nd Year / 4th Semester"
+                placeholder="e.g. Developed scalable UI components using React..."
               />
             </FormField>
           </div>

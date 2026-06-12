@@ -17,6 +17,59 @@ const REQUIRED_STEP7_FIELDS = [
   { key: 'weeklyAvailability', label: 'Weekly Availability' },
 ];
 
+// Exhaustive list of all global UTC Timezones
+const TIMEZONE_OPTIONS = [
+  'UTC -12:00 (International Date Line West)',
+  'UTC -11:00 (Midway Island, Samoa)',
+  'UTC -10:00 (Hawaii)',
+  'UTC -09:30 (Marquesas Islands)',
+  'UTC -09:00 (Alaska)',
+  'UTC -08:00 (Pacific Time - US & Canada)',
+  'UTC -07:00 (Mountain Time - US & Canada)',
+  'UTC -06:00 (Central Time - US & Canada, Mexico City)',
+  'UTC -05:00 (Eastern Time - US & Canada, Bogota, Lima)',
+  'UTC -04:00 (Atlantic Time - Canada, Caracas, La Paz)',
+  'UTC -03:30 (Newfoundland)',
+  'UTC -03:00 (Brasilia, Buenos Aires, Georgetown)',
+  'UTC -02:00 (Mid-Atlantic)',
+  'UTC -01:00 (Azores, Cape Verde Is.)',
+  'UTC ±00:00 (Greenwich Mean Time, London, Lisbon, Casablanca)',
+  'UTC +01:00 (Central European Time, Berlin, Paris, Rome, Madrid)',
+  'UTC +02:00 (Eastern European Time, Athens, Cairo, Jerusalem, Pretoria)',
+  'UTC +03:00 (Moscow, St. Petersburg, Riyadh, Baghdad, Kuwait)',
+  'UTC +03:30 (Tehran)',
+  'UTC +04:00 (Abu Dhabi, Muscat, Baku, Tbilisi)',
+  'UTC +04:30 (Kabul)',
+  'UTC +05:00 (Islamabad, Karachi, Tashkent, Yekaterinburg)',
+  'UTC +05:30 (Indian Standard Time, New Delhi, Mumbai, Colombo)',
+  'UTC +05:45 (Kathmandu)',
+  'UTC +06:00 (Almaty, Dhaka, Astana)',
+  'UTC +06:30 (Yangon, Cocos Islands)',
+  'UTC +07:00 (Bangkok, Hanoi, Jakarta, Krasnoyarsk)',
+  'UTC +08:00 (Beijing, Perth, Singapore, Hong Kong, Taipei)',
+  'UTC +08:45 (Eucla)',
+  'UTC +09:00 (Tokyo, Seoul, Osaka, Sapporo, Yakutsk)',
+  'UTC +09:30 (Adelaide, Darwin)',
+  'UTC +10:00 (Eastern Australia, Brisbane, Vladivostok, Guam)',
+  'UTC +10:30 (Lord Howe Island)',
+  'UTC +11:00 (Magadan, Solomon Is., New Caledonia)',
+  'UTC +12:00 (Auckland, Wellington, Fiji, Kamchatka)',
+  'UTC +12:45 (Chatham Islands)',
+  'UTC +13:00 (Nuku\'alofa, Phoenix Islands)',
+  'UTC +14:00 (Line Islands, Kiritimati)'
+];
+
+// Customized for your employment types
+const AVAILABILITY_OPTIONS = [
+  'Full-Time (8 hours/day, Mon-Fri)',
+  'Internship (Flexible Timing)',
+  'Contractual / Freelance',
+  'Project-Based / As Needed',
+  'Part-Time (Flexible / Set Hours)',
+  'Shift-Based (Rotating Shifts)',
+  'Weekends Only'
+];
+
 /**
  * Step7SystemInfo
  */
@@ -123,7 +176,7 @@ const Step7SystemInfo = () => {
                 value={form.laptopAvailability}
                 onChange={(v) => handleChange('laptopAvailability', v)}
                 options={['Yes', 'No']}
-                placeholder="Yes / No"
+                placeholder="Select Yes / No"
               />
             </FormField>
 
@@ -132,7 +185,7 @@ const Step7SystemInfo = () => {
                 value={form.primaryDeviceType}
                 onChange={(v) => handleChange('primaryDeviceType', v)}
                 options={['Laptop', 'Desktop', 'Tablet', 'Other']}
-                placeholder="Device Type"
+                placeholder="Select Device Type"
               />
             </FormField>
 
@@ -141,7 +194,7 @@ const Step7SystemInfo = () => {
                 value={form.operatingSystem}
                 onChange={(v) => handleChange('operatingSystem', v)}
                 options={['Windows', 'macOS', 'Linux', 'Other']}
-                placeholder="Options: Windows, macOS, Linux, Other"
+                placeholder="Select Operating System"
               />
             </FormField>
 
@@ -150,23 +203,25 @@ const Step7SystemInfo = () => {
                 value={form.internetReliability}
                 onChange={(v) => handleChange('internetReliability', v)}
                 options={['High', 'Moderate', 'Limited']}
-                placeholder="High, Moderate, Limited"
+                placeholder="Select Internet Reliability"
               />
             </FormField>
 
             <FormField label="Time Zone" required>
-              <TextInput
+              <SelectInput
                 value={form.timeZone}
                 onChange={(v) => handleChange('timeZone', v)}
-                placeholder="Enter"
+                options={TIMEZONE_OPTIONS}
+                placeholder="Select your Time Zone"
               />
             </FormField>
 
             <FormField label="Weekly Availability" required>
-              <TextInput
+              <SelectInput
                 value={form.weeklyAvailability}
                 onChange={(v) => handleChange('weeklyAvailability', v)}
-                placeholder="e.g. Monday to Friday, 10 AM – 6 PM IST."
+                options={AVAILABILITY_OPTIONS}
+                placeholder="Select Availability"
               />
             </FormField>
 
@@ -192,7 +247,7 @@ const Step7SystemInfo = () => {
           >
             <span className="step7-btn-text">
               <span className="step7-btn-text-sm">{isSavingStep ? 'Saving...' : 'Next'}</span>
-              <span className="step7-btn-text-lg">{isSavingStep ? 'Saving Step 7...' : 'Next: System Details'}</span>
+              <span className="step7-btn-text-lg">{isSavingStep ? 'Saving Step 7...' : 'Next: Declaration'}</span>
             </span>
             <ArrowRightIcon />
           </button>
@@ -215,15 +270,6 @@ const FormField = ({ label, required, children }) => (
     </label>
     {children}
   </div>
-);
-
-const TextInput = ({ value, onChange, placeholder }) => (
-  <input
-    value={value || ''}
-    onChange={(e) => onChange(e.target.value)}
-    placeholder={placeholder}
-    className="step7-input"
-  />
 );
 
 const SelectInput = ({ value, onChange, options, placeholder }) => (
