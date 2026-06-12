@@ -123,7 +123,7 @@ const Step4EducationInfo = () => {
               <SelectInput
                 value={form.highestQualification}
                 onChange={(v) => handleChange('highestQualification', v)}
-                placeholder="Dropdown options: High School, Diploma, Undergraduate"
+                placeholder="Select highest qualification"
                 options={[
                   'High School',
                   'Diploma',
@@ -139,7 +139,7 @@ const Step4EducationInfo = () => {
               <TextInput
                 value={form.courseName}
                 onChange={(v) => handleChange('courseName', v)}
-                placeholder="e.g. BCA, BTech, MBA, BA, etc."
+                placeholder="e.g. B.Tech in Computer Science"
               />
             </FormField>
 
@@ -147,7 +147,7 @@ const Step4EducationInfo = () => {
               <TextInput
                 value={form.universityName}
                 onChange={(v) => handleChange('universityName', v)}
-                placeholder="Enter institution name"
+                placeholder="e.g. University of Mumbai"
               />
             </FormField>
 
@@ -155,7 +155,7 @@ const Step4EducationInfo = () => {
               <TextInput
                 value={form.graduationYear}
                 onChange={(v) => handleChange('graduationYear', v)}
-                placeholder="Placeholder: e.g. 2nd Year / 4th Semester"
+                placeholder="e.g. 2024 or 2025"
               />
             </FormField>
 
@@ -163,7 +163,7 @@ const Step4EducationInfo = () => {
               <TextInput
                 value={form.currentYearSemester}
                 onChange={(v) => handleChange('currentYearSemester', v)}
-                placeholder="e.g. 2nd Year / 4th Semester"
+                placeholder="e.g. 8th Semester or Completed"
               />
             </FormField>
 

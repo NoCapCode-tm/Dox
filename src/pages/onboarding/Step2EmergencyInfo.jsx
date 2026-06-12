@@ -121,7 +121,7 @@ const Step2EmergencyInfo = () => {
               <TextInput
                 value={form.contactName}
                 onChange={(v) => handleChange('contactName', v)}
-                placeholder="Name"
+                placeholder="e.g. Aarti Sharma"
               />
             </FormField>
 
@@ -129,7 +129,7 @@ const Step2EmergencyInfo = () => {
               <TextInput
                 value={form.contactPhone}
                 onChange={(v) => handleChange('contactPhone', v)}
-                placeholder="+91 XXXXXXXXXX"
+                placeholder="+91 98765 43210"
                 inputMode="tel"
               />
             </FormField>
@@ -138,7 +138,7 @@ const Step2EmergencyInfo = () => {
               <TextInput
                 value={form.relationship}
                 onChange={(v) => handleChange('relationship', v)}
-                placeholder="Father / Mother / Spouse / Friend"
+                placeholder="e.g. Father, Mother, Spouse"
               />
             </FormField>
 
@@ -146,7 +146,7 @@ const Step2EmergencyInfo = () => {
               <TextInput
                 value={form.contactEmail}
                 onChange={(v) => handleChange('contactEmail', v)}
-                placeholder="your.email@example.com"
+                placeholder="e.g. aarti.sharma@example.com"
                 inputMode="email"
               />
             </FormField>
@@ -159,7 +159,7 @@ const Step2EmergencyInfo = () => {
               <TextInput
                 value={form.countryOfResidence}
                 onChange={(v) => handleChange('countryOfResidence', v)}
-                placeholder="Enter your country"
+                placeholder="e.g. India"
               />
             </FormField>
           </div>
@@ -342,4 +342,4 @@ const DoxLogo = ({ width = '69', fill = '#FFFFFF' }) => (
   </svg>
 );
 
-export default Step2EmergencyInfo;
+export default Step2EmergencyInfo;  

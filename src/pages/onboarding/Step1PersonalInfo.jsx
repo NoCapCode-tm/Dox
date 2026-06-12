@@ -153,7 +153,7 @@ const Step1PersonalInfo = () => {
               <TextInput
                 value={form.fullName}
                 onChange={(v) => handleChange('fullName', v)}
-                placeholder="Enter full name"
+                placeholder="e.g. Rahul Sharma"
               />
             </FormField>
 
@@ -161,7 +161,7 @@ const Step1PersonalInfo = () => {
               <TextInput
                 value={form.personalEmail}
                 onChange={(v) => handleChange('personalEmail', v)}
-                placeholder="your.email@example.com"
+                placeholder="rahul.sharma@example.com"
                 inputMode="email"
               />
             </FormField>
@@ -170,7 +170,7 @@ const Step1PersonalInfo = () => {
               <TextInput
                 value={form.phoneWhatsapp}
                 onChange={(v) => handleChange('phoneWhatsapp', v)}
-                placeholder="+91 XXXXXXXXXX"
+                placeholder="+91 98765 43210"
                 inputMode="tel"
               />
             </FormField>
@@ -186,7 +186,7 @@ const Step1PersonalInfo = () => {
               <TextInput
                 value={form.countryOfCitizenship}
                 onChange={(v) => handleChange('countryOfCitizenship', v)}
-                placeholder="Enter your country"
+                placeholder="e.g. India"
               />
             </FormField>
 
@@ -194,7 +194,7 @@ const Step1PersonalInfo = () => {
               <TextInput
                 value={form.stateProvince}
                 onChange={(v) => handleChange('stateProvince', v)}
-                placeholder="Enter your state/province"
+                placeholder="e.g. Maharashtra"
               />
             </FormField>
 
@@ -202,7 +202,7 @@ const Step1PersonalInfo = () => {
               <TextInput
                 value={form.city}
                 onChange={(v) => handleChange('city', v)}
-                placeholder="Enter your city"
+                placeholder="e.g. Mumbai"
               />
             </FormField>
 
@@ -223,7 +223,7 @@ const Step1PersonalInfo = () => {
                 <TextareaInput
                   value={form.permanentAddress}
                   onChange={(v) => handleChange('permanentAddress', v)}
-                  placeholder="Enter permanent address"
+                  placeholder="e.g. 123, MG Road, Andheri West, Mumbai, 400058"
                 />
               </FormField>
 
@@ -244,7 +244,7 @@ const Step1PersonalInfo = () => {
                 <TextareaInput
                   value={form.communicationAddress}
                   onChange={(v) => handleChange('communicationAddress', v)}
-                  placeholder="Enter communication address"
+                  placeholder="e.g. 456, Linking Road, Malad West, Mumbai, 400064"
                   disabled={form.sameAsPermanent}
                 />
               </FormField>
@@ -254,7 +254,7 @@ const Step1PersonalInfo = () => {
               <TextInput
                 value={form.phoneWithCode}
                 onChange={(v) => handleChange('phoneWithCode', v)}
-                placeholder="+91 XXXXXXXXXX"
+                placeholder="+91 98765 43210"
                 inputMode="tel"
               />
             </FormField>
