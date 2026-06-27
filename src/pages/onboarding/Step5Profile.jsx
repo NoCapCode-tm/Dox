@@ -14,7 +14,6 @@ const REQUIRED_STEP5_FIELDS = [
   { key: 'areasOfExpertise', label: 'Areas of Expertise' },
   { key: 'technicalSkills', label: 'Technical Skills' },
   { key: 'orgName', label: 'Organization / Company Name' },
-  { key: 'roleTitle', label: 'Role Title' },
   { key: 'duration', label: 'Duration' },
   { key: 'keyResponsibilities', label: 'Key Responsibilities' },
 ];
@@ -114,9 +113,6 @@ const Step5Profile = () => {
     <div className="step5-wrapper">
       {isSavingStep && <Loader fullScreen={true} message="Saving and loading next step..." />}
       
-      {/* Grid lines */}
-      <div className="step5-grid-lines" />
-
       {/* Header */}
       <div className="step5-header">
         <DoxLogo width="69" />
@@ -163,7 +159,7 @@ const Step5Profile = () => {
               <SelectInput
                 value={form.areasOfExpertise}
                 onChange={(v) => handleChange('areasOfExpertise', v)}
-                placeholder="Select area of expertise"
+                placeholder="UI/UX Design, Frontend Development, Backend Development"
                 options={[
                   'UI/UX Design',
                   'Frontend Development',
@@ -187,7 +183,7 @@ const Step5Profile = () => {
           </div>
 
           {/* Section label — Previous Experience */}
-          <p className="step5-section-title-lg">Previous Experience</p>
+          <p className="step5-section-title">Previous Experience</p>
 
           <div className="step5-form-grid">
             <FormField label="Organization / Company Name" required>
@@ -198,11 +194,11 @@ const Step5Profile = () => {
               />
             </FormField>
 
-            <FormField label="Role Title" required>
+            <FormField label="Role Title">
               <TextInput
                 value={form.roleTitle}
                 onChange={(v) => handleChange('roleTitle', v)}
-                placeholder="e.g. Frontend Developer, Marketing Analyst"
+                placeholder="Placeholder: e.g. 2nd Year / 4th Semester"
               />
             </FormField>
 
@@ -210,7 +206,7 @@ const Step5Profile = () => {
               <TextInput
                 value={form.duration}
                 onChange={(v) => handleChange('duration', v)}
-                placeholder="Duration"
+                placeholder="e.g. 2nd Year / 4th Semester"
               />
             </FormField>
 
@@ -218,13 +214,13 @@ const Step5Profile = () => {
               <TextInput
                 value={form.keyResponsibilities}
                 onChange={(v) => handleChange('keyResponsibilities', v)}
-                placeholder="Your Responsibilities"
+                placeholder="e.g. 2nd Year / 4th Semester"
               />
             </FormField>
           </div>
 
           {/* Section label — Professional Links */}
-          <p className="step5-section-title-sm">Professional Links</p>
+          <p className="step5-section-title" style={{ marginTop: '24px' }}>Professional Links</p>
 
           <div className="step5-form-grid">
             <FormField label="Portfolio Link" portfolioOptional>
@@ -245,6 +241,7 @@ const Step5Profile = () => {
               />
             </FormField>
 
+            {/* LinkedIn URL - spans full width below or fits in grid depending on screen */}
             <FormField label="LinkedIn Profile URL">
               <TextInput
                 value={form.linkedinUrl}
@@ -295,7 +292,7 @@ const FormField = ({ label, required, portfolioOptional, forTechRoles, children 
     <label className="step5-field-label-container">
       <span className="step5-field-label">{label}</span>
       {required && <span className="step5-field-asterisk">*</span>}
-      {portfolioOptional && <span className="step5-field-hint">(Design/Content/Marketing)-(Optional)</span>}
+      {portfolioOptional && <span className="step5-field-hint">(Design/Content/Marketing)(Optional)</span>}
       {forTechRoles && <span className="step5-field-hint">(For Tech Roles)</span>}
     </label>
     {children}
@@ -334,7 +331,7 @@ const SelectInput = ({ value, onChange, options, placeholder }) => {
         className={`step5-input step5-custom-select-trigger ${!value ? 'empty' : ''}`}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span>{value || placeholder}</span>
+        <span className="step5-select-value">{value || placeholder}</span>
         <svg 
           className={`step5-select-arrow ${isOpen ? 'open' : ''}`} 
           width="12" height="12" viewBox="0 0 12 12" fill="none"

@@ -87,9 +87,6 @@ const Step2EmergencyInfo = () => {
     <div className="step2-wrapper">
       {isSavingStep && <Loader fullScreen={true} message="Saving and loading next step..." />}
       
-      {/* Grid lines */}
-      <div className="step2-grid-lines" />
-
       {/* Header  */}
       <div className="step2-header">
         <DoxLogo width="69" />
@@ -127,14 +124,14 @@ const Step2EmergencyInfo = () => {
 
         {/* Form Card */}
         <div className="step2-form-card">
-          {/* 2-column grid */}
+          {/* Unified Grid ensures Country goes to the bottom left automatically */}
           <div className="step2-form-grid">
 
             <FormField label="Emergency Contact Name" required>
               <TextInput
                 value={form.contactName}
                 onChange={(v) => handleChange('contactName', v)}
-                placeholder="e.g. Aarti Sharma"
+                placeholder="Name"
               />
             </FormField>
 
@@ -142,7 +139,7 @@ const Step2EmergencyInfo = () => {
               <TextInput
                 value={form.contactPhone}
                 onChange={(v) => handleChange('contactPhone', v)}
-                placeholder="+91 98765 43210"
+                placeholder="+91 XXXXXXXXXX"
                 inputMode="tel"
               />
             </FormField>
@@ -151,7 +148,7 @@ const Step2EmergencyInfo = () => {
               <TextInput
                 value={form.relationship}
                 onChange={(v) => handleChange('relationship', v)}
-                placeholder="e.g. Father, Mother, Spouse"
+                placeholder="Father / Mother / Spouse / Friend"
               />
             </FormField>
 
@@ -159,22 +156,19 @@ const Step2EmergencyInfo = () => {
               <TextInput
                 value={form.contactEmail}
                 onChange={(v) => handleChange('contactEmail', v)}
-                placeholder="e.g. aarti.sharma@example.com"
+                placeholder="your.email@example.com"
                 inputMode="email"
               />
             </FormField>
 
-          </div>
-
-          {/* Country of Residence — left col only */}
-          <div className="step2-form-grid step2-form-grid-mt">
             <FormField label="Country of Residence" required>
               <TextInput
                 value={form.countryOfResidence}
                 onChange={(v) => handleChange('countryOfResidence', v)}
-                placeholder="e.g. India"
+                placeholder="Enter your country"
               />
             </FormField>
+
           </div>
         </div>
 
@@ -355,4 +349,4 @@ const DoxLogo = ({ width = '69', fill = '#FFFFFF' }) => (
   </svg>
 );
 
-export default Step2EmergencyInfo;  
+export default Step2EmergencyInfo;

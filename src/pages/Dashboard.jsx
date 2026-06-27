@@ -1,8 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { clearAuthToken, getCurrentUser } from '../api/employeeApi';
+import { getCurrentUser } from '../api/employeeApi';
 import Loader from '../components/ui/Loader';
-import { AUTH_SESSION_KEY, clearAuthSession, isAuthenticated } from '../utils/auth';
+import { AUTH_SESSION_KEY, isAuthenticated } from '../utils/auth';
+
+// Import the new CSS file
+import './css/Dashboard.css';
 
 const hasValue = (value) => {
   if (value == null) return false;
@@ -105,16 +108,13 @@ const getCompletedStepsFromUser = (payload) => {
 
 /**
  * Dashboard
- * Grid layout with 8 steps and 3 info cards
  */
 const Dashboard = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
   const [authError, setAuthError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [completedSteps, setCompletedSteps] = useState({});
-  const userMenuRef = useRef(null);
 
   useEffect(() => {
     const loadCurrentUser = async () => {
@@ -156,152 +156,83 @@ const Dashboard = () => {
     return () => window.removeEventListener('storage', handleStorageChange);
   }, [navigate]);
 
-  useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
-        setIsUserMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleOutsideClick);
-
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
-    };
-  }, []);
-
-  useEffect(() => {
-    //dashboard should reflect backend state.
-    setCompletedSteps({});
-  }, []);
-
   const handleStartStep = (stepNumber) => {
-    // Navigates to the respective step in the onboarding flow
     navigate(`/onboarding/step${stepNumber}`);
   };
 
-  const handleLogout = () => {
-    clearAuthToken();
-    clearAuthSession();
-    setUserName('');
-    setAuthError('');
-    setIsUserMenuOpen(false);
-    navigate('/', { replace: true });
-  };
-
-  const avatarCharacter = (userName?.trim()?.charAt(0) || 'U').toUpperCase();
-
   const getStepActionLabel = (stepIndex) => (completedSteps[`step${stepIndex}`] ? 'Update' : 'Start');
 
+  // Updated array mapping with MNC-grade wording
   const steps = [
     {
       num: '01',
       title: 'Basic Personal Information',
-      desc: 'Provide your basic personal details for official records and communication.',
+      desc: 'Ensure accurate record-keeping and seamless official communication.',
       stepIndex: 1,
     },
     {
       num: '02',
       title: 'Emergency Contact Information',
-      desc: 'Maintained for safety and HR compliance.',
+      desc: 'Provide verified emergency contacts for safety and HR compliance.',
       stepIndex: 2,
     },
     {
       num: '03',
-      title: 'Identity Information',
-      desc: 'Upload your identity details for verification and official documentation.',
+      title: 'Identity Verification',
+      desc: 'Submit government-issued ID for background verification and audit.',
       stepIndex: 3,
     },
     {
       num: '04',
-      title: 'Education / Background',
-      desc: 'Share your academic background and qualification details.',
+      title: 'Academic Background',
+      desc: 'Detail your educational history to support mandatory credential checks.',
       stepIndex: 4,
     },
     {
       num: '05',
       title: 'Professional Profile',
-      desc: 'Share your professional background and public work presence.',
+      desc: 'Highlight your technical proficiencies and core professional experience.',
       stepIndex: 5,
     },
     {
       num: '06',
-      title: 'Payment & Financial Information',
-      desc: 'Used for stipend, salary, or contractual payments.',
+      title: 'Compensation & Financial Details',
+      desc: 'Provide valid banking information for payroll and stipend processing.',
       stepIndex: 6,
     },
     {
       num: '07',
       title: 'Work Environment & Technical Setup',
-      desc: 'Helps IT and operations understand working conditions.',
+      desc: 'Confirm your technical infrastructure for operational provisioning.',
       stepIndex: 7,
     },
     {
       num: '08',
       title: 'Review & Declaration',
-      desc: 'Review all provided details and confirm submission for document generation.',
+      desc: 'Validate all submitted data to authorize official document generation.',
       stepIndex: 8,
     },
   ];
 
+  // Updated Info Blocks
   const infoBlocks = [
     {
       title: 'Required Information',
-      desc: 'Fields marked with * must be completed to continue onboarding.',
+      desc: 'Asterisk (*) fields are mandatory to finalize your formal onboarding process.',
     },
     {
       title: 'Automatic Progress Saving',
-      desc: 'Your details are securely saved as you move through each step, no need to worry about losing progress.',
+      desc: 'Data syncs in real-time; exit and resume at any time without losing your progress.',
     },
     {
       title: 'Data Confidentiality',
-      desc: 'All information you provide is protected and used solely for official purposes.',
+      desc: 'Your information is processed under strict security protocols for internal use only.',
     },
   ];
 
   return (
-    <div
-      className="relative min-h-screen w-full overflow-x-hidden flex flex-col font-[Jost] text-white"
-      style={{
-        background:
-          'radial-gradient(1400px 1000px at 0% 0%, #5B7AB5 0%, #1D2A43 45%, #0B1019 75%, #040608 100%)',
-      }}
-    >
-      <style>{`
-        @keyframes fadeSlideUp {
-          0% { opacity: 0; transform: translateY(20px); }
-          100% { opacity: 1; transform: translateY(0); }
-        }
-        @media (max-width: 767px) {
-          .step-card:nth-child(1) { animation-delay: 0.0s; }
-          .step-card:nth-child(2) { animation-delay: 0.1s; }
-          .step-card:nth-child(3) { animation-delay: 0.2s; }
-          .step-card:nth-child(4) { animation-delay: 0.3s; }
-          .step-card:nth-child(5) { animation-delay: 0.4s; }
-          .step-card:nth-child(6) { animation-delay: 0.5s; }
-          .step-card:nth-child(7) { animation-delay: 0.6s; }
-          .step-card:nth-child(8) { animation-delay: 0.7s; }
-        }
-        @media (min-width: 768px) and (max-width: 1023px) {
-          .step-card:nth-child(1), .step-card:nth-child(2) { animation-delay: 0.0s; }
-          .step-card:nth-child(3), .step-card:nth-child(4) { animation-delay: 0.15s; }
-          .step-card:nth-child(5), .step-card:nth-child(6) { animation-delay: 0.3s; }
-          .step-card:nth-child(7), .step-card:nth-child(8) { animation-delay: 0.45s; }
-        }
-        @media (min-width: 1024px) {
-          .step-card:nth-child(1), .step-card:nth-child(2), .step-card:nth-child(3), .step-card:nth-child(4) { animation-delay: 0.0s; }
-          .step-card:nth-child(5), .step-card:nth-child(6), .step-card:nth-child(7), .step-card:nth-child(8) { animation-delay: 0.25s; }
-        }
-      `}</style>
+    <div className="dashboard-wrapper">
       {isLoading && <Loader fullScreen={true} message="Loading dashboard..." />}
-      {/* Decorative Background grid/wires*/}
-      <div
-        className="absolute inset-0 pointer-events-none z-0 opacity-80"
-        style={{
-          backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
-          backgroundSize: '100px 100px'
-        }}
-      />
 
       {/* Header/Logo area */}
       <div className="w-full px-8 pt-8 pb-2 flex items-start justify-between relative z-30">
@@ -310,46 +241,6 @@ const Dashboard = () => {
           <span className="text-[12px] text-white/65 leading-[20px] mt-2 tracking-wide font-normal">
             Employee Onboarding
           </span>
-        </div>
-
-        <div ref={userMenuRef} className="relative z-40">
-          <button
-            type="button"
-            aria-label="Open user menu"
-            aria-expanded={isUserMenuOpen}
-            onClick={() => setIsUserMenuOpen((current) => !current)}
-            className="w-10 h-10 rounded-full flex items-center justify-center border border-white/20 text-[14px] font-semibold text-white transition-all hover:brightness-110"
-            style={{
-              background: 'linear-gradient(145deg, rgba(74, 102, 149, 0.9), rgba(38, 53, 76, 0.95))',
-              boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.18), 0 8px 20px rgba(0,0,0,0.35)',
-            }}
-          >
-            {avatarCharacter}
-          </button>
-
-          {isUserMenuOpen ? (
-            <div
-              className="absolute right-0 top-[calc(100%+10px)] z-50 w-[220px] rounded-[12px] p-2 border border-white/15"
-              style={{
-                background: 'rgba(8, 12, 18, 0.88)',
-                backdropFilter: 'blur(12px)',
-                boxShadow: '0 14px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.06)',
-              }}
-            >
-              <div className="px-3 py-2 rounded-[8px]" style={{ backgroundColor: 'rgba(255,255,255,0.03)' }}>
-                <p className="text-[11px] uppercase tracking-[0.15em] text-white/50">Username</p>
-                <p className="text-[14px] text-white mt-1 truncate">{userName || 'User'}</p>
-              </div>
-
-              <button
-                type="button"
-                onClick={handleLogout}
-                className="w-full mt-2 px-3 py-2 rounded-[8px] text-left text-[14px] text-[#FFB4B7] hover:bg-white/6 transition-colors"
-              >
-                Logout
-              </button>
-            </div>
-          ) : null}
         </div>
       </div>
 
@@ -360,14 +251,9 @@ const Dashboard = () => {
           <h1 className="text-[clamp(32px,4vw,48px)] leading-[60px] font-normal tracking-wide">
             Onboarding Information
           </h1>
-          {userName ? (
-            <p className="mt-[6px] text-[18px] text-white/80 font-normal leading-[26px]">
-              Welcome, {userName}
-            </p>
-          ) : null}
-          <p className="mt-[20px] text-[24px] text-[#FFFFFF] max-w-[739px] font-normal leading-[32px]">
-            Complete your onboarding process in 8 simple steps. All information
-            will be used for preparing your offer letter and agreements.
+          <p className="mt-[20px] text-[18px] md:text-[20px] text-[#FFFFFF] max-w-[800px] font-normal leading-[32px]">
+            Complete your onboarding in 8 streamlined steps. All data is securely processed to
+            facilitate the preparation of your employment agreement and internal records.
           </p>
           {authError ? (
             <p className="mt-[10px] text-[14px] text-[#FF9EA0] font-normal leading-[22px]">
@@ -381,18 +267,8 @@ const Dashboard = () => {
           {steps.map((step) => (
             <div
               key={step.num}
-              className="step-card flex flex-col justify-between p-6 rounded-[10px] h-full min-h-[234px]"
-              style={{
-                backgroundColor: 'rgba(21, 27, 35, 0.2)',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                backdropFilter: 'blur(10px)',
-                boxShadow: 'inset 1px 1px 0px rgba(255, 255, 255, 0.15), inset -1px -1px 0px rgba(255, 255, 255, 0.03)',
-                opacity: 0,
-                animationName: !isLoading ? 'fadeSlideUp' : 'none',
-                animationDuration: '1.6s',
-                animationTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
-                animationFillMode: 'forwards',
-              }}
+              className="step-card flex flex-col justify-between p-6 rounded-[10px] h-full min-h-[234px] transition-all duration-300"
+              style={!isLoading ? {} : { animationName: 'none', opacity: 0 }}
             >
               <div>
                 <div className="text-[16px] text-white font-normal leading-[20px] mb-[30px]">
@@ -401,7 +277,7 @@ const Dashboard = () => {
                 <h3 className="text-[16px] text-white font-normal leading-[28px] mb-[10px]">
                   {step.title}
                 </h3>
-                <p className="text-[14px] text-white leading-[20px]">
+                <p className="text-[14px] text-white/80 leading-[20px]">
                   {step.desc}
                 </p>
               </div>
@@ -413,7 +289,7 @@ const Dashboard = () => {
                 style={{
                   backgroundColor: '#314460',
                   boxShadow:
-                    '1px 1px 2px rgba(64, 88, 125, 0.3), -1px -1px 2px rgba(34, 48, 67, 0.5), inset -5px 5px 10px rgba(34, 48, 67, 0.2), inset 5px -5px 10px rgba(34, 48, 67, 0.2), inset -5px -5px 10px rgba(64, 88, 125, 0.9), inset 5px 5px 13px rgba(34, 48, 67, 0.9)',
+                    '1px 1px 2px rgba(64, 88, 125, 0.3), -1px -1px 2px rgba(34, 48, 67, 0.5), inset -5px 5px 10px rgba(34, 48, 67, 0.2), inset 5px -5px 10px rgba(34, 48, 67, 0.2), inset -5px -5px 10px rgba(40, 53, 81), inset 5px 5px 13px rgba(34, 48, 67, 0.9)',
                 }}
               >
                 <span className="text-[16px] text-white font-normal">{getStepActionLabel(step.stepIndex)}</span>
@@ -428,11 +304,7 @@ const Dashboard = () => {
           {infoBlocks.map((info, idx) => (
             <div
               key={idx}
-              className="flex items-start gap-4 p-5 rounded-[10px] h-full min-h-[130px]"
-              style={{
-                backgroundColor: '#0A0E14',
-                border: '0.8px solid rgba(255, 255, 255, 0.1)',
-              }}
+              className="info-card flex items-start gap-4 p-5 rounded-[10px] h-full min-h-[130px]"
             >
               <div className="mt-1 shrink-0">
                 <CheckCircleIcon />
@@ -511,7 +383,7 @@ const CheckCircleIcon = () => (
 /**
  * DOX Logo minimal component
  */
-const DoxLogo = ({ width = "69", fill = "#FFFFFF" }) => (
+const DoxLogo = ({ width = "69", fill = "#ffffffb4" }) => (
   <svg
     width={width}
     viewBox="0 0 339 95"

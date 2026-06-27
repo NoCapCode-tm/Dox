@@ -1,0 +1,38 @@
+/* welcome.css */
+
+.dox-glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(12px);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  
+  /* PERFORMANCE OPTIMIZATIONS FOR HOVER LAG */
+  transform: translateZ(0); 
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: background, transform, border-color;
+}
+
+.dox-glass-card:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px) translateZ(0); /* Keep Z(0) on hover */
+}
+
+.dox-logo-reflection {
+  -webkit-box-reflect: below -10px linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%);
+  opacity: 0.15;
+  filter: blur(2px);
+  transform: scaleY(-1) translateZ(0); /* Hardware accelerate reflection */
+  pointer-events: none;
+  user-select: none;
+}
+
+.bg-overlay-fade {
+  background: radial-gradient(circle at center, transparent 0%, rgba(5, 11, 20, 0.4) 100%);
+}
