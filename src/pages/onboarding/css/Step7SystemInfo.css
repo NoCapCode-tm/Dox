@@ -11,7 +11,7 @@
   color: #FFFFFF;
   
   /* Apply global background SVG */
-  background-image: url('../../../public/BG.svg');
+  background-image: url('../../../BG.svg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -333,6 +333,13 @@
 .step7-next-btn {
   background-color: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 
+    1px 1px 2px rgba(64,88,125,0.3), 
+    -1px -1px 2px rgba(34,48,67,0.5), 
+    inset -5px 5px 10px rgba(34,48,67,0.2), 
+    inset 5px -5px 10px rgba(34,48,67,0.2), 
+    inset -5px -5px 10px rgba(64,88,125,0.9), 
+    inset 5px 5px 13px rgba(34,48,67,0.9);
 }
 .step7-next-btn:hover { background-color: rgba(255, 255, 255, 0.15); }
 .step7-prev-btn:active, .step7-next-btn:active { transform: scale(0.98); }

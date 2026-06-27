@@ -11,7 +11,7 @@
   color: #FFFFFF;
 
   /* Matches the background provided exactly */
-  background-image: url('../../../public/BG.svg');
+  background-image: url('../../../BG.svg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

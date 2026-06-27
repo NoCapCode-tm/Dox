@@ -11,7 +11,7 @@
   color: #FFFFFF;
 
   /* Just point to the .svg file instead */
-  background-image: url('../../../public/BG.svg'); 
+  background-image: url('../../../BG.svg'); 
   
   background-size: cover;
   background-position: center;
