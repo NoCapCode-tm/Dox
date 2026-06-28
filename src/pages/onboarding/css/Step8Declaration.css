@@ -9,29 +9,21 @@
   flex-direction: column;
   font-family: 'Jost', sans-serif;
   color: #FFFFFF;
+  
+  /* Apply global background SVG */
   background-image: url('../../../BG.svg');
   background-size: cover;
+  background-position: center;
   background-attachment: fixed;
-  background-color: #0A0E14;
-}
-
-.step8-grid-lines {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
-  background-image: 
-    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), 
-    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size: 115px 115px;
+  background-repeat: no-repeat;
+  background-color: #0A0E14; /* Fallback */
 }
 
 /* --- Mobile First (Default) --- */
 
 .step8-header {
   width: 100%;
-  padding: 20px 20px 0; /* Reduced for mobile */
+  padding: 20px 20px 0;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -66,15 +58,18 @@
   align-items: center;
   padding: 0 16px;
   overflow-x: auto;
-  background-color: #0A0E14;
+  
+  /* Requested transparent dark background */
+  background-color: rgba(6, 14, 32, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  
   border: 0.8px solid rgba(255, 255, 255, 0.1);
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
-.step8-nav::-webkit-scrollbar {
-  display: none;
-}
+.step8-nav::-webkit-scrollbar { display: none; }
 
 .step8-nav-inner {
   display: flex;
@@ -97,16 +92,9 @@
   outline: none;
 }
 
-.step8-nav-item.active {
-  background-color: #314460;
-}
-
-.step8-nav-icon {
-  color: rgba(255, 255, 255, 0.65);
-}
-.step8-nav-item.active .step8-nav-icon {
-  color: #51A2FF;
-}
+.step8-nav-item.active { background-color: #314460; }
+.step8-nav-icon { color: rgba(255, 255, 255, 0.65); }
+.step8-nav-item.active .step8-nav-icon { color: #51A2FF; }
 
 .step8-nav-label {
   font-family: 'Jost', sans-serif;
@@ -115,9 +103,7 @@
   line-height: 20px;
   color: rgba(255, 255, 255, 0.65);
 }
-.step8-nav-item.active .step8-nav-label {
-  color: #51A2FF;
-}
+.step8-nav-item.active .step8-nav-label { color: #51A2FF; }
 
 /* Main Content Area */
 .step8-main {
@@ -125,7 +111,7 @@
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 32px 16px 80px; /* Reduced for mobile */
+  padding: 32px 16px 80px; 
   position: relative;
   z-index: 10;
 }
@@ -135,8 +121,8 @@
   font-weight: 500;
   line-height: 20px;
   margin-bottom: 20px;
-  font-size: 32px; /* Scaled down for mobile */
-  color: #314460;
+  font-size: 32px; 
+  color: #FFFFFF;
 }
 
 .step8-heading-container {
@@ -147,7 +133,7 @@
 
 .step8-h1 {
   font-family: 'Jost', sans-serif;
-  font-weight: 200;
+  font-weight: 400;
   font-size: 24px;
   line-height: 36px;
   color: #FFFFFF;
@@ -165,8 +151,8 @@
 /* Application Summary Details */
 .step8-section-h2 {
   font-family: 'Jost', sans-serif;
-  font-weight: 200;
-  font-size: 20px; /* Scaled down for mobile */
+  font-weight: 400;
+  font-size: 18px; 
   line-height: 28px;
   color: #FFFFFF;
   margin-bottom: 20px;
@@ -183,15 +169,14 @@
 .step8-review-card {
   width: 100%;
   border-radius: 14px;
-  padding: 20px; /* Reduced for mobile */
+  padding: 20px; 
   margin-bottom: 20px;
-  background-color: rgba(10, 14, 20, 0.75);
-  border: 0.8px solid rgba(255, 255, 255, 0.1);
-}
-
-.step8-nav, .step8-form-card, .step8-review-card, .step8-decl-wrapper {
-  background-color: rgba(6, 14, 32, 0.4) !important;
+  
+  /* Requested transparent dark background */
+  background-color: rgba(6, 14, 32, 0.4);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  
   border: 0.8px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -199,7 +184,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 0;
+  padding-bottom: 12px;
   border-bottom: 0.8px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -216,14 +201,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(49, 68, 96, 0.2);
-  color: #314460;
+  background-color: rgba(49, 68, 96, 0.4);
+  color: #FFFFFF;
 }
 
 .step8-review-title {
   font-family: 'Jost', sans-serif;
   font-weight: 500;
-  font-size: 16px; /* Scaled for mobile */
+  font-size: 16px; 
   line-height: 24px;
   color: #FFFFFF;
 }
@@ -231,11 +216,11 @@
 .step8-review-edit-btn {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   font-family: 'Jost', sans-serif;
   font-weight: 400;
   font-size: 14px;
-  color: #314460;
+  color: #99A1AF;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -244,13 +229,14 @@
 
 .step8-review-edit-btn:hover {
   opacity: 0.8;
+  color: #FFFFFF;
 }
 
 .step8-review-content {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 16px 0;
+  padding-top: 16px;
 }
 
 /* Review Rows - Stacked on Mobile */
@@ -271,10 +257,10 @@
 
 .step8-review-value {
   font-family: 'Jost', sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 14px;
   line-height: 20px;
-  color: #ffffff; /* Colorized on mobile to stand out when stacked */
+  color: #FFFFFF; 
   text-align: left;
   margin-left: 0;
 }
@@ -283,16 +269,21 @@
 .step8-decl-wrapper {
   width: 100%;
   border-radius: 14px;
-  padding: 24px; /* Reduced for mobile */
+  padding: 24px; 
   margin-bottom: 32px;
-  background-color: rgba(10, 14, 20, 0.65);
-  border: 0.8px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 0 26px rgba(0, 0, 0, 0.35);
+  
+  /* Requested transparent dark background */
+  background-color: rgba(6, 14, 32, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  
+  border: 0.8px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
 .step8-decl-h2 {
   font-family: 'Jost', sans-serif;
-  font-weight: 200;
+  font-weight: 400;
   font-size: 22px;
   line-height: 30px;
   color: #FFFFFF;
@@ -302,11 +293,8 @@
 /* Notice Cards */
 .step8-notice-card {
   width: 100%;
-  border-radius: 10px;
-  padding: 20px; /* Reduced for mobile */
+  padding: 0;
   margin-bottom: 24px;
-  background-color: rgba(59, 130, 246, 0.05);
-  border: 0.8px solid rgba(59, 130, 246, 0.2);
 }
 
 .step8-notice-title {
@@ -322,18 +310,28 @@
 .step8-notice-text {
   font-family: 'Jost', sans-serif;
   font-weight: 400;
-  font-size: 15px; /* Reduced for mobile */
-  line-height: 26px;
+  font-size: 14px; 
+  line-height: 24px;
   color: #D1D5DC;
   margin: 0;
 }
 
+/* The card enclosing the "I confirm..." text */
+.step8-notice-card-alt {
+  width: 100%;
+  border-radius: 10px;
+  padding: 24px; 
+  margin-bottom: 24px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 0.8px solid rgba(255, 255, 255, 0.2);
+}
+
 .step8-notice-text-alt {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Jost', sans-serif;
   font-weight: 400;
-  font-size: 15px;
-  line-height: 26px;
-  color: #D1D5DC;
+  font-size: 14px;
+  line-height: 24px;
+  color: #FFFFFF;
   margin: 0;
 }
 
@@ -350,23 +348,19 @@
 /* Form Card inside Declaration */
 .step8-form-card {
   width: 100%;
-  border-radius: 10px;
-  padding: 24px; /* Reduced for mobile */
   margin-bottom: 32px;
-  background-color: rgba(10, 14, 20, 0.6);
-  border: 0.8px solid rgba(255, 255, 255, 0.1);
 }
 
 .step8-form-grid {
   display: grid;
-  grid-template-columns: 1fr; /* 1 Column for mobile */
+  grid-template-columns: 1fr; 
   row-gap: 24px;
 }
 
 .step8-form-field {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
 .step8-field-label-container {
@@ -377,9 +371,8 @@
 
 .step8-field-label {
   font-family: 'Jost', sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 20px;
+  font-weight: 400;
+  font-size: 15px;
   color: #D1D5DC;
 }
 
@@ -391,42 +384,27 @@
 /* Digital Signature Input */
 .step8-sign-container {
   width: 100%;
-  height: 50px;
-  border-radius: 10px;
-  padding: 0 10px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 0.8px solid rgba(255, 255, 255, 0.1);
 }
 
 .step8-sign-btn {
-  height: 36px;
+  height: 50px;
+  width: 100%;
   padding: 0 16px;
-  border-radius: 8px;
-  flex-shrink: 0;
+  border-radius: 10px;
   font-family: 'Jost', sans-serif;
-  font-weight: 500;
-  font-size: 14px;
+  font-weight: 400;
+  font-size: 15px;
   color: #FFFFFF;
-  background-color: #314460;
-  border: none;
+  background-color: transparent;
+  border: 0.8px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
-  box-shadow: 
-    1px 1px 2px rgba(64,88,125,0.3), 
-    -1px -1px 2px rgba(34,48,67,0.5), 
-    inset -5px 5px 10px rgba(34,48,67,0.2), 
-    inset 5px -5px 10px rgba(34,48,67,0.2), 
-    inset -5px -5px 10px rgba(64,88,125,0.9), 
-    inset 5px 5px 13px rgba(34,48,67,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  transition: border-color 0.2s;
 }
 
-.step8-sign-status {
-  font-size: 13px;
-  font-family: 'Jost', sans-serif;
-  color: #99A1AF;
-}
+.step8-sign-btn:hover { border-color: rgba(255,255,255,0.4); }
 
 /* Inputs */
 .step8-input, .step8-date {
@@ -436,14 +414,16 @@
   padding: 0 16px;
   outline: none;
   font-family: 'Jost', sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   caret-color: #FFFFFF;
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 0.8px solid rgba(255, 255, 255, 0.1);
+  background-color: transparent;
+  border: 0.8px solid rgba(255, 255, 255, 0.2);
   color: #FFFFFF;
+  transition: border-color 0.2s ease;
 }
 
-.step8-input::placeholder { color: #6A7282; }
+.step8-input:focus { border-color: rgba(255, 255, 255, 0.4); }
+.step8-input::placeholder { color: #6A7282; font-weight: 400; }
 .step8-date { color-scheme: dark; }
 .step8-date.empty { color: #6A7282; }
 
@@ -458,24 +438,26 @@
 }
 
 .step8-checkbox-box {
-  width: 24px;
-  height: 24px;
-  border-radius: 8px;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: transparent;
 }
 
-.step8-checkbox-box.checked { background-color: #314460; }
+.step8-checkbox-box.checked { 
+  background-color: transparent; 
+  border-color: rgba(255, 255, 255, 0.6);
+}
 
 .step8-agree-text {
   font-family: 'Jost', sans-serif;
   font-weight: 400;
-  font-size: 15px;
-  line-height: 24px;
+  font-size: 14px;
   color: #FFFFFF;
 }
 
@@ -499,11 +481,18 @@
   cursor: pointer;
 }
 
-.step8-prev-btn { background-color: rgba(255, 255, 255, 0.3); }
+/* Hollow Outline button for Previous */
+.step8-prev-btn {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.step8-prev-btn:hover { background-color: rgba(255, 255, 255, 0.05); }
 
+/* Solid button for Next */
 .step8-submit-btn {
-  background-color: #314460;
-  box-shadow: 
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 
     1px 1px 2px rgba(64,88,125,0.3), 
     -1px -1px 2px rgba(34,48,67,0.5), 
     inset -5px 5px 10px rgba(34,48,67,0.2), 
@@ -511,15 +500,14 @@
     inset -5px -5px 10px rgba(64,88,125,0.9), 
     inset 5px 5px 13px rgba(34,48,67,0.9);
 }
-
-.step8-prev-btn:hover, .step8-submit-btn:hover { opacity: 0.9; }
-.step8-prev-btn:active, .step8-submit-btn:active { transform: scale(0.95); }
-.step8-submit-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+.step8-submit-btn:hover { background-color: rgba(255, 255, 255, 0.15); }
+.step8-prev-btn:active, .step8-submit-btn:active { transform: scale(0.98); }
+.step8-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
 .step8-btn-text {
-  font-size: 15px;
+  font-size: 14px;
   color: #FFFFFF;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .step8-error-text {
@@ -536,40 +524,37 @@
   .step8-main { padding: 48px 40px 80px; }
   
   .step8-step-label { font-size: 40px; margin-bottom: 24px; }
-  .step8-h1 { font-size: 28px; }
-  .step8-section-h2 { font-size: 24px; margin-bottom: 24px; }
+  .step8-h1 { font-size: 24px; margin-bottom: 8px; }
+  .step8-section-h2 { font-size: 18px; margin-bottom: 24px; }
   
   /* Return review cards to horizontal layout */
-  .step8-review-card { padding: 0 24px; }
   .step8-review-icon { width: 36px; height: 36px; border-radius: 10px; }
-  .step8-review-title { font-size: 18px; }
+  .step8-review-title { font-size: 16px; }
   .step8-review-content { gap: 12px; }
   .step8-review-row { flex-direction: row; align-items: flex-start; justify-content: space-between; }
   .step8-review-value { text-align: right; margin-left: 24px; color: #FFFFFF; }
 
   /* Declaration UI Scaling */
-  .step8-decl-wrapper { padding: 24px; }
-  .step8-decl-h2 { font-size: 24px; }
+  .step8-decl-wrapper { padding: 32px; }
+  .step8-decl-h2 { font-size: 18px; }
   
-  .step8-notice-card { padding: 32px; margin-bottom: 32px; }
-  .step8-notice-title { font-size: 18px; }
-  .step8-notice-text, .step8-notice-text-alt { font-size: 18px; line-height: 29px; }
+  .step8-notice-card { margin-bottom: 32px; }
+  .step8-notice-title { font-size: 16px; }
+  .step8-notice-text, .step8-notice-text-alt { font-size: 14px; line-height: 24px; }
   
-  .step8-confirm-title { font-size: 18px; margin-bottom: 24px; }
+  .step8-confirm-title { font-size: 16px; margin-bottom: 24px; }
   
-  .step8-form-card { padding: 40px; }
-  .step8-field-label { font-size: 18px; }
-  
-  .step8-sign-container, .step8-input, .step8-date { height: 53px; }
-  .step8-sign-btn { height: 40px; font-size: 16px; }
+  .step8-form-card { padding: 0; }
+  .step8-field-label { font-size: 15px; }
 
-  .step8-agree-label { margin-bottom: 40px; gap: 16px; }
-  .step8-agree-text { font-size: 16px; }
+  .step8-agree-label { margin-bottom: 40px; gap: 12px; }
+  .step8-agree-text { font-size: 14px; }
 
   /* Switch to 2 columns on Tablet */
   .step8-form-grid {
     grid-template-columns: 1fr 1fr;
     column-gap: 40px; 
+    row-gap: 32px;
   }
 
   /* Side-by-side buttons on Tablet */
@@ -578,7 +563,6 @@
     justify-content: space-between;
   }
   .step8-prev-btn, .step8-submit-btn { width: auto; height: 40px; padding: 0 24px; }
-  .step8-btn-text { font-size: 16px; }
   
   .step8-error-text { text-align: left; }
 }
@@ -587,16 +571,15 @@
 @media (min-width: 1024px) {
   .step8-main { padding-left: 80px; padding-right: 80px; }
   .step8-nav-container { padding: 0 64px; }
-  .step8-step-label { font-size: 48px; margin-bottom: 30px; }
-  .step8-form-card { padding: 44px 40px; }
+  .step8-step-label { font-size: 42px; margin-bottom: 24px; }
   
   /* Widen the gap safely for normal laptops */
-  .step8-form-grid { column-gap: 100px; }
+  .step8-form-grid { column-gap: 80px; }
 }
 
 /* --- Ultra-Wide Desktops (1440px and up) --- */
 @media (min-width: 1440px) {
   .step8-main { padding-left: 111px; padding-right: 111px; }
   /* Original Figma extra-wide gap */
-  .step8-form-grid { column-gap: 230px; }
+  .step8-form-grid { column-gap: 120px; }
 }
