@@ -5,6 +5,8 @@ import { showMissingRequiredFieldsToast } from '../../utils/requiredFieldToast';
 import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep3IdentityInfo, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
+import HelpButton from "../../components/Help/HelpButton";
+import HelpDrawer from "../../components/Help/HelpDrawer";
 
 // Import your standard CSS
 import './css/Step3IdentityInfo.css';
@@ -24,6 +26,7 @@ const Step3IdentityInfo = () => {
   const form = formData.step3;
   const [isSavingStep, setIsSavingStep] = useState(false);
   const [stepError, setStepError] = useState('');
+  const [helpOpen, setHelpOpen] = useState(false);
 
   /** Prefill form data from database on component mount */
   useEffect(() => {
@@ -198,6 +201,17 @@ const Step3IdentityInfo = () => {
         {stepError && <p className="step3-error-text">{stepError}</p>}
 
       </main>
+
+      <HelpButton
+        onClick={() => setHelpOpen(true)}
+      />
+
+      <HelpDrawer
+          open={helpOpen}
+          onClose={() => setHelpOpen(false)}
+          page="step3"
+      />
+
     </div>
   );
 };

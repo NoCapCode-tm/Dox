@@ -2,6 +2,8 @@ import { useMemo, useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import documentTree from '../data/companyDocsContent.js';
+import HelpButton from "../components/Help/HelpButton";
+import HelpDrawer from "../components/Help/HelpDrawer";
 
 import './css/CompanyDocs.css';
 
@@ -13,6 +15,7 @@ const CompanyDocs = () => {
     const [isContentOverflowing, setIsContentOverflowing] = useState(false);
     const [hasOpenedLongContent, setHasOpenedLongContent] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
+    const [helpOpen, setHelpOpen] = useState(false);
 
     const contentRef = useRef(null);
     const contentScrollRef = useRef(null);
@@ -258,6 +261,16 @@ const CompanyDocs = () => {
 
                 </div>
             </main>
+                <HelpButton
+                    onClick={() => setHelpOpen(true)}
+                />
+
+                <HelpDrawer
+                    open={helpOpen}
+                    onClose={() => setHelpOpen(false)}
+                    page="companyDocs"
+                />
+            
         </div>
     );
 };

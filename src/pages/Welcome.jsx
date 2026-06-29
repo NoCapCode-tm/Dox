@@ -1,5 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useRef, useEffect } from "react";
+import { getCurrentUser } from "../api/employeeApi";
+import { clearAuthSession } from "../utils/auth";
 import { useNavigate } from 'react-router-dom';
+import { toast } from "react-hot-toast";
 import './css/Welcome.css';
 
 /* =====================================================================
@@ -172,6 +175,41 @@ const WebGLBackground = () => {
 const Welcome = () => {
     const navigate = useNavigate();
 
+    const [user, setUser] = useState(null);
+
+    const [showProfileMenu, setShowProfileMenu] = useState(false);
+    const menuRef = useRef(null);
+
+    useEffect(() => {
+    const loadUser = async () => {
+        try {
+            const response = await getCurrentUser();
+
+            console.log("Current User:", response);
+
+            setUser(response.message);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    loadUser();
+    }, []);
+
+    useEffect(() => {
+    const handleClickOutside = (e) => {
+        if (menuRef.current && !menuRef.current.contains(e.target)) {
+            setShowProfileMenu(false);
+        }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+    };
+    }, []);
+
     const cards = [
         {
             step: '01',
@@ -202,6 +240,36 @@ const Welcome = () => {
         },
     ];
 
+    const handleLogout = () => {
+        // Remove auth session
+        localStorage.removeItem("emp-auth-session");
+        localStorage.removeItem("emp-auth-token");
+
+        // Clear session storage
+        sessionStorage.clear();
+
+        // Delete cookies
+        document.cookie.split(";").forEach((cookie) => {
+            document.cookie = cookie
+                .replace(/^ +/, "")
+                .replace(
+                    /=.*/,
+                    "=;expires=" + new Date(0).toUTCString() + ";path=/"
+                );
+        });
+
+        // Close profile menu
+        setShowProfileMenu(false);
+
+        // Show success toast
+        toast.success("Signed out successfully");
+
+        // Redirect after a short delay so the toast is visible
+        setTimeout(() => {
+            window.location.replace("/login");
+        }, 1200);
+    };
+
     return (
         <div className="relative min-h-screen w-full overflow-hidden font-sans text-white flex flex-col items-center justify-center bg-[#060D18]">
             
@@ -209,13 +277,65 @@ const Welcome = () => {
             <div className="absolute inset-0 z-0 bg-overlay-fade pointer-events-none" />
 
             <header className="absolute top-8 right-8 z-20">
-                <div className="w-[46px] h-[46px] rounded-full border border-white/20 bg-white/5 flex items-center justify-center text-white/90 backdrop-blur-md cursor-pointer hover:bg-white/10 transition-all">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-                    </svg>
+                <div className="relative" ref={menuRef}>
+
+                    <button
+                        onClick={() => setShowProfileMenu(!showProfileMenu)}
+                        className="w-[46px] h-[46px] rounded-full border border-white/20 bg-white/5 flex items-center justify-center text-white/90 backdrop-blur-md hover:bg-white/10 transition"
+                    >
+                        <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                        >
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </button>
+
+                    {showProfileMenu && (
+                        <div className="absolute right-0 mt-2 w-56 rounded-xl border border-white/10 bg-[#0b1320]/95 backdrop-blur-xl shadow-xl overflow-hidden">
+
+                            <div className="px-4 py-3 border-b border-white/10">
+                                <p className="text-[15px] font-semibold text-white">
+                                    {user?.name}
+                                </p>
+
+                                <p className="text-[11px] text-white/50 truncate mt-0.5">
+                                    {user?.email}
+                                </p>
+                            </div>
+
+                            <button
+                                onClick={handleLogout}
+                                className="w-full px-4 py-3 flex items-center justify-between text-red-400 hover:bg-red-500/10 transition"
+                            >
+                                <span>Sign Out</span>
+
+                                <svg
+                                    width="18"
+                                    height="18"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                >
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                                    <polyline points="16 17 21 12 16 7"/>
+                                    <line x1="21" y1="12" x2="9" y2="12"/>
+                                </svg>
+
+                            </button>
+
+                        </div>
+                    )}
+
                 </div>
             </header>
-
+            
             <main className="relative z-20 flex flex-col items-center w-full max-w-[1100px] px-6 py-12">
                 
                 {/* PERFECTED DOX LOGO AND REFLECTION */}

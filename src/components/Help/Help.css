@@ -1,0 +1,402 @@
+/* ==========================================================
+   HELP FLOATING BUTTON
+========================================================== */
+
+.help-floating-button {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  z-index: 999;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  width: 58px;
+  height: 58px;
+  padding: 0 18px;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 999px;
+
+  background: rgba(11,19,32,.92);
+  backdrop-filter: blur(20px);
+
+  cursor: pointer;
+
+  transition: all .35s ease;
+
+  box-shadow:
+      0 8px 24px rgba(0,0,0,.35),
+      inset 0 1px 0 rgba(255,255,255,.05);
+}
+
+.help-floating-button:hover{
+    width:170px;
+}
+
+.help-floating-icon{
+    width:22px;
+    height:22px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:#51A2FF;
+
+    flex-shrink:0;
+}
+
+.help-floating-text{
+
+    white-space:nowrap;
+
+    color:#fff;
+
+    font-size:15px;
+
+    font-weight:500;
+
+    opacity:0;
+
+    transform:translateX(10px);
+
+    transition:.25s;
+}
+
+.help-floating-button:hover .help-floating-text{
+
+    opacity:1;
+
+    transform:translateX(0);
+}
+
+/* ==========================================================
+   OVERLAY
+========================================================== */
+
+.help-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.45);
+
+    backdrop-filter:blur(4px);
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.3s;
+
+    z-index:1000;
+}
+
+.help-overlay.show{
+
+    opacity:1;
+
+    visibility:visible;
+}
+
+/* ==========================================================
+   DRAWER
+========================================================== */
+
+.help-drawer{
+
+    position:fixed;
+
+    top:0;
+
+    right:-460px;
+
+    width:430px;
+
+    height:100vh;
+
+    background:#0F172A;
+
+    border-left:1px solid rgba(255,255,255,.08);
+
+    display:flex;
+
+    flex-direction:column;
+
+    transition:right .35s ease;
+
+    z-index:1001;
+
+    box-shadow:-10px 0 40px rgba(0,0,0,.35);
+}
+
+.help-drawer.open{
+
+    right:0;
+}
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.help-header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:26px;
+
+    border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.help-header h2{
+
+    margin:0;
+
+    color:#fff;
+
+    font-size:24px;
+
+    font-weight:600;
+}
+
+.help-header p{
+
+    margin-top:5px;
+
+    color:#8D97A5;
+
+    font-size:14px;
+}
+
+.help-close-btn{
+
+    width:40px;
+
+    height:40px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:rgba(255,255,255,.05);
+
+    color:white;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    transition:.25s;
+}
+
+.help-close-btn:hover{
+
+    background:rgba(255,255,255,.12);
+}
+
+/* ==========================================================
+   BODY
+========================================================== */
+
+.help-section{
+
+    padding:24px;
+}
+
+.help-section h3{
+
+    margin-bottom:18px;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:600;
+}
+
+/* ==========================================================
+   ACCORDION
+========================================================== */
+
+.help-accordion{
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:12px;
+
+    margin-bottom:12px;
+
+    overflow:hidden;
+
+    background:rgba(255,255,255,.03);
+}
+
+.help-accordion-header{
+
+    width:100%;
+
+    padding:16px;
+
+    border:none;
+
+    background:transparent;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    cursor:pointer;
+
+    color:white;
+
+    text-align:left;
+}
+
+.help-question{
+
+    font-size:14px;
+
+    font-weight:500;
+}
+
+.help-chevron{
+
+    transition:.25s;
+}
+
+.help-chevron.rotate{
+
+    transform:rotate(180deg);
+}
+
+.help-accordion-content{
+
+    max-height:0;
+
+    overflow:hidden;
+
+    transition:max-height .3s ease;
+}
+
+.help-accordion-content.show{
+
+    max-height:250px;
+}
+
+.help-accordion-content p{
+
+    padding:0 16px 18px;
+
+    color:#9CA3AF;
+
+    font-size:14px;
+
+    line-height:24px;
+}
+
+/* ==========================================================
+   TIPS
+========================================================== */
+
+.help-tips{
+
+    margin:0;
+
+    padding-left:18px;
+}
+
+.help-tips li{
+
+    color:#D1D5DB;
+
+    margin-bottom:12px;
+
+    line-height:24px;
+
+    font-size:14px;
+}
+
+/* ==========================================================
+   FOOTER
+========================================================== */
+
+.help-footer{
+
+    margin-top:auto;
+
+    padding:24px;
+
+    border-top:1px solid rgba(255,255,255,.06);
+}
+
+.help-support-card{
+
+    display:flex;
+
+    gap:12px;
+
+    align-items:flex-start;
+
+    padding:18px;
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.04);
+
+    color:white;
+}
+
+.help-support-card strong{
+
+    display:block;
+
+    margin-bottom:6px;
+
+    font-size:14px;
+}
+
+.help-support-card span{
+
+    color:#9CA3AF;
+
+    font-size:13px;
+}
+
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width:768px){
+
+.help-drawer{
+
+    width:100%;
+
+    right:-100%;
+}
+
+.help-floating-button{
+
+    right:20px;
+
+    bottom:20px;
+}
+
+}

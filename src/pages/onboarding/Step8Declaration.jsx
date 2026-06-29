@@ -5,6 +5,8 @@ import { showMissingRequiredFieldsToast } from '../../utils/requiredFieldToast';
 import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep8Declaration, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
+import HelpButton from "../../components/Help/HelpButton";
+import HelpDrawer from "../../components/Help/HelpDrawer";
 
 // Import standard CSS
 import './css/Step8Declaration.css';
@@ -25,6 +27,7 @@ const Step8Declaration = () => {
     const { formData, updateFormData } = useOnboardingContext();
     const [isSavingStep, setIsSavingStep] = useState(false);
     const [stepError, setStepError] = useState('');
+    const [helpOpen, setHelpOpen] = useState(false);
     
     const step8 = formData.step8;
     const step1 = formData.step1;
@@ -344,6 +347,17 @@ const Step8Declaration = () => {
                 {stepError && <p className="step8-error-text">{stepError}</p>}
 
             </main>
+      
+        <HelpButton
+            onClick={() => setHelpOpen(true)}
+        />
+
+        <HelpDrawer
+            open={helpOpen}
+            onClose={() => setHelpOpen(false)}
+            page="step8"
+        />
+            
         </div>
     );
 };
