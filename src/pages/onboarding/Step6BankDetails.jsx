@@ -4,6 +4,8 @@ import { toast } from 'react-hot-toast';
 import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep6BankDetails, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
+import HelpButton from "../../components/Help/HelpButton";
+import HelpDrawer from "../../components/Help/HelpDrawer";
 
 // Import standard CSS
 import './css/Step6BankDetails.css';
@@ -19,6 +21,7 @@ const Step6BankDetails = () => {
   const intl = formData.step6.intl;
   const [isSavingStep, setIsSavingStep] = useState(false);
   const [stepError, setStepError] = useState('');
+  const [helpOpen, setHelpOpen] = useState(false);
 
   /** Prefill form data from database on component mount */
   useEffect(() => {
@@ -251,6 +254,17 @@ const Step6BankDetails = () => {
         {stepError && <p className="step6-error-text">{stepError}</p>}
 
       </main>
+
+      <HelpButton
+        onClick={() => setHelpOpen(true)}
+      />
+
+      <HelpDrawer
+          open={helpOpen}
+          onClose={() => setHelpOpen(false)}
+          page="step6"
+      />
+
     </div>
   );
 };

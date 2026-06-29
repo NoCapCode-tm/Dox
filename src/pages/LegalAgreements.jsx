@@ -1,8 +1,14 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './css/LegalAgreements.css'; // Make sure the path matches your project structure
+import HelpButton from "../components/Help/HelpButton";
+import HelpDrawer from "../components/Help/HelpDrawer";
+
 
 const LegalAgreements = () => {
     const navigate = useNavigate();
+    const [helpOpen, setHelpOpen] = useState(false);
+
 
     return (
         <div className="legal-wrapper">
@@ -128,6 +134,16 @@ const LegalAgreements = () => {
 
                 </div>
             </main>
+
+            <HelpButton
+                onClick={() => setHelpOpen(true)}
+            />
+
+            <HelpDrawer
+                open={helpOpen}
+                onClose={() => setHelpOpen(false)}
+                page="offerLetter"
+            />
         </div>
     );
 };

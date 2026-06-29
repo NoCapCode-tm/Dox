@@ -237,7 +237,7 @@ const Dashboard = () => {
       {/* Header/Logo area */}
       <div className="w-full px-8 pt-8 pb-2 flex items-start justify-between relative z-30">
         <div className="flex flex-col">
-          <DoxLogo width="110" />
+          <DoxLogo width="84" />
           <span className="text-[12px] text-white/65 leading-[20px] mt-2 tracking-wide font-normal">
             Employee Onboarding
           </span>

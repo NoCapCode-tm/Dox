@@ -5,6 +5,8 @@ import { showMissingRequiredFieldsToast } from '../../utils/requiredFieldToast';
 import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep4EducationInfo, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
+import HelpButton from "../../components/Help/HelpButton";
+import HelpDrawer from "../../components/Help/HelpDrawer";
 
 // Import your standard CSS
 import './css/Step4EducationInfo.css';
@@ -26,6 +28,7 @@ const Step4EducationInfo = () => {
   const form = formData.step4;
   const [isSavingStep, setIsSavingStep] = useState(false);
   const [stepError, setStepError] = useState('');
+  const [helpOpen, setHelpOpen] = useState(false);
 
   /** Prefill form data from database on component mount */
   useEffect(() => {
@@ -121,7 +124,7 @@ const Step4EducationInfo = () => {
               <SelectInput
                 value={form.highestQualification}
                 onChange={(v) => handleChange('highestQualification', v)}
-                placeholder="Dropdown options: High School, Diploma, Undergraduate"
+                placeholder="High School, Diploma, Undergraduate"
                 options={[
                   'High School',
                   'Diploma',
@@ -198,6 +201,17 @@ const Step4EducationInfo = () => {
         {stepError && <p className="step4-error-text">{stepError}</p>}
 
       </main>
+
+      <HelpButton
+        onClick={() => setHelpOpen(true)}
+      />
+
+      <HelpDrawer
+          open={helpOpen}
+          onClose={() => setHelpOpen(false)}
+          page="step4"
+      />
+      
     </div>
   );
 };

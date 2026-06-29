@@ -6,6 +6,8 @@ import { showMissingRequiredFieldsToast } from '../../utils/requiredFieldToast';
 import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep5ProfileInfo, getCurrentUser } from '../../api/employeeApi';
 import Loader from '../../components/ui/Loader';
+import HelpButton from "../../components/Help/HelpButton";
+import HelpDrawer from "../../components/Help/HelpDrawer";
 
 // Import standard CSS
 import './css/Step5Profile.css';
@@ -28,6 +30,7 @@ const Step5Profile = () => {
   const form = formData.step5;
   const [isSavingStep, setIsSavingStep] = useState(false);
   const [stepError, setStepError] = useState('');
+  const [helpOpen, setHelpOpen] = useState(false);
 
   /** Prefill form data from database on component mount */
   useEffect(() => {
@@ -281,6 +284,17 @@ const Step5Profile = () => {
         {stepError && <p className="step5-error-text">{stepError}</p>}
 
       </main>
+
+      <HelpButton
+        onClick={() => setHelpOpen(true)}
+      />
+
+      <HelpDrawer
+          open={helpOpen}
+          onClose={() => setHelpOpen(false)}
+          page="step5"
+      />
+
     </div>
   );
 };

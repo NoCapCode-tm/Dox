@@ -8,12 +8,12 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App />
     <Toaster
-      position="top-right"
+      position="top-left"
       toastOptions={{
         style: {
-          background: '#151B23',
+          background: 'rgba(28, 32, 39, 0.65)',
           color: '#FFFFFF',
-          border: '1px solid rgba(255,255,255,0.14)',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
         },
       }}
     />

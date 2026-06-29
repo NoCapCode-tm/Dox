@@ -6,6 +6,8 @@ import { saveStep1PersonalInfo, getCurrentUser } from '../../api/employeeApi';
 import { isValidEmail, isValidPhone } from '../../utils/validation';
 import Loader from '../../components/ui/Loader';
 import { showMissingRequiredFieldsToast } from '../../utils/requiredFieldToast';
+import HelpButton from "../../components/Help/HelpButton";
+import HelpDrawer from "../../components/Help/HelpDrawer";
 
 // Import your standard CSS
 import './css/Step1PersonalInfo.css';
@@ -40,6 +42,7 @@ const Step1PersonalInfo = () => {
   const form = formData.step1;
   const [isSavingStep, setIsSavingStep] = useState(false);
   const [stepError, setStepError] = useState('');
+  const [helpOpen, setHelpOpen] = useState(false);
 
   /** Prefill form data from database on component mount */
   useEffect(() => {
@@ -288,6 +291,16 @@ const Step1PersonalInfo = () => {
         {stepError && <p className="step1-error-text">{stepError}</p>}
 
       </main>
+
+      <HelpButton
+          onClick={() => setHelpOpen(true)}
+      />
+
+      <HelpDrawer
+          open={helpOpen}
+          onClose={() => setHelpOpen(false)}
+          page="step1"
+      />
     </div>
   );
 };
