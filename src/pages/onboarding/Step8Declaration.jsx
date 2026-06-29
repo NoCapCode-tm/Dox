@@ -78,9 +78,6 @@ const Step8Declaration = () => {
         <div className="step8-wrapper">
             {isSavingStep && <Loader fullScreen={true} message="Saving and completing onboarding..." />}
             
-            {/* Grid lines */}
-            <div className="step8-grid-lines" />
-
             {/* Header */}
             <div className="step8-header">
                 <DoxLogo width="69" />
@@ -236,7 +233,7 @@ const Step8Declaration = () => {
                     <div className="step8-notice-card">
                         <h3 className="step8-notice-title">Employee Declaration</h3>
                         <p className="step8-notice-text">
-                            I confirm that the information provided above is accurate and complete.<br />
+                            I confirm that all information provided is accurate and complete.<br />
                             I agree to comply with NoCapCode policies and the internal handbook.<br />
                             I acknowledge the confidentiality and data protection obligations.<br />
                             I understand that any misrepresentation may result in termination.
@@ -263,9 +260,6 @@ const Step8Declaration = () => {
                                     >
                                         {step8.signature ? '✓ Signed' : 'Click'}
                                     </button>
-                                    {step8.signature && (
-                                        <span className="step8-sign-status">Signature captured</span>
-                                    )}
                                 </div>
                             </div>
 
@@ -278,7 +272,7 @@ const Step8Declaration = () => {
                                 <input
                                     value={step8.fullName || ''}
                                     onChange={(e) => updateFormData('step8', 'fullName', e.target.value)}
-                                    placeholder="Enter full name as per ID"
+                                    placeholder="Enter full name"
                                     className="step8-input"
                                 />
                             </div>
@@ -301,9 +295,9 @@ const Step8Declaration = () => {
                     </div>
 
                     {/* Compliance blue card */}
-                    <div className="step8-notice-card">
+                    <div className="step8-notice-card-alt">
                         <p className="step8-notice-text-alt">
-                            I confirm that the information provided above is accurate and belongs to me, and I understand that this information will be used for preparing my Offer Letter, NDA/IP Agreement, and internal onboarding records.
+                            I confirm that all the information provided is accurate and belongs to me, and I understand that this information will be used for preparing my Offer Letter, NDA/IP Agreement, and internal onboarding records.
                         </p>
                     </div>
 
@@ -342,7 +336,7 @@ const Step8Declaration = () => {
                         disabled={isSavingStep}
                         className="step8-submit-btn"
                     >
-                        <span className="step8-btn-text">{isSavingStep ? 'Saving...' : 'Submit Onboarding'}</span>
+                        <span className="step8-btn-text">{isSavingStep ? 'Saving...' : 'Submit'}</span>
                         <ArrowRightIcon />
                     </button>
                 </div>

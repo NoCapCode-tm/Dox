@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { useOnboardingContext } from '../../context/OnboardingContext';
@@ -12,7 +12,7 @@ import './css/Step1PersonalInfo.css';
 
 const REQUIRED_STEP1_FIELDS = [
   { key: 'fullName', label: 'Full Name' },
-  { key: 'personalEmail', label: 'Personal Email ID' },
+  { key: 'personalEmail', label: 'Personal Email Address' },
   { key: 'phoneWhatsapp', label: 'Phone Number (WhatsApp enabled)' },
   { key: 'dateOfBirth', label: 'Date of Birth' },
   { key: 'countryOfCitizenship', label: 'Country of Citizenship' },
@@ -21,7 +21,7 @@ const REQUIRED_STEP1_FIELDS = [
   { key: 'gender', label: 'Gender' },
   { key: 'permanentAddress', label: 'Permanent Address' },
   { key: 'communicationAddress', label: 'Communication Address' },
-  { key: 'phoneWithCode', label: 'Phone Number (with country code)' },
+  { key: 'phoneWithCode', label: 'Alternative Phone Number (with country code)' },
 ];
 
 const toDateInputValue = (value) => {
@@ -59,8 +59,6 @@ const Step1PersonalInfo = () => {
           updateFormData('step1', 'countryOfCitizenship', form.countryOfCitizenship || data.address?.country || '');
           updateFormData('step1', 'stateProvince', form.stateProvince || data.address?.state || '');
           updateFormData('step1', 'city', form.city || data.address?.city || '');
-        } else {
-          console.warn(' Step 1: No message field in userData');
         }
       } catch (error) {
         console.error(' Step 1: Prefill error:', error?.message, error);
@@ -120,16 +118,11 @@ const Step1PersonalInfo = () => {
     <div className="step1-wrapper">
       {isSavingStep && <Loader fullScreen={true} message="Saving and loading next step..." />}
       
-      {/* Grid lines */}
-      <div className="step1-grid-lines" />
-
-      {/* ── Header ── */}
       <div className="step1-header">
         <DoxLogo width="69" />
         <span>Employee Onboarding</span>
       </div>
 
-      {/* ── Step Navbar ── */}
       <div className="step1-nav-container">
         <nav className="step1-nav">
           <div className="step1-nav-inner">
@@ -146,48 +139,45 @@ const Step1PersonalInfo = () => {
         </nav>
       </div>
 
-      {/* ── Page content ── */}
       <main className="step1-main">
 
-        {/* Step label */}
         <p className="step1-step-label">Step 1 of 8</p>
 
-        {/* Heading + subtitle */}
         <div className="step1-heading-container">
           <h1 className="step1-h1">Basic Personal Information</h1>
           <p className="step1-subtitle">
-            Please provide your basic details for official records and communication. 
+            Please provide your basic details for official records and communication. <br/>
             Fields marked with <span className="step1-mandatory">*</span> are mandatory.
           </p>
         </div>
 
-        {/* ── Form Card ── */}
         <div className="step1-form-card">
           
-          {/* 2-column grid */}
           <div className="step1-form-grid">
+            {/* ROW 1 */}
             <FormField label="Full Name (as per Government ID)" required>
               <TextInput
                 value={form.fullName}
                 onChange={(v) => handleChange('fullName', v)}
-                placeholder="e.g. Rahul Sharma"
+                placeholder="Enter full name"
               />
             </FormField>
 
-            <FormField label="Personal Email ID" required>
+            <FormField label="Personal Email Address" required>
               <TextInput
                 value={form.personalEmail}
                 onChange={(v) => handleChange('personalEmail', v)}
-                placeholder="rahul.sharma@example.com"
+                placeholder="your.email@example.com"
                 inputMode="email"
               />
             </FormField>
 
+            {/* ROW 2 */}
             <FormField label="Phone Number (WhatsApp enabled)" required>
               <TextInput
                 value={form.phoneWhatsapp}
                 onChange={(v) => handleChange('phoneWhatsapp', v)}
-                placeholder="+91 98765 43210"
+                placeholder="+91 XXXXXXXXXX"
                 inputMode="tel"
               />
             </FormField>
@@ -199,11 +189,12 @@ const Step1PersonalInfo = () => {
               />
             </FormField>
 
+            {/* ROW 3 */}
             <FormField label="Country of Citizenship" required>
               <TextInput
                 value={form.countryOfCitizenship}
                 onChange={(v) => handleChange('countryOfCitizenship', v)}
-                placeholder="e.g. India"
+                placeholder="Enter your country"
               />
             </FormField>
 
@@ -211,15 +202,16 @@ const Step1PersonalInfo = () => {
               <TextInput
                 value={form.stateProvince}
                 onChange={(v) => handleChange('stateProvince', v)}
-                placeholder="e.g. Maharashtra"
+                placeholder="Enter your state/province"
               />
             </FormField>
 
+            {/* ROW 4 */}
             <FormField label="City" required>
               <TextInput
                 value={form.city}
                 onChange={(v) => handleChange('city', v)}
-                placeholder="e.g. Mumbai"
+                placeholder="Enter your city"
               />
             </FormField>
 
@@ -231,54 +223,53 @@ const Step1PersonalInfo = () => {
                 placeholder="Select gender"
               />
             </FormField>
-          </div>
 
-          {/* Address fields */}
-          <div className="step1-form-grid step1-form-grid-mt">
-            <div className="step1-flex-col">
-              <FormField label="Permanent Address" required>
-                <TextareaInput
-                  value={form.permanentAddress}
-                  onChange={(v) => handleChange('permanentAddress', v)}
-                  placeholder="e.g. 123, MG Road, Andheri West, Mumbai, 400058"
-                />
-              </FormField>
+            {/* ROW 5 (Addresses & Alt Phone) */}
+            <FormField label="Permanent Address" required>
+              <TextareaInput
+                value={form.permanentAddress}
+                onChange={(v) => handleChange('permanentAddress', v)}
+                placeholder="Enter permanent address"
+              />
+            </FormField>
 
-              <FormField label="Communication Address" required>
-                <label 
-                  className="step1-checkbox-label"
-                  onClick={() => handleChange('sameAsPermanent', !form.sameAsPermanent)}
-                >
-                  <div className={`step1-checkbox-box ${form.sameAsPermanent ? 'checked' : ''}`}>
-                    {form.sameAsPermanent && (
-                      <svg width="12" height="9" viewBox="0 0 12 9" fill="none">
-                        <path d="M1 4L4.5 7.5L11 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    )}
-                  </div>
-                  <span className="step1-checkbox-text">Same as permanent address</span>
-                </label>
-                <TextareaInput
-                  value={form.communicationAddress}
-                  onChange={(v) => handleChange('communicationAddress', v)}
-                  placeholder="e.g. 456, Linking Road, Malad West, Mumbai, 400064"
-                  disabled={form.sameAsPermanent}
+            <div className="step1-flex-col-alt">
+               <FormField label="Alternative Phone Number (with country code)" required>
+                <TextInput
+                  value={form.phoneWithCode}
+                  onChange={(v) => handleChange('phoneWithCode', v)}
+                  placeholder="+91 XXXXXXXXXX"
+                  inputMode="tel"
                 />
               </FormField>
             </div>
 
-            <FormField label="Phone Number (with country code)" required>
-              <TextInput
-                value={form.phoneWithCode}
-                onChange={(v) => handleChange('phoneWithCode', v)}
-                placeholder="+91 98765 43210"
-                inputMode="tel"
+            {/* ROW 6 (Communication Address spans full width or sits bottom left) */}
+            <FormField label="Communication Address" required>
+              <label 
+                className="step1-checkbox-label"
+                onClick={() => handleChange('sameAsPermanent', !form.sameAsPermanent)}
+              >
+                <div className={`step1-checkbox-box ${form.sameAsPermanent ? 'checked' : ''}`}>
+                  {form.sameAsPermanent && (
+                    <svg width="12" height="9" viewBox="0 0 12 9" fill="none">
+                      <path d="M1 4L4.5 7.5L11 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  )}
+                </div>
+                <span className="step1-checkbox-text">Same as permanent address</span>
+              </label>
+              <TextareaInput
+                value={form.communicationAddress}
+                onChange={(v) => handleChange('communicationAddress', v)}
+                placeholder="Enter communication address"
+                disabled={form.sameAsPermanent}
               />
             </FormField>
+
           </div>
         </div>
 
-        {/* ── Next Button ── */}
         <div className="step1-button-container">
           <button
             type="button"
@@ -329,22 +320,49 @@ const DateInput = ({ value, onChange }) => (
     type="date"
     value={value || ''}
     onChange={(e) => onChange(e.target.value)}
-    className={`step1-date ${!value ? 'empty' : ''}`}
+    className={`step1-input step1-date ${!value ? 'empty' : ''}`}
   />
 );
 
-const SelectInput = ({ value, onChange, options, placeholder }) => (
-  <select
-    value={value || ''}
-    onChange={(e) => onChange(e.target.value)}
-    className={`step1-select ${!value ? 'empty' : ''}`}
-  >
-    <option value="" disabled hidden>{placeholder}</option>
-    {options.map((opt) => (
-      <option key={opt} value={opt}>{opt}</option>
-    ))}
-  </select>
-);
+const SelectInput = ({ value, onChange, options, placeholder }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const handler = (e) => { 
+      if (ref.current && !ref.current.contains(e.target)) setIsOpen(false); 
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
+
+  return (
+    <div className="step1-custom-select-container" ref={ref}>
+      <div 
+        className={`step1-input step1-custom-select-trigger ${!value ? 'empty' : ''}`} 
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span>{value || placeholder}</span>
+        <svg className={`step1-select-arrow ${isOpen ? 'open' : ''}`} width="12" height="8" viewBox="0 0 12 8" fill="none">
+          <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </div>
+      {isOpen && (
+        <div className="step1-custom-select-dropdown">
+          {options.map(opt => (
+            <div 
+              key={opt} 
+              className={`step1-custom-select-option ${value === opt ? 'selected' : ''}`} 
+              onClick={() => { onChange(opt); setIsOpen(false); }}
+            >
+              {opt}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const TextareaInput = ({ value, onChange, placeholder, disabled }) => (
   <textarea
@@ -352,7 +370,6 @@ const TextareaInput = ({ value, onChange, placeholder, disabled }) => (
     onChange={(e) => onChange(e.target.value)}
     placeholder={placeholder}
     disabled={disabled}
-    rows={4}
     className="step1-textarea"
   />
 );

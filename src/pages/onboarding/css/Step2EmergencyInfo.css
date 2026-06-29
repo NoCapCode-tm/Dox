@@ -9,26 +9,21 @@
   flex-direction: column;
   font-family: 'Jost', sans-serif;
   color: #FFFFFF;
-  background: linear-gradient(121.47deg, #0A0E14 49.53%, #161F2C 104.45%);
-}
 
-.step2-grid-lines {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
-  background-image: 
-    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), 
-    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size: 115px 115px;
+  /* Matches the background provided exactly */
+  background-image: url('../../../BG.svg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-color: #0A0E14; /* Dark fallback */
 }
 
 /* --- Mobile First (Default) --- */
 
 .step2-header {
   width: 100%;
-  padding: 20px 20px 0; /* Reduced for mobile */
+  padding: 20px 20px 0;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -63,7 +58,7 @@
   align-items: center;
   padding: 0 16px;
   overflow-x: auto;
-  background-color: #0A0E14;
+  background-color: rgba(6, 14, 32, 0.4);
   border: 0.8px solid rgba(255, 255, 255, 0.1);
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -122,7 +117,7 @@
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 32px 16px 80px; /* Reduced for mobile */
+  padding: 32px 16px 80px; 
   position: relative;
   z-index: 10;
 }
@@ -132,8 +127,8 @@
   font-weight: 500;
   line-height: 20px;
   margin-bottom: 20px;
-  font-size: 32px; /* Scaled down for mobile */
-  color: #314460;
+  font-size: 32px; 
+  color: #FFFFFF;
 }
 
 .step2-heading-container {
@@ -144,7 +139,7 @@
 
 .step2-h1 {
   font-family: 'Jost', sans-serif;
-  font-weight: 200;
+  font-weight: 400;
   font-size: 24px;
   line-height: 36px;
   color: #FFFFFF;
@@ -163,26 +158,24 @@
 .step2-form-card {
   width: 100%;
   border-radius: 16px;
-  padding: 24px; /* Reduced for mobile */
-  background-color: rgba(10, 14, 20, 0.6);
+  padding: 24px;
+  background-color: rgba(6, 14, 32, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 0.8px solid rgba(255, 255, 255, 0.1);
 }
 
 .step2-form-grid {
   display: grid;
-  grid-template-columns: 1fr; /* 1 Column for Mobile */
+  grid-template-columns: 1fr;
   row-gap: 24px;
-}
-
-.step2-form-grid-mt {
-  margin-top: 24px;
 }
 
 /* Form Fields */
 .step2-form-field {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
 .step2-field-label-container {
@@ -194,9 +187,8 @@
 
 .step2-field-label {
   font-family: 'Jost', sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 20px;
+  font-weight: 400;
+  font-size: 15px;
   color: #D1D5DC;
 }
 
@@ -210,39 +202,45 @@
 .step2-field-optional {
   font-family: 'Jost', sans-serif;
   font-weight: 400;
-  font-size: 13px;
-  color: #99A1AF;
+  font-size: 12px;
+  color: rgb(111 115 129); 
   margin-left: 4px;
 }
 
 .step2-input {
   width: 100%;
-  height: 50px; /* Standardized mobile height */
+  height: 50px; 
   border-radius: 10px;
   padding: 0 16px;
   outline: none;
   font-family: 'Jost', sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   caret-color: #FFFFFF;
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 0.8px solid rgba(255, 255, 255, 0.1);
+  background-color: transparent;
+  border: 0.8px solid rgba(255, 255, 255, 0.2);
   color: #FFFFFF;
+  transition: border-color 0.2s ease;
+}
+
+.step2-input:focus {
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 .step2-input::placeholder {
   color: #6A7282;
+  font-weight: 400;
 }
 
 /* Buttons */
 .step2-button-container {
   display: flex;
-  flex-direction: column; /* Stack vertically on mobile */
+  flex-direction: column; 
   gap: 12px;
   margin-top: 32px;
 }
 
 .step2-prev-btn, .step2-next-btn {
-  height: 44px; /* Taller touch target for mobile */
+  height: 44px;
   width: 100%;
   border-radius: 10px;
   display: flex;
@@ -254,12 +252,17 @@
   cursor: pointer;
 }
 
+/* Hollow Outline button for Previous */
 .step2-prev-btn {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
+.step2-prev-btn:hover { background-color: rgba(255, 255, 255, 0.05); }
 
+/* Solid button for Next */
 .step2-next-btn {
-  background-color: #314460;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   box-shadow: 
     1px 1px 2px rgba(64,88,125,0.3), 
     -1px -1px 2px rgba(34,48,67,0.5), 
@@ -269,18 +272,14 @@
     inset 5px 5px 13px rgba(34,48,67,0.9);
 }
 
-.step2-prev-btn:hover, .step2-next-btn:hover { opacity: 0.9; }
-.step2-prev-btn:active, .step2-next-btn:active { transform: scale(0.95); }
+.step2-prev-btn:active, .step2-next-btn:active { transform: scale(0.98); }
 .step2-next-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
 
 .step2-btn-text {
-  font-size: 15px;
+  font-size: 14px;
+  font-weight: 400;
   color: #FFFFFF;
-  text-align: center;
 }
-
-.step2-prev-btn .step2-btn-text { font-weight: 400; }
-.step2-next-btn .step2-btn-text { font-weight: 500; }
 
 .step2-btn-text-sm { display: inline; }
 .step2-btn-text-lg { display: none; }
@@ -300,30 +299,28 @@
   .step2-main { padding: 48px 40px 80px; }
   
   .step2-step-label { font-size: 40px; margin-bottom: 24px; }
-  .step2-h1 { font-size: 28px; }
-  .step2-field-label { font-size: 18px; }
+  .step2-h1 { font-size: 24px; margin-bottom: 8px; }
   
-  .step2-form-card { padding: 32px; }
+  .step2-form-card { padding: 40px; }
   
-  /* Switch to 2 columns on Tablet */
+  /* 2 columns on Tablet */
   .step2-form-grid {
     grid-template-columns: 1fr 1fr;
     column-gap: 40px; 
+    row-gap: 32px;
   }
 
   .step2-button-container {
-    flex-direction: row; /* Horizontal on tablet */
+    flex-direction: row; 
     justify-content: space-between;
   }
 
   .step2-prev-btn, .step2-next-btn {
     height: 40px;
     width: auto;
+    padding: 0 24px;
   }
-  .step2-prev-btn { padding: 0 20px; }
-  .step2-next-btn { padding: 0 24px; }
   
-  .step2-btn-text { font-size: 16px; }
   .step2-btn-text-sm { display: none; }
   .step2-btn-text-lg { display: inline; }
   
@@ -334,16 +331,13 @@
 @media (min-width: 1024px) {
   .step2-main { padding-left: 80px; padding-right: 80px; }
   .step2-nav-container { padding: 0 64px; }
-  .step2-step-label { font-size: 48px; margin-bottom: 30px; }
+  .step2-step-label { font-size: 42px; margin-bottom: 24px; }
   .step2-form-card { padding: 40px; }
-  
-  /* Widen the gap safely for normal laptops */
-  .step2-form-grid { column-gap: 100px; }
+  .step2-form-grid { column-gap: 80px; }
 }
 
 /* --- Ultra-Wide Desktops (1440px and up) --- */
 @media (min-width: 1440px) {
   .step2-main { padding-left: 111px; padding-right: 111px; }
-  /* Original Figma extra-wide gap */
-  .step2-form-grid { column-gap: 230px; }
+  .step2-form-grid { column-gap: 120px; }
 }

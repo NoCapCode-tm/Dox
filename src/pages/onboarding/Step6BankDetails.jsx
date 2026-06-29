@@ -74,9 +74,6 @@ const Step6BankDetails = () => {
     <div className="step6-wrapper">
       {isSavingStep && <Loader fullScreen={true} message="Saving and loading next step..." />}
       
-      {/* Grid lines */}
-      <div className="step6-grid-lines" />
-
       {/* Header */}
       <div className="step6-header">
         <DoxLogo width="69" />
@@ -108,7 +105,7 @@ const Step6BankDetails = () => {
 
         {/* Heading + subtitle */}
         <div className="step6-heading-container">
-          <h1 className="step6-h1">Payment & Financial Information</h1>
+          <h1 className="step6-h1">Payment and Financial Information</h1>
           <p className="step6-subtitle">
             Used for stipend, salary, or contractual payments.
           </p>
@@ -118,8 +115,9 @@ const Step6BankDetails = () => {
         <p className="step6-section-title">For India-based personnel</p>
 
         {/* India Form Card */}
-        <div className="step6-form-card step6-form-card.mb-40">
+        <div className="step6-form-card">
           <div className="step6-form-grid">
+            {/* ROW 1 */}
             <FormField label="Bank Account Holder Name">
               <TextInput
                 value={india.accountHolderName}
@@ -132,10 +130,11 @@ const Step6BankDetails = () => {
               <TextInput
                 value={india.ifscCode}
                 onChange={(v) => handleIndia('ifscCode', v)}
-                placeholder="e.g. SBIN0000123"
+                placeholder="EG. SBIN0000123"
               />
             </FormField>
 
+            {/* ROW 2 */}
             <FormField label="Bank Account Number">
               <TextInput
                 value={india.accountNumber}
@@ -152,6 +151,7 @@ const Step6BankDetails = () => {
               />
             </FormField>
 
+            {/* ROW 3 */}
             <FormField label="Bank Name">
               <TextInput
                 value={india.bankName}
@@ -171,13 +171,14 @@ const Step6BankDetails = () => {
         </div>
 
         {/* Section label — International */}
-        <p className="step6-section-title" style={{ marginTop: '40px' }}>
+        <p className="step6-section-title" style={{ marginTop: '32px' }}>
           For International personnel
         </p>
 
         {/* International Form Card */}
         <div className="step6-form-card">
           <div className="step6-form-grid">
+            {/* ROW 1 */}
             <FormField label="Account Holder Name">
               <TextInput
                 value={intl.accountHolderName}
@@ -190,10 +191,11 @@ const Step6BankDetails = () => {
               <TextInput
                 value={intl.swiftCode}
                 onChange={(v) => handleIntl('swiftCode', v)}
-                placeholder="e.g. SBIN0000123"
+                placeholder="EG. SBIN0000123"
               />
             </FormField>
 
+            {/* ROW 2 */}
             <FormField label="IBAN / Account Number">
               <TextInput
                 value={intl.ibanAccountNumber}
@@ -210,6 +212,7 @@ const Step6BankDetails = () => {
               />
             </FormField>
 
+            {/* ROW 3 - Solo on left column */}
             <FormField label="Bank Name">
               <TextInput
                 value={intl.bankName}

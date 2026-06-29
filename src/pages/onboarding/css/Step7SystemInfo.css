@@ -9,19 +9,14 @@
   flex-direction: column;
   font-family: 'Jost', sans-serif;
   color: #FFFFFF;
-  background: linear-gradient(121.47deg, #0A0E14 49.53%, #161F2C 104.45%);
-}
-
-.step7-grid-lines {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
-  background-image: 
-    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), 
-    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size: 115px 115px;
+  
+  /* Apply global background SVG */
+  background-image: url('../../../BG.svg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-color: #0A0E14; /* Fallback */
 }
 
 /* --- Mobile First (Default) --- */
@@ -44,6 +39,7 @@
   letter-spacing: 0.025em;
 }
 
+/* Navigation */
 .step7-nav-container {
   width: 100%;
   padding: 0 16px;
@@ -62,7 +58,12 @@
   align-items: center;
   padding: 0 16px;
   overflow-x: auto;
-  background-color: #0A0E14;
+  
+  /* Requested transparent dark background */
+  background-color: rgba(6, 14, 32, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  
   border: 0.8px solid rgba(255, 255, 255, 0.1);
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -106,6 +107,7 @@
 }
 .step7-nav-item.active .step7-nav-label { color: #51A2FF; }
 
+/* Main Content Area */
 .step7-main {
   flex: 1;
   width: 100%;
@@ -122,7 +124,7 @@
   line-height: 20px;
   margin-bottom: 20px;
   font-size: 32px;
-  color: #314460;
+  color: #FFFFFF;
 }
 
 .step7-heading-container {
@@ -133,7 +135,7 @@
 
 .step7-h1 {
   font-family: 'Jost', sans-serif;
-  font-weight: 200;
+  font-weight: 400;
   font-size: 24px;
   line-height: 36px;
   color: #FFFFFF;
@@ -148,11 +150,17 @@
   margin: 0;
 }
 
+/* Form Layout */
 .step7-form-card {
   width: 100%;
-  border-radius: 10px;
+  border-radius: 16px;
   padding: 24px;
-  background-color: rgba(10, 14, 20, 0.6);
+  
+  /* Requested transparent dark background */
+  background-color: rgba(6, 14, 32, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  
   border: 0.8px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -162,10 +170,11 @@
   row-gap: 24px;
 }
 
+/* Form Fields */
 .step7-form-field {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
 .step7-field-label-container {
@@ -177,9 +186,8 @@
 
 .step7-field-label {
   font-family: 'Jost', sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 20px;
+  font-weight: 400;
+  font-size: 15px;
   color: #D1D5DC;
 }
 
@@ -190,6 +198,7 @@
   color: #FF6467;
 }
 
+/* Inputs */
 .step7-input {
   width: 100%;
   height: 50px;
@@ -197,18 +206,19 @@
   padding: 0 16px;
   outline: none;
   font-family: 'Jost', sans-serif;
-  font-size: 16px;
-  line-height: 23px;
+  font-size: 15px;
   caret-color: #FFFFFF;
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 0.8px solid rgba(255, 255, 255, 0.1);
+  background-color: transparent;
+  border: 0.8px solid rgba(255, 255, 255, 0.2);
   color: #FFFFFF;
+  transition: border-color 0.2s ease;
 }
 
-.step7-input::placeholder { color: #6A7282; }
+.step7-input:focus { border-color: rgba(255, 255, 255, 0.4); }
+.step7-input::placeholder { color: #6A7282; font-weight: 400; }
 
 /* ----------------------------------
-   CUSTOM DROPDOWN STYLES (NEW)
+   CUSTOM DROPDOWN STYLES
 ------------------------------------- */
 .step7-custom-select-container {
   position: relative;
@@ -227,9 +237,17 @@
   color: #6A7282;
 }
 
+.step7-select-value {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90%; 
+}
+
 .step7-select-arrow {
   transition: transform 0.2s ease;
   color: #99A1AF;
+  pointer-events: none;
 }
 
 .step7-select-arrow.open {
@@ -238,12 +256,12 @@
 
 .step7-custom-select-dropdown {
   position: absolute;
-  top: calc(100% + 4px);
+  top: calc(100%); 
   left: 0;
   width: 100%;
   max-height: 280px;
   overflow-y: auto;
-  background-color: #121820; /* Dark background matching your screenshot */
+  background-color: rgba(6, 14, 32, 0.9);
   border: 0.8px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   z-index: 50;
@@ -253,11 +271,14 @@
 
 /* Custom Scrollbar for Dropdown */
 .step7-custom-select-dropdown::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
+}
+.step7-custom-select-dropdown::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.1);
 }
 .step7-custom-select-dropdown::-webkit-scrollbar-thumb {
-  background-color: #314460;
-  border-radius: 4px;
+  background-color: rgb(111 115 129); 
+  border-radius: 6px;
 }
 
 .step7-custom-select-option {
@@ -269,24 +290,16 @@
   transition: background-color 0.15s, color 0.15s;
 }
 
-/* The exact light blue hover state from your screenshot */
-.step7-custom-select-option:hover {
+.step7-custom-select-option:hover,
+.step7-custom-select-option.selected:hover {
   background-color: #9EC8FF;
-  color: #0A0E14; /* Dark text for contrast against bright blue */
+  color: #0A0E14; 
 }
 
-/* Selected state styling */
 .step7-custom-select-option.selected {
   background-color: rgba(158, 200, 255, 0.1);
   color: #9EC8FF;
 }
-
-.step7-custom-select-option.selected:hover {
-  background-color: #9EC8FF;
-  color: #0A0E14;
-}
-/* ---------------------------------- */
-
 
 /* Buttons */
 .step7-button-container {
@@ -309,10 +322,17 @@
   cursor: pointer;
 }
 
-.step7-prev-btn { background-color: rgba(255, 255, 255, 0.3); }
+/* Hollow Outline button for Previous */
+.step7-prev-btn {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.step7-prev-btn:hover { background-color: rgba(255, 255, 255, 0.05); }
 
+/* Solid button for Next */
 .step7-next-btn {
-  background-color: #314460;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   box-shadow: 
     1px 1px 2px rgba(64,88,125,0.3), 
     -1px -1px 2px rgba(34,48,67,0.5), 
@@ -321,19 +341,18 @@
     inset -5px -5px 10px rgba(64,88,125,0.9), 
     inset 5px 5px 13px rgba(34,48,67,0.9);
 }
-
-.step7-prev-btn:hover, .step7-next-btn:hover { opacity: 0.9; }
-.step7-prev-btn:active, .step7-next-btn:active { transform: scale(0.95); }
+.step7-next-btn:hover { background-color: rgba(255, 255, 255, 0.15); }
+.step7-prev-btn:active, .step7-next-btn:active { transform: scale(0.98); }
 .step7-next-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
 
 .step7-btn-text {
-  font-size: 15px;
+  font-size: 14px;
   color: #FFFFFF;
   text-align: center;
 }
 
 .step7-prev-btn .step7-btn-text { font-weight: 400; }
-.step7-next-btn .step7-btn-text { font-weight: 500; }
+.step7-next-btn .step7-btn-text { font-weight: 400; }
 
 .step7-btn-text-sm { display: inline; }
 .step7-btn-text-lg { display: none; }
@@ -351,18 +370,21 @@
   .step7-nav-container { padding: 0 40px; }
   .step7-main { padding: 48px 40px 80px; }
   .step7-step-label { font-size: 40px; margin-bottom: 24px; }
-  .step7-h1 { font-size: 28px; }
-  .step7-field-label { font-size: 18px; }
-  .step7-form-card { padding: 32px; }
+  .step7-h1 { font-size: 24px; margin-bottom: 8px; }
+  .step7-form-card { padding: 40px; }
   
-  .step7-form-grid { grid-template-columns: 1fr 1fr; column-gap: 40px; }
+  /* Switch to 2 columns on Tablet */
+  .step7-form-grid { 
+    grid-template-columns: 1fr 1fr; 
+    column-gap: 40px; 
+    row-gap: 32px;
+  }
 
   .step7-button-container { flex-direction: row; justify-content: space-between; }
   .step7-prev-btn, .step7-next-btn { height: 40px; width: auto; }
   .step7-prev-btn { padding: 0 20px; }
   .step7-next-btn { padding: 0 24px; }
   
-  .step7-btn-text { font-size: 16px; }
   .step7-btn-text-sm { display: none; }
   .step7-btn-text-lg { display: inline; }
   
@@ -373,13 +395,13 @@
 @media (min-width: 1024px) {
   .step7-main { padding-left: 80px; padding-right: 80px; }
   .step7-nav-container { padding: 0 64px; }
-  .step7-step-label { font-size: 48px; margin-bottom: 30px; }
+  .step7-step-label { font-size: 42px; margin-bottom: 24px; }
   .step7-form-card { padding: 40px; }
-  .step7-form-grid { column-gap: 100px; }
+  .step7-form-grid { column-gap: 80px; }
 }
 
 /* --- Ultra-Wide Desktops (1440px and up) --- */
 @media (min-width: 1440px) {
   .step7-main { padding-left: 111px; padding-right: 111px; }
-  .step7-form-grid { column-gap: 230px; }
+  .step7-form-grid { column-gap: 120px; }
 }

@@ -9,26 +9,21 @@
   flex-direction: column;
   font-family: 'Jost', sans-serif;
   color: #FFFFFF;
-  background: linear-gradient(121.47deg, #0A0E14 49.53%, #161F2C 104.45%);
-}
-
-.step3-grid-lines {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
-  background-image: 
-    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), 
-    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size: 115px 115px;
+  
+  /* Background match as requested */
+  background-image: url('../../../BG.svg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-color: #0A0E14; /* Fallback */
 }
 
 /* --- Mobile First (Default) --- */
 
 .step3-header {
   width: 100%;
-  padding: 20px 20px 0; /* Reduced for mobile */
+  padding: 20px 20px 0;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -63,15 +58,15 @@
   align-items: center;
   padding: 0 16px;
   overflow-x: auto;
-  background-color: #0A0E14;
+  background-color: rgba(6, 14, 32, 0.4); /* SPECIFIC REQUEST */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 0.8px solid rgba(255, 255, 255, 0.1);
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
-.step3-nav::-webkit-scrollbar {
-  display: none;
-}
+.step3-nav::-webkit-scrollbar { display: none; }
 
 .step3-nav-inner {
   display: flex;
@@ -94,16 +89,9 @@
   outline: none;
 }
 
-.step3-nav-item.active {
-  background-color: #314460;
-}
-
-.step3-nav-icon {
-  color: rgba(255, 255, 255, 0.65);
-}
-.step3-nav-item.active .step3-nav-icon {
-  color: #51A2FF;
-}
+.step3-nav-item.active { background-color: #314460; }
+.step3-nav-icon { color: rgba(255, 255, 255, 0.65); }
+.step3-nav-item.active .step3-nav-icon { color: #51A2FF; }
 
 .step3-nav-label {
   font-family: 'Jost', sans-serif;
@@ -112,9 +100,7 @@
   line-height: 20px;
   color: rgba(255, 255, 255, 0.65);
 }
-.step3-nav-item.active .step3-nav-label {
-  color: #51A2FF;
-}
+.step3-nav-item.active .step3-nav-label { color: #51A2FF; }
 
 /* Main Content Area */
 .step3-main {
@@ -122,7 +108,7 @@
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 32px 16px 80px; /* Reduced for mobile */
+  padding: 32px 16px 80px; 
   position: relative;
   z-index: 10;
 }
@@ -132,8 +118,8 @@
   font-weight: 500;
   line-height: 20px;
   margin-bottom: 20px;
-  font-size: 32px; /* Scaled down for mobile */
-  color: #314460;
+  font-size: 32px; 
+  color: #FFFFFF;
 }
 
 .step3-heading-container {
@@ -144,7 +130,7 @@
 
 .step3-h1 {
   font-family: 'Jost', sans-serif;
-  font-weight: 200;
+  font-weight: 400;
   font-size: 24px;
   line-height: 36px;
   color: #FFFFFF;
@@ -163,14 +149,16 @@
 .step3-form-card {
   width: 100%;
   border-radius: 16px;
-  padding: 24px; /* Reduced for mobile */
-  background-color: rgba(10, 14, 20, 0.6);
+  padding: 24px;
+  background-color: rgba(6, 14, 32, 0.4); /* SPECIFIC REQUEST */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 0.8px solid rgba(255, 255, 255, 0.1);
 }
 
 .step3-form-grid {
   display: grid;
-  grid-template-columns: 1fr; /* 1 Column for Mobile */
+  grid-template-columns: 1fr;
   row-gap: 24px;
 }
 
@@ -178,7 +166,7 @@
 .step3-form-field {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
 .step3-field-label-container {
@@ -190,9 +178,8 @@
 
 .step3-field-label {
   font-family: 'Jost', sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 20px;
+  font-weight: 400;
+  font-size: 15px;
   color: #D1D5DC;
 }
 
@@ -206,41 +193,40 @@
 .step3-field-hint {
   font-family: 'Jost', sans-serif;
   font-weight: 400;
-  font-size: 13px;
-  color: #99A1AF;
+  font-size: 12px;
+  color: rgb(111 115 129);  
   margin-left: 4px;
 }
 
 /* Text Input */
 .step3-input {
   width: 100%;
-  height: 50px; /* Standardized mobile height */
+  height: 50px; 
   border-radius: 10px;
   padding: 0 16px;
   outline: none;
   font-family: 'Jost', sans-serif;
-  font-size: 16px;
-  line-height: 23px;
+  font-size: 15px;
   caret-color: #FFFFFF;
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 0.8px solid rgba(255, 255, 255, 0.1);
+  background-color: transparent;
+  border: 0.8px solid rgba(255, 255, 255, 0.2);
   color: #FFFFFF;
+  transition: border-color 0.2s ease;
 }
 
-.step3-input::placeholder {
-  color: #6A7282;
-}
+.step3-input:focus { border-color: rgba(255, 255, 255, 0.4); }
+.step3-input::placeholder { color: #6A7282; font-weight: 400; }
 
-/* File Input Component */
+/* File Input Component to match design exactly */
 .step3-file-container {
   width: 100%;
-  height: 60px;
+  height: 50px;
   border-radius: 10px;
   display: flex;
   align-items: center;
-  padding: 0 10px;
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 0.8px solid rgba(255, 255, 255, 0.1);
+  padding: 0 6px;
+  background-color: transparent;
+  border: 0.8px solid rgba(255, 255, 255, 0.2);
   overflow: hidden;
 }
 
@@ -251,62 +237,51 @@
 }
 
 .step3-file-btn {
-  height: 40px;
+  height: 38px;
   padding: 0 16px;
-  border-radius: 10px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #314460;
-  box-shadow: 
-    1px 1px 2px rgba(64,88,125,0.3), 
-    -1px -1px 2px rgba(34,48,67,0.5), 
-    inset -5px 5px 10px rgba(34,48,67,0.2), 
-    inset 5px -5px 10px rgba(34,48,67,0.2), 
-    inset -5px -5px 10px rgba(64,88,125,0.9), 
-    inset 5px 5px 13px rgba(34,48,67,0.9);
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background-color 0.2s;
+}
+
+.step3-file-label:hover .step3-file-btn {
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
 .step3-file-btn-text {
   font-family: 'Jost', sans-serif;
   font-weight: 500;
-  font-size: 14px; /* Slightly smaller for mobile */
+  font-size: 14px; 
   color: #FFFFFF;
-  line-height: 24px;
 }
 
-.step3-hidden-input {
-  display: none;
-}
+.step3-hidden-input { display: none; }
 
 .step3-file-name {
   margin-left: 12px;
-  font-size: 13px;
+  font-size: 14px;
   font-family: 'Jost', sans-serif;
   color: #99A1AF;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  flex: 1; /* Take up remaining space */
-}
-
-.step3-file-empty {
-  margin-left: 12px;
-  font-size: 13px;
-  font-family: 'Jost', sans-serif;
-  color: #6A7282;
+  flex: 1; 
 }
 
 /* Buttons */
 .step3-button-container {
   display: flex;
-  flex-direction: column; /* Stack vertically on mobile */
+  flex-direction: column; 
   gap: 12px;
   margin-top: 32px;
 }
 
 .step3-prev-btn, .step3-next-btn {
-  height: 44px; /* Taller touch target for mobile */
+  height: 44px; 
   width: 100%;
   border-radius: 10px;
   display: flex;
@@ -318,13 +293,18 @@
   cursor: pointer;
 }
 
+/* Hollow Outline button for Previous */
 .step3-prev-btn {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
+.step3-prev-btn:hover { background-color: rgba(255, 255, 255, 0.05); }
 
+/* Solid button for Next */
 .step3-next-btn {
-  background-color: #314460;
-  box-shadow: 
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 
     1px 1px 2px rgba(64,88,125,0.3), 
     -1px -1px 2px rgba(34,48,67,0.5), 
     inset -5px 5px 10px rgba(34,48,67,0.2), 
@@ -332,19 +312,18 @@
     inset -5px -5px 10px rgba(64,88,125,0.9), 
     inset 5px 5px 13px rgba(34,48,67,0.9);
 }
-
-.step3-prev-btn:hover, .step3-next-btn:hover { opacity: 0.9; }
-.step3-prev-btn:active, .step3-next-btn:active { transform: scale(0.95); }
+.step3-next-btn:hover { background-color: rgba(255, 255, 255, 0.15); }
+.step3-prev-btn:active, .step3-next-btn:active { transform: scale(0.98); }
 .step3-next-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
 
 .step3-btn-text {
-  font-size: 15px;
+  font-size: 14px;
   color: #FFFFFF;
   text-align: center;
 }
 
 .step3-prev-btn .step3-btn-text { font-weight: 400; }
-.step3-next-btn .step3-btn-text { font-weight: 500; }
+.step3-next-btn .step3-btn-text { font-weight: 400; }
 
 .step3-btn-text-sm { display: inline; }
 .step3-btn-text-lg { display: none; }
@@ -364,22 +343,19 @@
   .step3-main { padding: 48px 40px 80px; }
   
   .step3-step-label { font-size: 40px; margin-bottom: 24px; }
-  .step3-h1 { font-size: 28px; }
-  .step3-field-label { font-size: 18px; }
+  .step3-h1 { font-size: 24px; margin-bottom: 8px; }
   
-  .step3-form-card { padding: 32px; }
+  .step3-form-card { padding: 40px; }
   
   /* Switch to 2 columns on Tablet */
   .step3-form-grid {
     grid-template-columns: 1fr 1fr;
     column-gap: 40px; 
+    row-gap: 32px;
   }
 
-  .step3-file-btn-text { font-size: 16px; }
-  .step3-file-name { font-size: 14px; }
-
   .step3-button-container {
-    flex-direction: row; /* Horizontal on tablet */
+    flex-direction: row; 
     justify-content: space-between;
   }
 
@@ -390,7 +366,6 @@
   .step3-prev-btn { padding: 0 20px; }
   .step3-next-btn { padding: 0 24px; }
   
-  .step3-btn-text { font-size: 16px; }
   .step3-btn-text-sm { display: none; }
   .step3-btn-text-lg { display: inline; }
   
@@ -401,16 +376,13 @@
 @media (min-width: 1024px) {
   .step3-main { padding-left: 80px; padding-right: 80px; }
   .step3-nav-container { padding: 0 64px; }
-  .step3-step-label { font-size: 48px; margin-bottom: 30px; }
+  .step3-step-label { font-size: 42px; margin-bottom: 24px; }
   .step3-form-card { padding: 40px; }
-  
-  /* Widen the gap safely for normal laptops */
-  .step3-form-grid { column-gap: 100px; }
+  .step3-form-grid { column-gap: 80px; }
 }
 
 /* --- Ultra-Wide Desktops (1440px and up) --- */
 @media (min-width: 1440px) {
   .step3-main { padding-left: 111px; padding-right: 111px; }
-  /* Original Figma extra-wide gap */
-  .step3-form-grid { column-gap: 230px; }
+  .step3-form-grid { column-gap: 120px; }
 }

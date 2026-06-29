@@ -4,45 +4,6 @@ import { toast } from 'react-hot-toast';
 import { showMissingRequiredFieldsToast } from '../../utils/requiredFieldToast';
 import { useOnboardingContext } from '../../context/OnboardingContext';
 import { saveStep7SystemInfo, getCurrentUser } from '../../api/employeeApi';
-
-//IANA time zones for the dropdown.
-const TIMEZONES = [
-  'UTC',
-  'Etc/GMT+12',
-  'Pacific/Midway',
-  'Pacific/Honolulu',
-  'America/Anchorage',
-  'America/Los_Angeles',
-  'America/Denver',
-  'America/Chicago',
-  'America/New_York',
-  'America/Sao_Paulo',
-  'Atlantic/Azores',
-  'Europe/London',
-  'Europe/Dublin',
-  'Europe/Lisbon',
-  'Europe/London',
-  'Europe/Berlin',
-  'Europe/Paris',
-  'Europe/Moscow',
-  'Africa/Cairo',
-  'Africa/Johannesburg',
-  'Asia/Jerusalem',
-  'Europe/Istanbul',
-  'Asia/Dubai',
-  'Asia/Karachi',
-  'Asia/Kolkata',
-  'Asia/Dhaka',
-  'Asia/Bangkok',
-  'Asia/Singapore',
-  'Asia/Hong_Kong',
-  'Asia/Tokyo',
-  'Asia/Seoul',
-  'Australia/Perth',
-  'Australia/Sydney',
-  'Pacific/Auckland',
-  'Pacific/Fiji'
-];
 import Loader from '../../components/ui/Loader';
 
 // Import standard CSS
@@ -166,9 +127,6 @@ const Step7SystemInfo = () => {
     <div className="step7-wrapper">
       {isSavingStep && <Loader fullScreen={true} message="Saving and loading next step..." />}
       
-      {/* Grid lines */}
-      <div className="step7-grid-lines" />
-
       {/* Header */}
       <div className="step7-header">
         <DoxLogo width="69" />
@@ -210,12 +168,13 @@ const Step7SystemInfo = () => {
         <div className="step7-form-card">
           <div className="step7-form-grid">
 
+            {/* ROW 1 */}
             <FormField label="Laptop Availability" required>
               <SelectInput
                 value={form.laptopAvailability}
                 onChange={(v) => handleChange('laptopAvailability', v)}
                 options={['Yes', 'No']}
-                placeholder="Select Yes / No"
+                placeholder="Yes / No"
               />
             </FormField>
 
@@ -224,16 +183,17 @@ const Step7SystemInfo = () => {
                 value={form.primaryDeviceType}
                 onChange={(v) => handleChange('primaryDeviceType', v)}
                 options={['Laptop', 'Desktop', 'Tablet', 'Other']}
-                placeholder="Select Device Type"
+                placeholder="Device Type"
               />
             </FormField>
 
+            {/* ROW 2 */}
             <FormField label="Operating System" required>
               <SelectInput
                 value={form.operatingSystem}
                 onChange={(v) => handleChange('operatingSystem', v)}
                 options={['Windows', 'macOS', 'Linux', 'Other']}
-                placeholder="Select Operating System"
+                placeholder="Options: Windows, macOS, Linux, Other"
               />
             </FormField>
 
@@ -242,16 +202,17 @@ const Step7SystemInfo = () => {
                 value={form.internetReliability}
                 onChange={(v) => handleChange('internetReliability', v)}
                 options={['High', 'Moderate', 'Limited']}
-                placeholder="Select Internet Reliability"
+                placeholder="High, Moderate, Limited"
               />
             </FormField>
 
+            {/* ROW 3 */}
             <FormField label="Time Zone" required>
               <SelectInput
                 value={form.timeZone}
                 onChange={(v) => handleChange('timeZone', v)}
                 options={TIMEZONE_OPTIONS}
-                placeholder="Select your Time Zone"
+                placeholder="Enter"
               />
             </FormField>
 
@@ -260,7 +221,7 @@ const Step7SystemInfo = () => {
                 value={form.weeklyAvailability}
                 onChange={(v) => handleChange('weeklyAvailability', v)}
                 options={AVAILABILITY_OPTIONS}
-                placeholder="Select Availability"
+                placeholder="eg. Monday to Friday, 10 AM — 6 PM IST."
               />
             </FormField>
 
@@ -286,7 +247,7 @@ const Step7SystemInfo = () => {
           >
             <span className="step7-btn-text">
               <span className="step7-btn-text-sm">{isSavingStep ? 'Saving...' : 'Next'}</span>
-              <span className="step7-btn-text-lg">{isSavingStep ? 'Saving Step 7...' : 'Next: Declaration'}</span>
+              <span className="step7-btn-text-lg">{isSavingStep ? 'Saving Step 7...' : 'Next: System Details'}</span>
             </span>
             <ArrowRightIcon />
           </button>
@@ -340,12 +301,12 @@ const SelectInput = ({ value, onChange, options, placeholder }) => {
         className={`step7-input step7-custom-select-trigger ${!value ? 'empty' : ''}`}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span>{value || placeholder}</span>
+        <span className="step7-select-value">{value || placeholder}</span>
         <svg 
           className={`step7-select-arrow ${isOpen ? 'open' : ''}`} 
-          width="12" height="8" viewBox="0 0 12 8" fill="none"
+          width="12" height="12" viewBox="0 0 12 12" fill="none"
         >
-          <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
       
@@ -367,83 +328,6 @@ const SelectInput = ({ value, onChange, options, placeholder }) => {
 };
 // -----------------------------------------------------------------
 
-/**
- * TimezoneSelect — custom dropdown
- */
-const TimezoneSelect = ({ value, onChange, options, placeholder }) => {
-  const [open, setOpen] = useState(false);
-  const containerRef = useRef(null);
-  const [maxHeightPx, setMaxHeightPx] = useState(260);
-  const selectedLabel = value || placeholder;
-
-  useEffect(() => {
-    const handleOutside = (e) => {
-      if (containerRef.current && !containerRef.current.contains(e.target)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleOutside);
-    return () => document.removeEventListener('mousedown', handleOutside);
-  }, []);
-
-  useEffect(() => {
-    if (!open) return;
-    // compute available space above the button (viewport-relative)
-    const rect = containerRef.current.getBoundingClientRect();
-    const availableAbove = Math.max(80, Math.floor(rect.top - 24)); // leave some padding, minimum 80px
-    setMaxHeightPx(availableAbove);
-  }, [open]);
-
-  return (
-    <div className="relative" ref={containerRef}>
-      <button
-        type="button"
-        onClick={() => setOpen((s) => !s)}
-        className="w-full h-[53px] rounded-[10px] px-[20px] text-left flex items-center justify-between"
-        style={{
-          backgroundColor: 'rgba(255,255,255,0.05)',
-          border: '0.8px solid rgba(255,255,255,0.1)',
-          color: value ? '#FFFFFF' : '#6A7282',
-        }}
-      >
-        <span className="truncate">{selectedLabel}</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M6 9l6 6 6-6" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
-
-      {open && (
-        <div
-          className="absolute left-0 right-0 rounded-[8px] shadow-lg"
-          style={{
-            zIndex: 60,
-            bottom: 'calc(100% + 8px)',
-            maxHeight: `${maxHeightPx}px`,
-            overflowY: 'auto',
-            backgroundColor: '#0A0E14',
-            border: '0.8px solid rgba(255,255,255,0.08)',
-          }}
-        >
-          {options.map((opt) => (
-            <button
-              key={opt}
-              type="button"
-              onClick={() => { onChange(opt); setOpen(false); }}
-              className="w-full text-left px-[16px] py-[10px] hover:bg-white/6"
-              style={{ color: '#FFFFFF' }}
-            >
-              {opt}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};
-
-/**
- * NavItem — single navbar link
- */
 const NavItem = ({ label, icon, active }) => {
   const navigate = useNavigate();
   const routeByLabel = {

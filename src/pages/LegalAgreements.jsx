@@ -1,300 +1,203 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import './css/LegalAgreements.css'; // Make sure the path matches your project structure
 
 const LegalAgreements = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     return (
-        <div
-            className="relative h-screen w-screen overflow-hidden font-[Jost] text-white"
-            style={{ background: 'linear-gradient(119.18deg, #0A0E14 2.67%, #141C28 96.61%)' }}
-        >
-            <style>{`.no-scrollbar::-webkit-scrollbar{display:none} .no-scrollbar{scrollbar-width:none; -ms-overflow-style:none;}`}</style>
-            {/* Mobile top navbar */}
-            <div className="fixed top-0 left-0 right-0 z-50 flex items-stretch justify-between border-b border-white/10 bg-[#0A0E14] md:hidden">
-                <div
-                    className="flex flex-col items-center justify-center overflow-hidden shrink-0"
-                    style={{
-                        width: 'clamp(86px, 28vw, 112px)',
-                        height: 'clamp(64px, 14vw, 74px)',
-                        background: '#0A0E14',
-                        borderRight: '0.5px solid rgba(173, 173, 173, 0.5)',
-                        borderBottom: '0.5px solid rgba(173, 173, 173, 0.5)',
-                        borderRadius: '0px 0px 10px 0px',
-                    }}
-                >
-                    <div style={{ transform: 'scale(0.62)', transformOrigin: 'center' }}>
-                        <DoxLogo />
-                    </div>
-                    <p className="leading-none text-white/50 text-[8px] mt-0.5 text-center px-1">Employee Onboarding</p>
+        <div className="legal-wrapper">
+            
+            {/* --- Mobile Top Navbar (Hidden on Desktop) --- */}
+            <div className="legal-mobile-nav">
+                <div className="legal-mobile-nav-logo">
+                    <DoxLogo width="50" />
                 </div>
-
-                <div className="flex flex-1 items-center justify-around gap-2 px-2 py-2">
-                    {[1, 2, 3].map((n) => {
-                        const isActive = n === 1
-                        return (
-                            <div
-                                key={n}
-                                className="flex min-w-0 flex-1 items-center justify-center rounded-[10px] border text-center font-medium"
-                                style={{
-                                    height: 'clamp(42px,10vw,56px)',
-                                    fontSize: 'clamp(12px,3.5vw,16px)',
-                                    background: isActive ? '#1C2027' : '#0A0E14',
-                                    borderColor: 'rgba(173,173,173,0.5)',
-                                    color: isActive ? '#FFFFFF' : 'rgba(255,255,255,0.55)'
-                                }}
-                            >
-                                {n}
-                            </div>
-                        )
-                    })}
+                <div className="legal-mobile-steps">
+                    {[1, 2, 3].map((n) => (
+                        <div key={n} className={`legal-mobile-step ${n === 3 ? 'active' : 'inactive'}`}>
+                            {n}
+                        </div>
+                    ))}
                 </div>
             </div>
 
-            {/* Sidebar */}
-            {/* DOX logo square */}
-            <div className="absolute top-0 left-0 z-50 hidden md:block">
-                <div
-                    className="flex flex-col items-center justify-center overflow-hidden"
-                    style={{
-                        width: '12vw',
-                        height: '16vh',
-                        background: '#0A0E14',
-                        borderRight: '0.5px solid rgba(173, 173, 173, 0.5)',
-                        borderBottom: '0.5px solid rgba(173, 173, 173, 0.5)',
-                        borderRadius: '0px 0px 10px 0px',
-                    }}
-                >
-                    <div style={{ transform: 'scale(0.82)', transformOrigin: 'center' }}>
-                        <DoxLogo />
-                    </div>
-                    <p className="leading-none text-white/50 mt-1" style={{ fontSize: 'clamp(10px, 0.65vw, 12px)' }}>Employee Onboarding</p>
+            {/* --- Sidebar Navigation (Desktop) --- */}
+            <nav className="legal-sidebar">
+                {/* Logo Area */}
+                <div className="legal-sidebar-logo">
+                    <DoxLogo width="45" />
                 </div>
-            </div>
 
-            {/* Sidebar steps */}
-            <aside className="fixed left-0 top-0 h-full z-30 hidden flex-col bg-transparent md:flex" style={{ paddingTop: '32vh' }}>
-                <div className="flex flex-col gap-9">
-                    {/* Active step 1 */}
-                    <div
-                        className="flex items-center justify-center font-medium text-white"
-                        style={{
-                            width: '5vw',
-                            height: '10vh',
-                            fontSize: '2.2vw',
-                            background: '#1C2027',
-                            border: '0.5px solid rgba(173, 173, 173, 0.5)',
-                            borderRadius: '0px 10px 10px 0px',
-                        }}
-                    >
-                        1
-                    </div>
-                    {/* Inactive step 2 */}
-                    <div
-                        className="flex items-center justify-center font-medium text-white/60"
-                        style={{
-                            width: '5vw',
-                            height: '10vh',
-                            fontSize: '2.2vw',
-                            background: '#0A0E14',
-                            border: '0.5px solid rgba(173, 173, 173, 0.5)',
-                            borderRadius: '0px 10px 10px 0px',
-                        }}
-                    >
-                        2
-                    </div>
-                    {/* Inactive step 3 */}
-                    <div
-                        className="flex items-center justify-center font-medium text-white/60"
-                        style={{
-                            width: '5vw',
-                            height: '10vh',
-                            fontSize: '2.2vw',
-                            background: '#0A0E14',
-                            border: '0.5px solid rgba(173, 173, 173, 0.5)',
-                            borderRadius: '0px 10px 10px 0px',
-                        }}
-                    >
-                        3
-                    </div>
+                {/* Steps */}
+                <div className="legal-sidebar-steps">
+                    <div className="legal-sidebar-step inactive">1</div>
+                    <div className="legal-sidebar-step inactive">2</div>
+                    <div className="legal-sidebar-step active">3</div>
                 </div>
-            </aside>
+            </nav>
 
-            {/* Framed container  */}
-            <div className="relative" style={{ marginLeft: '4.5vw', marginTop: '8vh', marginRight: '3vw', marginBottom: '5vh', zIndex: 20 }}>
-                <div className="w-full border border-white/10 rounded-[10px] relative no-scrollbar" style={{ borderColor: 'rgba(173, 173, 173, 0.5)', maxHeight: 'calc(100vh - 12vh)', overflowY: 'auto' }}>
-                    {/* Main Content */}
-                    <main className="w-full flex flex-col items-start justify-center">
-                        <div className="w-full max-w-225 p-8 md:p-12 mt-8 mx-auto"
-                            style={{ marginLeft: '6vw', paddingLeft: 'clamp(16px, 6vw, 40px)', paddingTop: 'clamp(50px, 7vw, 70px)' }}>
-                            <h1 className="text-[32px] leading-tight font-normal text-white">Legal Agreements</h1>
-                            <p className="mt-2 text-[16px] text-white/60">
-                                Please review and sign the following documents to proceed with your onboarding.
-                            </p>
+            {/* --- Main Content Area --- */}
+            <main className="legal-main">
+                
+                {/* Form Card */}
+                <div className="legal-card">
+                    
+                    {/* Header */}
+                    <div className="legal-header-container">
+                        <h1 className="legal-h1">Legal Agreements</h1>
+                        <p className="legal-subtitle">
+                            Please review and sign the following documents to proceed with your onboarding.
+                        </p>
+                    </div>
 
-                            <div className="mt-10 space-y-6">
-                                <AgreementCard
-                                    title="Offer Letter"
-                                    description="Your official employment offer letter containing role, compensation, and benefits details."
-                                    status="Signed"
-                                    signed
-                                    actionLabel="View Signed Document"
-                                    onAction={() => { }}
-                                    icon={<OfferIcon />}
-                                />
-
-                                <AgreementCard
-                                    title="Non-Disclosure Agreement (NDA)"
-                                    description="Confidentiality agreement protecting company information and intellectual property."
-                                    status="Pending"
-                                    actionLabel="Sign via SignWell"
-                                    onAction={() => { }}
-                                    icon={<NdaIcon />}
-                                />
+                    {/* Agreement Cards */}
+                    <div className="legal-agreements-list">
+                        
+                        {/* Offer Letter */}
+                        <div className="legal-agreement-item">
+                            <div className="legal-agreement-left">
+                                <div className="legal-agreement-icon signed">
+                                    <OfferIcon />
+                                </div>
+                                <div className="legal-agreement-text">
+                                    <div className="legal-agreement-title-row">
+                                        <h3 className="legal-agreement-title">Offer Letter</h3>
+                                        <div className="legal-badge signed">
+                                            <StatusSignedIcon /> Signed
+                                        </div>
+                                    </div>
+                                    <p className="legal-agreement-desc">
+                                        Your official employment offer letter containing role, compensation, and benefits details.
+                                    </p>
+                                </div>
                             </div>
-
-                            <div className="mt-12 flex items-center justify-between">
-                                <button
-                                    type="button"
-                                    onClick={() => navigate('/welcome')}
-                                    className="px-6 py-2.5 rounded-lg border border-white/20 text-[15px] font-medium text-white/80 hover:bg-white/5 transition-colors inline-flex items-center gap-2"
-                                >
-                                    <BackArrowIcon />
-                                    Back
-                                </button>
-
-                                <button
-                                    type="button"
-                                    onClick={() => navigate('/dashboard')}
-                                    className="px-6 py-2.5 rounded-lg border border-white/20 text-[15px] font-medium text-white/80 hover:bg-white/5 transition-colors inline-flex items-center gap-2"
-                                >
-                                    Continue
-                                    <ForwardArrowIcon />
+                            <div className="legal-agreement-right">
+                                <button type="button" className="legal-action-btn signed">
+                                    <ButtonCheckIcon /> View Signed Document
                                 </button>
                             </div>
                         </div>
-                    </main>
+
+                        {/* NDA */}
+                        <div className="legal-agreement-item">
+                            <div className="legal-agreement-left">
+                                <div className="legal-agreement-icon pending">
+                                    <NdaIcon />
+                                </div>
+                                <div className="legal-agreement-text">
+                                    <div className="legal-agreement-title-row">
+                                        <h3 className="legal-agreement-title">Non-Disclosure Agreement (NDA)</h3>
+                                        <div className="legal-badge pending">
+                                            <StatusPendingIcon /> Pending
+                                        </div>
+                                    </div>
+                                    <p className="legal-agreement-desc">
+                                        Confidentiality agreement protecting company information and intellectual property.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="legal-agreement-right">
+                                <button type="button" className="legal-action-btn pending">
+                                    <ButtonSignwellIcon /> Sign via Nexgn
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {/* Bottom Navigation Buttons */}
+                    <div className="legal-bottom-nav">
+                        <button
+                            type="button"
+                            onClick={() => navigate('/welcome')}
+                            className="legal-nav-btn"
+                        >
+                            <BackArrowIcon />
+                            Back
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={() => navigate('/dashboard')}
+                            className="legal-nav-btn"
+                        >
+                            Continue
+                            <ForwardArrowIcon />
+                        </button>
+                    </div>
+
                 </div>
-            </div>
+            </main>
         </div>
-    )
-}
+    );
+};
 
-const BackArrowIcon = () => (
-    <svg width="16" height="14" viewBox="0 0 16 14" fill="none" aria-hidden="true">
-        <path d="M9.8 2.2L4.8 7L9.8 11.8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M5 7H14.2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-    </svg>
-)
-
-const ForwardArrowIcon = () => (
-    <svg width="16" height="14" viewBox="0 0 16 14" fill="none" aria-hidden="true">
-        <path d="M6.2 2.2L11.2 7L6.2 11.8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M1.8 7H11" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-    </svg>
-)
-
-const AgreementCard = ({ title, description, status, actionLabel, onAction, icon, signed = false }) => (
-    <div
-        className="relative rounded-xl border border-white/10 p-4 sm:p-6"
-        style={{
-            background: 'rgba(255, 255, 255, 0.02)'
-        }}
-    >
-        <div className="absolute top-6 right-3 sm:top-6 sm:right-6 px-2.5 py-1 rounded-md text-[11px] sm:text-[13px] font-medium leading-none inline-flex items-center gap-1" style={{
-            background: signed ? 'rgba(6, 214, 160, 0.15)' : 'rgba(255,255,255,0.05)',
-            color: signed ? '#06D6A0' : 'rgba(255,255,255,0.6)',
-        }}>
-            {signed ? <StatusSignedIcon /> : <StatusPendingIcon />}
-            {status}
-        </div>
-
-        <div className="flex flex-col items-start gap-3 pr-0 sm:flex-row sm:gap-4 sm:pr-28">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-[10px] bg-white/4 border border-white/5 flex items-center justify-center shrink-0">
-                {icon}
-            </div>
-            <div className="pt-0 sm:pt-0.5 w-full">
-                <h3 className="text-[16px] sm:text-[20px] font-medium text-white/90 leading-tight">{title}</h3>
-                <p className="mt-1.5 text-[13px] sm:mt-2 sm:text-[15px] text-white/50 leading-snug sm:leading-relaxed">{description}</p>
-
-                <button
-                    type="button"
-                    onClick={onAction}
-                    className="mt-4 w-full justify-center px-4 py-2 rounded-lg text-[12px] sm:mt-5 sm:w-auto sm:px-5 sm:py-2.5 sm:text-[14px] font-medium transition-colors inline-flex items-center gap-2"
-                    style={{
-                        background: signed ? 'rgba(255,255,255,0.08)' : 'transparent',
-                        border: signed ? '1px solid transparent' : '1px solid rgba(255,255,255,0.15)',
-                        color: 'rgba(255,255,255,0.9)'
-                    }}
-                >
-                    {signed ? <ButtonCheckIcon /> : <ButtonSignwellIcon />}
-                    {actionLabel}
-                </button>
-            </div>
-        </div>
-    </div>
-)
+/* --- Icons --- */
 
 const StatusSignedIcon = () => (
     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-        <circle cx="6" cy="6" r="4.5" stroke="currentColor" strokeWidth="1.2" />
-        <path d="M3.9 6.2L5.2 7.4L8.1 4.6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="6" cy="6" r="5" stroke="currentColor" strokeWidth="1.2" />
+        <path d="M3.5 6.5L5 8L8.5 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
-)
+);
 
 const StatusPendingIcon = () => (
     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-        <circle cx="6" cy="6" r="4.5" stroke="currentColor" strokeWidth="1.2" />
+        <rect x="2.5" y="4" width="7" height="4" rx="2" stroke="currentColor" strokeWidth="1.2" />
     </svg>
-)
+);
 
 const ButtonCheckIcon = () => (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-        <path d="M5.5 9L8 11.4L12.5 6.8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-        <circle cx="9" cy="9" r="7.25" stroke="currentColor" strokeOpacity="0.35" strokeWidth="1.2" />
+    <svg width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+        <path d="M5.5 9L8 11.4L12.5 6.8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="9" cy="9" r="7.5" stroke="currentColor" strokeOpacity="0.5" strokeWidth="1.2" />
     </svg>
-)
+);
 
 const ButtonSignwellIcon = () => (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-        <path d="M13.2 3.0H17.2V7.0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M17.2 3.0L8.6 11.4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <rect x="4" y="6.1" width="9.9" height="9.9" rx="2.1" stroke="currentColor" strokeWidth="1.9" />
+    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M10 4H5C4.44772 4 4 4.44772 4 5V15C4 15.5523 4.44772 16 5 16H15C15.5523 16 16 15.5523 16 15V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M15 4L9 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M11 4H15V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
-)
-
-const DoxLogo = () => (
-    <svg width="69" height="19" viewBox="0 0 75 19" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="DOX logo">
-        <g transform="translate(0 0)">
-            <path d="M0.400771 17.25C0.400771 17.25 -2.35803 17.25 6.60085 17.25C15.5597 17.25 14.6954 1.25 6.60085 1.25C-1.49371 1.25 0.400771 1.25 0.400771 1.25" stroke="white" strokeWidth="2.5" strokeLinecap="butt" />
-        </g>
-        <g transform="translate(17 0)">
-            <path d="M13.8492 17.25C13.8492 17.25 16.608 17.25 7.64915 17.25C-1.30974 17.25 -0.445418 1.25 7.64915 1.25C15.7437 1.25 13.8492 1.25 13.8492 1.25" stroke="white" strokeWidth="2.5" strokeLinecap="butt" />
-        </g>
-        <g transform="translate(27 0)">
-            <path d="M0.400771 17.25C0.400771 17.25 -2.35803 17.25 6.60085 17.25C15.5597 17.25 14.6954 1.25 6.60085 1.25C-1.49371 1.25 0.400771 1.25 0.400771 1.25" stroke="white" strokeWidth="2.5" strokeLinecap="butt" />
-        </g>
-        <g transform="translate(45 0)">
-            <path d="M0.400771 17.25C0.400771 17.25 -2.35803 17.25 6.60085 17.25C15.5597 17.25 14.6954 1.25 6.60085 1.25C-1.49371 1.25 0.400771 1.25 0.400771 1.25" stroke="white" strokeWidth="2.5" strokeLinecap="butt" />
-        </g>
-        <g transform="translate(56 0)">
-            <path d="M13.8492 17.25C13.8492 17.25 16.608 17.25 7.64915 17.25C-1.30974 17.25 -0.445418 1.25 7.64915 1.25C15.7437 1.25 13.8492 1.25 13.8492 1.25" stroke="white" strokeWidth="2.5" strokeLinecap="butt" />
-        </g>
-    </svg>
-)
+);
 
 const OfferIcon = () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M12 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9l-8-6z" stroke="#06D6A0" strokeWidth="2" strokeLinejoin="round" />
-        <path d="M12 3v6h6" stroke="#06D6A0" strokeWidth="2" strokeLinejoin="round" />
-        <path d="M8 13h8M8 17h5" stroke="#06D6A0" strokeWidth="2" strokeLinecap="round" />
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="#06D6A0" strokeWidth="1.5" strokeLinejoin="round" />
+        <path d="M14 2V8H20" stroke="#06D6A0" strokeWidth="1.5" strokeLinejoin="round" />
+        <path d="M8 13H16M8 17H12" stroke="#06D6A0" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
-)
+);
 
 const NdaIcon = () => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <rect x="4" y="2" width="16" height="20" rx="2" stroke="#BFD1FF" strokeWidth="2" />
-        <path d="M8 7h8M8 11h8M8 15h5" stroke="#BFD1FF" strokeWidth="2" strokeLinecap="round" />
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="#D1D5DC" strokeWidth="1.5" strokeLinejoin="round" />
+        <path d="M14 2V8H20" stroke="#D1D5DC" strokeWidth="1.5" strokeLinejoin="round" />
+        <path d="M8 13H16M8 17H12" stroke="#D1D5DC" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
-)
+);
 
-export default LegalAgreements
+const BackArrowIcon = () => (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M10 4L6 8L10 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M6 8H14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+);
+
+const ForwardArrowIcon = () => (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M2 8H10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+);
+
+const DoxLogo = ({ width = '50', fill = '#FFFFFF' }) => (
+    <svg width={width} viewBox="0 0 339 95" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="DOX logo">
+        <g>
+            <path d="M34.7666 3C46.7577 3 56.0143 9.02218 62.1338 17.5264C68.1563 25.896 71.2549 36.7461 71.541 47.3379C71.8268 57.9196 69.3202 68.899 63.3457 77.415C57.2191 86.1478 47.6047 92 34.7666 92H3C2.99991 91.9957 2.99999 85.9979 3 80H34.7666C43.4858 80 49.5193 76.2271 53.5215 70.5225C57.6757 64.601 59.779 56.3304 59.5449 47.6621C59.3111 39.0041 56.7596 30.604 52.3936 24.5361C48.1243 18.603 42.2529 15 34.7666 15H4.00195V3H34.7666ZM159.892 3C171.883 3 181.139 9.02218 187.259 17.5264C193.281 25.896 196.38 36.7461 196.666 47.3379C196.952 57.9196 194.445 68.899 188.471 77.415C182.344 86.1478 172.73 92 159.892 92H120.421C107.583 92 97.9684 86.1478 91.8418 77.415C85.8673 68.899 83.3607 57.9196 83.6465 47.3379C83.9326 36.7461 87.0312 25.896 93.0537 17.5264C99.1732 9.02218 108.43 3 120.421 3H159.892ZM241.704 3C253.695 3 262.952 9.02218 269.071 17.5264C270.345 19.2968 271.487 21.179 272.5 23.1455C273.513 21.179 274.655 19.2968 275.929 17.5264C282.048 9.02218 291.305 3 303.296 3H334.061V15H303.296C295.81 15 289.938 18.603 285.669 24.5361C281.303 30.604 278.751 39.0041 278.518 47.6621C278.283 56.3304 280.387 64.601 284.541 70.5225C288.543 76.2271 294.577 80 303.296 80H335.062C335.062 85.9979 335.063 91.9957 335.062 92H303.296C290.458 92 280.843 86.1478 274.717 77.415C273.915 76.2723 273.178 75.0839 272.5 73.8594C271.822 75.0839 271.085 76.2723 270.283 77.415C264.157 86.1478 254.542 92 241.704 92H209.938C209.937 91.9957 209.937 85.9979 209.938 80H241.704C250.423 80 256.457 76.2271 260.459 70.5225C264.613 64.601 266.717 56.3304 266.482 47.6621C266.249 39.0041 263.697 30.604 259.331 24.5361C255.062 18.603 249.19 15 241.704 15H210.939V3H241.704ZM120.421 15C112.935 15 107.063 18.603 102.794 24.5361C98.4279 30.604 95.8764 39.0041 95.6426 47.6621C95.4085 56.3304 97.5118 64.601 101.666 70.5225C105.668 76.2271 111.702 80 120.421 80H159.892C168.611 80 174.644 76.2271 178.646 70.5225C182.801 64.601 184.904 56.3304 184.67 47.6621C184.436 39.0041 181.885 30.604 177.519 24.5361C173.249 18.603 167.378 15 159.892 15H120.421Z" fill={fill}/>
+        </g>
+    </svg>
+);
+
+export default LegalAgreements;

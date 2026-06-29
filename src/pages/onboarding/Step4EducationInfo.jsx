@@ -74,9 +74,6 @@ const Step4EducationInfo = () => {
     <div className="step4-wrapper">
       {isSavingStep && <Loader fullScreen={true} message="Saving and loading next step..." />}
       
-      {/* Grid lines */}
-      <div className="step4-grid-lines" />
-
       {/* Header */}
       <div className="step4-header">
         <DoxLogo width="69" />
@@ -110,8 +107,8 @@ const Step4EducationInfo = () => {
         <div className="step4-heading-container">
           <h1 className="step4-h1">Education Details</h1>
           <p className="step4-subtitle">
-            Share your academic background and qualification details. Fields marked with{' '}
-            <span className="step4-mandatory">*</span> are mandatory.
+            Share your academic background and qualification details. <br/>
+            Fields marked with <span className="step4-mandatory">*</span> are mandatory.
           </p>
         </div>
 
@@ -119,11 +116,12 @@ const Step4EducationInfo = () => {
         <div className="step4-form-card">
           <div className="step4-form-grid">
 
+            {/* Row 1 */}
             <FormField label="Highest Qualification" required>
               <SelectInput
                 value={form.highestQualification}
                 onChange={(v) => handleChange('highestQualification', v)}
-                placeholder="Select highest qualification"
+                placeholder="Dropdown options: High School, Diploma, Undergraduate"
                 options={[
                   'High School',
                   'Diploma',
@@ -139,15 +137,16 @@ const Step4EducationInfo = () => {
               <TextInput
                 value={form.courseName}
                 onChange={(v) => handleChange('courseName', v)}
-                placeholder="e.g. B.Tech in Computer Science"
+                placeholder="e.g. BCA, BTech, MBA, BA, etc."
               />
             </FormField>
 
+            {/* Row 2 */}
             <FormField label="College / University Name" required>
               <TextInput
                 value={form.universityName}
                 onChange={(v) => handleChange('universityName', v)}
-                placeholder="e.g. University of Mumbai"
+                placeholder="Enter institution name"
               />
             </FormField>
 
@@ -159,11 +158,12 @@ const Step4EducationInfo = () => {
               />
             </FormField>
 
+            {/* Row 3 */}
             <FormField label="Current Year / Semester" required>
               <TextInput
                 value={form.currentYearSemester}
                 onChange={(v) => handleChange('currentYearSemester', v)}
-                placeholder="e.g. 8th Semester or Completed"
+                placeholder="e.g. 2nd Year / 4th Semester"
               />
             </FormField>
 

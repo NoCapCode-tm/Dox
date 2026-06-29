@@ -79,9 +79,6 @@ const Step3IdentityInfo = () => {
     <div className="step3-wrapper">
       {isSavingStep && <Loader fullScreen={true} message="Saving and loading next step..." />}
       
-      {/* Grid lines */}
-      <div className="step3-grid-lines" />
-
       {/* Header */}
       <div className="step3-header">
         <DoxLogo width="69" />
@@ -115,7 +112,7 @@ const Step3IdentityInfo = () => {
         <div className="step3-heading-container">
           <h1 className="step3-h1">Identity Information</h1>
           <p className="step3-subtitle">
-            Upload your identity details for verification and official documentation.
+            Used for internal verification and legal documentation.
           </p>
         </div>
 
@@ -128,7 +125,7 @@ const Step3IdentityInfo = () => {
               <TextInput
                 value={form.govid1}
                 onChange={(v) => handleChange('govid1', v)}
-                placeholder="e.g. ABCDE1234F (PAN) or 1234 5678 9012 (Aadhaar)"
+                placeholder="Passport, National ID, Driver's License..."
               />
             </FormField>
 
@@ -144,11 +141,11 @@ const Step3IdentityInfo = () => {
               <TextInput
                 value={form.govid2}
                 onChange={(v) => handleChange('govid2', v)}
-                placeholder="e.g. MH04 20110012345 (Driving License)"
+                placeholder="Passport, National ID, Driver's License..."
               />
             </FormField>
 
-            <FormField label="Upload Secondary ID ( JPG/PNG )" ifAvailable>
+            <FormField label="Upload Secondar-ID( JPG/PNG )" ifAvailable>
               <FileInput
                 file={form.govid2image}
                 onChange={(f) => handleFile('govid2image', f)}
@@ -242,10 +239,10 @@ const FileInput = ({ file, onChange }) => {
           onChange={(e) => onChange(e.target.files?.[0] || null)}
         />
       </label>
-      {file ? (
-        <span className="step3-file-name">{file.name}</span>
-      ) : (
-        <span className="step3-file-empty">No file chosen</span>
+      {file && (
+        <span className="step3-file-name" title={file.name}>
+          {file.name}
+        </span>
       )}
     </div>
   );

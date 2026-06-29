@@ -35,10 +35,13 @@ const Completion = () => {
 
 	return (
 		<div
-			className="relative min-h-screen w-full overflow-hidden text-white font-[Jost]"
+			className="relative min-h-screen w-full overflow-hidden text-white font-[Jost] flex flex-col"
 			style={{
-				background:
-					'conic-gradient(from 118.41deg at 50% 55.97%, #000000 0deg, #254386 0.51deg, #000000 360deg), conic-gradient(from 90deg at 92.22% 50%, #000000 0deg, #2D5EC9 360deg), conic-gradient(from 0deg at 50% 11.18%, #000000 0deg, #1C4BB2 360deg), conic-gradient(from -90deg at 10.69% 50%, #123D7C -0.03deg, #000102 0.04deg, #123D7C 359.97deg, #000102 360.04deg), conic-gradient(from 180deg at 50% 87.88%, #394860 0deg, #101620 360deg)',
+				backgroundImage: "url('../../../public/BG.svg')",
+				backgroundSize: 'cover',
+				backgroundPosition: 'center',
+				backgroundAttachment: 'fixed',
+				backgroundColor: '#0A0E14'
 			}}
 		>
 			<div className="relative z-10 w-full px-[35px] pt-[35px]">
@@ -48,68 +51,64 @@ const Completion = () => {
 				</span>
 			</div>
 
-			<main className="relative z-10 max-w-[1200px] mx-auto px-4 pt-[70px] pb-[80px] flex flex-col items-center text-center">
-				<div className="mb-[28px] flex justify-center" style={{ position: 'relative' }}>
-					<CheckCircleIcon />
+			<main className="relative z-10 flex-1 max-w-[1200px] w-full mx-auto px-4 flex flex-col items-center justify-center text-center pb-[100px]">
+				
+                <div className="mb-[24px] flex justify-center text-[#51A2FF]">
+					<CheckCircleOutlineIcon />
 				</div>
 
 				<h1
-					className="text-[40px] md:text-[64px] font-normal text-[#DBDBDB]"
+					className="text-[40px] md:text-[56px] font-normal text-[#FFFFFF]"
 					style={{
 						maxWidth: '792px',
-						lineHeight: '1.1',
-						transform: 'rotate(0.11deg)',
+						lineHeight: '1.2',
 					}}
 				>
-					Your onboarding is <span className="block md:inline text-[#1B6CE5]">complete</span>
+					Your onboarding is <span className="text-[#51A2FF]">complete</span>
 				</h1>
 
 				<p
-					className="mt-[62px] text-[20px] md:text-[32px] text-white/75 font-normal"
-					style={{ maxWidth: '532px', lineHeight: '24px' }}
+					className="mt-[24px] text-[18px] md:text-[24px] text-[#D1D5DC] font-normal"
+					style={{ maxWidth: '532px', lineHeight: '32px' }}
 				>
 					You will receive full system access in :
 				</p>
 
 				<div
-					className="mt-[56px] mx-auto w-[394px] max-w-full flex items-baseline justify-center gap-[6px] whitespace-nowrap"
+					className="mt-[40px] mx-auto flex items-baseline justify-center gap-[8px] whitespace-nowrap"
 					style={{
-						fontFamily: 'Roboto Flex, Jost, sans-serif',
-						fontWeight: 200,
-						fontStyle: 'normal',
-						lineHeight: '1',
-						textAlign: 'center',
+						fontFamily: 'Jost, sans-serif',
+						fontWeight: 300,
 						color: '#FFFFFF',
-						fontVariationSettings: '"opsz" 48, "wght" 200',
 					}}
 				>
-					<span style={{ fontSize: 'clamp(44px, 4.6vw, 64px)', lineHeight: '1' }}>{hours}</span>
-					<span style={{ fontSize: 'clamp(16px, 1.35vw, 24px)', lineHeight: '1', transform: 'translateY(0px)' }}>Hr</span>
-					<span style={{ fontSize: 'clamp(30px, 2.6vw, 48px)', lineHeight: '1' }}>:</span>
-					<span style={{ fontSize: 'clamp(44px, 4.6vw, 64px)', lineHeight: '1' }}>{minutes}</span>
-					<span style={{ fontSize: 'clamp(16px, 1.35vw, 24px)', lineHeight: '1', transform: 'translateY(0px)' }}>Min</span>
-					<span style={{ fontSize: 'clamp(30px, 2.6vw, 48px)', lineHeight: '1' }}>:</span>
-					<span style={{ fontSize: 'clamp(44px, 4.6vw, 64px)', lineHeight: '1' }}>{seconds}</span>
-					<span style={{ fontSize: 'clamp(16px, 1.35vw, 24px)', lineHeight: '1', transform: 'translateY(0px)' }}>Sec</span>
+					<span style={{ fontSize: 'clamp(48px, 6vw, 72px)', lineHeight: '1' }}>{hours}</span>
+					<span style={{ fontSize: 'clamp(18px, 2vw, 24px)', lineHeight: '1', paddingRight: '8px' }}>Hr</span>
+					<span style={{ fontSize: 'clamp(36px, 4vw, 56px)', lineHeight: '1' }}>:</span>
+					<span style={{ fontSize: 'clamp(48px, 6vw, 72px)', lineHeight: '1', paddingLeft: '8px' }}>{minutes}</span>
+					<span style={{ fontSize: 'clamp(18px, 2vw, 24px)', lineHeight: '1', paddingRight: '8px' }}>Min</span>
+					<span style={{ fontSize: 'clamp(36px, 4vw, 56px)', lineHeight: '1' }}>:</span>
+					<span style={{ fontSize: 'clamp(48px, 6vw, 72px)', lineHeight: '1', paddingLeft: '8px' }}>{seconds}</span>
+					<span style={{ fontSize: 'clamp(18px, 2vw, 24px)', lineHeight: '1' }}>Sec</span>
 				</div>
 
 				<button
 					type="button"
 					onClick={() => navigate('/welcome')}
-					className="mt-[90px] h-[40px] w-[187px] rounded-[10px] flex items-center justify-center gap-[7px] transition-opacity hover:opacity-90 active:scale-95"
+					className="mt-[64px] h-[44px] px-[24px] rounded-[10px] flex items-center justify-center gap-[8px] transition-all hover:bg-white/10 active:scale-95 border border-white/10"
 					style={{
-						background: '#314460',
-						boxShadow:
-							'1px 1px 2px rgba(64,88,125,0.3), -1px -1px 2px rgba(34,48,67,0.5), inset -5px 5px 10px rgba(34,48,67,0.2), inset 5px -5px 10px rgba(34,48,67,0.2), inset -5px -5px 10px rgba(64,88,125,0.9), inset 5px 5px 13px rgba(34,48,67,0.9)',
+						backgroundColor: 'rgba(6, 14, 32, 0.4)',
+						backdropFilter: 'blur(10px)',
+                        WebkitBackdropFilter: 'blur(10px)'
 					}}
 				>
-					<DashboardIcon />
-					<span className="font-[Jost] font-normal text-[16px] leading-[24px] text-white">Go to Dashboard</span>
+					<ExternalLinkIcon />
+					<span className="font-[Jost] font-normal text-[15px] leading-[24px] text-white">Go to Dashboard</span>
 				</button>
 
-				<div className="mt-[22px] text-[16px] leading-[24px] font-normal text-white/65">
+				<div className="mt-[32px] text-[14px] leading-[24px] font-normal text-[#99A1AF]">
 					Questions or need help?{' '}
-					<a href="mailto:hr@nocapcode.cloud" className="text-[#1B6CE5] hover:underline">
+					<a href="mailto:hr@nocapcode.cloud" className="text-[#51A2FF] hover:underline transition-all">
 						Contact HR Support
 					</a>
 				</div>
@@ -118,76 +117,34 @@ const Completion = () => {
 	);
 };
 
-const CheckCircleIcon = () => (
-	<svg
-		width="114"
-		height="114"
-		viewBox="0 0 114 114"
-		fill="none"
-		aria-hidden="true"
-		style={{
-			width: 'clamp(84px, 7.2vw, 114px)',
-			height: 'clamp(84px, 7.2vw, 114px)',
-			flexShrink: 0,
+/* --- Internal SVG Components --- */
+
+const CheckCircleOutlineIcon = () => (
+	<svg 
+        width="114" 
+        height="114" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor" 
+        strokeWidth="1.2" 
+        strokeLinecap="round" 
+        strokeLinejoin="round"
+        style={{
+			width: 'clamp(72px, 8vw, 100px)',
+			height: 'clamp(72px, 8vw, 100px)',
 		}}
-	>
-		<g filter="url(#completion-filter-1174-666)">
-			<path
-				fillRule="evenodd"
-				clipRule="evenodd"
-				d="M48.2442 3.65299C60.3513 1.74554 72.7463 4.04622 83.3624 10.1715C85.2757 11.2756 85.9322 13.722 84.8282 15.6354C83.724 17.5484 81.2776 18.2041 79.3643 17.1003C70.3333 11.8895 59.7887 9.93268 49.4893 11.5553C39.19 13.178 29.758 18.2823 22.7666 26.0172C15.7754 33.7523 11.6472 43.6508 11.0704 54.0612C10.4936 64.4715 13.5028 74.7653 19.5967 83.2253C25.6908 91.6853 34.5016 97.8009 44.5586 100.551C54.6157 103.302 65.312 102.522 74.8633 98.3405C84.4145 94.1593 92.2444 86.8297 97.0459 77.5749C101.847 68.32 103.331 57.6984 101.249 47.4821C100.808 45.3175 102.206 43.2045 104.37 42.7633C106.535 42.3226 108.647 43.72 109.088 45.8844C111.535 57.8939 109.791 70.3801 104.147 81.2594C98.5022 92.1386 89.2989 100.755 78.0713 105.67C66.8438 110.584 54.2703 111.501 42.4483 108.268C30.6263 105.035 20.2691 97.8467 13.1055 87.902C5.94197 77.9572 2.40414 65.8563 3.08207 53.6188C3.76012 41.3813 8.61286 29.7456 16.8311 20.653C25.0495 11.5604 36.1372 5.56048 48.2442 3.65299ZM103.291 13.1276C104.833 11.5463 107.366 11.5151 108.947 13.0573C110.529 14.5998 110.56 17.1321 109.018 18.7135L59.4346 69.5465C58.6818 70.3182 57.6493 70.7536 56.5713 70.7536C55.4934 70.7534 54.4607 70.3182 53.708 69.5465L38.833 54.2965C37.2909 52.7152 37.3223 50.1827 38.9034 48.6403C40.4846 47.098 43.0171 47.1297 44.5596 48.7106L56.5704 61.0251L103.291 13.1276Z"
-				fill="#314460"
-			/>
-		</g>
-		<defs>
-			<filter id="completion-filter-1174-666" x="0" y="0" width="113.167" height="113.166" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-				<feFlood floodOpacity="0" result="BackgroundImageFix" />
-				<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-				<feOffset dx="-1" dy="-1" />
-				<feGaussianBlur stdDeviation="1" />
-				<feColorMatrix type="matrix" values="0 0 0 0 0.0784314 0 0 0 0 0.105882 0 0 0 0 0.14902 0 0 0 0.5 0" />
-				<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1174_666" />
-				<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-				<feOffset dx="1" dy="1" />
-				<feGaussianBlur stdDeviation="1" />
-				<feColorMatrix type="matrix" values="0 0 0 0 0.305882 0 0 0 0 0.427451 0 0 0 0 0.603922 0 0 0 0.3 0" />
-				<feBlend mode="normal" in2="effect1_dropShadow_1174_666" result="effect2_dropShadow_1174_666" />
-				<feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_1174_666" result="shape" />
-				<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-				<feOffset dx="3" dy="3" />
-				<feGaussianBlur stdDeviation="4" />
-				<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-				<feColorMatrix type="matrix" values="0 0 0 0 0.0784314 0 0 0 0 0.105882 0 0 0 0 0.14902 0 0 0 0.9 0" />
-				<feBlend mode="normal" in2="shape" result="effect3_innerShadow_1174_666" />
-				<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-				<feOffset dx="-3" dy="-3" />
-				<feGaussianBlur stdDeviation="3" />
-				<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-				<feColorMatrix type="matrix" values="0 0 0 0 0.305882 0 0 0 0 0.427451 0 0 0 0 0.603922 0 0 0 0.9 0" />
-				<feBlend mode="normal" in2="effect3_innerShadow_1174_666" result="effect4_innerShadow_1174_666" />
-				<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-				<feOffset dx="3" dy="-3" />
-				<feGaussianBlur stdDeviation="3" />
-				<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-				<feColorMatrix type="matrix" values="0 0 0 0 0.0784314 0 0 0 0 0.105882 0 0 0 0 0.14902 0 0 0 0.2 0" />
-				<feBlend mode="normal" in2="effect4_innerShadow_1174_666" result="effect5_innerShadow_1174_666" />
-				<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-				<feOffset dx="-3" dy="3" />
-				<feGaussianBlur stdDeviation="3" />
-				<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-				<feColorMatrix type="matrix" values="0 0 0 0 0.0784314 0 0 0 0 0.105882 0 0 0 0 0.14902 0 0 0 0.2 0" />
-				<feBlend mode="normal" in2="effect5_innerShadow_1174_666" result="effect6_innerShadow_1174_666" />
-			</filter>
-		</defs>
-	</svg>
+    >
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+        <polyline points="22 4 12 14.01 9 11.01" />
+    </svg>
 );
 
-const DashboardIcon = () => (
-	<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-		<path d="M10 2H14V6" stroke="white" strokeWidth="1.333" strokeLinecap="round" strokeLinejoin="round" />
-		<path d="M9 7L14 2" stroke="white" strokeWidth="1.333" strokeLinecap="round" strokeLinejoin="round" />
-		<path d="M6 3H3.6C3.03995 3 2.75992 3 2.54601 3.10899C2.35785 3.20487 2.20487 3.35785 2.10899 3.54601C2 3.75992 2 4.03995 2 4.6V12.4C2 12.9601 2 13.2401 2.10899 13.454C2.20487 13.6422 2.35785 13.7951 2.54601 13.891C2.75992 14 3.03995 14 3.6 14H11.4C11.9601 14 12.2401 14 12.454 13.891C12.6422 13.7951 12.7951 13.6422 12.891 13.454C13 13.2401 13 12.9601 13 12.4V10" stroke="white" strokeWidth="1.333" strokeLinecap="round" strokeLinejoin="round" />
-	</svg>
+const ExternalLinkIcon = () => (
+	<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+        <polyline points="15 3 21 3 21 9" />
+        <line x1="10" y1="14" x2="21" y2="3" />
+    </svg>
 );
 
 const DoxLogo = ({ width = '69', fill = '#FFFFFF' }) => (
