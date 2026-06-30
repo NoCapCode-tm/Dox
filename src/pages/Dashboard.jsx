@@ -383,7 +383,7 @@ const CheckCircleIcon = () => (
 /**
  * DOX Logo minimal component
  */
-const DoxLogo = ({ width = "69", fill = "#ffffffb4" }) => (
+const DoxLogo = ({ width = "69", fill = "#FFFFFF" }) => (
   <svg
     width={width}
     viewBox="0 0 339 95"
