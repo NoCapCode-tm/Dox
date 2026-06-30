@@ -237,7 +237,7 @@ const Dashboard = () => {
       {/* Header/Logo area */}
       <div className="w-full px-8 pt-8 pb-2 flex items-start justify-between relative z-30">
         <div className="flex flex-col">
-          <DoxLogo width="84" />
+          <DoxLogo width="69" />
           <span className="text-[12px] text-white/65 leading-[20px] mt-2 tracking-wide font-normal">
             Employee Onboarding
           </span>
@@ -383,7 +383,7 @@ const CheckCircleIcon = () => (
 /**
  * DOX Logo minimal component
  */
-const DoxLogo = ({ width = "69", fill = "#ffffffb4" }) => (
+const DoxLogo = ({ width = "69", fill = "#FFFFFF" }) => (
   <svg
     width={width}
     viewBox="0 0 339 95"

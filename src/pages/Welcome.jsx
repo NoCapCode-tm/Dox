@@ -366,7 +366,7 @@ const Welcome = () => {
             </main>
 
             <footer className="absolute bottom-8 z-20 text-white/50 text-[14px] tracking-wide font-light select-none">
-                © 2026 NoCapCode. All rights reserved.
+                © 2024-{String(new Date().getFullYear()).slice(-2)} NoCapCode. All rights reserved.
             </footer>
         </div>
     );
