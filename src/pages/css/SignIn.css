@@ -27,14 +27,11 @@
   justify-content: center;
 
   background-image: url('/SignIn.svg');
-  background-repeat: no-repeat;
-  background-position: center;
   background-size: cover;
-
-  /* fallback while svg loads */
+  background-position: center;
+  background-attachment: fixed;
   background-color: #081321;
 }
-
 /* Main Content Wrapper */
 .signin-main-content {
   position: relative;
@@ -89,7 +86,7 @@
   padding: 19px 26px;
   display: flex;
   flex-direction: column;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(255, 255, 255, 0.02);
   border: 0.8px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -117,7 +114,8 @@
   align-items: center;
   gap: 10px;
   padding: 0 16px;
-  background-color: rgba(201, 201, 201, 0.1);
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 0.8px solid rgba(255, 255, 255, 0.1);
 }
 
 .signin-input {
@@ -161,7 +159,7 @@
   justify-content: center;
   gap: 4px;
   transition: opacity 0.2s;
-  background-color: #314460;
+  background-color: rgb(49, 68, 96);
   border: 1px solid #FFFFFF;
   box-shadow: 
     1px 1px 2px rgba(64,88,125,0.3), 
