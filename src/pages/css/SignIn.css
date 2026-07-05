@@ -11,102 +11,27 @@
   100% { transform: translateX(0); opacity: 1; }
 }
 
+
+
+/* Layout & Background */
 /* Layout & Background */
 .signin-wrapper {
   position: relative;
-  height: 100vh;
   width: 100%;
+  min-height: 100vh;
   overflow: hidden;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(116.04deg, #0A0E14 18.26%, #112B53 51.38%, #0A0E14 78.49%);
-}
 
-/* Background Decorative Texts */
-.signin-bg-atla-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 0;
-  width: 100%;
-  pointer-events: none;
-  user-select: none;
-  animation: slideInRight 3.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  background-image: url('/SignIn.svg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-color: #081321;
 }
-
-.signin-bg-atla-shadow {
-  position: absolute;
-  font-family: 'Jomolhari', serif;
-  font-size: 55vw;
-  font-weight: 400;
-  line-height: 1;
-  color: rgba(0, 0, 0, 0.46);
-  filter: blur(11.1px);
-  top: 0;
-  left: -3vw;
-  transform: translate(0, -72%);
-  white-space: nowrap;
-}
-
-.signin-bg-atla-gradient {
-  position: absolute;
-  font-family: 'Jomolhari', serif;
-  font-size: 55vw;
-  font-weight: 400;
-  line-height: 1;
-  top: 0;
-  left: -3vw;
-  transform: translate(0, -72%);
-  white-space: nowrap;
-  background: linear-gradient(95.73deg, #000000 8.34%, #FFFFFF 63.47%, #0A0E14 94.62%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.signin-bg-ncc-container {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: 0;
-  width: 100%;
-  pointer-events: none;
-  user-select: none;
-  animation: slideInLeft 3.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-.signin-bg-ncc-shadow {
-  position: absolute;
-  font-family: 'Jomolhari', serif;
-  font-size: 40vw;
-  font-weight: 400;
-  line-height: 1;
-  color: rgba(0, 0, 0, 0.49);
-  filter: blur(13.65px);
-  bottom: 0;
-  left: 50%;
-  transform: translate(-50%, 60%);
-  white-space: nowrap;
-}
-
-.signin-bg-ncc-gradient {
-  position: absolute;
-  font-family: 'Jomolhari', serif;
-  font-size: 40vw;
-  font-weight: 400;
-  line-height: 1;
-  bottom: 0;
-  left: 50%;
-  transform: translate(-50%, 60%);
-  white-space: nowrap;
-  background: linear-gradient(93.02deg, #6C6C6C 24.98%, #FFFFFF 45.65%, #050505 75.35%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
 /* Main Content Wrapper */
 .signin-main-content {
   position: relative;
@@ -118,14 +43,6 @@
   padding: 0 16px;
   margin-top: 1vh;
   z-index: 20;
-}
-
-.signin-logo-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 6px;
-  flex-shrink: 0;
 }
 
 /* Titles */
@@ -164,12 +81,12 @@
 .signin-form-box {
   margin-top: 16px;
   width: 100%;
-  max-width: 350px;
+  max-width: 500px;
   border-radius: 16px;
   padding: 19px 26px;
   display: flex;
   flex-direction: column;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(255, 255, 255, 0.02);
   border: 0.8px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -197,7 +114,8 @@
   align-items: center;
   gap: 10px;
   padding: 0 16px;
-  background-color: rgba(201, 201, 201, 0.1);
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 0.8px solid rgba(255, 255, 255, 0.1);
 }
 
 .signin-input {
@@ -233,7 +151,7 @@
   position: relative;
   z-index: 30;
   width: 100%;
-  max-width: 350px;
+  max-width: 500px;
   height: 56px;
   border-radius: 14px;
   display: flex;
@@ -241,7 +159,7 @@
   justify-content: center;
   gap: 4px;
   transition: opacity 0.2s;
-  background-color: #314460;
+  background-color: rgb(49, 68, 96);
   border: 1px solid #FFFFFF;
   box-shadow: 
     1px 1px 2px rgba(64,88,125,0.3), 
@@ -294,10 +212,10 @@
 .signin-footer-text {
   margin: 0;
   font-family: 'Jost', sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
   text-align: center;
-  background: linear-gradient(90deg, #195AC0 0%, #FFFFFF 100%);
+  background: rgb(138, 138, 138);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -307,3 +225,4 @@
 .signin-icon-shrink {
   flex-shrink: 0;
 }
+
