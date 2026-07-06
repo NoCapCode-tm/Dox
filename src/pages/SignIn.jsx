@@ -73,13 +73,15 @@ const SignIn = () => {
     <div className="signin-wrapper">
       {isLoading && <Loader fullScreen={true} message="Signing in..." />}
 
-      {/* ── Main Content Wrapper ── */}
-      <div className="signin-main-content">
-
-        {/* Title */}
-        <div className="signin-title-container">
-          <span className="signin-title-white">Sign</span>
-          <span className="signin-title-blue">In</span>
+      <main className="signin-main">
+        
+        {/* ── Title & Subtitle ── */}
+        <div className="signin-header-section">
+          <div className="signin-title-container">
+            <span className="signin-title-white">Sign</span>
+            <span className="signin-title-blue">In</span>
+          </div>
+          <p className="signin-subtitle">Access your onboarding portal</p>
         </div>
 
         {errorMessage && (
@@ -94,13 +96,13 @@ const SignIn = () => {
           {/* Glass Card Wrapping Inputs Only */}
           <div className="signin-card">
             
-            {/* Email/Username Field */}
+            {/* Username Field */}
             <div className="signin-form-field">
-              <label className="signin-field-label">Email Address</label>
+              <label className="signin-field-label">Email ID</label>
               <div className="signin-input-wrapper">
                 <MailIcon className="signin-input-icon" />
                 <input
-                  type="text" /* Changed from "email" to "text" to allow plain usernames without '@' */
+                  type="text"
                   value={userId}
                   onChange={(e) => setUserId(e.target.value)}
                   placeholder="your.username"
@@ -132,21 +134,16 @@ const SignIn = () => {
                   {showPassword ? <EyeOffIcon /> : <EyeIcon />}
                 </button>
               </div>
+              
+              {/* Forgot Password Link */}
+              <div className="signin-forgot-pwd">
+                <a href="#forgot" onClick={(e) => { e.preventDefault(); toast("Forgot password flow not yet implemented."); }}>
+                  Forgot password?
+                </a>
+              </div>
             </div>
 
-          {/* Email input */}
-          <div className="signin-input-container">
-            <MailIcon />
-            <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="your.username"
-              inputMode="email"
-              autoComplete="email"
-              className="signin-input"
-              aria-label="Email address"
-            />
-          </div>
+          </div> {/* <-- This was the missing closing tag in your broken code */}
 
           {/* Submit Button (Outside Glass Card) */}
           <button
@@ -155,154 +152,57 @@ const SignIn = () => {
             className="signin-submit-btn"
           >
             <span className="signin-btn-text">
-               {isLoading ? "Signing In..." : "Sign In"}
+               {isLoading ? "Signing In..." : "Log In"}
             </span>
             {!isLoading && <ArrowRightIcon />}
           </button>
 
         </form>
 
+        {/* Footer Support Text */}
         <div className="signin-footer-text">
           © 2024–{new Date().getFullYear().toString().slice(-2)} NoCapCode. <br />DOX Secure Employee Onboarding & Document Management Platform.
         </div>
 
-        {/* Sign In button */}
-        <button
-          type="button"
-          onClick={handleSignIn}
-          disabled={!canSubmit || isLoading}
-          className="signin-submit-btn"
-        >
-          <span className="signin-btn-text">
-            {isLoading ? "Signing In..." : "Sign In →"}
-          </span>
-        </button>
-
-        {errorMessage && (
-          <p className="signin-error-text">
-            {errorMessage}
-          </p>
-        )}
-
-      </div>
-
-      {/* Footer — DOX logo + gradient text */}
-      <div className="signin-footer">
-        <p className="signin-footer-text">
-          © 2024–{new Date().getFullYear().toString().slice(-2)} NoCapCode. <br />DOX Secure Employee Onboarding & Document Management Platform.
-        </p>
-      </div>
+      </main>
     </div>
   );
 };
 
 /* --- SVGs --- */
 
-const MailIcon = () => (
-  <svg
-    width="17"
-    height="17"
-    viewBox="0 0 16 16"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-hidden="true"
-    className="signin-icon-shrink"
-  >
-    <path
-      d="M2.5 4.5h11v7h-11v-7Z"
-      stroke="rgba(255,255,255,0.65)"
-      strokeWidth="1.5"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M2.8 4.9 8 8.5l5.2-3.6"
-      stroke="rgba(255,255,255,0.65)"
-      strokeWidth="1.5"
-      strokeLinejoin="round"
-    />
+const MailIcon = ({ className }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+    <polyline points="22,6 12,13 2,6"></polyline>
   </svg>
 );
 
-const LockIcon = () => (
-  <svg
-    width="17"
-    height="17"
-    viewBox="0 0 16 16"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-hidden="true"
-    className="signin-icon-shrink"
-  >
-    <path
-      d="M4.5 7v-1.5a3.5 3.5 0 1 1 7 0V7"
-      stroke="rgba(255,255,255,0.65)"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-    />
-    <path
-      d="M4 7.2h8v6H4v-6Z"
-      stroke="rgba(255,255,255,0.65)"
-      strokeWidth="1.5"
-      strokeLinejoin="round"
-    />
+const LockIcon = ({ className }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
   </svg>
 );
 
 const EyeIcon = () => (
-  <svg
-    width="18"
-    height="18"
-    viewBox="0 0 16 16"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-hidden="true"
-    className="signin-icon-shrink"
-  >
-    <path
-      d="M1.5 8s2.2-3.5 6.5-3.5S14.5 8 14.5 8s-2.2 3.5-6.5 3.5S1.5 8 1.5 8Z"
-      stroke="rgba(255,255,255,0.65)"
-      strokeWidth="1.5"
-      strokeLinejoin="round"
-    />
-    <circle
-      cx="8"
-      cy="8"
-      r="2"
-      stroke="rgba(255,255,255,0.65)"
-      strokeWidth="1.5"
-    />
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.65)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+    <circle cx="12" cy="12" r="3"></circle>
   </svg>
 );
 
 const EyeOffIcon = () => (
-  <svg
-    width="18"
-    height="18"
-    viewBox="0 0 16 16"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-hidden="true"
-    className="signin-icon-shrink"
-  >
-    <path
-      d="M1.5 8s2.2-3.5 6.5-3.5S14.5 8 14.5 8s-2.2 3.5-6.5 3.5S1.5 8 1.5 8Z"
-      stroke="rgba(255,255,255,0.65)"
-      strokeWidth="1.5"
-      strokeLinejoin="round"
-    />
-    <circle
-      cx="8"
-      cy="8"
-      r="2"
-      stroke="rgba(255,255,255,0.65)"
-      strokeWidth="1.5"
-    />
-    <path
-      d="M2.5 13.5 13.5 2.5"
-      stroke="rgba(255,255,255,0.65)"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-    />
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.65)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+    <line x1="1" y1="1" x2="23" y2="23"></line>
+  </svg>
+);
+
+const ArrowRightIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+    <path d="M3.33334 8H12.6667" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M8 3.33334L12.6667 8.00001L8 12.6667" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
