@@ -16,28 +16,30 @@
   animation: fadeInSlideUp 0.30s ease-out forwards;
 }
 
-/* ── Layout & Background ── */
+
+
+/* Layout & Background */
+/* Layout & Background */
 .signin-wrapper {
   position: relative;
-  min-height: 100vh;
   width: 100%;
+  min-height: 100vh;
   overflow: hidden;
+
   display: flex;
   flex-direction: column;
-  font-family: 'Jost', sans-serif;
-  color: #FFFFFF;
-  
-  /* Apply global background SVG */
-  background-image: url('../../../SignIn.svg');
+  align-items: center;
+  justify-content: center;
+
+  background-image: url('/SignIn.svg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  background-color: #081321; /* Fallback */
+  background-color: #081321;
 }
-
-/* ── Main Content Area ── */
-.signin-main {
-  flex: 1;
+/* Main Content Wrapper */
+.signin-main-content {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -49,16 +51,7 @@
   min-height: 100vh; 
 }
 
-/* Header Text Section (Sign In Title) */
-.signin-header-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 24px;
-  opacity: 0;
-  animation: fadeInSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
+/* Titles */
 .signin-title-container {
   display: flex;
   gap: 6px;
@@ -109,24 +102,12 @@
 /* ── Form Container ── */
 .signin-form-container {
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
+  border-radius: 16px;
+  padding: 19px 26px;
   display: flex;
   flex-direction: column;
-  gap: 16px; /* Gap between Card and Button */
-  opacity: 0;
-  animation: fadeInSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.30s forwards; /* Staggered delay */
-}
-
-/* Glass Card */
-.signin-card {
-  width: 100%;
-  border-radius: 12px;
-  padding: 24px 32px;
-  
-  /* Requested Background */
-  background-color: rgba(6, 14, 32, 0.4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background-color: rgba(255, 255, 255, 0.02);
   border: 0.8px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
   
@@ -154,6 +135,10 @@
   position: relative;
   display: flex;
   align-items: center;
+  gap: 10px;
+  padding: 0 16px;
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 0.8px solid rgba(255, 255, 255, 0.1);
 }
 
 .signin-input-icon {
@@ -218,15 +203,23 @@
 .signin-submit-btn {
   height: 46px;
   width: 100%;
-  border-radius: 8px;
+  max-width: 500px;
+  height: 56px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  
-  /* Matching the exact blue from the design */
-  background-color: #1A66FF; 
-  border: none;
+  gap: 4px;
+  transition: opacity 0.2s;
+  background-color: rgb(49, 68, 96);
+  border: 1px solid #FFFFFF;
+  box-shadow: 
+    1px 1px 2px rgba(64,88,125,0.3), 
+    -1px -1px 2px rgba(34,48,67,0.5), 
+    inset -5px 5px 10px rgba(34,48,67,0.2), 
+    inset 5px -5px 10px rgba(34,48,67,0.2), 
+    inset -5px -5px 10px rgba(64,88,125,0.9), 
+    inset 5px 5px 13px rgba(34,48,67,0.9);
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
@@ -257,8 +250,17 @@
   bottom: 30px;
   font-size: 13px;
   font-family: 'Jost', sans-serif;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
+  font-weight: 400;
   text-align: center;
-  opacity: 0;
-  animation: fadeInSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards; /* Staggered delay */
+  background: rgb(138, 138, 138);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
+
+/* Utility for icons */
+.signin-icon-shrink {
+  flex-shrink: 0;
+}
+
