@@ -1,174 +1,242 @@
 /* SignIn.css */
 
-/* Animations */
-@keyframes slideInRight {
-  0% { transform: translateX(100vw); opacity: 0; }
-  100% { transform: translateX(0); opacity: 1; }
+/* ── Animations ── */
+@keyframes fadeInSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-@keyframes slideInLeft {
-  0% { transform: translateX(-100vw); opacity: 0; }
-  100% { transform: translateX(0); opacity: 1; }
+.animate-fade {
+  animation: fadeInSlideUp 0.30s ease-out forwards;
 }
 
-
-
-/* Layout & Background */
-/* Layout & Background */
+/* ── Layout & Background ── */
 .signin-wrapper {
   position: relative;
-  width: 100%;
   min-height: 100vh;
+  width: 100%;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Jost', sans-serif;
+  color: #FFFFFF;
+  
+  /* Apply global background SVG */
+  background-image: url('../../../SignIn.svg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-color: #081321; /* Fallback */
+}
 
+/* ── Main Content Area ── */
+.signin-main {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  background-image: url('/SignIn.svg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  background-color: #081321;
-}
-/* Main Content Wrapper */
-.signin-main-content {
+  padding: 24px;
   position: relative;
+  z-index: 10;
+  width: 100%;
+  min-height: 100vh; 
+}
+
+/* Header Text Section (Sign In Title) */
+.signin-header-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
-  max-width: 471px;
-  padding: 0 16px;
-  margin-top: 1vh;
-  z-index: 20;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeInSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Titles */
 .signin-title-container {
   display: flex;
-  align-items: center;
   gap: 6px;
-  height: 33px;
+  margin-bottom: 4px;
 }
 
 .signin-title-white {
   font-family: 'Jost', sans-serif;
-  font-size: 24px;
-  font-weight: 200;
+  font-size: 26px;
+  font-weight: 300; /* Made slightly lighter based on the design */
   color: #FFFFFF;
 }
 
 .signin-title-blue {
   font-family: 'Jost', sans-serif;
-  font-size: 24px;
-  font-weight: 200;
-  color: #86B2F4;
+  font-size: 26px;
+  font-weight: 300;
+  color: #1A66FF; /* Matching the button blue */
 }
 
 .signin-subtitle {
-  margin-top: 1px;
-  font-family: 'Jost', sans-serif;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 28px;
-  text-align: center;
-  color: rgba(255, 255, 255, 0.65);
-}
-
-/* Form Container */
-.signin-form-box {
-  margin-top: 16px;
-  width: 100%;
-  max-width: 500px;
-  border-radius: 16px;
-  padding: 19px 26px;
-  display: flex;
-  flex-direction: column;
-  background-color: rgba(255, 255, 255, 0.02);
-  border: 0.8px solid rgba(255, 255, 255, 0.1);
-}
-
-.signin-label {
-  height: 20px;
-  display: flex;
-  align-items: center;
+  margin-top: 2px;
   font-family: 'Jost', sans-serif;
   font-size: 14px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.65);
+  text-align: center;
+}
+
+/* Error Box */
+.signin-error-box {
+  background-color: rgba(255, 100, 103, 0.1);
+  border: 1px solid rgba(255, 100, 103, 0.3);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+.signin-error-box p {
+  color: #FF9EA0;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* ── Form Container ── */
+.signin-form-container {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Gap between Card and Button */
+  opacity: 0;
+  animation: fadeInSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.30s forwards; /* Staggered delay */
+}
+
+/* Glass Card */
+.signin-card {
+  width: 100%;
+  border-radius: 12px;
+  padding: 24px 32px;
+  
+  /* Requested Background */
+  background-color: rgba(6, 14, 32, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 0.8px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Form Fields */
+.signin-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.signin-field-label {
+  font-family: 'Jost', sans-serif;
   font-weight: 500;
+  font-size: 13px;
   color: #FFFFFF;
 }
 
-.signin-label.mt-16 {
-  margin-top: 16px;
-}
-
-/* Input Fields */
-.signin-input-container {
-  margin-top: 6px;
-  width: 100%;
-  height: 45px;
-  border-radius: 10px;
+/* Input Wrappers & Icons */
+.signin-input-wrapper {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 0 16px;
-  background-color: rgba(255, 255, 255, 0.02);
-  border: 0.8px solid rgba(255, 255, 255, 0.1);
 }
 
+.signin-input-icon {
+  position: absolute;
+  left: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+/* Inputs */
 .signin-input {
-  flex: 1;
-  background-color: transparent;
-  border: none;
+  width: 100%;
+  height: 44px;
+  border-radius: 8px;
   outline: none;
   font-family: 'Jost', sans-serif;
   font-size: 14px;
   caret-color: #FFFFFF;
-  color: rgba(255, 255, 255, 0.65);
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.signin-input.with-icon {
+  padding-left: 42px;
+  padding-right: 42px; /* Space for the eye icon */
+}
+
+.signin-input:focus {
+  border-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .signin-input::placeholder {
   color: rgba(255, 255, 255, 0.4);
+  font-weight: 400;
 }
 
+/* Toggle Password Button */
 .signin-toggle-btn {
-  flex-shrink: 0;
-  background-color: transparent;
+  position: absolute;
+  right: 14px;
+  background: transparent;
   border: none;
-  outline: none;
-  padding: 0;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0;
+  transition: opacity 0.2s;
+  outline: none;
 }
 
-/* Submit Button */
+.signin-toggle-btn:hover {
+  opacity: 0.8;
+}
+
+/* ── Submit Button (Outside Card) ── */
 .signin-submit-btn {
-  margin-top: 16px;
-  position: relative;
-  z-index: 30;
+  height: 46px;
   width: 100%;
-  max-width: 500px;
-  height: 56px;
-  border-radius: 14px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  transition: opacity 0.2s;
-  background-color: rgb(49, 68, 96);
-  border: 1px solid #FFFFFF;
-  box-shadow: 
-    1px 1px 2px rgba(64,88,125,0.3), 
-    -1px -1px 2px rgba(34,48,67,0.5), 
-    inset -5px 5px 10px rgba(34,48,67,0.2), 
-    inset 5px -5px 10px rgba(34,48,67,0.2), 
-    inset -5px -5px 10px rgba(64,88,125,0.9), 
-    inset 5px 5px 13px rgba(34,48,67,0.9);
+  gap: 8px;
+  
+  /* Matching the exact blue from the design */
+  background-color: #1A66FF; 
+  border: none;
   cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.signin-submit-btn:hover:enabled {
+  background-color: #0055ff;
+}
+
+.signin-submit-btn:active:enabled {
+  transform: scale(0.98);
 }
 
 .signin-submit-btn:disabled {
@@ -176,53 +244,21 @@
   cursor: not-allowed;
 }
 
-.signin-submit-btn:hover:enabled {
-  opacity: 0.9;
-}
-
 .signin-btn-text {
   font-family: 'Jost', sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   color: #FFFFFF;
 }
 
-/* Error Text */
-.signin-error-text {
-  margin-top: 10px;
-  font-size: 13px;
-  color: #FF9EA0;
-  text-align: center;
-  max-width: 392px;
-}
-
-/* Footer */
-.signin-footer {
-  position: absolute;
-  bottom: 3vh;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  z-index: 20;
-}
-
+/* ── Footer Support Text ── */
 .signin-footer-text {
-  margin: 0;
-  font-family: 'Jost', sans-serif;
+  position: absolute;
+  bottom: 30px;
   font-size: 13px;
-  font-weight: 400;
+  font-family: 'Jost', sans-serif;
+  color: rgba(255, 255, 255, 0.5);
   text-align: center;
-  background: rgb(138, 138, 138);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  opacity: 0;
+  animation: fadeInSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards; /* Staggered delay */
 }
-
-/* Utility for icons */
-.signin-icon-shrink {
-  flex-shrink: 0;
-}
-
