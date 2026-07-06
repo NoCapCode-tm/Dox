@@ -137,8 +137,33 @@ const SignIn = () => {
               
               {/* Forgot Password Link */}
               <div className="signin-forgot-pwd">
-                <a href="#forgot" onClick={(e) => { e.preventDefault(); toast("Forgot password flow not yet implemented."); }}>
-                  Forgot password?
+                <a
+                href={`mailto:hr@nocapcode.cloud?subject=${encodeURIComponent(
+                    "Forgot Password Request - Dox Account Access"
+                  )}&body=${encodeURIComponent(`Dear HR Team,
+
+                I hope you are doing well.
+
+                I am writing to request assistance with accessing my Dox account, as I am currently unable to log in. I would appreciate your support in resetting my password or guiding me through the recovery process.
+
+                For your reference, my details are provided below:
+
+                Full Name:
+                Registered Email:
+                Employee ID (if applicable):
+                Department/Team:
+                Issue Summary: Unable to access my Dox account
+
+                Please let me know if any additional information is required from my side to proceed further.
+
+                Thank you for your time and support. I look forward to your assistance.
+
+                Best regards,
+                `)}`}
+
+                >
+
+                Forgot Password? 
                 </a>
               </div>
             </div>
