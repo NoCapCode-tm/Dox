@@ -10,21 +10,21 @@ import "./css/SignIn.css";
 
 const AUTH_SESSION_KEY = "emp-auth-session";
 
-
 /**
  * SignIn page
  */
 const SignIn = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  // State for username/email
+  const [userId, setUserId] = useState(""); 
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const canSubmit = useMemo(
-    () => email.trim().length > 0 && password.length > 0,
-    [email, password]
+    () => userId.trim().length > 0 && password.length > 0,
+    [userId, password]
   );
 
   const isInvalidCredentialError = (error) => {
@@ -39,25 +39,27 @@ const SignIn = () => {
       message.includes("invalid") ||
       message.includes("incorrect") ||
       message.includes("unauthorized") ||
-      message.includes("request failed")
+      message.includes("not found")
     );
   };
 
-  const handleSignIn = async () => {
+  const handleSignIn = async (e) => {
+    e?.preventDefault();
     if (!canSubmit || isLoading) return;
 
     try {
       setIsLoading(true);
       setErrorMessage("");
 
-      // Backend expects "userid", map the current email field value.
-      await loginEmployee({ userid: email.trim(), password });
+      // Backend expects "userid", map the current field value.
+      await loginEmployee({ userid: userId.trim(), password });
+      
       setAuthSession();
       toast.success("Login successful");
       navigate("/welcome");
     } catch (error) {
       const message = isInvalidCredentialError(error)
-        ? "Incorrect credentials"
+        ? "Incorrect credentials. Please try again."
         : "Sign in failed. Please try again.";
 
       toast.error(message);
@@ -80,14 +82,57 @@ const SignIn = () => {
           <span className="signin-title-blue">In</span>
         </div>
 
-        {/* Subtitle */}
-        <p className="signin-subtitle">Access your onboarding portal</p>
+        {errorMessage && (
+          <div className="signin-error-box animate-fade">
+            <p>{errorMessage}</p>
+          </div>
+        )}
 
-        {/* Inner fields box */}
-        <div className="signin-form-box">
+        {/* ── Form Container ── */}
+        <form onSubmit={handleSignIn} className="signin-form-container">
           
-          {/* Email label */}
-          <div className="signin-label">Email Address</div>
+          {/* Glass Card Wrapping Inputs Only */}
+          <div className="signin-card">
+            
+            {/* Email/Username Field */}
+            <div className="signin-form-field">
+              <label className="signin-field-label">Email Address</label>
+              <div className="signin-input-wrapper">
+                <MailIcon className="signin-input-icon" />
+                <input
+                  type="text" /* Changed from "email" to "text" to allow plain usernames without '@' */
+                  value={userId}
+                  onChange={(e) => setUserId(e.target.value)}
+                  placeholder="your.username"
+                  className="signin-input with-icon"
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Password Field */}
+            <div className="signin-form-field">
+              <label className="signin-field-label">Password</label>
+              <div className="signin-input-wrapper">
+                <LockIcon className="signin-input-icon" />
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                  className="signin-input with-icon"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="signin-toggle-btn"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+                </button>
+              </div>
+            </div>
 
           {/* Email input */}
           <div className="signin-input-container">
@@ -103,36 +148,22 @@ const SignIn = () => {
             />
           </div>
 
-          {/* Password label */}
-          <div className="signin-label mt-16">Password</div>
+          {/* Submit Button (Outside Glass Card) */}
+          <button
+            type="submit"
+            disabled={!canSubmit || isLoading}
+            className="signin-submit-btn"
+          >
+            <span className="signin-btn-text">
+               {isLoading ? "Signing In..." : "Sign In"}
+            </span>
+            {!isLoading && <ArrowRightIcon />}
+          </button>
 
-          {/* Password input */}
-          <div className="signin-input-container">
-            <LockIcon />
-            <input
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && canSubmit && !isLoading) {
-                  handleSignIn();
-                }
-              }}
-              placeholder="Enter your password"
-              type={showPassword ? "text" : "password"}
-              autoComplete="current-password"
-              className="signin-input"
-              aria-label="Password"
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword((prev) => !prev)}
-              className="signin-toggle-btn"
-              aria-label={showPassword ? "Hide password" : "Show password"}
-              aria-pressed={showPassword}
-            >
-              {showPassword ? <EyeOffIcon /> : <EyeIcon />}
-            </button>
-          </div>
+        </form>
+
+        <div className="signin-footer-text">
+          © 2024–{new Date().getFullYear().toString().slice(-2)} NoCapCode. <br />DOX Secure Employee Onboarding & Document Management Platform.
         </div>
 
         {/* Sign In button */}
@@ -165,7 +196,7 @@ const SignIn = () => {
   );
 };
 
-/* ── SVGs ── */
+/* --- SVGs --- */
 
 const MailIcon = () => (
   <svg
