@@ -171,6 +171,9 @@
   background-color: rgba(6, 14, 32, 0.4);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  height: auto;
+    max-height: 90vh;
+    overflow: auto;
 }
 
 @media (min-width: 1024px) {
@@ -227,7 +230,6 @@
 
 @media (min-width: 1024px) {
   .docs-inner-nav {
-    height: 470px;
     overflow-y: auto;
   }
   
