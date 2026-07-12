@@ -197,7 +197,7 @@ const CompanyDocs = () => {
                                                 className={`docs-nav-group-title ${isSectionExpanded ? 'expanded' : ''}`}
                                                 onClick={() => {
                                                     if (section.children?.length) {
-                                                        // Accordion Logic: close others, open this
+                                                        // Accordion Logic: Only keep this section open, close others
                                                         setExpandedSectionIds(prev => 
                                                             prev.includes(section.id) ? [] : [section.id]
                                                         );
@@ -291,7 +291,7 @@ const CompanyDocs = () => {
                                 )}
                             </div>
 
-                            {/* --- Confirmation Checkbox Box --- */}
+                            {/* Checkbox and Confirm Button */}
                             <div className="docs-confirm-box">
                                 <label className="docs-checkbox-label" style={{ cursor: 'not-allowed' }}>
                                     <div className={`docs-checkbox-box ${isCurrentDocRead ? 'checked' : ''}`}>
@@ -344,6 +344,14 @@ const CompanyDocs = () => {
 
                 </div>
             </main>
+            
+            <HelpButton onClick={() => setHelpOpen(true)} />
+
+            <HelpDrawer
+                open={helpOpen}
+                onClose={() => setHelpOpen(false)}
+                page="companyDocs"
+            />
             
             <HelpButton onClick={() => setHelpOpen(true)} />
             <HelpDrawer open={helpOpen} onClose={() => setHelpOpen(false)} page="companyDocs" />
