@@ -111,11 +111,12 @@ const CompanyDocs = () => {
                                     return (
                                         <div key={section.id} className="docs-nav-group">
                                             <button 
-                                                className="docs-nav-group-title"
+                                                className={`docs-nav-group-title ${isSectionExpanded ? 'expanded' : ''}`}
                                                 onClick={() => {
                                                     if (section.children?.length) {
+                                                        // Accordion Logic: Only keep this section open, close others
                                                         setExpandedSectionIds(prev => 
-                                                            prev.includes(section.id) ? prev.filter(id => id !== section.id) : [...prev, section.id]
+                                                            prev.includes(section.id) ? [] : [section.id]
                                                         );
                                                     } else {
                                                         handleSelect(section.id);
@@ -125,13 +126,13 @@ const CompanyDocs = () => {
                                                 <span>{section.title}</span>
                                                 {section.children?.length ? (
                                                     <span className={`docs-nav-chevron ${isSectionExpanded ? 'open' : ''}`}>
-                                                        |
+                                                        <ChevronDownIcon />
                                                     </span>
                                                 ) : null}
                                             </button>
 
                                             {/* Sub-items */}
-                                            {section.children?.length && isSectionExpanded && (
+                                            {section.children?.length > 0 && isSectionExpanded && (
                                                 <div className="docs-nav-subitems">
                                                     {section.children.map((child) => (
                                                         <button
@@ -154,7 +155,6 @@ const CompanyDocs = () => {
                         <div className="docs-content-area">
                             <div className="docs-article-wrapper">
                                 
-                               
                                 <img 
                                     src="../../../CompanyDocs_BG.svg" 
                                     className="docs-watermark" 
@@ -202,12 +202,6 @@ const CompanyDocs = () => {
                                         </button>
                                     </div>
                                 )}
-                            </div>
-
-                            {/* Need Help Box */}
-                            <div className="docs-help-box">
-                                <h4 className="docs-help-title">Need Help?</h4>
-                                <p className="docs-help-text">Reach out to DOX or your assigned onboarding buddy.</p>
                             </div>
 
                             {/* Checkbox and Confirm Button */}
@@ -261,15 +255,14 @@ const CompanyDocs = () => {
 
                 </div>
             </main>
-                <HelpButton
-                    onClick={() => setHelpOpen(true)}
-                />
+            
+            <HelpButton onClick={() => setHelpOpen(true)} />
 
-                <HelpDrawer
-                    open={helpOpen}
-                    onClose={() => setHelpOpen(false)}
-                    page="companyDocs"
-                />
+            <HelpDrawer
+                open={helpOpen}
+                onClose={() => setHelpOpen(false)}
+                page="companyDocs"
+            />
             
         </div>
     );
@@ -344,13 +337,13 @@ const ReadIcon = () => (
 );
 
 const ChevronDownIcon = () => (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
         <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
 );
 
 const ChevronUpIcon = () => (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
         <path d="M12 10L8 6L4 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
 );

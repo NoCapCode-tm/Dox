@@ -19,7 +19,7 @@ This handbook is intended to function as a living operational document. It evolv
 NoCapCode welcomes individuals who value structured thinking, collaborative execution, and transparent working relationships. By engaging with NoCapCode, contributors become part of a globally coordinated system designed to build scalable digital solutions with clarity, discipline, and long-term impact.` },
 
             {
-                id: 'company-overview-operating-model', title: 'Company Overview & Operating Model (Software + Consulting Hybrid)',
+                id: 'company-overview-operating-model', title: 'Company Overview & Operating Model',
                 content: `NoCapCode operates as a hybrid organization that integrates software development, systems engineering, automation design, and strategic consulting into a unified operating model. This structure enables the organization to support clients, partners, and internal initiatives across the full lifecycle of digital transformation, from conceptualization and planning to execution, deployment, and continuous improvement.
 
 As a software organization, NoCapCode is engaged in the design and development of digital platforms, applications, automation systems, and operational tools. These solutions are built with an emphasis on scalability, modular architecture, and long-term maintainability. The organization focuses on creating systems that are not only functional but also adaptable to evolving business needs, ensuring that technology remains an enabler of growth rather than a constraint.
@@ -412,7 +412,7 @@ The organization also places strong emphasis on transparency and fairness. Decis
 Continuous improvement is an integral component of the People Operations philosophy. Team members are encouraged to refine their skills, contribute ideas, and participate in improving processes and systems. This culture of learning and adaptability supports long-term organizational growth and individual development.` },
 
             {
-                id: 'engagement-types-full-time-contract-intern-part-time', title: 'Engagement Types (Full-time / Contract / Intern / Part-time)',
+                id: 'engagement-types-full-time-contract-intern-part-time', title: 'Engagement Types ',
                 content: `NoCapCode operates with a flexible engagement model designed to accommodate a diverse global workforce. Individuals may engage with the organization under various structures, including full-time employment, independent contracting, consulting arrangements, internships, and part-time contributions. Each engagement type is defined by specific responsibilities, expectations, and legal considerations, while maintaining alignment with the organization’s core operational standards.
 
 Full-time engagements typically involve consistent participation in organizational activities, long-term contribution to projects, and alignment with strategic objectives. Individuals in full-time roles are expected to maintain high levels of ownership, accountability, and coordination across teams.
@@ -552,7 +552,7 @@ NoCapCode encourages a principle of data minimization. Only the data necessary f
 Any data-related incident, including unauthorized access or potential breach, must be reported promptly. Timely reporting enables the organization to take corrective action and mitigate potential impact.` },
 
             {
-                id: 'regulatory-compliance-gdpr-us-uae-india-aligned', title: 'Regulatory Compliance (GDPR / US / UAE / India aligned)',
+                id: 'regulatory-compliance-gdpr-us-uae-india-aligned', title: 'Regulatory Compliance',
                 content: `NoCapCode aligns its operations with major international regulatory frameworks to ensure consistent compliance across regions. This includes adherence to data protection, contractual, and professional standards applicable in jurisdictions such as the European Union, the United States, the United Arab Emirates, and India.
 
 In the European context, NoCapCode follows principles aligned with data protection regulations, including lawful processing, data minimization, and protection of individual rights. In the United States, the organization ensures compliance with applicable contractual and data handling standards based on industry requirements. In the UAE, NoCapCode aligns with regional data protection and business regulations governing digital operations. In India, compliance includes adherence to evolving data protection frameworks and information technology regulations.
@@ -596,7 +596,7 @@ NoCapCode also acknowledges that transparency must be balanced with responsibili
 At its core, the Transparency Commitment ensures that all work within NoCapCode remains visible, understandable, and aligned. It enables individuals to operate with confidence, supports informed decision-making, and reinforces accountability across all levels of the organization.` },
 
             {
-                id: 'build-with-clarity-nocapcode-motto', title: 'Build With Clarity — NoCapCode Motto',
+                id: 'build-with-clarity-nocapcode-motto', title: 'Build With Clarity - NoCapCode Motto',
                 content: `“Build With Clarity” represents the central philosophy that defines how NoCapCode approaches technology, collaboration, and organizational growth. This principle is not limited to technical execution but extends to communication, decision-making, and system design. It reflects the organization’s commitment to reducing unnecessary complexity and ensuring that all work is grounded in structured thinking and purposeful execution.
 
 Clarity within NoCapCode begins with how problems are understood. Before initiating execution, individuals are expected to define objectives, identify requirements, and establish expected outcomes. This structured approach ensures that work begins with a clear understanding of purpose and direction. Ambiguity at the outset often leads to inefficiencies during execution, and NoCapCode’s operating model is designed to minimize such ambiguity through deliberate planning and alignment.
