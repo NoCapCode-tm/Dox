@@ -172,8 +172,8 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   height: auto;
-  max-height: 90vh;
-  overflow-y: auto;
+    max-height: 90vh;
+    overflow: auto;
 }
 
 @media (min-width: 1024px) {
