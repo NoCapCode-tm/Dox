@@ -284,3 +284,21 @@ export const saveStep8Declaration = async (step8Data) => {
 
     return parseResponse(response);
 };
+
+
+// Add this to your api/employeeApi.js file
+export const acknowledgeCompanyDocs = async (data) => {
+    // NOTE: Make sure your backend route is changed from .get() to .post()
+    const response = await fetch(`${API_BASE_URL}/acknowledge`, {
+        method: "POST",
+        headers: {
+            ...getAuthHeaders(),
+        },
+        credentials: "include",
+
+        body: data
+    });
+    
+    if (!response.ok) throw new Error('Failed to acknowledge');
+    return await response.json();
+};
