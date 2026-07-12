@@ -4,18 +4,49 @@ import { toast } from 'react-hot-toast';
 import documentTree from '../data/companyDocsContent.js';
 import HelpButton from "../components/Help/HelpButton";
 import HelpDrawer from "../components/Help/HelpDrawer";
+import { acknowledgeCompanyDocs } from '../api/employeeApi.js';
 
 import './css/CompanyDocs.css';
+
+// Helper to recursively get a flat array of all readable leaf document IDs
+const getAllDocumentIds = (nodes) => {
+    let ids = [];
+    nodes.forEach(node => {
+        if (node.children && node.children.length > 0) {
+            ids.push(...getAllDocumentIds(node.children));
+        } else {
+            ids.push(node.id);
+        }
+    });
+    return ids;
+};
 
 const CompanyDocs = () => {
     const navigate = useNavigate();
     const [selectedDocumentId, setSelectedDocumentId] = useState('section-1-about-nocapcode');
     const [expandedSectionIds, setExpandedSectionIds] = useState([]);
-    const [hasAcknowledged, setHasAcknowledged] = useState(false);
     const [isContentOverflowing, setIsContentOverflowing] = useState(false);
     const [hasOpenedLongContent, setHasOpenedLongContent] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     const [helpOpen, setHelpOpen] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    // --- Tracking Logic ---
+    const allDocIds = useMemo(() => getAllDocumentIds(documentTree), []);
+    
+    const [readDocs, setReadDocs] = useState(() => {
+        try {
+            const saved = localStorage.getItem('dox-read-docs');
+            return saved ? JSON.parse(saved) : [];
+        } catch (e) {
+            return [];
+        }
+    });
+
+    // Save to local storage whenever progress changes
+    useEffect(() => {
+        localStorage.setItem('dox-read-docs', JSON.stringify(readDocs));
+    }, [readDocs]);
 
     const contentRef = useRef(null);
     const contentScrollRef = useRef(null);
@@ -25,37 +56,84 @@ const CompanyDocs = () => {
         [selectedDocumentId]
     );
 
+    // Derived states for validation
+    const isCurrentDocRead = readDocs.includes(selectedDocumentId);
+    const isAllRead = useMemo(() => {
+        if (allDocIds.length === 0) return false;
+        return allDocIds.every(id => readDocs.includes(id));
+    }, [allDocIds, readDocs]);
+
     const handleSelect = (id) => {
         setSelectedDocumentId(id);
-        setHasAcknowledged(false);
         setIsContentOverflowing(false);
         setHasOpenedLongContent(false);
         setIsExpanded(false);
         if (contentScrollRef.current) {
             contentScrollRef.current.scrollTop = 0;
         }
-    };
 
-    const handleAcknowledgeChange = (event) => {
-        if (event.target.checked && isContentOverflowing && !hasOpenedLongContent) {
-            toast.error('Please click Read More to review the full document.');
-            return;
+        // Auto-expand the parent folder in the sidebar
+        const parent = documentTree.find(sec => sec.children?.some(child => child.id === id));
+        if (parent) {
+            setExpandedSectionIds([parent.id]);
+        } else {
+            setExpandedSectionIds([id]);
         }
-        setHasAcknowledged(event.target.checked);
     };
 
     const handleMarkAsRead = () => {
+        // Enforce reading the full document if it's long
         if (isContentOverflowing && !hasOpenedLongContent) {
             toast.error('Please click Read More to review the full document.');
             return;
         }
-        setHasAcknowledged(true);
+
+        let updatedReadDocs = readDocs;
+
+        // If not already read, add it to the tracking array
+        if (!isCurrentDocRead) {
+            updatedReadDocs = [...readDocs, selectedDocumentId];
+            setReadDocs(updatedReadDocs);
+            
+            // Check if this was the last document needed
+            const allCompleted = allDocIds.every(id => updatedReadDocs.includes(id));
+            if (allCompleted) {
+                toast.success("All sections read! You can now click Continue below.", { duration: 4000 });
+            }
+        }
+
+        // Auto-advance to the next unread document
+        const nextUnreadId = allDocIds.find(id => !updatedReadDocs.includes(id));
+        if (nextUnreadId) {
+            handleSelect(nextUnreadId);
+        }
     };
 
-    // Check for overflow when document changes
+    // Final API submission
+    const handleFinalContinue = async () => {
+        if (!isAllRead) {
+            toast.error("Please read all sections and sub-sections before continuing.");
+            return;
+        }
+
+        try {
+            setIsSubmitting(true);
+            await acknowledgeCompanyDocs({ acknowledge: true });
+            toast.success("Company policies successfully acknowledged!");
+            
+            // Clear local storage tracking since the DB has recorded completion
+            localStorage.removeItem('dox-read-docs'); 
+            navigate('/legal-agreements');
+        } catch (error) {
+            toast.error(error.message || "Failed to submit acknowledgment.");
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    // Calculate overflow based on content height
     useEffect(() => {
         if (contentRef.current && contentScrollRef.current) {
-            // Re-evaluate overflow based on a fixed max-height (e.g. 400px)
             const isOver = contentRef.current.scrollHeight > 404;
             setIsContentOverflowing(isOver);
         }
@@ -64,7 +142,7 @@ const CompanyDocs = () => {
     return (
         <div className="docs-wrapper">
             
-            {/* --- Mobile Top Navbar (Hidden on Desktop) --- */}
+            {/* --- Mobile Top Navbar --- */}
             <div className="docs-mobile-nav">
                 <div className="docs-mobile-nav-logo">
                     <DoxLogo width="50" />
@@ -78,7 +156,7 @@ const CompanyDocs = () => {
                 </div>
             </div>
 
-            {/* --- Sidebar Navigation (Desktop) --- */}
+            {/* --- Desktop Sidebar Navigation --- */}
             <nav className="docs-sidebar">
                 <div className="docs-sidebar-logo">
                     <DoxLogo width="45" />
@@ -94,7 +172,6 @@ const CompanyDocs = () => {
             <main className="docs-main">
                 <div className="docs-card">
                     
-                    {/* Header */}
                     <div className="docs-header-container">
                         <h1 className="docs-h1">Company Docs</h1>
                         <p className="docs-subtitle">
@@ -103,18 +180,24 @@ const CompanyDocs = () => {
                     </div>
 
                     <div className="docs-grid">
-                        {/* Inner Sidebar Menu */}
+                        
+                        {/* --- Inner Sidebar Menu --- */}
                         <div className="docs-inner-nav">
                             <div className="docs-inner-nav-content">
                                 {documentTree.map((section) => {
                                     const isSectionExpanded = expandedSectionIds.includes(section.id);
+                                    
+                                    // Verify if all sub-documents in this section are read
+                                    const sectionChildIds = section.children ? section.children.map(c => c.id) : [section.id];
+                                    const isFullyRead = sectionChildIds.every(id => readDocs.includes(id));
+
                                     return (
                                         <div key={section.id} className="docs-nav-group">
                                             <button 
                                                 className={`docs-nav-group-title ${isSectionExpanded ? 'expanded' : ''}`}
                                                 onClick={() => {
                                                     if (section.children?.length) {
-                                                        // Accordion Logic: Only keep this section open, close others
+                                                        // Accordion Logic: close others, open this
                                                         setExpandedSectionIds(prev => 
                                                             prev.includes(section.id) ? [] : [section.id]
                                                         );
@@ -123,7 +206,10 @@ const CompanyDocs = () => {
                                                     }
                                                 }}
                                             >
-                                                <span>{section.title}</span>
+                                                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                    {section.title} 
+                                                    {isFullyRead && <CheckIcon width="14" stroke="#4ade80" />}
+                                                </span>
                                                 {section.children?.length ? (
                                                     <span className={`docs-nav-chevron ${isSectionExpanded ? 'open' : ''}`}>
                                                         <ChevronDownIcon />
@@ -140,7 +226,10 @@ const CompanyDocs = () => {
                                                             className={`docs-nav-item ${selectedDocumentId === child.id ? 'active' : ''}`}
                                                             onClick={() => handleSelect(child.id)}
                                                         >
-                                                            {child.title}
+                                                            <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                                                                {child.title}
+                                                                {readDocs.includes(child.id) && <CheckIcon width="12" stroke="#4ade80" />}
+                                                            </span>
                                                         </button>
                                                     ))}
                                                 </div>
@@ -151,7 +240,7 @@ const CompanyDocs = () => {
                             </div>
                         </div>
 
-                        {/* Document Content Area */}
+                        {/* --- Document Reading Area --- */}
                         <div className="docs-content-area">
                             <div className="docs-article-wrapper">
                                 
@@ -178,12 +267,10 @@ const CompanyDocs = () => {
                                     </div>
                                 </div>
 
-                                {/* Fade out overlay if long text */}
                                 {isContentOverflowing && !isExpanded && (
                                     <div className="docs-fade-overlay" />
                                 )}
 
-                                {/* Read More / Less Toggle */}
                                 {isContentOverflowing && (
                                     <div className="docs-expand-toggle">
                                         <button
@@ -204,17 +291,18 @@ const CompanyDocs = () => {
                                 )}
                             </div>
 
-                            {/* Checkbox and Confirm Button */}
+                            {/* --- Confirmation Checkbox Box --- */}
                             <div className="docs-confirm-box">
-                                <label className="docs-checkbox-label">
-                                    <div className={`docs-checkbox-box ${hasAcknowledged ? 'checked' : ''}`}>
+                                <label className="docs-checkbox-label" style={{ cursor: 'not-allowed' }}>
+                                    <div className={`docs-checkbox-box ${isCurrentDocRead ? 'checked' : ''}`}>
                                         <input
                                             type="checkbox"
                                             className="docs-hidden-checkbox"
-                                            checked={hasAcknowledged}
-                                            onChange={handleAcknowledgeChange}
+                                            checked={isCurrentDocRead}
+                                            disabled
+                                            readOnly
                                         />
-                                        {hasAcknowledged && <CheckIcon />}
+                                        {isCurrentDocRead && <CheckIcon />}
                                     </div>
                                     <span>I have read and understood this document.</span>
                                 </label>
@@ -222,17 +310,17 @@ const CompanyDocs = () => {
                                 <button
                                     type="button"
                                     onClick={handleMarkAsRead}
-                                    disabled={hasAcknowledged}
+                                    disabled={isCurrentDocRead}
                                     className="docs-mark-read-btn"
                                 >
                                     <ReadIcon />
-                                    {hasAcknowledged ? 'Document Marked as Read' : 'Mark as Read & Continue'}
+                                    {isCurrentDocRead ? 'Document Marked as Read' : 'Mark as Read & Continue'}
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    {/* Bottom Navigation Buttons */}
+                    {/* --- Bottom Navigation Buttons --- */}
                     <div className="docs-bottom-nav">
                         <button
                             type="button"
@@ -245,11 +333,12 @@ const CompanyDocs = () => {
 
                         <button
                             type="button"
-                            onClick={() => navigate('/legal-agreements')}
-                            className="docs-nav-btn"
+                            onClick={handleFinalContinue}
+                            disabled={!isAllRead || isSubmitting}
+                            className={`docs-nav-btn docs-continue-btn ${isAllRead ? 'enabled' : 'disabled'}`}
                         >
-                            Continue
-                            <ForwardArrowIcon />
+                            {isSubmitting ? 'Saving...' : 'Continue'}
+                            {!isSubmitting && <ForwardArrowIcon />}
                         </button>
                     </div>
 
@@ -257,19 +346,12 @@ const CompanyDocs = () => {
             </main>
             
             <HelpButton onClick={() => setHelpOpen(true)} />
-
-            <HelpDrawer
-                open={helpOpen}
-                onClose={() => setHelpOpen(false)}
-                page="companyDocs"
-            />
-            
+            <HelpDrawer open={helpOpen} onClose={() => setHelpOpen(false)} page="companyDocs" />
         </div>
     );
 };
 
 /* --- Helpers --- */
-
 const findDocumentNode = (items, targetId) => {
     const findMatch = (nodes, trail = []) => {
         for (const item of nodes) {
@@ -304,21 +386,18 @@ const renderContentWithBoldMarkers = (text) => {
         );
         lastIndex = markerRegex.lastIndex;
     }
-
     if (lastIndex < text.length) {
         renderedParts.push(text.slice(lastIndex));
     }
-
     return renderedParts.map((part, index) =>
         typeof part === 'string' ? <span key={`text-${index}`}>{part}</span> : part
     );
 };
 
 /* --- Icons --- */
-
-const CheckIcon = () => (
-    <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
-        <path d="M1 4L3.5 6.5L9 1" stroke="#6EA8FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+const CheckIcon = ({ width = "10", stroke = "#FFFFFF" }) => (
+    <svg width={width} height={width === "10" ? "8" : width} viewBox="0 0 10 8" fill="none" style={{ flexShrink: 0 }}>
+        <path d="M1 4L3.5 6.5L9 1" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
 );
 
@@ -330,9 +409,9 @@ const ClockIcon = () => (
 );
 
 const ReadIcon = () => (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-        <circle cx="9" cy="9" r="7.25" stroke="currentColor" strokeOpacity="0.35" strokeWidth="1.2" />
-        <path d="M6 9.25L8 11.2L12 6.8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    <svg width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+        <circle cx="9" cy="9" r="7.25" stroke="currentColor" strokeOpacity="0.5" strokeWidth="1.2" />
+        <path d="M6 9.25L8 11.2L12 6.8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
 );
 
