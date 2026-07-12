@@ -172,13 +172,13 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   height: auto;
-    max-height: 90vh;
-    overflow: auto;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 @media (min-width: 1024px) {
   .docs-card {
-    padding: 40px 60px;
+    padding: 30px 40px;
   }
 }
 
@@ -231,11 +231,8 @@
 @media (min-width: 1024px) {
   .docs-inner-nav {
     overflow-y: auto;
+    max-height: 540px;
   }
-  
-  /* Scrollbar hiding for nav */
-  .docs-inner-nav::-webkit-scrollbar { display: none; }
-  .docs-inner-nav { -ms-overflow-style: none; scrollbar-width: none; }
 }
 
 .docs-inner-nav-content {
@@ -267,8 +264,15 @@
 }
 
 .docs-nav-chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: rgba(255, 255, 255, 0.5);
-  font-weight: 300;
+  transition: transform 0.3s ease;
+}
+
+.docs-nav-chevron.open {
+  transform: rotate(180deg);
 }
 
 .docs-nav-subitems {
@@ -326,10 +330,10 @@
   transform: translate(-50%, -50%);
   width: 45%;
   height: 45%;
-  object-fit: contain; /* Ensures it scales perfectly inside without stretching */
+  object-fit: contain; 
   pointer-events: none;
   z-index: 0;
-  opacity: 0.45; /* Adjusted for visibility like the screenshot */
+  opacity: 0.75;
 }
 
 .docs-article-header {
@@ -363,10 +367,7 @@
   z-index: 10;
   max-height: 404px;
   overflow-y: hidden;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
 }
-.docs-scroll-area::-webkit-scrollbar { display: none; }
 
 .docs-scroll-area.expanded {
   overflow-y: auto;
@@ -418,26 +419,6 @@
 .docs-toggle-btn:hover {
   background: rgba(255, 255, 255, 0.05);
   color: #FFFFFF;
-}
-
-/* Help Box */
-.docs-help-box {
-  background: rgba(28, 32, 39, 0.65);
-  border-radius: 5px;
-  padding: 16px;
-}
-
-.docs-help-title {
-  font-size: 15px;
-  font-weight: 500;
-  color: #FFFFFF;
-  margin: 0 0 4px 0;
-}
-
-.docs-help-text {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.7);
-  margin: 0;
 }
 
 /* Confirmation Box */
@@ -533,4 +514,32 @@
 
 .docs-nav-btn:hover {
   background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* ── Custom Scrollbar Styling ── */
+/* Targets the main card, inner nav menu, and expanded reading area */
+.docs-card::-webkit-scrollbar,
+.docs-inner-nav::-webkit-scrollbar,
+.docs-scroll-area.expanded::-webkit-scrollbar {
+  width: 6px;
+}
+
+.docs-card::-webkit-scrollbar-track,
+.docs-inner-nav::-webkit-scrollbar-track,
+.docs-scroll-area.expanded::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.docs-card::-webkit-scrollbar-thumb,
+.docs-inner-nav::-webkit-scrollbar-thumb,
+.docs-scroll-area.expanded::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+.docs-card::-webkit-scrollbar-thumb:hover,
+.docs-inner-nav::-webkit-scrollbar-thumb:hover,
+.docs-scroll-area.expanded::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
 }
