@@ -286,19 +286,34 @@ export const saveStep8Declaration = async (step8Data) => {
 };
 
 
-// Add this to your api/employeeApi.js file
+// Add this to the bottom of api/employeeApi.js
 export const acknowledgeCompanyDocs = async (data) => {
-    // NOTE: Make sure your backend route is changed from .get() to .post()
-    const response = await fetch(`${API_BASE_URL}/acknowledge`, {
-        method: "POST",
+    const response = await fetch(`${API_BASE_URL}/employee/acknowledge`, {
+        method: "POST", // Requires the backend to use .post()
         headers: {
             ...getAuthHeaders(),
+            "Content-Type": "application/json",
         },
         credentials: "include",
-
-        body: data
+        body: JSON.stringify(data)
     });
     
-    if (!response.ok) throw new Error('Failed to acknowledge');
+    if (!response.ok) {
+        // Advanced error catching to tell you exactly what went wrong
+        const text = await response.text();
+        console.error("Backend Error Response:", text);
+        
+        if (response.status === 404) {
+            throw new Error("API Route Not Found (404). Ensure you changed .get() to .post() in Employee.routes.js!");
+        }
+
+        try {
+            const errData = JSON.parse(text);
+            throw new Error(errData.message || "Request failed");
+        } catch (e) {
+            throw new Error(`Server returned a non-JSON error (${response.status}). Check terminal logs.`);
+        }
+    }
+    
     return await response.json();
 };

@@ -415,3 +415,130 @@
 .legal-nav-btn:hover {
   background-color: rgba(255, 255, 255, 0.05);
 }
+
+
+
+.legal-maintenance-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(6, 14, 32, 0.6);
+    backdrop-filter: blur(20px);
+    padding: 20px;
+}
+
+.legal-maintenance-card {
+    width: 100%;
+    max-width: 500px;
+    padding: 48px;
+    border-radius: 24px;
+    background: rgba(11, 18, 35, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 40px 60px rgba(0, 0, 0, 0.6);
+    text-align: center;
+}
+
+.maintenance-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 24px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(251, 191, 36, 0.1);
+    color: #FBBF24;
+}
+
+.maintenance-title {
+    font-size: 24px;
+    font-weight: 500;
+    color: #FFFFFF;
+    margin-bottom: 16px;
+}
+
+.maintenance-description {
+    font-size: 15px;
+    color: #94A3B8;
+    line-height: 1.7;
+    margin-bottom: 28px;
+}
+
+.maintenance-divider {
+    height: 1px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 28px;
+}
+
+.maintenance-notice {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+}
+
+.notice-text {
+    font-size: 15px;
+    color: #E2E8F0;
+}
+
+.notice-contact {
+    font-size: 14px;
+    color: #94A3B8;
+}
+
+.notice-contact a {
+    color: #6EA8FF;
+    text-decoration: none;
+    margin-left: 5px;
+    font-weight: 500;
+}
+
+.notice-contact a:hover {
+    text-decoration: underline;
+}
+
+
+/* UNDER MAINTENANCE BRACK */
+
+.maintenance-actions {
+    margin-top: 32px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.btn-primary {
+    padding: 12px 24px;
+    border-radius: 8px;
+    background: #6EA8FF;
+    color: #060D18;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background: #86B2F4;
+}
+
+.btn-secondary {
+    padding: 12px 24px;
+    border-radius: 8px;
+    background: transparent;
+    color: #FFFFFF;
+    font-weight: 400;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.4);
+}

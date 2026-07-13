@@ -144,7 +144,53 @@ const LegalAgreements = () => {
                 onClose={() => setHelpOpen(false)}
                 page="offerLetter"
             />
+                    // Inside LegalAgreements.jsx, just before the final UNDER MAINTENANCE BREAK
+                        <div className="legal-maintenance-overlay">
+                            <div className="legal-maintenance-card">
+                                <div className="maintenance-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                    </svg>
+                                </div>
+
+                                <h2 className="maintenance-title">System Maintenance</h2>
+                                <p className="maintenance-description">
+                                    Our engineering team in <strong>New Mexico, United States</strong>, is currently performing a scheduled upgrade to the Legal Agreements module to improve reliability and signing performance.
+                                </p>
+
+                                <div className="maintenance-divider"></div>
+
+                                <div className="maintenance-notice">
+                                    <p className="notice-text">
+                                        Your <strong>Offer Letter and NDA</strong> will be processed and sent to your portal within <strong>24 hours</strong>.
+                                    </p>
+                                    <p className="notice-contact">
+                                        For urgent inquiries, please reach out to our HR team at 
+                                        <a href="mailto:hr@nocapcode.cloud"> hr@nocapcode.cloud</a>.
+                                    </p>
+                                </div>
+                                {/* New Action Buttons */}
+                                <div className="maintenance-actions">
+                                    <button 
+                                        onClick={() => navigate('/welcome')} 
+                                        className="btn-primary"
+                                    >
+                                        Return to Homepage
+                                    </button>
+                                    <button 
+                                        onClick={() => window.location.reload()} 
+                                        className="btn-secondary"
+                                    >
+                                        Check Status Again
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+        
         </div>
+        
     );
 };
 
