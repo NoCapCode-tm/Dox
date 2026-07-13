@@ -213,16 +213,16 @@ const Welcome = () => {
     const cards = [
         {
             step: '01',
-            status: 'completed',
+            status:user?.onboarding?.status==="Completed" ?"completed":"in-progress",
             title: 'Profile Setup',
             desc: 'Provide your essential details to help us securely generate your official offer letter and agreements.',
-            buttonText: 'Review Details >',
+            buttonText: user?.onboarding?.status==="Completed"?'Review Details >':"Start >",
             icon: <ProfileIcon />,
             onClick: () => navigate('/dashboard'),
         },
         {
             step: '02',
-            status: 'in-progress',
+            status:user?.onboarding?.status ==="Completed" ?(user.policyhandbook === false ? "in-progress":"completed"):"not-started",
             title: 'Company Guidelines',
             desc: 'Familiarize yourself with our core values, internal policies, and workplace culture.',
             buttonText: 'Continue Module →',
@@ -231,10 +231,10 @@ const Welcome = () => {
         },
         {
             step: '03',
-            status: 'not-started',
+            status: user?.policyhandbook === true ? 'in-progress':'not-started',
             title: 'Legal Agreements',
             desc: 'Securely review and electronically sign your offer letter and non-disclosure agreement.',
-            buttonText: 'Awaiting Step 02',
+            buttonText: 'Awaiting Step 03',
             icon: <SignIcon />,
             onClick: () => navigate('/legal-agreements'),
         },
@@ -276,7 +276,7 @@ const Welcome = () => {
             <WebGLBackground />
             <div className="absolute inset-0 z-0 bg-overlay-fade pointer-events-none" />
 
-            <header className="absolute top-8 right-8 z-20">
+            <header className="absolute top-8 right-8 z-9999999">
                 <div className="relative" ref={menuRef}>
 
                     <button

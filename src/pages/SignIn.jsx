@@ -52,11 +52,17 @@ const SignIn = () => {
       setErrorMessage("");
 
       // Backend expects "userid", map the current field value.
-      await loginEmployee({ userid: userId.trim(), password });
+      const response = await loginEmployee({ userid: userId.trim(), password });
+      console.log(response.message)
       
       setAuthSession();
       toast.success("Login successful");
-      navigate("/welcome");
+      if(response?.message?.onboarding?.status === "Completed"){
+        navigate("/completion")
+      }else{
+        navigate("/welcome");
+      }
+      
     } catch (error) {
       const message = isInvalidCredentialError(error)
         ? "Incorrect credentials. Please try again."
