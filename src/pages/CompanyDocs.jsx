@@ -4,7 +4,9 @@ import { toast } from 'react-hot-toast';
 import documentTree from '../data/companyDocsContent.js';
 import HelpButton from "../components/Help/HelpButton";
 import HelpDrawer from "../components/Help/HelpDrawer";
-import { acknowledgeCompanyDocs } from '../api/employeeApi.js';
+import Loader from "../components/ui/Loader";
+
+import { acknowledgeCompanyDocs, getCurrentUser } from '../api/employeeApi.js';
 
 import './css/CompanyDocs.css';
 
@@ -23,33 +25,69 @@ const getAllDocumentIds = (nodes) => {
 
 const CompanyDocs = () => {
     const navigate = useNavigate();
+    
     const [selectedDocumentId, setSelectedDocumentId] = useState('section-1-about-nocapcode');
     const [expandedSectionIds, setExpandedSectionIds] = useState([]);
     const [isContentOverflowing, setIsContentOverflowing] = useState(false);
     const [hasOpenedLongContent, setHasOpenedLongContent] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     const [helpOpen, setHelpOpen] = useState(false);
-    const [isSubmitting, setIsSubmitting] = useState(false);
-
-    // --- Tracking Logic ---
-    const allDocIds = useMemo(() => getAllDocumentIds(documentTree), []);
     
-    const [readDocs, setReadDocs] = useState(() => {
-        try {
-            const saved = localStorage.getItem('dox-read-docs');
-            return saved ? JSON.parse(saved) : [];
-        } catch (e) {
-            return [];
-        }
-    });
+    // --- Synchronization States ---
+    const [isCheckingStatus, setIsCheckingStatus] = useState(true);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [alreadyAcknowledgedDB, setAlreadyAcknowledgedDB] = useState(false);
+    const [readDocs, setReadDocs] = useState([]);
 
-    // Save to local storage whenever progress changes
-    useEffect(() => {
-        localStorage.setItem('dox-read-docs', JSON.stringify(readDocs));
-    }, [readDocs]);
+    const allDocIds = useMemo(() => getAllDocumentIds(documentTree), []);
 
     const contentRef = useRef(null);
     const contentScrollRef = useRef(null);
+
+    // 1. On Mount: Fetch User from DB to check if policyhandbook is already true
+    useEffect(() => {
+        const fetchStatus = async () => {
+            try {
+                const res = await getCurrentUser();
+                
+                // FIXED: Bulletproof check across the entire payload response structure
+                const isAcknowledged = 
+                    res?.message?.policyhandbook === true || res?.message?.policyhandbook === "true" ||
+                    res?.data?.policyhandbook === true || res?.data?.policyhandbook === "true" ||
+                    res?.data?.user?.policyhandbook === true || res?.data?.user?.policyhandbook === "true" ||
+                    res?.policyhandbook === true || res?.policyhandbook === "true";
+
+                if (isAcknowledged) {
+                    // If true in DB, mark EVERYTHING as read automatically
+                    setAlreadyAcknowledgedDB(true);
+                    setReadDocs(allDocIds);
+                    localStorage.setItem('dox-read-docs', JSON.stringify(allDocIds)); // Ensure local cache mirrors DB
+                } else {
+                    // Otherwise, load incremental progress from local storage
+                    const saved = localStorage.getItem('dox-read-docs');
+                    if (saved) {
+                        setReadDocs(JSON.parse(saved));
+                    }
+                }
+            } catch (error) {
+                console.error("Error fetching user status:", error);
+                // Fallback to local storage on error
+                const saved = localStorage.getItem('dox-read-docs');
+                if (saved) setReadDocs(JSON.parse(saved));
+            } finally {
+                setIsCheckingStatus(false);
+            }
+        };
+
+        fetchStatus();
+    }, [allDocIds]);
+
+    // 2. Save incremental progress to Local Storage
+    useEffect(() => {
+        if (!isCheckingStatus) {
+            localStorage.setItem('dox-read-docs', JSON.stringify(readDocs));
+        }
+    }, [readDocs, isCheckingStatus]);
 
     const selectedDocument = useMemo(
         () => findDocumentNode(documentTree, selectedDocumentId),
@@ -97,7 +135,7 @@ const CompanyDocs = () => {
             
             // Check if this was the last document needed
             const allCompleted = allDocIds.every(id => updatedReadDocs.includes(id));
-            if (allCompleted) {
+            if (allCompleted && !alreadyAcknowledgedDB) {
                 toast.success("All sections read! You can now click Continue below.", { duration: 4000 });
             }
         }
@@ -109,20 +147,27 @@ const CompanyDocs = () => {
         }
     };
 
-    // Final API submission
+    // Final Action: Continue Button
     const handleFinalContinue = async () => {
         if (!isAllRead) {
             toast.error("Please read all sections and sub-sections before continuing.");
             return;
         }
 
+        // If it was already true in the DB when they logged in, skip the API call and just navigate
+        if (alreadyAcknowledgedDB) {
+            navigate('/legal-agreements');
+            return;
+        }
+
+        // Otherwise, send the POST request to mark it true in DB
         try {
             setIsSubmitting(true);
             await acknowledgeCompanyDocs({ acknowledge: true });
             toast.success("Company policies successfully acknowledged!");
             
-            // Clear local storage tracking since the DB has recorded completion
-            localStorage.removeItem('dox-read-docs'); 
+            setAlreadyAcknowledgedDB(true);
+            // FIXED: Do NOT remove the local storage cache anymore. Keep it intact!
             navigate('/legal-agreements');
         } catch (error) {
             toast.error(error.message || "Failed to submit acknowledgment.");
@@ -138,6 +183,15 @@ const CompanyDocs = () => {
             setIsContentOverflowing(isOver);
         }
     }, [selectedDocument]);
+
+    // Show a loader while we verify their DB status to prevent flickering
+    if (isCheckingStatus) {
+        return (
+            <div className="docs-wrapper" style={{ justifyContent: 'center', alignItems: 'center' }}>
+                 <Loader message="Syncing document status..." />
+            </div>
+        );
+    }
 
     return (
         <div className="docs-wrapper">
@@ -197,7 +251,7 @@ const CompanyDocs = () => {
                                                 className={`docs-nav-group-title ${isSectionExpanded ? 'expanded' : ''}`}
                                                 onClick={() => {
                                                     if (section.children?.length) {
-                                                        // Accordion Logic: Only keep this section open, close others
+                                                        // Accordion Logic: close others, open this
                                                         setExpandedSectionIds(prev => 
                                                             prev.includes(section.id) ? [] : [section.id]
                                                         );
@@ -291,7 +345,7 @@ const CompanyDocs = () => {
                                 )}
                             </div>
 
-                            {/* Checkbox and Confirm Button */}
+                            {/* --- Confirmation Checkbox Box --- */}
                             <div className="docs-confirm-box">
                                 <label className="docs-checkbox-label" style={{ cursor: 'not-allowed' }}>
                                     <div className={`docs-checkbox-box ${isCurrentDocRead ? 'checked' : ''}`}>
@@ -344,14 +398,6 @@ const CompanyDocs = () => {
 
                 </div>
             </main>
-            
-            <HelpButton onClick={() => setHelpOpen(true)} />
-
-            <HelpDrawer
-                open={helpOpen}
-                onClose={() => setHelpOpen(false)}
-                page="companyDocs"
-            />
             
             <HelpButton onClick={() => setHelpOpen(true)} />
             <HelpDrawer open={helpOpen} onClose={() => setHelpOpen(false)} page="companyDocs" />
