@@ -22,15 +22,15 @@
   <meta property="og:url" content="https://dox.nocapcode.cloud" />
 
   <!-- Favicons -->
-  <link rel="icon" href="/assets/favicon-CM1ym1jC.ico" sizes="any" />
-  <link rel="icon" type="image/svg+xml" href="/assets/favicon-CSxX0FbH.svg" />
-  <link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon-96x96-BiriZkfg.png" />
+  <link rel="icon" href="/favicon_Dox/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/svg+xml" href="/favicon_Dox/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon_Dox/favicon-96x96.png" />
 
   <!-- Apple -->
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon-COJQ28sv.png" />
+  <link rel="apple-touch-icon" href="/favicon_Dox/apple-touch-icon.png" />
 
   <!-- PWA Manifest -->
-  <link rel="manifest" href="/assets/site-B199zlUD.webmanifest" />
+  <link rel="manifest" href="/favicon_Dox/site.webmanifest" />
 
   <!-- Fonts (optimized loading) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -39,8 +39,25 @@
     href="https://fonts.googleapis.com/css2?family=Jomolhari&family=Jost:wght@200;300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Roboto+Flex:opsz,wght@8..144,200&display=swap"
     rel="stylesheet" />
 
-  <script type="module" crossorigin src="/assets/index-Dix6_vNo.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-CerpC0aM.css">
+    <!-- Handle client-side routing for GitHub Pages -->
+
+  <script type="text/javascript">
+      (function(l) {
+        if (l.search[1] === 'p') {  
+          var a = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&') 
+          });
+          var p = a[0].split('=')[1];
+          var q = a[1] ? '?' + a[1].split('=')[1] : '';
+          window.history.replaceState(null, null,
+            l.pathname.slice(0, -1) + p + q + l.hash
+          );
+        }
+      }(window.location));
+    </script>
+
+  <script type="module" crossorigin src="/assets/index-D1wCJd01.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-KOKZLvq4.css">
 </head>
 
 <body>
