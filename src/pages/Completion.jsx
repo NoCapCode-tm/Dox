@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOnboardingContext } from '../context/OnboardingContext';
+import { getCurrentUser } from '../api/employeeApi';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
@@ -8,7 +9,26 @@ const Completion = () => {
 	const navigate = useNavigate();
 	const { formData, updateFormData } = useOnboardingContext();
 	const completionStartedAt = formData.step8.completionStartedAt;
+	 const [user, setUser] = useState(null);
+	
+	
 	const [now, setNow] = useState(Date.now());
+
+	 useEffect(() => {
+		const loadUser = async () => {
+			try {
+				const response = await getCurrentUser();
+	
+				console.log("Current User:", response);
+	
+				setUser(response.message);
+			} catch (err) {
+				console.error(err);
+			}
+		};
+	
+		loadUser();
+		}, []);
 
 	useEffect(() => {
 		if (!completionStartedAt) {
@@ -16,18 +36,27 @@ const Completion = () => {
 		}
 	}, [completionStartedAt, updateFormData]);
 
-	useEffect(() => {
-		const timer = setInterval(() => {
-			setNow(Date.now());
-		}, 1000);
-
-		return () => clearInterval(timer);
-	}, []);
+	
 
 	const remainingMs = useMemo(() => {
-		const startAt = completionStartedAt || now;
-		return Math.max(0, DAY_MS - (now - startAt));
-	}, [completionStartedAt, now]);
+	if (!user?.onboarding?.completedAt) return DAY_MS;
+
+	const completedAt = new Date(user.onboarding.completedAt).getTime();
+	const expiresAt = completedAt + DAY_MS;
+
+	return Math.max(0, expiresAt - now);
+}, [user?.onboarding?.completedAt, now]);
+ const canGoToDashboard = remainingMs === 0;
+
+ useEffect(() => {
+	if (remainingMs === 0) return;
+
+	const timer = setInterval(() => {
+		setNow(Date.now());
+	}, 1000);
+
+	return () => clearInterval(timer);
+}, [remainingMs]);
 
 	const hours = Math.floor(remainingMs / (60 * 60 * 1000));
 	const minutes = Math.floor((remainingMs % (60 * 60 * 1000)) / (60 * 1000));
@@ -74,37 +103,52 @@ const Completion = () => {
 					You will receive full system access in :
 				</p>
 
-				<div
-					className="mt-[40px] mx-auto flex items-baseline justify-center gap-[8px] whitespace-nowrap"
-					style={{
-						fontFamily: 'Jost, sans-serif',
-						fontWeight: 300,
-						color: '#FFFFFF',
-					}}
-				>
-					<span style={{ fontSize: 'clamp(48px, 6vw, 72px)', lineHeight: '1' }}>{hours}</span>
-					<span style={{ fontSize: 'clamp(18px, 2vw, 24px)', lineHeight: '1', paddingRight: '8px' }}>Hr</span>
-					<span style={{ fontSize: 'clamp(36px, 4vw, 56px)', lineHeight: '1' }}>:</span>
-					<span style={{ fontSize: 'clamp(48px, 6vw, 72px)', lineHeight: '1', paddingLeft: '8px' }}>{minutes}</span>
-					<span style={{ fontSize: 'clamp(18px, 2vw, 24px)', lineHeight: '1', paddingRight: '8px' }}>Min</span>
-					<span style={{ fontSize: 'clamp(36px, 4vw, 56px)', lineHeight: '1' }}>:</span>
-					<span style={{ fontSize: 'clamp(48px, 6vw, 72px)', lineHeight: '1', paddingLeft: '8px' }}>{seconds}</span>
-					<span style={{ fontSize: 'clamp(18px, 2vw, 24px)', lineHeight: '1' }}>Sec</span>
-				</div>
+				{!canGoToDashboard && (
+	<div
+		className="mt-[40px] mx-auto flex items-baseline justify-center gap-[8px] whitespace-nowrap"
+		style={{
+			fontFamily: 'Jost, sans-serif',
+			fontWeight: 300,
+			color: '#FFFFFF',
+		}}
+	>
+		<span style={{ fontSize: 'clamp(48px, 6vw, 72px)', lineHeight: '1' }}>
+			{String(hours).padStart(2, '0')}
+		</span>
+		<span style={{ fontSize: 'clamp(18px, 2vw, 24px)' }}>Hr</span>
 
-				<button
-					type="button"
-					onClick={() => navigate('/welcome')}
-					className="mt-[64px] h-[44px] px-[24px] rounded-[10px] flex items-center justify-center gap-[8px] transition-all hover:bg-white/10 active:scale-95 border border-white/10"
-					style={{
-						backgroundColor: 'rgba(6, 14, 32, 0.4)',
-						backdropFilter: 'blur(10px)',
-                        WebkitBackdropFilter: 'blur(10px)'
-					}}
-				>
-					<ExternalLinkIcon />
-					<span className="font-[Jost] font-normal text-[15px] leading-[24px] text-white">Go to Dashboard</span>
-				</button>
+		<span style={{ fontSize: 'clamp(36px, 4vw, 56px)' }}>:</span>
+
+		<span style={{ fontSize: 'clamp(48px, 6vw, 72px)', lineHeight: '1' }}>
+			{String(minutes).padStart(2, '0')}
+		</span>
+		<span style={{ fontSize: 'clamp(18px, 2vw, 24px)' }}>Min</span>
+
+		<span style={{ fontSize: 'clamp(36px, 4vw, 56px)' }}>:</span>
+
+		<span style={{ fontSize: 'clamp(48px, 6vw, 72px)', lineHeight: '1' }}>
+			{String(seconds).padStart(2, '0')}
+		</span>
+		<span style={{ fontSize: 'clamp(18px, 2vw, 24px)' }}>Sec</span>
+	</div>
+)}
+				{canGoToDashboard && (
+	<button
+		type="button"
+		onClick={() => navigate('/welcome')}
+		className="mt-[64px] h-[44px] px-[24px] rounded-[10px] flex items-center justify-center gap-[8px] transition-all hover:bg-white/10 active:scale-95 border border-white/10"
+		style={{
+			backgroundColor: 'rgba(6, 14, 32, 0.4)',
+			backdropFilter: 'blur(10px)',
+			WebkitBackdropFilter: 'blur(10px)',
+		}}
+	>
+		<ExternalLinkIcon />
+		<span className="font-[Jost] font-normal text-[15px] leading-[24px] text-white">
+			Go to Dashboard
+		</span>
+	</button>
+)}
 
 				<div className="mt-[32px] text-[14px] leading-[24px] font-normal text-[#99A1AF]">
 					Questions or need help?{' '}
