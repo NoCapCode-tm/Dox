@@ -1,5 +1,4 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://dox-backend-db4i.onrender.com/api/v1";
-const AUTH_TOKEN_KEY = "emp-auth-token";
 
 const parseResponse = async (response) => {
     const data = await response.json().catch(() => ({}));
@@ -15,29 +14,7 @@ const parseResponse = async (response) => {
     return data;
 };
 
-/** Get Authorization headers with JWT token */
-const getAuthHeaders = () => {
-    const token = localStorage.getItem(AUTH_TOKEN_KEY);
-    const headers = {};
 
-    if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
-    }
-
-    return headers;
-};
-
-/** Store JWT token after login */
-const storeAuthToken = (token) => {
-    if (token) {
-        localStorage.setItem(AUTH_TOKEN_KEY, token);
-    }
-};
-
-/** Remove JWT token on logout */
-export const clearAuthToken = () => {
-    localStorage.removeItem(AUTH_TOKEN_KEY);
-};
 
 export const loginEmployee = async ({ userid, password }) => {
     const response = await fetch(`${API_BASE_URL}/employee/login`, {
@@ -52,32 +29,19 @@ export const loginEmployee = async ({ userid, password }) => {
     const data = await parseResponse(response);
     console.log("🔐 Login Response:", data);
 
-    // Extract token from various possible response locations
-    let token = null;
-    if (data.data?.token) {
-        token = data.data.token;
-    } else if (data.message?.token) {
-        token = data.message.token;
-    } else if (data.token) {
-        token = data.token;
-    }
-
-    if (token) {
-        storeAuthToken(token);
-        console.log("✅ Token stored in localStorage");
-    } else {
-        console.warn("⚠️ No token found in response, will rely on cookies");
-    }
-
     return data;
+};
+export const logout = async () => {
+    const response = await fetch(`${API_BASE_URL}/employee/logout`, {
+        method: "GET",
+        credentials: "include",
+    });
+    console.log(response)
 };
 
 export const getCurrentUser = async () => {
     const response = await fetch(`${API_BASE_URL}/employee/getuser`, {
         method: "GET",
-        headers: {
-            ...getAuthHeaders(),
-        },
         credentials: "include",
     });
 
@@ -98,9 +62,6 @@ export const saveStep1PersonalInfo = async (step1Data) => {
 
     const response = await fetch(`${API_BASE_URL}/employee/onboarding/1`, {
         method: "PATCH",
-        headers: {
-            ...getAuthHeaders(),
-        },
         credentials: "include",
         body,
     });
@@ -118,9 +79,6 @@ export const saveStep2EmergencyInfo = async (step2Data) => {
 
     const response = await fetch(`${API_BASE_URL}/employee/onboarding/2`, {
         method: "PATCH",
-        headers: {
-            ...getAuthHeaders(),
-        },
         credentials: "include",
         body,
     });
@@ -153,9 +111,6 @@ export const saveStep3IdentityInfo = async (step3Data) => {
 
     const response = await fetch(`${API_BASE_URL}/employee/onboarding/3`, {
         method: "PATCH",
-        headers: {
-            ...getAuthHeaders(),
-        },
         credentials: "include",
         body,
     });
@@ -173,9 +128,6 @@ export const saveStep4EducationInfo = async (step4Data) => {
 
     const response = await fetch(`${API_BASE_URL}/employee/onboarding/4`, {
         method: "PATCH",
-        headers: {
-            ...getAuthHeaders(),
-        },
         credentials: "include",
         body,
     });
@@ -199,9 +151,7 @@ export const saveStep5ProfileInfo = async (step5Data) => {
 
     const response = await fetch(`${API_BASE_URL}/employee/onboarding/5`, {
         method: "PATCH",
-        headers: {
-            ...getAuthHeaders(),
-        },
+        
         credentials: "include",
         body,
     });
@@ -237,9 +187,7 @@ export const saveStep6BankDetails = async (step6Data) => {
 
     const response = await fetch(`${API_BASE_URL}/employee/onboarding/6`, {
         method: "PATCH",
-        headers: {
-            ...getAuthHeaders(),
-        },
+        
         credentials: "include",
         body,
     });
@@ -258,9 +206,7 @@ export const saveStep7SystemInfo = async (step7Data) => {
 
     const response = await fetch(`${API_BASE_URL}/employee/onboarding/7`, {
         method: "PATCH",
-        headers: {
-            ...getAuthHeaders(),
-        },
+       
         credentials: "include",
         body,
     });
@@ -275,9 +221,7 @@ export const saveStep8Declaration = async (step8Data) => {
 
     const response = await fetch(`${API_BASE_URL}/employee/onboarding/8`, {
         method: "PATCH",
-        headers: {
-            ...getAuthHeaders(),
-        },
+       
         credentials: "include",
         body,
     });
@@ -290,10 +234,6 @@ export const saveStep8Declaration = async (step8Data) => {
 export const acknowledgeCompanyDocs = async (data) => {
     const response = await fetch(`${API_BASE_URL}/employee/acknowledge`, {
         method: "POST", // Requires the backend to use .post()
-        headers: {
-            ...getAuthHeaders(),
-            "Content-Type": "application/json",
-        },
         credentials: "include",
         body: JSON.stringify(data)
     });
@@ -311,7 +251,7 @@ export const acknowledgeCompanyDocs = async (data) => {
             const errData = JSON.parse(text);
             throw new Error(errData.message || "Request failed");
         } catch (e) {
-            throw new Error(`Server returned a non-JSON error (${response.status}). Check terminal logs.`);
+            throw new Error(`Server returned a non-JSON error (${response.status}). Check terminal logs.`,e.message);
         }
     }
     

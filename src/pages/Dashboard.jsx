@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCurrentUser } from '../api/employeeApi';
 import Loader from '../components/ui/Loader';
-import { AUTH_SESSION_KEY, isAuthenticated } from '../utils/auth';
+// import { AUTH_SESSION_KEY, isAuthenticated } from '../utils/auth';
 
 // Import the new CSS file
 import './css/Dashboard.css';
+
 
 const hasValue = (value) => {
   if (value == null) return false;
@@ -122,15 +123,10 @@ const Dashboard = () => {
         setIsLoading(true);
         setAuthError('');
 
-        if (!isAuthenticated()) {
-          setUserName('');
-          navigate('/', { replace: true });
-          return;
-        }
-
         const response = await getCurrentUser();
         const name = response?.data?.name || response?.message?.name || '';
         setUserName(name);
+        console.log(userName)
         setCompletedSteps(getCompletedStepsFromUser(response));
       } catch (error) {
         setAuthError(error?.message || 'Session expired. Please sign in again.');
@@ -145,16 +141,16 @@ const Dashboard = () => {
     loadCurrentUser();
   }, [navigate]);
 
-  useEffect(() => {
-    const handleStorageChange = (event) => {
-      if (event.key === AUTH_SESSION_KEY && !event.newValue) {
-        navigate('/', { replace: true });
-      }
-    };
+  // useEffect(() => {
+  //   const handleStorageChange = (event) => {
+  //     if (event.key === AUTH_SESSION_KEY && !event.newValue) {
+  //       navigate('/', { replace: true });
+  //     }
+  //   };
 
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, [navigate]);
+  //   window.addEventListener('storage', handleStorageChange);
+  //   return () => window.removeEventListener('storage', handleStorageChange);
+  // }, [navigate]);
 
   const handleStartStep = (stepNumber) => {
     navigate(`/onboarding/step${stepNumber}`);

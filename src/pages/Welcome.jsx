@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import { getCurrentUser } from "../api/employeeApi";
-import { clearAuthSession } from "../utils/auth";
+import { getCurrentUser, logout } from "../api/employeeApi";
 import { useNavigate } from 'react-router-dom';
-import { toast } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 import './css/Welcome.css';
 
 /* =====================================================================
@@ -184,12 +183,16 @@ const Welcome = () => {
     const loadUser = async () => {
         try {
             const response = await getCurrentUser();
-
             console.log("Current User:", response);
+            // if(!response?.message?.name){
+            //     Toaster.error("Please Login First")
+            //     navigate("/")
+            // }
 
             setUser(response.message);
         } catch (err) {
-            console.error(err);
+             toast.error("Please Login First",err.message)
+                navigate("/")
         }
     };
 
@@ -240,24 +243,8 @@ const Welcome = () => {
         },
     ];
 
-    const handleLogout = () => {
-        // Remove auth session
-        localStorage.removeItem("emp-auth-session");
-        localStorage.removeItem("emp-auth-token");
-
-        // Clear session storage
-        sessionStorage.clear();
-
-        // Delete cookies
-        document.cookie.split(";").forEach((cookie) => {
-            document.cookie = cookie
-                .replace(/^ +/, "")
-                .replace(
-                    /=.*/,
-                    "=;expires=" + new Date(0).toUTCString() + ";path=/"
-                );
-        });
-
+    const handleLogout = async() => {
+      logout()
         // Close profile menu
         setShowProfileMenu(false);
 
@@ -266,7 +253,7 @@ const Welcome = () => {
 
         // Redirect after a short delay so the toast is visible
         setTimeout(() => {
-            window.location.replace("/login");
+            window.location.replace("/");
         }, 1200);
     };
 

@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOnboardingContext } from '../context/OnboardingContext';
-import { getCurrentUser } from '../api/employeeApi';
+import {  getCurrentUser, logout } from '../api/employeeApi';
 
-const DAY_MS = 24 * 60 * 60 * 1000;
+const DAY_MS = 23 * 60 * 60 * 1000;
 
 const Completion = () => {
 	const navigate = useNavigate();
@@ -13,6 +13,8 @@ const Completion = () => {
 	
 	
 	const [now, setNow] = useState(Date.now());
+
+
 
 	 useEffect(() => {
 		const loadUser = async () => {
@@ -29,6 +31,8 @@ const Completion = () => {
 	
 		loadUser();
 		}, []);
+
+		
 
 	useEffect(() => {
 		if (!completionStartedAt) {
@@ -57,6 +61,29 @@ const Completion = () => {
 
 	return () => clearInterval(timer);
 }, [remainingMs]);
+	useEffect(() => {
+  window.history.pushState(null, "", window.location.href);
+
+  const handleBack = async () => {
+    console.log("Back pressed");
+
+    if (
+      user?.onboarding?.status === "Completed" &&
+      remainingMs === 0
+    ) {
+      navigate("/welcome", { replace: true });
+    } else {
+      await logout();
+      navigate("/", { replace: true });
+    }
+  };
+
+  window.addEventListener("popstate", handleBack);
+
+  return () => {
+    window.removeEventListener("popstate", handleBack);
+  };
+}, [user, remainingMs, navigate]);
 
 	const hours = Math.floor(remainingMs / (60 * 60 * 1000));
 	const minutes = Math.floor((remainingMs % (60 * 60 * 1000)) / (60 * 1000));
