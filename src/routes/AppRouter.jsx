@@ -7,32 +7,78 @@ import Welcome from '../pages/Welcome.jsx'
 import CompanyDocs from '../pages/CompanyDocs.jsx'
 import LegalAgreements from '../pages/LegalAgreements.jsx'
 import ReviewApproval from '../pages/ReviewApproval.jsx'
-import { isAuthenticated } from '../utils/auth'
+import ProtectedRoute from "../pages/ProtectedRoute.jsx";
 
-const PrivateRoute = ({ children }) => {
-  return isAuthenticated() ? children : <Navigate to="/" replace />
-}
-
-const PublicRoute = ({ children }) => {
-  return isAuthenticated() ? <Navigate to="/welcome" replace /> : children
-}
 
 const AppRouter = () => {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
-      <Routes>
-        <Route path="/" element={<PublicRoute><SignIn /></PublicRoute>} />
-        <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-        <Route path="/completion" element={<PrivateRoute><Completion /></PrivateRoute>} />
-        <Route path="/welcome" element={<PrivateRoute><Welcome /></PrivateRoute>} />
-        <Route path="/company-docs" element={<PrivateRoute><CompanyDocs /></PrivateRoute>} />
-        <Route path="/legal-agreements" element={<PrivateRoute><LegalAgreements /></PrivateRoute>} />
-        <Route path="/review-approval" element={<PrivateRoute><ReviewApproval /></PrivateRoute>} />
+     <Routes>
+  <Route path="/" element={<SignIn />} />
 
-        <Route path="/onboarding/*" element={<PrivateRoute><OnboardingLayout /></PrivateRoute>} />
+  <Route
+    path="/welcome"
+    element={
+      <ProtectedRoute>
+        <Welcome />
+      </ProtectedRoute>
+    }
+  />
 
-        <Route path="*" element={<Navigate to={isAuthenticated() ? '/welcome' : '/'} replace />} />
-      </Routes>
+  <Route
+    path="/dashboard"
+    element={
+      <ProtectedRoute>
+        <Dashboard />
+      </ProtectedRoute>
+    }
+  />
+
+  <Route
+    path="/completion"
+    element={
+      <ProtectedRoute>
+        <Completion />
+      </ProtectedRoute>
+    }
+  />
+
+  <Route
+    path="/company-docs"
+    element={
+      <ProtectedRoute>
+        <CompanyDocs />
+      </ProtectedRoute>
+    }
+  />
+
+  <Route
+    path="/legal-agreements"
+    element={
+      <ProtectedRoute>
+        <LegalAgreements />
+      </ProtectedRoute>
+    }
+  />
+
+  <Route
+    path="/review-approval"
+    element={
+      <ProtectedRoute>
+        <ReviewApproval />
+      </ProtectedRoute>
+    }
+  />
+
+  <Route
+    path="/onboarding/*"
+    element={
+      <ProtectedRoute>
+        <OnboardingLayout />
+      </ProtectedRoute>
+    }
+  />
+</Routes>
     </BrowserRouter>
   )
 }

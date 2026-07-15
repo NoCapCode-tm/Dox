@@ -3,12 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { loginEmployee } from "../api/employeeApi";
 import Loader from "../components/ui/Loader";
-import { setAuthSession } from "../utils/auth";
 
 // Import standard CSS
 import "./css/SignIn.css";
-
-const AUTH_SESSION_KEY = "emp-auth-session";
 
 /**
  * SignIn page
@@ -54,11 +51,9 @@ const SignIn = () => {
       // Backend expects "userid", map the current field value.
       const response = await loginEmployee({ userid: userId.trim(), password });
       console.log(response.message)
-      
-      setAuthSession();
       toast.success("Login successful");
       if(response?.message?.onboarding?.status === "Completed"){
-        navigate("/completion")
+      navigate("/completion");
       }else{
         navigate("/welcome");
       }
