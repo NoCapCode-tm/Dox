@@ -93,7 +93,7 @@ const Completion = () => {
 		<div
 			className="relative min-h-screen w-full overflow-hidden text-white font-[Jost] flex flex-col"
 			style={{
-				backgroundImage: "url('../../../public/BG.svg')",
+				backgroundImage: "url('../../../BG.svg')",
 				backgroundSize: 'cover',
 				backgroundPosition: 'center',
 				backgroundAttachment: 'fixed',
