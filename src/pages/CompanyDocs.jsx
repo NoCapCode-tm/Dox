@@ -163,7 +163,7 @@ const CompanyDocs = () => {
         // Otherwise, send the POST request to mark it true in DB
         try {
             setIsSubmitting(true);
-            await acknowledgeCompanyDocs({ acknowledge: true });
+            await acknowledgeCompanyDocs(true);
             toast.success("Company policies successfully acknowledged!");
             
             setAlreadyAcknowledgedDB(true);

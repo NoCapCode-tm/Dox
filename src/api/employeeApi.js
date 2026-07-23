@@ -1,4 +1,5 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://dox-backend-db4i.onrender.com/api/v1";
+import axios from 'axios';
 
 const parseResponse = async (response) => {
     const data = await response.json().catch(() => ({}));
@@ -232,28 +233,13 @@ export const saveStep8Declaration = async (step8Data) => {
 
 // Add this to the bottom of api/employeeApi.js
 export const acknowledgeCompanyDocs = async (data) => {
-    const response = await fetch(`${API_BASE_URL}/employee/acknowledge`, {
-        method: "POST", // Requires the backend to use .post()
-        credentials: "include",
-        body: JSON.stringify(data)
-    });
-    
-    if (!response.ok) {
-        // Advanced error catching to tell you exactly what went wrong
-        const text = await response.text();
-        console.error("Backend Error Response:", text);
+   try {
+     const response = await axios.post(`${API_BASE_URL}/employee/acknowledge`,{acknowledge:data},{withCredentials:true});
+     console.log(response)
         
-        if (response.status === 404) {
-            throw new Error("API Route Not Found (404). Ensure you changed .get() to .post() in Employee.routes.js!");
-        }
-
-        try {
-            const errData = JSON.parse(text);
-            throw new Error(errData.message || "Request failed");
-        } catch (e) {
-            throw new Error(`Server returned a non-JSON error (${response.status}). Check terminal logs.`,e.message);
-        }
-    }
-    
-    return await response.json();
+     
+     return response.data.message;
+   } catch (error) {
+     console.log(error.message)
+   }
 };
