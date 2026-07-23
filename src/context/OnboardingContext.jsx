@@ -110,7 +110,9 @@ const getInitialFormData = () => {
                 ...(parsed.step8 || {}),
             },
         };
-    } catch {
+    } catch (error) {
+        // Silently handle the blocked read
+        console.warn("Storage read access denied. Defaulting to initial state.");
         return defaultData;
     }
 };
@@ -119,7 +121,12 @@ export const OnboardingProvider = ({ children }) => {
     const [formData, setFormData] = useState(getInitialFormData);
 
     useEffect(() => {
-        sessionStorage.setItem(ONBOARDING_STORAGE_KEY, JSON.stringify(formData));
+        // THIS IS THE FIX: Wrapped the write operation in try...catch
+        try {
+            sessionStorage.setItem(ONBOARDING_STORAGE_KEY, JSON.stringify(formData));
+        } catch (error) {
+            console.warn("Could not save to sessionStorage due to browser privacy settings.");
+        }
     }, [formData]);
 
     /** Update a field in a specific step */

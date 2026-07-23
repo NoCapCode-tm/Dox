@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { loginEmployee } from "../api/employeeApi";
@@ -18,10 +18,35 @@ const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  
+  // --- New State for Cookie Detection ---
+  const [cookiesBlocked, setCookiesBlocked] = useState(false);
+
+  // --- Cookie Detection Logic ---
+  useEffect(() => {
+    const checkCookiesEnabled = () => {
+      // 1. Check browser's built-in flag
+      if (!navigator.cookieEnabled) return false;
+      
+      // 2. Perform a hard test (write, read, delete) to catch strict privacy blockers
+      try {
+        document.cookie = "dox_cookietest=1; SameSite=Strict";
+        const isEnabled = document.cookie.indexOf("dox_cookietest=") !== -1;
+        document.cookie = "dox_cookietest=1; expires=Thu, 01-Jan-1970 00:00:00 GMT; SameSite=Strict";
+        return isEnabled;
+      } catch (e) {
+        return false;
+      }
+    };
+
+    if (!checkCookiesEnabled()) {
+      setCookiesBlocked(true);
+    }
+  }, []);
 
   const canSubmit = useMemo(
-    () => userId.trim().length > 0 && password.length > 0,
-    [userId, password]
+    () => userId.trim().length > 0 && password.length > 0 && !cookiesBlocked,
+    [userId, password, cookiesBlocked]
   );
 
   const isInvalidCredentialError = (error) => {
@@ -53,7 +78,7 @@ const SignIn = () => {
       console.log(response.message)
       toast.success("Login successful");
       if(response?.message?.onboarding?.status === "Completed"){
-      navigate("/completion");
+        navigate("/completion");
       }else{
         navigate("/welcome");
       }
@@ -73,6 +98,44 @@ const SignIn = () => {
   return (
     <div className="signin-wrapper">
       {isLoading && <Loader fullScreen={true} message="Signing in..." />}
+
+      {/* --- Cookie Blocked Overlay --- */}
+      {cookiesBlocked && (
+        <div className="cookie-blocked-overlay animate-fade">
+          <div className="cookie-blocked-card">
+            
+            <div className="cookie-header">
+              <div className="cookie-icon-wrapper">
+                <CookieIcon />
+              </div>
+              <h2>Action Required</h2>
+            </div>
+            
+            <p className="cookie-description">
+              Your browser is currently blocking cookies. DOX requires cookies to securely authenticate your session and protect your onboarding documents.
+            </p>
+            
+            <div className="cookie-divider"></div>
+            
+            <div className="cookie-instructions">
+              <strong>How to resolve this:</strong>
+              <ul>
+                <li>Disable "Block all cookies" in your browser settings.</li>
+                <li>If using Incognito/Private mode, allow cookies for this site.</li>
+                <li>Turn off strict tracker blockers (e.g., Brave Shields).</li>
+              </ul>
+            </div>
+            
+            <button 
+              onClick={() => window.location.reload()} 
+              className="cookie-reload-btn"
+            >
+              I have enabled cookies — Reload
+            </button>
+            
+          </div>
+        </div>
+      )}
 
       <main className="signin-main">
         
@@ -109,6 +172,7 @@ const SignIn = () => {
                   placeholder="your.username"
                   className="signin-input with-icon"
                   required
+                  disabled={cookiesBlocked}
                 />
               </div>
             </div>
@@ -125,12 +189,14 @@ const SignIn = () => {
                   placeholder="Enter your password"
                   className="signin-input with-icon"
                   required
+                  disabled={cookiesBlocked}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((prev) => !prev)}
                   className="signin-toggle-btn"
                   aria-label={showPassword ? "Hide password" : "Show password"}
+                  disabled={cookiesBlocked}
                 >
                   {showPassword ? <EyeOffIcon /> : <EyeIcon />}
                 </button>
@@ -143,39 +209,37 @@ const SignIn = () => {
                     "Forgot Password Request - Dox Account Access"
                   )}&body=${encodeURIComponent(`Dear HR Team,
 
-                I hope you are doing well.
+I hope you are doing well.
 
-                I am writing to request assistance with accessing my Dox account, as I am currently unable to log in. I would appreciate your support in resetting my password or guiding me through the recovery process.
+I am writing to request assistance with accessing my Dox account, as I am currently unable to log in. I would appreciate your support in resetting my password or guiding me through the recovery process.
 
-                For your reference, my details are provided below:
+For your reference, my details are provided below:
 
-                Full Name:
-                Registered Email:
-                Employee ID (if applicable):
-                Department/Team:
-                Issue Summary: Unable to access my Dox account
+Full Name:
+Registered Email:
+Employee ID (if applicable):
+Department/Team:
+Issue Summary: Unable to access my Dox account
 
-                Please let me know if any additional information is required from my side to proceed further.
+Please let me know if any additional information is required from my side to proceed further.
 
-                Thank you for your time and support. I look forward to your assistance.
+Thank you for your time and support. I look forward to your assistance.
 
-                Best regards,
-                `)}`}
-
+Best regards,
+`)}`}
                 >
-
                 Forgot Password? 
                 </a>
               </div>
             </div>
 
-          </div> {/* <-- This was the missing closing tag in your broken code */}
+          </div> 
 
           {/* Submit Button (Outside Glass Card) */}
           <button
             type="submit"
-            disabled={!canSubmit || isLoading}
-            className="signin-submit-btn"
+            disabled={!canSubmit || isLoading || cookiesBlocked}
+            className={`signin-submit-btn ${cookiesBlocked ? 'disabled-by-cookies' : ''}`}
           >
             <span className="signin-btn-text">
                {isLoading ? "Signing In..." : "Log In"}
@@ -196,6 +260,17 @@ const SignIn = () => {
 };
 
 /* --- SVGs --- */
+
+const CookieIcon = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path>
+    <path d="M8.5 8.5v.01"></path>
+    <path d="M16 12.5v.01"></path>
+    <path d="M12 16v.01"></path>
+    <path d="M11 12.5v.01"></path>
+    <path d="M8 14.5v.01"></path>
+  </svg>
+);
 
 const MailIcon = ({ className }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
