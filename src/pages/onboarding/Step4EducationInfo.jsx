@@ -78,7 +78,11 @@ const Step4EducationInfo = () => {
       {isSavingStep && <Loader fullScreen={true} message="Saving and loading next step..." />}
       
       {/* Header */}
-      <div className="step4-header">
+      <div className="step4-header"
+        onClick={() => navigate('/welcome')}
+        style={{ cursor: 'pointer' }}
+        title="Return to Welcome Page"
+        >
         <DoxLogo width="69" />
         <span>Employee Onboarding</span>
       </div>

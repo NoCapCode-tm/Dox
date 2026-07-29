@@ -117,7 +117,11 @@ const Step5Profile = () => {
       {isSavingStep && <Loader fullScreen={true} message="Saving and loading next step..." />}
       
       {/* Header */}
-      <div className="step5-header">
+      <div className="step5-header"
+        onClick={() => navigate('/welcome')}
+        style={{ cursor: 'pointer' }}
+        title="Return to Welcome Page"
+      >
         <DoxLogo width="69" />
         <span>Employee Onboarding</span>
       </div>

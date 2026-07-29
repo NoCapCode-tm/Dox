@@ -83,7 +83,11 @@ const Step3IdentityInfo = () => {
       {isSavingStep && <Loader fullScreen={true} message="Saving and loading next step..." />}
       
       {/* Header */}
-      <div className="step3-header">
+      <div className="step3-header"
+        onClick={() => navigate('/welcome')}
+        style={{ cursor: 'pointer' }}
+        title="Return to Welcome Page"
+      >
         <DoxLogo width="69" />
         <span>Employee Onboarding</span>
       </div>

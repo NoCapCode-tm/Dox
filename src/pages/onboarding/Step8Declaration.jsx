@@ -82,7 +82,11 @@ const Step8Declaration = () => {
             {isSavingStep && <Loader fullScreen={true} message="Saving and completing onboarding..." />}
             
             {/* Header */}
-            <div className="step8-header">
+            <div className="step8-header"
+                onClick={() => navigate('/welcome')}
+                style={{ cursor: 'pointer' }}
+                title="Return to Welcome Page"
+            >
                 <DoxLogo width="69" />
                 <span>Employee Onboarding</span>
             </div>

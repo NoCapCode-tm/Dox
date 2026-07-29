@@ -121,7 +121,11 @@ const Step1PersonalInfo = () => {
     <div className="step1-wrapper">
       {isSavingStep && <Loader fullScreen={true} message="Saving and loading next step..." />}
       
-      <div className="step1-header">
+      <div className="step1-header"
+      onClick={() => navigate('/welcome')}
+        style={{ cursor: 'pointer' }}
+        title="Return to Welcome Page"
+      >
         <DoxLogo width="69" />
         <span>Employee Onboarding</span>
       </div>
